@@ -1,0 +1,41 @@
+/* .fixedbtm {
+    position: fixed;
+    width: 100%;
+    display: block;
+    bottom: 0;
+    z-index: 100;
+} */
+
+.htmx-indicator{
+  display:none;
+}
+.htmx-request .my-indicator{
+  display:inline;
+}
+.htmx-request.my-indicator{
+  display:inline;
+}
+
+
+.icon-user-type {
+    height: 6rem; }
+    
+    .icon-user-type.icon-user-type {
+      height: 6rem; }
+      
+    
+  
+  .icon-shape-user-type {
+    width: 6rem;
+    height: 6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center; }
+    .icon-shape-user-type svg {
+      height: 6rem; }
+    
+    .icon-shape-user-type.icon-size-user-type {
+      width: 6rem;
+      height: 6rem; }
+      .icon-shape-user-type.icon-size-user-type svg {
+        height: 6rem; }

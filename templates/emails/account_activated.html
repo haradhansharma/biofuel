@@ -1,0 +1,31 @@
+{% autoescape off %}
+<!DOCTYPE html>
+<html>
+    <body>
+Hello {{ user.username }},
+<br>
+<br>
+Thank you for joining us.
+<br>
+<br>
+We’d like to confirm that your account was ativated successfully. To access {{ domain }} click the link below.
+<br>
+<br>
+
+<a href="{{ login }}"> LOGIN </a>
+<br>
+<br>
+
+If you experience any issues logging into your account, reach out to us at {{exsite.email}}.
+<br>
+<br>
+
+Best,<br>
+The {{ domain }} team <br>
+
+</body>
+</html>
+{% endautoescape %}
+
+
+

@@ -1,0 +1,31 @@
+{% autoescape off %}
+Hello {{ user.username }},
+<br>
+<br>
+
+We’re happy that another incredible person joined our {{ domain }} platform.
+<br>
+<br>
+
+Let’s start with the basics!
+<br>
+<br>
+
+To complete registration procedure, click on the below link to verify your email address:
+<br>
+<br>
+
+http://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}
+<br>
+<br>
+
+Thank you for joining, let’s make great things happen together!
+<br>
+<br>
+
+Sincerely,<br>
+The {{ domain }} Team <br>
+{% endautoescape %}
+
+
+

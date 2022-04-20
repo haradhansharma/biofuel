@@ -1,0 +1,14 @@
+*.pyc  
+*~  
+__pycache__  
+gfvp_env
+.vscode
+evaluation_bkup  
+task doing for mash.txt 
+.DS_Store  
+gfvp/settings.py
+static/assets/scss
+static/assets/gulpfile.js
+static/assets/package.json
+for krishnahara.txt
+mail template.txt

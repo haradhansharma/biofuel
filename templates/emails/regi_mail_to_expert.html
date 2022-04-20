@@ -1,0 +1,18 @@
+{% autoescape off %}
+Hello {{ user.username }},
+<br><br>
+
+We’re happy that another incredible expert joined our {{ domain }} platform. <br><br>
+
+We're reviewing your application as <b> {{ user.get_type }} </b>. <br><br>
+
+You will be notified once it is approved. <br><br>
+
+Thank you for joining, let’s make great things happen together! <br><br>
+
+Sincerely, <br>
+{{ domain }} team. <br>
+{% endautoescape %}
+
+
+

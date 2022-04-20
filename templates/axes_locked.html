@@ -1,0 +1,41 @@
+
+{% extends "layouts/base-fullscreen.html" %}
+
+{% block title %} Error 403 {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main>
+        <section class="vh-100 d-flex align-items-center justify-content-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center d-flex align-items-center justify-content-center">
+                        <div>
+                            <h1>YOUR ACCOUNT LOCKED FOR WRONG LOGIN ATTEMPT</h1>
+                            <h1 class="mt-5">
+                                Access <span class="fw-bolder text-danger">denied</span>
+                            </h1>
+                            <p class="lead my-4">
+                                Credentials : {{username}}
+                            </p>
+                            <p class="lead my-4">
+                                Cooloff Time : {{cooloff_timedelta}} Hrs
+                            </p>
+                            <p class="lead my-4">
+                                Failor Limit : {{failure_limit}}
+                            </p>
+                            <p class="lead my-4"> Try <a class="btn btn-dark animate-hover" href="{% url 'login' %}">LOGIN</a>after {{cooloff_timedelta}} Hrs fo inactivity. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

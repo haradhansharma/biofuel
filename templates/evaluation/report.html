@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <style>
+        @page title_template { margin: 5cm; }
+        @page regular_template { margin: 2cm; }
+
+        @page {
+            size: a4 portrait;
+
+
+
+            @frame header_frame { /* Static Frame */
+                -pdf-frame-content: header_content;
+                left: 50pt; width: 512pt; top: 50pt; height: 40pt;
+                }
+
+
+            @frame content_frame {
+                left: 50pt; width: 512pt; top: 90pt; height: 632pt;
+                }
+
+
+            @frame footer_frame {
+                -pdf-frame-content: footer_content;
+                left: 50pt; width: 512pt; top: 772pt; height: 20pt;
+                }
+
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 2px;
+        }
+
+
+        th {
+            text-align: left;
+        }
+
+        p {
+            text-align: justify;
+        }
+
+        .page-break {
+
+            page-break-after: always;
+            display: block;
+
+        }
+
+
+    </style>
+
+    <title>GREEN FUEL VALIDATION PLATFORM - ANALYSIS REPORT</title>
+
+</head>
+
+<body>
+    <div class="page-break">
+
+
+        <div id="header_content">GREEN FUEL VALIDATION PLATFORM - ANALYSIS REPORT</div>
+        <center >
+            <div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            <b style="font-size: 30px;">GREEN FUEL</b> <br>
+            <b style="font-size: 30px;">VALIDATION PLATFORM</b>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+<!--
+            <span style="font-size: 22px;"> CO2 NEGATIVE-NEUTRAL ISO</span> <br>
+            <span style="font-size: 22px;"> 8217:2017 BIO-BUNKER FUEL OIL </span>
+            -->
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+<!--
+            <b style="font-size: 18px;">Initial Analysis Report.</b>
+            -->
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+
+            <span>Report ID:{{ current_evaluator.id }}</span>
+            
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+<!--
+            <b style="font-size: 30px;">PARTNERS: MASH ENERGY Aps</b>
+            -->
+
+        </div>
+        </center>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+    <div class="page-break" style="font-size: 14px;">
+
+        <center>
+
+            <b style="font-size: 24px;">CLASSIFICATION AND APPROVAL</b> <br> <br>
+            <span style="font-size: 14px;"><b>Classification:</b> Confidential</span>
+
+        </center>
+
+
+        <center>
+            <br>
+            <h1>DEFINITIONS</h1>
+        </center>
+        <br><br><br><br><br>
+
+
+
+        <p><b>Public after Review:</b></p>
+        <p>The document may be freely distributed after successful WP leader approval. </p>
+
+        <p><b>Confidential for the Duration of the Project:</b></p>
+        <p>As for 'Confidential', but only for the duration of the Project. After final Project Approval by Innovation
+            Fund
+            Denmark, status for reports classified 'Confidential for the Duration of the Project' are automatically
+            downgraded to 'Public'. </p>
+
+        <p><b>Confidential:</b></p>
+        <p>The document is for use of the Contractors within the ShippingLab project and shall not be used or disclosed
+            to
+            third parties without the unanimous agreement and approval within the ShippingLab Steering Committee.</p>
+
+        </div>
+
+ -->
+ <!--
+        <div class="page-break">
+
+
+        <center>
+            <b style="font-size: 18px;">AUTHORS:</b> <br> <br>
+        </center>
+
+        <table style="font-size: 14px;">
+            <tr>
+                <th>Organization</th>
+                <th>Name</th>
+                <th>Date</th>
+            </tr>
+            <tr>
+                <td>MASH Energy</td>
+                <td>Jakob Andersen</td>
+                <td style="width:30%"></td>
+            </tr>
+            <tr>
+                <td>Name of other authors</td>
+                <td>Krishna Hara Chakravarty</td>
+                <td style="width:30%"></td>
+            </tr>
+        </table>
+        <br><br><br>
+
+
+        <center>
+            <b style="font-size: 18px;">READERS:</b> <br><br>
+        </center>
+
+        <table style="font-size: 14px;">
+            <tr style="height:30px">
+                <th>Organization</th>
+                <th>Name</th>
+                <th>Date</th>
+            </tr>
+            <tr style="height:20px">
+                <td style="width:40%"></td>
+                <td style="width:30%"></td>
+                <td style="width:30%"></td>
+            </tr>
+            <tr style="height:20px">
+                <td style="width:40%"></td>
+                <td style="width:30%"></td>
+                <td style="width:30%"></td>
+            </tr>
+            <tr style="height:20px">
+                <td style="width:40%"></td>
+                <td style="width:30%"></td>
+                <td style="width:30%"></td>
+            </tr>
+            <tr style="height:20px">
+                <td style="width:40%"></td>
+                <td style="width:30%"></td>
+                <td style="width:30%"></td>
+            </tr>
+            <tr style="height:20px">
+                <td style="width:40%"></td>
+                <td style="width:30%"></td>
+                <td style="width:30%"></td>
+            </tr>
+        </table>
+        <br><br><br><br><br><br><br><br><br><br><br>
+
+
+
+        <center>
+            <b style="font-size: 18px;">APPROVAL:</b>
+            <b style="font-size: 14px;">Approved for release by:</b>
+        </center>
+        <br><br>
+        <table style="font-size: 14px;">
+            <tr>
+                <th>Organization</th>
+                <th>Name</th>
+                <th>Date</th>
+            </tr>
+            <tr>
+                <td>Task manager</td>
+                <td style="width:30%"></td>
+                <td style="width:30%"></td>
+            </tr>
+            <tr>
+                <td>Project Director</td>
+                <td>Magnus Gary</td>
+                <td style="width:30%"></td>
+            </tr>
+        </table>
+
+
+</div>
+-->
+<div class="page-break">
+    <!--
+        <center>
+            <b style="font-size: 18px;">DOCUMENT HISTORY:</b> <br><br>
+
+        </center>
+        <table style="font-size: 14px;">
+            <tr>
+                <th>Issue</th>
+                <th>Date</th>
+                <th>Initials</th>
+                <th>Revised pages</th>
+                <th>Short description of changes: File name</th>
+            </tr>
+            <tr>
+                <td style="width: 10%;">1</td>
+                <td style="width: 10%;"></td>
+                <td style="width: 15%;"></td>
+                <td style="width: 20%;"></td>
+                <td style="width: 45%;"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;">2</td>
+                <td style="width: 10%;"></td>
+                <td style="width: 15%;"></td>
+                <td style="width: 20%;"></td>
+                <td style="width: 45%;"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;">3</td>
+                <td style="width: 10%;"></td>
+                <td style="width: 15%;"></td>
+                <td style="width: 20%;"></td>
+                <td style="width: 45%;"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;">4</td>
+                <td style="width: 10%;"></td>
+                <td style="width: 15%;"></td>
+                <td style="width: 20%;"></td>
+                <td style="width: 45%;"></td>
+            </tr>
+
+
+        </table>
+        -->
+    </div>
+    <div class="page-break">
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+        <h1 style="font-size: 24px;">DISCLAIMER:</h1>
+
+        <p style="font-size: 14px;"> Use of any knowledge, information or data contained in this document shall be at the user's sole risk. The
+            members of the ShippingLab Project accept no liability or responsibility, in negligence or otherwise, for
+            any loss, damage or expense whatever sustained by any person as a result of the use, in any manner or form,
+            of any knowledge, information or data contained in this document, or due to any inaccuracy, omission or
+            error therein contained.</p>
+
+        <p style="font-size: 14px;"> Danish Maritime Fund shall not in any way be liable or responsible for the use of any such knowledge,
+            information or data, or of the consequences thereof.</p>
+
+
+
+ </div>
+
+ <div class="page-break">
+    <center><h2 style="font-size: 20px;">CONTENTS</h2></center> <br><br><br><br><br><br><br><br>
+    <div>
+    <div style="display: block; font-size: 18px;">
+        <ol>
+    <li>Basic Summary</li>
+    {% for el in eva_label %}
+    <li>{{el.label.label}}</li>
+    {% endfor %}
+</ol>
+    </div>
+</div>
+
+ </div>
+
+ <div class="page-break">
+    <center>
+        <h1 style="font-size: 24px;">BIOFUEL SUMMARY</h1> <br><br>
+    </center>
+    <h2 style="font-size: 20px;">Basic Summary</h2>
+    <table style="font-size: 14px;">
+        <tr>
+            <th>Name And Organization</th>
+            <th>Email And Phone</th>
+            <th>Selected Biofuel</th>
+        </tr>
+        <tr>
+            <td>{{current_evaluator.name}}</td>
+            <td>{{current_evaluator.email}}</td>
+            <td rowspan="2">{{current_evaluator.biofuel.name}}</td>
+        </tr>
+        <tr>
+            <td>{{current_evaluator.orgonization}}</td>
+            <td>{{current_evaluator.phone}}</td>
+        </tr>
+    </table>
+
+
+
+    {% for el in eva_label %}
+    <h2 style="font-size: 20px;">{{el.label.label}}</h2>
+
+    {% for es in el.evalebelstatement_set.all %}
+    {% if es.statement is not None %}
+    <p style="font-size: 14px;">{{es.statement}}</p>
+    {% endif %}
+    {% if es.next_step is not None %}
+    <p style="font-size: 14px;">{{es.next_step}}</p>
+    {% endif %}
+    {% endfor %}
+
+    {% endfor %}
+</div>
+    <h2 style="font-size: 20px;">Question Specific Feedback</h2>
+    {% for e in evaluation %}
+    <table style="font-size: 14px;">
+        <tr>
+            <th>Question : {{e.question.name}}</th>
+        </tr>
+        <tr>
+            <td>
+                <p> <b>Chosen Option :</b> {{e.option.name}}</p>
+                <p> <b>Comment :</b>
+
+                    {% for qa in e.get_question_comment  %}
+                   <p>{{qa.comments}}</p>
+
+                    {% endfor %}
+
+
+
+
+                </p>
+                <p><b>Feedback :</b> {{e.option.statement}}</p>
+            </td>
+        </tr>
+    </table>
+
+    {% endfor %}
+
+
+    <div id="footer_content">Initial Analysis Report.- Page <pdf:pagenumber>
+        Of <pdf:pagecount>
+        </div>
+
+</body>
+
+</html>

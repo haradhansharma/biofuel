@@ -1,0 +1,231 @@
+{% extends "layouts/base-fullscreen.html" %}
+
+{% block title %} {{text.signin}} {% endblock %}
+{% block stylesheets %}{% endblock stylesheets %}
+{% load custom_tags %}
+{% block content %}
+{% block header %}
+{% include 'includes/g_header.html' %}
+{% endblock %}
+<main id="indi">
+
+
+
+
+
+    <!-- Hero -->
+    <section class="section-header overflow-hidden pt-7 pt-lg-8 pb-9 pb-lg-12 bg-primary text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="bootstrap-big-icon d-none d-lg-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="700" height="622" class="d-block my-1"
+                            viewBox="0 0 118 94" role="img">
+                            <title>Green Fuel Validation Platform</title>
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z"
+                                fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    <h1 class="fw-bolder">Green Fuel Validation Platform</h1>
+                    <h2 class="lead fw-normal text-muted mb-5">
+                        Self assesment
+                    </h2>
+
+
+                </div>
+
+
+                {% if messages %}
+                        
+                        <div class="alert alert-secondary mt-5" role="alert">
+                            {% for message in messages %}
+                            <span class="alert-inner--text">{{ message }}</span>
+                            {% endfor %}
+                        </div>
+                        
+                {% endif %}
+
+
+
+            </div>
+        </div>
+        <figure class="position-absolute bottom-0 left-0 w-100 d-none d-md-block mb-n2"><svg class="home-pattern"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 185.4">
+                <path d="M3000,0v185.4H0V0c496.4,115.6,996.4,173.4,1500,173.4S2503.6,115.6,3000,0z"></path>
+            </svg></figure>
+    </section>
+    
+
+    <div  class="section pt-0">
+
+        
+
+
+        <div class="container-fluid mt-n10 mt-lg-n12 z-2">
+            <div class="row justify-content-center">
+                <div class="col-12">                    
+                    <button class="btn btn-warning btn-block mb-2" onclick="history.back()">Go Back</button>
+                    <div class="card text-center mb-4">                        
+                        <div class="row p-3 justify-content-center">
+                            {% for parent, child in question_dataset.items %}                           
+                        <div class="col-md-3 col-lg-2 col-xl-1 mb-3">
+                            <div style="min-height: 5rem;" class="card">  
+                                <a style="padding: 0.05rem; font-size: 0.25rem;"  class="btn {% if slug == parent.slug %} btn-primary {% else %} {% if parent.stat == 'checked' %} btn-success {% elif parent.stat == 'skipped' %} btn-gray-100  {% else %} btn-outline-success {% endif %} {% endif %} mb-1  col-12 mx-auto " data-bs-toggle="tooltip" data-bs-html="true" title="{{parent.name}}" href="{% url 'evaluation:eva_question' request.session.evaluator parent.slug %}">{% if parent.sort_order %}--{% else %}--{% endif %}</a>
+                        
+                            <div class="col-12 p-2">
+                                {% for item in child %}
+                                
+                                <a style="padding: 0.08rem; font-size: 0.25rem;" class="btn {% if slug == item.slug %} btn-primary {% else %} {% if item.stat == 'checked' %} btn-success {% elif item.stat == 'skipped' %} btn-gray-100  {% else %} btn-outline-success {% endif %} {% endif %} mb-1 rounded-circle "  data-bs-toggle="tooltip" data-bs-html="true" title="{{item.name}}" style="font-size: 4px;" href="{% url 'evaluation:eva_question' request.session.evaluator item.slug %}">--</a>
+                               
+                                {% endfor %} 
+                            </div>
+                          
+
+                        </div>
+                        </div>
+                        {% endfor %}
+                        </div>
+                        <div class="card-header">
+                            {{ timing_text }}
+                        </div>  
+                    </div>
+
+                    <div id = "ques" class="card text-center">                       
+                        <div class="card-footer">
+                            <h3>Question: {{question.name}}</h3>                                
+                        </div>
+                        <div class="card-footer">
+                            {% if question.description %}
+                            <p>{{question.description}}</p>
+                            {% else %}
+                            <p>Description of the question are coming soon in this place!</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if total_question <= qualified_rang %}
+                    {% if messages %}
+                    
+                    <div class="alert alert-secondary mt-5" role="alert">
+                        {% for message in messages %}
+                        <span class="alert-inner--text">{{ message }}</span>
+                        {% endfor %}
+                    </div>
+                    
+                    {% endif %}
+                    {% endif %}
+                    <div class="row mt-5 mb-10">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>Options:</h5>
+                                    <form method="POST" action="{% url 'evaluation:option_add2' %}#ques">
+                                        {% csrf_token %}
+                                        {% for optn in optns %}                                          
+                                                                                           
+                                        <fieldset>                                                
+                                            <div class="form-check">                                                    
+                                                <input class="form-check-input" type="radio" name="option_id" id="{{optn.id}}" value="{{optn.id}}" {% if optn.id == selected_option.id %} checked {% endif %} required>
+                                                <label class="form-check-label" for="{{optn.id}}"> {{optn.name}} </label>  
+                                                <!--
+                                                    <span class="btn-primary p-2 rounded-circle" data-bs-toggle="tooltip" data-bs-html="true" title=" {{optn.statement}}" style="font-size: 8px;">?</span> 
+                                                -->
+                                                
+                                            </div>
+                                        </fieldset>  
+                                        {% endfor %}
+                                        <h5>Your Comments Here:</h5>
+                                        
+                                        <div class="mt-3">
+                                            <textarea class="form-control" id="comment" name="comment">{{submitted_comment}}</textarea>
+                                            <input type="hidden" name="slug" value="{{slug}}">
+                                        </div>
+
+
+                                        <div class="mt-3 d-flex">
+                                            <button type="submit" name="get_feedback" class="btn btn-success btn-block m-2">Submit</button>                                                
+                                        </div>
+
+
+                                        <div class="mt-3">
+                                            <h5>GFVP Feedback:</h5><textarea class="form-control" id="feedback" rows="6" disabled>{{selected_option.statement}}</textarea>
+                                        </div>
+
+
+                                        <div class="mt-3 d-flex">
+                                            <!--
+                                            <button type="submit" name="submit_and_stay" value="Submit" class="btn btn-success btn-block m-2">Submit and select Question Manually</button>   
+                                            -->                                             
+                                        
+                                            <button type="submit" name="submit_and_auto" value="Submit" class="btn btn-success btn-block m-2">Confirm</button>                                                
+                                        </div>
+                                    </form>
+                                
+                                <!--
+                                    <div class="mt-3">
+                                        <h5>Feedback:</h5>
+                                        <textarea class="form-control" id="feedback" rows="6" disabled> {{selected_option.statement}}</textarea>
+                                    </div>
+                            
+                                
+                                    
+                                -->
+                                    
+                                    
+                                    
+                                </div>
+                            </div>
+
+                           
+
+                                <div class="card">
+                                <div class="card-body">
+                                    
+                                    
+                                
+                                
+                                    
+                                
+                                    <div class="mt-3">
+                                        
+                                        {{evaluator.id}}
+                                        
+
+                                           
+                                       
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="alert alert-success" role="alert">
+                                Greenfuel Summary
+                            </div>
+                            <div class="card">
+<div class="card-body">
+{% for eva_lebel in eva_lebels %}{{eva_lebel.label.label}}
+<textarea name="tarea" class="form-control" rows="6" id="floatingTextarea" disabled>{% if total_question >= qualified_rang %}{% for el in eva_lebel.evalebelstatement_set.all %}
+
+{{el.statement.strip}}{{el.next_step.strip}}{% endfor %}{% else %}Need to submit minimum {{ qualified_rang }} qualified ans to view your results! Current is {{ total_question }} !{% endif %}</textarea>
+{% endfor %}
+</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+
+</main>
+{% include "includes/g_footer.html" %}
+{% endblock content %}
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

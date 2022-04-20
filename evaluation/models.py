@@ -1,0 +1,306 @@
+import uuid
+from django.conf import settings
+from django.db import models
+from django.forms import ValidationError
+from django.urls import reverse
+
+#Validator in admin to protect from more then one common status to be entry.
+def get_common_status(value):
+    try:
+        common_status_total = DifinedLabel.objects.filter(common_status = True).count()
+        common_status = DifinedLabel.objects.get(common_status = True)
+    except Exception:
+        common_status_total = 0
+
+    if common_status_total == int(1) and value == 1:
+        raise ValidationError('A common status named "' + common_status.name +'" already exist! Only One common status allowed!')
+    else:
+        pass
+
+
+class DifinedLabel(models.Model):
+    '''
+    # database connector for label to use in sidewide
+    # We need to define labe to work in report and each question settings in admin.
+    
+    ''' 
+    
+    
+    name = models.CharField(max_length=252) 
+    
+    # label to be display on the evaluation's question form
+    label = models.CharField(max_length=252, default='')
+    
+    #adj to use alternative name in the statement
+    adj = models.CharField(max_length=252, default='')
+    
+    # Summary should be marked as common_status
+    common_status = models.BooleanField(default=False, validators=[get_common_status])
+    
+    #sor_order is most importent to maintain display order
+    sort_order = models.CharField(max_length=3, default=0)
+
+    def __str__(self):
+        return self.name
+
+   
+def generate_uuid():
+    '''
+    # genarate hexacode for slug url. currently it is beeing used only on questions.
+    '''
+    return uuid.uuid4().hex
+
+
+class Question(models.Model):
+    '''
+    # database connection for questions
+    # IF question is parent then have to be selected is_door
+    # Active question is accessible everywhere, if please keep careful eye to tick mark on is_active.
+    # To make question chaptaries have to select parent_question
+    # sort_order is most important to work system corrctly. So be careful here.
+    # do not touch the slug.
+    # parent question must be mark by giving tick mark on is_door with proper short_order.
+    # every question should have proper sort order and must be selected next_question in option part(mentioned below) to go to next question otherwise system will redirect to the that you page of report.
+    '''
+    slug = models.CharField(default=generate_uuid, editable=False, unique=True, max_length=40)
+    name = models.CharField(max_length=252)
+    chapter_name = models.CharField(max_length=252, null=True, blank=True)
+    parent_question = models.ForeignKey("evaluation.Question", on_delete=models.CASCADE, null=True, blank=True, related_name='child' )
+    sort_order = models.IntegerField(default=1)    
+    description = models.TextField()
+    is_active = models.BooleanField(default=False)
+    is_door = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['sort_order']
+
+    def __str__(self):
+        return  '(' + str(self.sort_order) +') ' + self.name
+    
+    #The url to brows indivisual question to edit but it is not usefule in evaluation procedure.
+    def get_absolute_url(self):        
+        return reverse('home:questions_details', args=[str(self.slug)])
+    
+    
+    # the url to add quatation to the questions 
+    @property
+    def add_quatation(self):
+        return reverse('home:add_quatation', args=[str(self.slug)])
+    
+    
+    @property
+    def labels(self):
+        return Label.objects.filter(question = self)
+ 
+    
+    
+    
+    @property
+    def get_related_quotations(self):  
+        from home.models import Quotation
+        quotations = Quotation.objects.filter(related_questions = self)
+        
+        return quotations
+    
+    @property
+    def get_quotations(self):  
+        from home.models import Quotation
+        quotations = Quotation.objects.filter(test_for = self)
+        
+        return quotations
+        
+        
+    
+    
+
+class Label(models.Model):
+    '''
+    # database conenctor for labels
+    # The label has to be set during seting up questions.
+    # so that this is made inline in the admin side.
+    # Value is the formulated field as per business logic.
+    '''
+    name = models.ForeignKey(DifinedLabel, on_delete=models.PROTECT, related_name='dlabels', limit_choices_to={'common_status': False})
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='questions')
+    value = models.CharField(max_length=1, default=0)
+
+    def __str__(self):
+        return self.name.name
+
+class Option(models.Model):  
+    '''
+    # database conenctor for options
+    # if name is 'Yes' or not but option represent yes then 'yes_status' must be marked, otherwise system will give wrong result and behave unexected.
+    # if name is 'Don't Know' or not but represent do not know then 'dont_know' must be tick marked, otherwise system will give wrong result and behave unexected.
+    # if name 'No' or not but represent as 'no' then 'name' should be writen as 'No'(Case sensative), otherwise system will give wrong result and behave unexected.
+    # 'next_question' must be selected to go to the next question during process of evaluation otherwise system will redirect to the thank you page.
+    # 'statement' will be printed under label in report and question page based on selection of questions.
+    # 'next_step' will be printed under the label based on selection as per business logic in report and question forms.
+    # 'overall' should be filled as 1 or 0 (It was recomended during development, and advised to avoid True/Flse). if overall is 1 then statement will be added to the summary.
+    # 'positive' should be filled as 1 or 0 (It was recomended during development, and advised to avoid True/Flse). it is used to calculated assesent under the label in report and question form.
+    '''  
+    name = models.CharField(max_length=252)
+    yes_status = models.BooleanField(default=False)
+    dont_know = models.BooleanField(default=False)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='question')
+    next_question = models.ForeignKey(Question, on_delete=models.CASCADE, null = True, blank = True, related_name='next_question', limit_choices_to={'is_active': True})
+    statement = models.TextField(null = True, blank = True,)
+    next_step = models.TextField(null = True, blank = True,)
+    overall = models.CharField(max_length=1, default=0)
+    positive = models.CharField(max_length=1, default=0)
+    
+
+    def __str__(self):
+        return self.name + '(' + str(self.question.sort_order) + ')'
+
+class LogicalString(models.Model):
+    '''
+    # database conenctor for logical statement based on selected options.
+    # As per business logic it is another part of statement.
+    # can selecte multi option. 
+    # 'tex' is act as statment.
+    # based on selection statement will be added to the labels of report and questions form
+    # 'overall' should be filled as 1 or 0 (It was recomended during development, and advised to avoid True/Flse). if overall is 1 then statement will be added to the summary.
+    # 'positive' should be filled as 1 or 0 (It was recomended during development, and advised to avoid True/Flse). it is used to calculated assesent under the label in report and question form.
+    '''
+    options = models.ManyToManyField(Option)
+    text = models.TextField(null = True, blank = True,)
+    overall = models.CharField(max_length=1, default=0)
+    positive = models.CharField(max_length=1, default=0)
+
+    def __str__(self):
+        return self.text
+
+class Lslabel(models.Model):
+    '''
+    # Labels for logical string to select during seting up logical string
+    # It is mandatory.    
+    '''
+    
+    name = models.ForeignKey(DifinedLabel, on_delete=models.PROTECT, related_name='ls_dlabels', limit_choices_to={'common_status': False})
+    logical_string = models.ForeignKey(LogicalString, on_delete=models.CASCADE, related_name='logical_strings')
+    value = models.CharField(max_length=1, default=0)
+
+    def __str__(self):
+        return self.name.name
+
+
+
+
+class Biofuel(models.Model):
+    '''
+    The biofuel selected by user in initial page of evaluation.
+    Based on this value a summary has been displayed under the dashboard.    
+    '''
+    name = models.CharField(max_length=252)
+    
+    
+    def __str__(self):
+        return self.name
+    
+
+    
+
+
+class Evaluator(models.Model):
+    '''
+    Do not edit or modyfy anything here from admin side.
+    It has been genarated autometically during evaluation by user.
+    so that it is not editable in admin side.
+    
+    '''
+    slug = models.UUIDField( default=uuid.uuid4, editable=False, unique=True)    
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='user')    
+    name = models.CharField(max_length=252)
+    email = models.EmailField()
+    phone = models.CharField(max_length=16)
+    orgonization = models.CharField(max_length=252)
+    biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, blank=True)
+    create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    report_genarated = models.BooleanField(default=False)
+    
+
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse('evaluation:report', args=[str(self.slug)])    
+
+
+class Evaluation(models.Model):
+    '''    
+    It has been genarated autometically during evaluation by user.
+    so that it is not displayed in admin side.    
+    '''
+    evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='eva_evaluator')
+    option = models.ForeignKey(Option, on_delete=models.RESTRICT, related_name='eva_option')
+    question = models.ForeignKey(Question, on_delete=models.RESTRICT,null=True, blank=True, related_name='eva_question')
+    
+
+    def __str__(self):
+        return self.evaluator.name
+
+    @property
+    def get_question_comment(self):
+        eva_comment = EvaComments.objects.filter(question = self.question, evaluator = self.evaluator)
+        return eva_comment
+
+
+class EvaComments(models.Model):
+    '''    
+    It has been genarated autometically during evaluation by user.
+    so that it is not displayed in admin side.    
+    '''
+    evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='coment_evaluator')
+    question = models.ForeignKey(Question, on_delete=models.RESTRICT, related_name='comment_question')
+    comments = models.TextField(max_length=600)
+
+    def __str__(self):
+        return self.comments
+
+
+class EvaLabel(models.Model):
+    '''    
+    It has been genarated autometically during evaluation by user.
+    so that it is not displayed in admin side.    
+    '''
+    label = models.ForeignKey(DifinedLabel, on_delete=models.PROTECT, related_name='labels')
+    evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='evaluators')
+    sort_order = models.CharField(max_length=3, default=0)
+    create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.label.name
+
+class EvaLebelStatement(models.Model):
+    '''    
+    It has been genarated autometically during evaluation by user.
+    so that it is not displayed in admin side.    
+    '''
+    evalebel = models.ForeignKey(EvaLabel, on_delete=models.PROTECT)
+    question = models.ForeignKey(Question, on_delete=models.PROTECT, null=True, blank=True)
+    option_id = models.CharField(max_length=252, null=True, blank=True)
+    statement = models.TextField(blank=True, null=True)
+    next_step = models.TextField(blank=True, null=True)
+    positive = models.CharField(max_length=1, default=0)
+    dont_know = models.BooleanField(default=False)
+    assesment = models.BooleanField(default=False)
+    evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='s_evaluators', null=True)
+    create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.statement
+class OptionSet(models.Model):
+    '''    
+    It has been genarated autometically during evaluation by user.
+    so that it is not displayed in admin side.    
+    '''
+    option_list = models.CharField(max_length=252, unique = True)
+    text = models.TextField()
+    positive = models.CharField(max_length=1, default=0)
+    overall = models.CharField(max_length=1, default=0)
+    ls_id = models.CharField(max_length=252, default=0)
+
+
+    def __str__(self):
+        return str(self.option_list) + str(self.text)

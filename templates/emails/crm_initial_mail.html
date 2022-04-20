@@ -1,0 +1,8 @@
+{% autoescape off %}
+Hi {{ lead.lead }},
+
+Here will be text for mail fr marketing mail from CRM
+
+http://{{ domain }}{% url 'crm:unsubscrib' email=lead.email_address code=confirm_code %}
+{% endautoescape %}
+
