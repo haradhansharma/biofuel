@@ -1,13 +1,9 @@
 {% autoescape off %}
-Hello {{ user.username }},
+Dear {{ user.username }},
 <br>
 <br>
+Thank you for signing up with us. Your personal data is protected and stored as per the GDPR guidelines, We strictly follow, the GDPR rules for processing data based on your consent.
 
-We’re happy that another incredible person joined our {{ domain }} platform.
-<br>
-<br>
-
-Let’s start with the basics!
 <br>
 <br>
 
@@ -15,16 +11,38 @@ To complete registration procedure, click on the below link to verify your email
 <br>
 <br>
 
-http://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}
+https://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}
 <br>
 <br>
 
-Thank you for joining, let’s make great things happen together!
+For {{ domain }} it has always been important that your personal information is handled in a safe manner, and we recommend that you familiarizes yourself with our GDPR Policy that describes how and why we process your personal information.
+<br>
+<br>
+Thank you for taking the time to register with us.
+
+<br>
+<br>
+You can at any time contact {{ domain }} if you have concerns related to data privacy by emailing our Data Privacy Team  info@gf-vp.com.
 <br>
 <br>
 
-Sincerely,<br>
-The {{ domain }} Team <br>
+Best regards,
+<br>
+<br>
+ 
+Green Fuel Validation Platform<br>
+{{ domain }}<br>
+24/7/365 Support: Live Chat | Helpdesk | Email<br><br>
+
+Krishna Hara Chakravarty<br>
+GDPR Officer<br>
+krishna.hara.chakravarti@gmail.com <br>
+
+
+Follow us on<br>
+https://twitter.com/<br>
+https://www.facebook.com/<br>
+https://www.linkedin.com/company/<br>
 {% endautoescape %}
 
 
