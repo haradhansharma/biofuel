@@ -7,7 +7,7 @@ Abstract:xxx
 
 
 ## Install & Dependence
-- python
+- python sdsdsdf
 - Django
 - requirments.txt
 

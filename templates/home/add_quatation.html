@@ -100,10 +100,19 @@
     {% endif %}
 
 
-
-    <div class=" h4 mb-4">
-        {{ question.name }}
+    <div class="d-block">
+    <div class="d-inline h4 mb-4">
+        {{ question.name }} 
+        
     </div>
+    <div class="d-inline h4 mb-4" style="float: right;" >
+        {% if quatation %}
+            <a  href="{{report_link}}">Print</a>
+        {% endif %}    
+        
+        
+    </div>
+</div>
 
     <li role="separator" class="dropdown-divider mb-0 border-gray-700"></li>
 

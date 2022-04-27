@@ -18,6 +18,7 @@ from django.forms import formset_factory, inlineformset_factory
 from django.core.exceptions import PermissionDenied
 from .helper import users_under_each_label, reports_under_each_biofuel, weeks_results, all_reports, total_reports, typewise_user
 from django.db.models import Count, Min
+from doc.doc_processor import site_info
 
 
 def home(request):
@@ -145,6 +146,31 @@ def password_change(request):
 
 
 
+def get_question_of_label(request):
+    # Get where user are expert
+    curent_user_expert_in = request.user.experts_in
+       
+    # get that lebels, here value define which one are using for this question
+    # if multilabel value is one then this question should be displayed to the multi type of expert.
+    label_to_question = Label.objects.filter(name = curent_user_expert_in, value = str(1))
+    
+    if request.user.is_staff or request.user.is_superuser:
+        # Staff of super user are accesable to all questions
+        questions = [q for q in Question.objects.filter(is_active = True)]
+    else:   
+        # Only user that have label of this question as expert can access this. 
+        questions = []
+        for q in label_to_question:
+            if q.question.is_active:
+                questions.append(q.question)
+            else:
+                continue
+            
+    return questions
+    
+
+
+
 @login_required
 @expert_required
 def questions(request):  
@@ -154,22 +180,8 @@ def questions(request):
     # This is essential where login_required
     null_session(request)
         
-    # Get where user are expert
-    curent_user_expert_in = request.user.experts_in
     
-    # get that lebels, here value define which one are using for this question
-    # if multilabel value is one then this question should be displayed to the multi type of expert.
-    label_to_question = Label.objects.filter(name = curent_user_expert_in, value = str(1))
-    
-    if request.user.is_staff or request.user.is_superuser:
-        # Staff of super user are accesable to all questions
-        questions = Question.objects.filter(is_active = True)
-    else:   
-        # Only user that have label of this question as expert can access this. 
-        questions = []
-        for q in label_to_question:
-            questions.append(q.question)
-    
+    questions = get_question_of_label(request)
     
     # build parent         
     parents = []
@@ -201,8 +213,7 @@ def questions(request):
         results = paginator.page(paginator.num_pages)
     
     context = {
-        'questions': results
-        
+        'questions': results        
     }
     
     return render(request, 'home/questions.html', context = context)
@@ -221,13 +232,16 @@ def add_quatation(request, slug):
     
     check_quotation = Quotation.objects.filter(test_for = question, service_provider = request.user)
     if check_quotation.exists(): 
-        form = QuotationForm(instance=check_quotation.first())                
+        form = QuotationForm(instance=check_quotation.first())   
+        report_link = reverse('home:quotation_report', kwargs={'question': str(slug), 'quotation': int(check_quotation.first().id) })             
     else:
         form = QuotationForm(initial={'test_for': question}) 
-        
-        
+        report_link = '#'
     
     
+    # overwriting form's default queryset for related_questions to restrict access for other other domain expert
+    questions_id  = [q.id for q in get_question_of_label(request) if not q.is_door ] 
+    form.fields["related_questions"].queryset = Question.objects.filter(is_active = True, id__in=questions_id)
     
     
     if request.method == "POST":
@@ -240,68 +254,244 @@ def add_quatation(request, slug):
                 related_question = form.cleaned_data['related_questions']
                 new_quatation.save()
                 new_quatation.related_questions.set(related_question)
+                
                 messages.success(request,('Quatation was successfully updated!'))
+                return HttpResponseRedirect(reverse('home:add_quatation', args=[str(slug)]))
             else:
                 messages.error(request, 'Invalid form submission.')
-                messages.error(request, form.errors)
-                # if check_quotation.exists(): 
-                #     quatation = Quotation.objects.get(id = check_quotation.id )
-                #     quatation.service_provider = request.user
-                #     quatation.price = form.cleaned_data['price']
-                #     quatation.price_unit = form.cleaned_data['price_unit']
-                #     quatation.needy_time = form.cleaned_data['needy_time']
-                #     quatation.needy_time_unit = form.cleaned_data['needy_time_unit']
-                #     quatation.sample_amount = form.cleaned_data['sample_amount']
-                #     quatation.sample_amount_unit = form.cleaned_data['sample_amount_unit']
-                #     quatation.require_documents = form.cleaned_data['require_documents']
-                #     quatation.factory_pickup = form.cleaned_data['factory_pickup']
-                #     quatation.test_for = form.cleaned_data['test_for']
-                #     quatation.related_questions = form.cleaned_data['related_questions']
-                #     quatation.quotation_format = form.cleaned_data['quotation_format']
-                #     quatation.save()
-                # else:
-                #     new_quatation = form.save(commit=False)
-                #     new_quatation.service_provider = request.user
-                #     related_question = form.cleaned_data['related_questions']
-                #     new_quatation.save()
-                    
-                    
+                messages.error(request, form.errors)      
+                return HttpResponseRedirect(reverse('home:add_quatation', args=[str(slug)]))            
                 
         else:
-            messages.warning(request, f'Change in "Tests for question" is not allowed! It should be "{question}"')
+            messages.warning(request, f'Change in "Tests for question" is not allowed! It should be "{question}"! Changes was not effected.')
+            return HttpResponseRedirect(reverse('home:add_quatation', args=[str(slug)]))
         
         
         
-        
-        
-        form = QuotationForm(request.POST,  request.FILES)  
-        
-        # if form.is_valid():
-        #     # new_quatation = form.save(commit=False)
-        #     # new_quatation.service_provider = request.user
-        #     # related_question = form.cleaned_data['related_questions']
-        #     # new_quatation.save()
-        #     # new_quatation.related_questions.set(related_question)
-        #     messages.success(request,('Quatation was successfully updated!'))
-        # else:
-        #     messages.error(request, 'Invalid form submission.')
-        #     messages.error(request, form.errors)
+    
     
     context = {
         'question': question,
         'form' : form,
         'quatation' : check_quotation.first(),
+        'report_link' : report_link
         
         
         
     }
     return render(request, 'home/add_quatation.html', context = context)
+
+def get_verbose_name(instance, field_name):
+    """
+    Returns verbose_name for a field.
+    """
+    return instance._meta.get_field(field_name).verbose_name.title()
+
+@login_required
+def quotation_report2(request, quotation_data):
+    null_session(request)
+    import io
+    from django.http import FileResponse
+    from reportlab.pdfgen import canvas    
+    from django.template.loader import render_to_string
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle    
+    from reportlab.lib.units import mm, inch
+    from reportlab.lib.enums import TA_RIGHT, TA_CENTER, TA_LEFT, TA_JUSTIFY
+    from reportlab.lib.pagesizes import letter, A4    
+    from reportlab.lib.colors import Color, black, blue, red
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer    
+    # Create a file-like buffer to receive PDF data.
+    buffer = io.BytesIO()
+
+    # Create the PDF object, using the buffer as its "file."
+    
+    c = canvas.Canvas(buffer)
+    c.setPageSize(A4)
+    c.setTitle(title = f'Quotation for Question #{quotation_data.test_for.sort_order}--Quotation #{quotation_data.id}')
+    c.setAuthor(f'www.gf-vp.com')
+    c.setCreator(f'www.gf-vp.com')
+    c.getPageNumber()
+    c.setFont("Times-Roman", 20)
+    
     
 
+    # https://stackoverflow.com/questions/69537038/django-with-reportlab-pdf
+    # https://stackoverflow.com/questions/44970128/django-reportlab-generates-empty-pdf
+    # https://stackoverflow.com/questions/37697686/python-reportlab-two-items-in-the-same-row-on-a-paragraph
+    # https://www.reportlab.com/docs/reportlab-userguide.pdf
+    # https://www.youtube.com/watch?v=1x_ACMFzGYM
+    # https://www.reportlab.com/dev/docs/tutorial/
+    
+    c.beginText()
+    
+    
+    
+    
+    
+    left_style_red_head = ParagraphStyle(name="Times", fontName='Times-Roman', fontSize=16, leading=18, textColor= red, alignment=TA_LEFT)
+    left_style_red = ParagraphStyle(name="Times", fontName='Times-Roman', fontSize=14, leading=18, textColor= red, alignment=TA_LEFT)
+    left_style_black = ParagraphStyle(name="Times", fontName='Times-Roman', fontSize=16, leading=16, textColor= black, alignment=TA_LEFT)
+    left_style_black_50 = ParagraphStyle(name="Times", fontName='Times-Roman', fontSize=16, leading=50, textColor= black, alignment=TA_LEFT)
+    center_style_80 = ParagraphStyle(name="Times", fontName='Times-Roman', fontSize=12, leading=80, textColor= blue, alignment=TA_CENTER)
+    left_style_blue = ParagraphStyle(name="Times", fontName='Times-Roman', fontSize=14, leading=20, textColor= blue, alignment=TA_LEFT)
+    right_style_blue = ParagraphStyle(name="Times", fontName='Times-Roman', fontSize=14, leading=20, textColor= blue, alignment=TA_RIGHT)
+    left_style_blue_50 = ParagraphStyle(name="Times", fontName='Times-Roman', fontSize=12, leading=12, textColor= red, alignment=TA_LEFT)
+    center_style_line = ParagraphStyle(name="Times", fontName='Times-Roman', fontSize=12, leading=14, textColor= blue, alignment=TA_CENTER)
+    data = [       
+    ('left_style_red_head' , f'QUOTATION #{quotation_data.id}'),    
+    ('left_style_red' , f'Created for question #{quotation_data.test_for.sort_order}'),
+    ('left_style_black' , f'-------------------------------------------------------------------------------------'),    
+    ('left_style_blue_50' , f'{ quotation_data.test_for }'),  
+    ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),   
+    ('left_style_black' , f'-------------------------------------------------------------------------------------'),
+    ('left_style_red' , f'<u>Questions which are also tested within this quotation::</u>'),   
+     
+    ]     
+    aW = 500 # available width and height
+    aH = 800    
+   
+    
+    for style, values in data:        
+        p = Paragraph(values, locals()[style])        
+        w,h = p.wrap(aW, aH) # find required space    
+        aH -= h  # reduce the available height starting from first line  
+        if w <= aW and h <= aH:
+            p.drawOn(c,50,aH)
+            aH = aH #protect to be double line          
+        else:
+            aH = 800
+            c.showPage()            
+            # raise ValueError('Not enogugh room')
+            w,h = p.wrap(aW, aH) # find required space        
+            if w <= aW and h <= aH:
+                p.drawOn(c,50,aH)
+                aH -= h # reduce the available height   
+            continue    
+      
+    list_item = []
+    for related_question in  quotation_data.related_questions.all():
+        list_item.append(related_question)        
+        
+    # p = Paragraph(list_head, left_style_red)
+    for index, item in enumerate(list_item):
+        p = Paragraph("__{}. {}".format(index + 1, item))
+        w,h = p.wrap(aW, aH)
+        aH -= h
+        if w <= aW and h <= aH:
+            p.drawOn(c,50,aH)
+            aH = aH
+        else:
+            aH = 800
+            c.showPage()            
+            # raise ValueError('Not enogugh room')
+            w,h = p.wrap(aW, aH) # find required space        
+            if w <= aW and h <= aH:
+                p.drawOn(c,50,aH)
+                aH -= h # reduce the available height   
+            continue 
+        
+    data = [
+        ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
+        ('left_style_black' , f'-------------------------------------------------------------------------------------'), 
+        ('left_style_blue' , f'<u>QUOTATION PROVIDED BY:</u>'),
+        ('left_style_blue' , f'___creator: {quotation_data.service_provider.get_full_name()}'),         
+        ('left_style_blue' , f'___email: {quotation_data.service_provider.email}'),  
+        ('left_style_blue' , f'___phone: {quotation_data.service_provider.phone}'),  
+        ('left_style_blue' , f'___orgonization: {quotation_data.service_provider.orgonization}'),  
+        ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
+    ]
+    
+    for style, values in data:        
+        p = Paragraph(values, locals()[style])        
+        w,h = p.wrap(aW, aH) # find required space    
+        aH -= h  # reduce the available height starting from first line  
+        if w <= aW and h <= aH:
+            p.drawOn(c,50,aH)
+            aH = aH #protect to be double line          
+        else:
+            aH = 800
+            c.showPage()            
+            # raise ValueError('Not enogugh room')
+            w,h = p.wrap(aW, aH) # find required space        
+            if w <= aW and h <= aH:
+                p.drawOn(c,50,aH)
+                aH -= h # reduce the available height   
+            continue
+    data = [
+        ('left_style_black' , f'-------------------------------------------------------------------------------------'),
+        ('left_style_red' , f'<u>Quotation details:</u>'),  
+        ('left_style_blue', ('___' + get_verbose_name(quotation_data, 'price') + (':___' + str(quotation_data.price) + ' ' + str(quotation_data.price_unit)))),
+        ('left_style_blue', ('___' + get_verbose_name(quotation_data, 'needy_time') + (':___' + str(quotation_data.needy_time) + ' ' + str(quotation_data.needy_time_unit)))),
+        ('left_style_blue', ('___' + get_verbose_name(quotation_data, 'sample_amount') + (':___' + str(quotation_data.sample_amount) + ' ' + str(quotation_data.sample_amount_unit)))),
+        ('left_style_blue', ('___' + get_verbose_name(quotation_data, 'require_documents') + (':___' + str(quotation_data.require_documents)))),
+        ('left_style_blue', ('___' + get_verbose_name(quotation_data, 'factory_pickup') + (':___' + str(quotation_data.factory_pickup)))),
+        ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
+    ]
+    
+    for style, values in data:        
+        p = Paragraph(values, locals()[style])        
+        w,h = p.wrap(aW, aH) # find required space    
+        aH -= h  # reduce the available height starting from first line  
+        if w <= aW and h <= aH:
+            p.drawOn(c,50,aH)
+            aH = aH #protect to be double line          
+        else:
+            aH = 800
+            c.showPage()            
+            # raise ValueError('Not enogugh room')
+            w,h = p.wrap(aW, aH) # find required space        
+            if w <= aW and h <= aH:
+                p.drawOn(c,50,aH)
+                aH -= h # reduce the available height   
+            continue
+    data = [
+        
+        ('left_style_black' , f'-------------------------------------------------------------------------------------'),
+        ('left_style_blue' , f'___This report has been genarated using {site_info().get("domain")}'),         
+        ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),        
+        ('left_style_red_head' , f'PLEASE CONSIDER BELOW PAGES UPLOADED BY THE QUOTATION PROVIDER!'),
+    ]
+    for style, values in data:        
+        p = Paragraph(values, locals()[style])        
+        w,h = p.wrap(aW, aH) # find required space    
+        aH -= h  # reduce the available height starting from first line  
+        if w <= aW and h <= aH:
+            p.drawOn(c,50,aH)
+            aH = aH #protect to be double line          
+        else:
+            aH = 800
+            c.showPage()            
+            # raise ValueError('Not enogugh room')
+            w,h = p.wrap(aW, aH) # find required space        
+            if w <= aW and h <= aH:
+                p.drawOn(c,50,aH)
+                aH -= h # reduce the available height   
+            continue
 
+    
+    c.save()    
+    buffer.seek(0)
+    
+    return buffer
 
+@login_required
+def quotation_report(request, question, quotation):    
+    null_session(request)
+    from PyPDF2 import PdfFileMerger
+    
+    quotation_id = quotation    
+    quotation_data = Quotation.objects.get(id = quotation_id)    
+    
+    merger = PdfFileMerger()    
 
-
+    quotation_file = quotation_data.quotation_format
+    result2 = quotation_report2(request, quotation_data)  
+    result = HttpResponse(content_type='application/pdf')
+    merger.append(result2)
+    merger.append(quotation_file)    
+    merger.write(result)
+   
+    return result
 
 @login_required
 @expert_required

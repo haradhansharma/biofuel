@@ -16,6 +16,7 @@ urlpatterns = [
     path('dashboard/questions/add-quatation/<str:slug>', views.add_quatation, name='add_quatation'), 
     path('dashboard/allreports/', views.allreports, name='all_reports'),  
     path('dashboard/new_questions/', views.new_questions, name='new_question'),
+    path('quotation/<str:question>/<int:quotation>', views.quotation_report, name='quotation_report'),
 ]
 
 hx_urlpatterns = [

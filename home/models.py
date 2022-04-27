@@ -30,7 +30,15 @@ class QuotationDocType(models.Model):
     def __str__(self):
         return self.name
 
+
+
 class Quotation(models.Model): 
+    
+    
+    
+    
+    
+    
     service_provider = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quotationserviceprovider')   
     price = models.DecimalField(verbose_name='Quotation Price' , help_text='Help text will go here', decimal_places=2, max_digits=10)
     price_unit = models.ForeignKey(PriceUnit, verbose_name='Price Unit', on_delete=models.CASCADE, related_name='priceunitquatation')

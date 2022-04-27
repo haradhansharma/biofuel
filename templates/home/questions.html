@@ -1,4 +1,5 @@
 {% extends "layouts/base.html" %}
+{% load custom_tags %}
 
 {% block title %} Questions {% endblock %}
 
@@ -138,52 +139,51 @@
                                 
                                 
                                 <td>
-                                    <a class="fw-normal btn btn-outline-primary" href="{{ child.get_absolute_url }}">Edit</a>
+                                    <a class="fw-normal btn btn-success" href="{{ child.get_absolute_url }}">Edit</a>
                                     
-                                        <!--
-                                    {% if child.get_quotations %}
-                                    {% for quotation in  child.get_quotations  %}   
-                                    {% if quotation.service_provider.id == request.user.id %}
-                                    <a class="fw-normal btn btn-outline-primary" href="{{quotation.get_quot_url}}">Quotation #{{quotation.id}}</a>
-                                    {% endif %}
+
+                                    {% if child.get_quotations|in_quot:user %}
+                                    {% for quotation in  child.get_quotations|in_quot:user %}   
+                                    
+                                    <a class="fw-normal btn btn-secondary" href="{{quotation.get_quot_url}}">Quotation #{{quotation.id}}</a>
+                                    
                                     {% endfor %}
                                     {% else %}
-                                    <a class="fw-normal btn btn-outline-primary" href="{{ child.add_quatation }}">Add Quatation</a>
+                                    <a class="fw-normal btn btn-success" href="{{ child.add_quatation }}">Add Quatation</a>
                                     {% endif %}
 
  
                                     {% if child.get_related_quotations  %}
-                                     Button trigger modal 
+                                    <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#refered{{child.id}}">
                                         Refered From Other Questions
                                     </button>
                                     {% endif %}
-                                    -->
 
-                                                                        <!-- Modal 
+                                                                        <!-- Modal -->
                                     <div class="modal fade" id="refered{{child.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="referedLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                            <h5 class="modal-title" id="referedLabel">Modal title</h5>
+                                            <h5 class="modal-title" id="referedLabel">Reffered Quotations</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 
                                                     {% for quotation in  child.get_related_quotations  %}   
                                                     {% if quotation.service_provider.id == request.user.id %}
-                                                    <a class="fw-normal btn btn-outline-primary m-2" href="{{quotation.get_quot_url}}">{{quotation.service_provider.orgonization}}(From Question#{{quotation.test_for.sort_order}})</a> <br>
+                                                    <a target="_blank" class="fw-normal btn btn-outline-secondary m-2" href="{{quotation.get_quot_url}}">Ceated By {{quotation.service_provider.orgonization}} From Question#{{quotation.test_for.sort_order}}. Quotation #{{quotation.id}}</a> <br>
                                                     {% endif %}
                                                     {% endfor %}
                                                     
                                             </div>
                                             <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Understood</button>
+                                            
                                             </div>
                                         </div>
                                         </div>
-                                    </div>-->
+                                    </div>
   
 
                                     

@@ -51,6 +51,9 @@ def generate_uuid():
     return uuid.uuid4().hex
 
 
+
+
+
 class Question(models.Model):
     '''
     # database connection for questions
@@ -103,16 +106,20 @@ class Question(models.Model):
         return quotations
     
     @property
-    def get_quotations(self):  
+    def get_quotations(self): 
+        
         from home.models import Quotation
         quotations = Quotation.objects.filter(test_for = self)
         
         return quotations
         
         
-    
-    
 
+
+
+ 
+    
+ 
 class Label(models.Model):
     '''
     # database conenctor for labels

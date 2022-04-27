@@ -43,8 +43,4 @@ admin.site.register(DifinedLabel)
 admin.site.register(Biofuel)
 admin.site.register(Option)
 
-admin.site.register(Evaluation)
-admin.site.register(EvaComments)
-admin.site.register(EvaLabel)
-admin.site.register(EvaLebelStatement)
 
