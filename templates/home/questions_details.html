@@ -144,12 +144,12 @@
 
 
 
-            <button class="btn btn-success btn-block" hx-get="{% url 'home:add_extra' question.pk  %}" hx-target="#pppp"
+            <button class="btn btn-success btn-block" hx-get="{% url 'home:add_extra' question.slug  %}" hx-target="#pppp"
                 hx-swap="outerHTML" hx-name="'sdsad" name="extra" hx-trigger="click">
                 Add Extra
             </button>
 
-            <button class="btn btn-success btn-block" hx-get="{% url 'home:sub_extra' question.pk  %}" hx-target="#pppp"
+            <button class="btn btn-success btn-block" hx-get="{% url 'home:sub_extra' question.slug  %}" hx-target="#pppp"
                 hx-swap="outerHTML" name="extra" hx-trigger="click">
                 Sub Extra
             </button>           

@@ -145,7 +145,7 @@ def password_change(request):
     return render(request, 'home/change_pass.html', context = context)
 
 
-
+# It is DRY helper
 def get_question_of_label(request):
     # Get where user are expert
     curent_user_expert_in = request.user.experts_in
@@ -518,8 +518,7 @@ def questions_details(request, slug):
     
     OptionFormSet = inlineformset_factory(Question, Option, fk_name='question', form = OptionForm, extra= int(request.session['extra']), can_delete=False)
     
-    if request.method == 'POST':
-        
+    if request.method == 'POST':      
         
         question_form = QuestionForm(request.POST, request.FILES, prefix='questions', instance=question)
         

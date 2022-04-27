@@ -144,7 +144,7 @@
 
                                     {% if child.get_quotations|in_quot:user %}
                                     {% for quotation in  child.get_quotations|in_quot:user %}   
-                                    
+                                     
                                     <a class="fw-normal btn btn-secondary" href="{{quotation.get_quot_url}}">Quotation #{{quotation.id}}</a>
                                     
                                     {% endfor %}
@@ -153,7 +153,7 @@
                                     {% endif %}
 
  
-                                    {% if child.get_related_quotations  %}
+                                    {% if child.get_related_quotations|in_quot:user  %}
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#refered{{child.id}}">
                                         Refered From Other Questions
@@ -170,10 +170,10 @@
                                             </div>
                                             <div class="modal-body">
                                                 
-                                                    {% for quotation in  child.get_related_quotations  %}   
-                                                    {% if quotation.service_provider.id == request.user.id %}
+                                                    {% for quotation in  child.get_related_quotations|in_quot:user  %}   
+                                                    
                                                     <a target="_blank" class="fw-normal btn btn-outline-secondary m-2" href="{{quotation.get_quot_url}}">Ceated By {{quotation.service_provider.orgonization}} From Question#{{quotation.test_for.sort_order}}. Quotation #{{quotation.id}}</a> <br>
-                                                    {% endif %}
+                                                    
                                                     {% endfor %}
                                                     
                                             </div>
