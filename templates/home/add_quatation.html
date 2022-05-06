@@ -224,7 +224,7 @@
 
 
                                 <!--form start-->
-                                <div class="form-group mt-4">
+                                <div class="form-group mt-4" style="display: none;">
                                 <div class="row g-3 align-items-center">
                                     <div class="text-error invalid-feedback">{{ form.test_for.errors }}</div>                                    
                                     <div class="col-auto">
@@ -296,6 +296,8 @@
 
 
             <input class="btn btn-success btn-block" type="submit" name = "add_quatation" value="Add Quatation">
+            <a class="btn btn-success btn-block" href="{% url 'home:questions' %}">Go Back to Questions</a>
+            <a class="btn btn-success btn-block" href="{{report_link}}">See Final Pdf</a>
            <!-- <input class="btn btn-success btn-block" type="submit" hx-post="#ssss" hx-push-url="{% url 'home:questions' %}"  value="Save" hx-target="#pppp"  hx-swap="outerHTML" hx-vals='{"save": "save"}' hx-trigger="click">--> 
 
             

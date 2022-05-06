@@ -622,16 +622,7 @@ def thanks(request):
     '''
     Deletion of incomplete report are not necessary , if need can uncomments below code. need to check if raising any error.As an incomplete report may not have evalauation or statment both.
     '''  
-    # try:
-    #     non_genarated_reports = Evaluator.objects.filter(creator = request.user, report_genarated = False).exclude(id = request.session['evaluator'])
-    #     for non_genarated_report in non_genarated_reports:  
-    #         Evaluation.objects.filter(evaluator = non_genarated_report).delete()
-    #         EvaLebelStatement.objects.filter(evaluator = non_genarated_report).delete()
-    #         EvaLabel.objects.filter(evaluator = non_genarated_report).delete()
-    #         EvaComments.objects.filter(evaluator = non_genarated_report).delete()
-    #     non_genarated_report.delete()
-    # except:
-    #     pass
+   
     
     try:
         last_reports = Evaluator.objects.filter(creator = request.user, report_genarated = True).order_by('-create_date').first()  
@@ -694,6 +685,8 @@ def report(request, slug):
     #as report marked as completed in the thank you page it is no more required, so that it will let edit the page.
     request.session['evaluator'] = ''
     
+    
+    
     #as report completed om the thank you page question and total_question no more required.
     try:        
         del request.session['question']
@@ -713,16 +706,107 @@ def report(request, slug):
     else:
         raise PermissionDenied
     
+    
+    
+    
     #genarating PDF . Please ensure django-xhtml2pdf==0.0.4 installed
     evaluation = Evaluation.objects.filter(evaluator = get_report)
     eva_label = EvaLabel.objects.filter(evaluator = get_report).order_by('sort_order')
     eva_statment = EvaLebelStatement.objects.filter(evaluator = get_report).order_by('pk')
+    
+    
+    
+    
+    
+    # next_activities = NextActivities.objects.all().order_by('priority')
+    
+    # common_label = eva_label.get(label=DifinedLabel.objects.get(common_status = True))
+    # #delete any prevous record for this current report
+    # try:
+    #     EvaLebelStatement.objects.filter(evalebel = common_label, evaluator =  get_report, next_activity = True).delete()    
+    # except:
+    #     pass   
+    
+    
+    # questions_of_report = set()
+    
+    
+    # for es in eva_statment:        
+    #     if es.question and not es.dont_know:            
+    #         questions_of_report.add(es.question)
+    
+    # all_eva_ac = EvaluatorActivities.objects.filter(evaluator=get_report)
+    
+    # entry_count = 0
+    # summery_statement_next_activities = EvaLebelStatement(evalebel = common_label, next_step = '<b>THE NEXT STEPS FOR VALIDATION SHOULD BE:</b> <ul>',  evaluator =  get_report, next_activity = True)   
+    # summery_statement_next_activities.save()
+    # for na in next_activities:
+    #     # It should be in the first work of the loop
+    #     if na not in [a.next_activity for a in all_eva_ac]:
+    #         setattr(na, 'is_active', 'Not Started') 
+        
+                        
+        
+        
+                
+        
+    #     related_questions = set(na.related_questions.all())
+    #     compulsory_questions = set(na.compulsory_questions.all())
+    #     rel_ques_pecent_in_report = round(len(questions_of_report.intersection(related_questions))/len(related_questions)*100, 2)
+    #     com_ques_percent_in_report = round(len(questions_of_report.intersection(compulsory_questions))/len(compulsory_questions)*100, 2)
+        
+        
+    #     try:        
+    #         eva_ac = EvaluatorActivities.objects.get(evaluator=get_report, next_activity=na)            
+    #         eva_ac.related_percent = rel_ques_pecent_in_report
+    #         eva_ac.compulsory_percent = com_ques_percent_in_report 
+    #         eva_ac.save()            
+    #     except:
+    #         if rel_ques_pecent_in_report >= 51 and com_ques_percent_in_report >= 100 :            
+    #             eva_ac = EvaluatorActivities.objects.create(evaluator=get_report, next_activity=na, related_percent = rel_ques_pecent_in_report, compulsory_percent = com_ques_percent_in_report ) 
+    #         else:
+    #             continue  
+            
+        
+            
+    #     if int(eva_ac.related_percent) >= 90 and int(eva_ac.compulsory_percent) >= 100:
+    #         setattr(na, 'is_active', 'Completed')  
+    #     elif int(eva_ac.related_percent) >= 50 and int(eva_ac.compulsory_percent) >= 100:
+    #         setattr(na, 'is_active', 'Not Completed')                          
+    #     else:
+    #         continue     
+        
+    #     if entry_count <= 4:
+    #         #This is top 5 next activity to the executive summary to save memory space.  
+    #         summery_statement_next_activities = EvaLebelStatement(evalebel = common_label, next_step = f"<li> {str(na.name_and_standared)}({na.is_active}) </li>",  evaluator =  get_report, next_activity = True)    
+    #         summery_statement_next_activities.save() 
+    #         entry_count += 1
+    #     else:
+    #         continue
+        
+    # summery_statement_next_activities = EvaLebelStatement(evalebel = common_label, next_step ='</ul> <p>PLEASE SEE THE "Deatils of activities" SECTION FOR MORE DETAILS.</p>',  evaluator =  get_report, next_activity = True)
+    # summery_statement_next_activities.save()   
+               
+        
+                   
+                               
+            
+            
+    
+        
+    
+    
+
+    
+    
+    
 
     context = {
         'evaluation': evaluation,
         'current_evaluator': get_report,
         'eva_label': eva_label,
-        'eva_statment': eva_statment
+        'eva_statment': eva_statment,
+        'next_activities' : next_activities
     }
 
     resp = HttpResponse(content_type='application/pdf')

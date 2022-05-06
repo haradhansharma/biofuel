@@ -389,13 +389,14 @@
     <p style="font-size: 14px;">{{es.statement}}</p>
     {% endif %}
     {% if es.next_step is not None %}
-    <p style="font-size: 14px;">{{es.next_step}}</p>
+    <p style="font-size: 14px;">{{es.next_step|safe}}</p>
     {% endif %}
     {% endfor %}
 
     {% endfor %}
 </div>
     <h2 style="font-size: 20px;">Question Specific Feedback</h2>
+
     {% for e in evaluation %}
     <table style="font-size: 14px;">
         <tr>
@@ -405,27 +406,39 @@
             <td>
                 <p> <b>Chosen Option :</b> {{e.option.name}}</p>
                 <p> <b>Comment :</b>
-
                     {% for qa in e.get_question_comment  %}
                    <p>{{qa.comments}}</p>
-
                     {% endfor %}
-
-
-
-
                 </p>
                 <p><b>Feedback :</b> {{e.option.statement}}</p>
             </td>
         </tr>
     </table>
-
     {% endfor %}
 
 
+    <h2 style="font-size: 20px;">Deatils of activities: </h2>
+    
+    {% for e in next_activities %}
+    <table style="font-size: 14px;">
+        <tr>
+            <th>Activity : {{e.name_and_standared}}</th>
+        </tr>
+        <tr>
+            <td>
+                
+                <p> <b>Descriptions :</b>                    
+                   <p>{{e.descriptions}}</p>                    
+                </p>
+                <p><b>Completed :</b> {{e.is_active}}</p>
+            </td>
+        </tr>
+    </table>
+    {% endfor %}
+
     <div id="footer_content">Initial Analysis Report.- Page <pdf:pagenumber>
         Of <pdf:pagecount>
-        </div>
+    </div>
 
 </body>
 

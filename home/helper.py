@@ -40,16 +40,12 @@ def reports_under_each_biofuel(request):
 def weeks_results(request):
     day_last_week = (timezone.now() - timezone.timedelta(days=7))    
     reports = Evaluator.objects.filter(create_date__gte=day_last_week).values('create_date__date').annotate(total = Count('create_date__date') )   
-    records = {
-        
-    }
+    records = {}
     for i in reports:
         record = {
             i['create_date__date'].strftime("%A") : i['total']
         }
-        records.update(record)
-        
-    
+        records.update(record)   
     return records
 
 def all_reports(request):

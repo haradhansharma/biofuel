@@ -22,8 +22,9 @@ from doc.doc_processor import site_info
 
 
 def home(request):
-    null_session(request)
-    
+    #skip session error
+    null_session(request)  
+    # pass user type  
     user_types = UserType.objects.all().order_by('sort_order') 
     context = {
         'user_types': user_types        
@@ -32,23 +33,32 @@ def home(request):
 
 
 def user_types(request, slug):
+
+    '''
+    Types of user are listed here. User signup journey must be started from here by selecting desired user type.
+    Same type of user and admin and staff can have permission to visit this page
+    '''  
+    
+    
+    #skipp error
     null_session(request)    
-    request.session['interested_in'] = slug   
     
-    '''Same type of user and admin and staff can have permission to visit this page'''
+    #role player
+    request.session['interested_in'] = slug      
     
-    # check_type(request, slug)
+    
+    # ensire user logged to evaluation enrolment 
     try:
         curent_user_type_slug = request.user.type.slug
     except:
-        curent_user_type_slug = None
-        
-    
+        curent_user_type_slug = None   
     if slug == curent_user_type_slug:        
         enroll = reverse('evaluation:evaluation2')
     else:
         enroll = ''
-        
+    
+    
+    # pass user type data    
     try:
         user_type = UserType.objects.get(slug = slug)
         users = User.objects.filter(type = user_type)
@@ -67,14 +77,12 @@ def user_types(request, slug):
 
 @login_required
 def dashboard(request):
+    #skipping session error essential for signup process
     null_session(request)    
+    
+    #dashboard summary
     day_of_week = [key.split(': ') for key, value in weeks_results(request).items()]
-    total_of_day = [value for key, value in weeks_results(request).items()]
-    
-    # print(typewise_user(request))
-    
-    
-    
+    total_of_day = [value for key, value in weeks_results(request).items()]   
     context = {
         'user_of_labels' : users_under_each_label(request),
         'biofuel_records' : reports_under_each_biofuel(request),
@@ -106,8 +114,7 @@ def user_setting(request):
         else:
             messages.error(request, 'Invalid form submission.')
             messages.error(request, profile_form.errors)
-            messages.error(request, user_form.errors) 
-           
+            messages.error(request, user_form.errors)            
         
         return HttpResponseRedirect(reverse('home:user_settings'))
     user_form = UserForm(instance=request.user)
@@ -145,7 +152,7 @@ def password_change(request):
     return render(request, 'home/change_pass.html', context = context)
 
 
-# It is DRY helper
+# It is DRY helper to get questions based on user expert type
 def get_question_of_label(request):
     # Get where user are expert
     curent_user_expert_in = request.user.experts_in
@@ -164,8 +171,7 @@ def get_question_of_label(request):
             if q.question.is_active:
                 questions.append(q.question)
             else:
-                continue
-            
+                continue            
     return questions
     
 
@@ -180,7 +186,7 @@ def questions(request):
     # This is essential where login_required
     null_session(request)
         
-    
+    # we need permitted question based on expertise type
     questions = get_question_of_label(request)
     
     # build parent         
@@ -222,14 +228,21 @@ def questions(request):
 @login_required
 @expert_required
 def add_quatation(request, slug):
+    '''
+    quotation can be created by indivisual expert
+    one question can have one quotation from same user but can be refer to multi question mult time.
+    if no quotation can add other wise can edit
+    able to see quotation refered by other user.    
+    '''   
     
-    
+    #protect unuseual activity
     try:
         question = Question.objects.get(is_active = True, slug=slug)
     except:
         messages.warning(request, 'Question not found or inactive!')
         return HttpResponseRedirect(reverse('home:add_quatation', args=[str(slug)]))
     
+    #if question exists ca edit other wise can add
     check_quotation = Quotation.objects.filter(test_for = question, service_provider = request.user)
     if check_quotation.exists(): 
         form = QuotationForm(instance=check_quotation.first())   
@@ -239,7 +252,7 @@ def add_quatation(request, slug):
         report_link = '#'
     
     
-    # overwriting form's default queryset for related_questions to restrict access for other other domain expert
+    # overwriting form's default queryset for related_questions to restrict access for other domain expert
     questions_id  = [q.id for q in get_question_of_label(request) if not q.is_door ] 
     form.fields["related_questions"].queryset = Question.objects.filter(is_active = True, id__in=questions_id)
     
@@ -251,8 +264,11 @@ def add_quatation(request, slug):
             if form.is_valid():
                 new_quatation = form.save(commit=False)
                 new_quatation.service_provider = request.user
+                require_document = form.cleaned_data['require_documents']
                 related_question = form.cleaned_data['related_questions']
                 new_quatation.save()
+                #essential to set manytomny reltionship
+                new_quatation.require_documents.set(require_document)
                 new_quatation.related_questions.set(related_question)
                 
                 messages.success(request,('Quatation was successfully updated!'))
@@ -265,46 +281,42 @@ def add_quatation(request, slug):
         else:
             messages.warning(request, f'Change in "Tests for question" is not allowed! It should be "{question}"! Changes was not effected.')
             return HttpResponseRedirect(reverse('home:add_quatation', args=[str(slug)]))
-        
-        
-        
-    
-    
     context = {
         'question': question,
         'form' : form,
         'quatation' : check_quotation.first(),
         'report_link' : report_link
-        
-        
-        
     }
     return render(request, 'home/add_quatation.html', context = context)
 
+#helper function
 def get_verbose_name(instance, field_name):
     """
     Returns verbose_name for a field.
     """
     return instance._meta.get_field(field_name).verbose_name.title()
 
+# sub function for making PDF
 @login_required
 def quotation_report2(request, quotation_data):
     null_session(request)
-    import io
-    from django.http import FileResponse
+    '''
+    genarate pdf based on quotation data
+    '''
+    import io    
     from reportlab.pdfgen import canvas    
-    from django.template.loader import render_to_string
-    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle    
+    
+    from reportlab.lib.styles import ParagraphStyle    
     from reportlab.lib.units import mm, inch
-    from reportlab.lib.enums import TA_RIGHT, TA_CENTER, TA_LEFT, TA_JUSTIFY
+    from reportlab.lib.enums import TA_RIGHT, TA_CENTER, TA_LEFT
     from reportlab.lib.pagesizes import letter, A4    
-    from reportlab.lib.colors import Color, black, blue, red
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer    
+    from reportlab.lib.colors import black, blue, red
+    from reportlab.platypus import  Paragraph
+    
     # Create a file-like buffer to receive PDF data.
     buffer = io.BytesIO()
 
-    # Create the PDF object, using the buffer as its "file."
-    
+    # Create the PDF object, using the buffer as its "file."    
     c = canvas.Canvas(buffer)
     c.setPageSize(A4)
     c.setTitle(title = f'Quotation for Question #{quotation_data.test_for.sort_order}--Quotation #{quotation_data.id}')
@@ -314,7 +326,7 @@ def quotation_report2(request, quotation_data):
     c.setFont("Times-Roman", 20)
     
     
-
+    #reference to make pdf
     # https://stackoverflow.com/questions/69537038/django-with-reportlab-pdf
     # https://stackoverflow.com/questions/44970128/django-reportlab-generates-empty-pdf
     # https://stackoverflow.com/questions/37697686/python-reportlab-two-items-in-the-same-row-on-a-paragraph
@@ -322,12 +334,11 @@ def quotation_report2(request, quotation_data):
     # https://www.youtube.com/watch?v=1x_ACMFzGYM
     # https://www.reportlab.com/dev/docs/tutorial/
     
-    c.beginText()
+    c.beginText()  
     
     
     
-    
-    
+    #styeles to be added
     left_style_red_head = ParagraphStyle(name="Times", fontName='Times-Roman', fontSize=16, leading=18, textColor= red, alignment=TA_LEFT)
     left_style_red = ParagraphStyle(name="Times", fontName='Times-Roman', fontSize=14, leading=18, textColor= red, alignment=TA_LEFT)
     left_style_black = ParagraphStyle(name="Times", fontName='Times-Roman', fontSize=16, leading=16, textColor= black, alignment=TA_LEFT)
@@ -337,6 +348,8 @@ def quotation_report2(request, quotation_data):
     right_style_blue = ParagraphStyle(name="Times", fontName='Times-Roman', fontSize=14, leading=20, textColor= blue, alignment=TA_RIGHT)
     left_style_blue_50 = ParagraphStyle(name="Times", fontName='Times-Roman', fontSize=12, leading=12, textColor= red, alignment=TA_LEFT)
     center_style_line = ParagraphStyle(name="Times", fontName='Times-Roman', fontSize=12, leading=14, textColor= blue, alignment=TA_CENTER)
+    
+    
     data = [       
     ('left_style_red_head' , f'QUOTATION #{quotation_data.id}'),    
     ('left_style_red' , f'Created for question #{quotation_data.test_for.sort_order}'),
@@ -367,6 +380,8 @@ def quotation_report2(request, quotation_data):
                 p.drawOn(c,50,aH)
                 aH -= h # reduce the available height   
             continue    
+    
+    
       
     list_item = []
     for related_question in  quotation_data.related_questions.all():
@@ -423,10 +438,14 @@ def quotation_report2(request, quotation_data):
         ('left_style_blue', ('___' + get_verbose_name(quotation_data, 'price') + (':___' + str(quotation_data.price) + ' ' + str(quotation_data.price_unit)))),
         ('left_style_blue', ('___' + get_verbose_name(quotation_data, 'needy_time') + (':___' + str(quotation_data.needy_time) + ' ' + str(quotation_data.needy_time_unit)))),
         ('left_style_blue', ('___' + get_verbose_name(quotation_data, 'sample_amount') + (':___' + str(quotation_data.sample_amount) + ' ' + str(quotation_data.sample_amount_unit)))),
-        ('left_style_blue', ('___' + get_verbose_name(quotation_data, 'require_documents') + (':___' + str(quotation_data.require_documents)))),
+        ('left_style_blue', ('___' + get_verbose_name(quotation_data, 'require_documents') + (':___' +  ', '.join([str(q) for q in quotation_data.require_documents.all()])))),
         ('left_style_blue', ('___' + get_verbose_name(quotation_data, 'factory_pickup') + (':___' + str(quotation_data.factory_pickup)))),
         ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
     ]
+    
+    
+    
+    
     
     for style, values in data:        
         p = Paragraph(values, locals()[style])        
@@ -467,17 +486,20 @@ def quotation_report2(request, quotation_data):
                 p.drawOn(c,50,aH)
                 aH -= h # reduce the available height   
             continue
-
     
-    c.save()    
+    c.save() 
+       
     buffer.seek(0)
     
     return buffer
 
 @login_required
 def quotation_report(request, question, quotation):    
+    from PyPDF2 import PdfFileMerger    
+    '''return final report with attachment as pdf'''
+    
     null_session(request)
-    from PyPDF2 import PdfFileMerger
+    
     
     quotation_id = quotation    
     quotation_data = Quotation.objects.get(id = quotation_id)    
@@ -497,37 +519,40 @@ def quotation_report(request, question, quotation):
 @expert_required
 def questions_details(request, slug):
     null_session(request)
+    
+    #controling front end from session
     if 'extra' not in request.session:
         request.session['extra'] = 0
     
+    #validating question is active 
     res_question = get_object_or_404(Question, slug = slug, is_active = True)
     
-    '''get questions related to the current user'''
-    curent_user_expert_in = request.user.experts_in
-    
+    #get questions related to the current expert
+    curent_user_expert_in = request.user.experts_in    
     if request.user.is_staff or request.user.is_superuser:
         question = res_question
-    else: 
-    
+    else:   
         try:
             label_to_question = Label.objects.get(name = curent_user_expert_in, value = str(1), question = res_question)
             question = label_to_question.question
         except:
             raise PermissionDenied   
     
-    
-    OptionFormSet = inlineformset_factory(Question, Option, fk_name='question', form = OptionForm, extra= int(request.session['extra']), can_delete=False)
-    
+    #option form set of question.
+    OptionFormSet = inlineformset_factory(Question, Option, fk_name='question', form = OptionForm, extra= int(request.session['extra']), can_delete=False)    
     if request.method == 'POST':      
-        
-        question_form = QuestionForm(request.POST, request.FILES, prefix='questions', instance=question)
-        
+        #build combined form
+        question_form = QuestionForm(request.POST, request.FILES, prefix='questions', instance=question)        
         option_formset = OptionFormSet(request.POST, request.FILES, prefix='options', instance=question)
+        
+        
         if question_form.is_valid() and option_formset.is_valid():
             question = question_form.save()
             option_formset = OptionFormSet(request.POST, request.FILES, prefix='options', instance=question)
             option_formset.is_valid()
             option_formset.save()
+            
+            #controling fronend with htmx
             request.session['extra'] = 0
             if 'add_more' in request.POST or 'extra' in request.POST:
                 return HttpResponseRedirect(reverse('home:questions_details', args=[str(slug)])) 

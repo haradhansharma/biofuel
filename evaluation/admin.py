@@ -34,13 +34,17 @@ admin.site.register(LogicalString, LogicalStringAdmin)
 
 
 class EvaluatorAdmin(admin.ModelAdmin):    
-    list_display = ('name','creator', 'email', 'phone', 'phone', 'biofuel', 'create_date','orgonization', 'report_genarated')
+    list_display = ('name','creator', 'email', 'phone', 'biofuel', 'create_date','orgonization', 'report_genarated')
     list_filter = ('biofuel', )
-    readonly_fields = ('report_genarated', 'orgonization', 'name','creator', 'email', 'phone', 'phone', 'biofuel', 'create_date',)
+    readonly_fields = ('report_genarated', 'orgonization', 'name','creator', 'email', 'phone', 'biofuel', 'create_date',)
 admin.site.register(Evaluator, EvaluatorAdmin)
 
 admin.site.register(DifinedLabel)
 admin.site.register(Biofuel)
 admin.site.register(Option)
+# admin.site.register(NextActivities)
+# admin.site.register(EvaluatorActivities)
+
+
 
 
