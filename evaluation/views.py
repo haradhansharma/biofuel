@@ -760,7 +760,7 @@ def report(request, slug):
             #otherwise will be created new.                    
             eva_ac = EvaluatorActivities.objects.create(evaluator=get_report, next_activity=na, related_percent = rel_ques_pecent_in_report, compulsory_percent = com_ques_percent_in_report ) 
         
-        # as we need 3 type of result we will take help of memory to change change atribute
+        # as we need 3 type of result we will take help of memory to change change bool atribute
         if int(eva_ac.related_percent) >= int(na.related_percent) and int(eva_ac.compulsory_percent) >= int(na.compulsory_percent):            
             setattr(na, 'is_active', 'Completed')  
         elif int(eva_ac.related_percent) < int(na.related_percent) and int(eva_ac.related_percent) > 0 and int(eva_ac.compulsory_percent) >= int(na.compulsory_percent):
