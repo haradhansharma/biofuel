@@ -52,10 +52,32 @@ def user_types(request, slug):
         curent_user_type_slug = request.user.type.slug
     except:
         curent_user_type_slug = None   
-    if slug == curent_user_type_slug:        
-        enroll = reverse('evaluation:evaluation2')
+        
+    if request.user.is_authenticated:    
+        if slug == curent_user_type_slug and request.user.is_producer and (request.user.is_staff and request.user.is_superuser):        
+            enroll = {
+                'Enroll Evaluation' : reverse('evaluation:evaluation2') 
+                }
+        elif slug == curent_user_type_slug and request.user.is_expert and (request.user.is_staff and request.user.is_superuser):
+            enroll = {
+                'Questions and Quotations' : reverse('home:questions')
+                } 
+        elif slug == curent_user_type_slug and request.user.is_producer:
+            enroll = {
+                'Enroll Evaluation' : reverse('evaluation:evaluation2') 
+                }
+        elif slug == curent_user_type_slug and request.user.is_expert:
+            enroll = {
+                'Questions and Quotations' : reverse('home:questions')
+                }        
+        else:
+            enroll = {'Thank You for Joining!' : reverse('accounts:user_link', args=[str(request.user.username)])}
     else:
-        enroll = ''
+        enroll = {}
+    
+    
+        
+        
     
     
     # pass user type data    

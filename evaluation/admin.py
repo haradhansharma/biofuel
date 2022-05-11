@@ -42,8 +42,8 @@ admin.site.register(Evaluator, EvaluatorAdmin)
 admin.site.register(DifinedLabel)
 admin.site.register(Biofuel)
 admin.site.register(Option)
-# admin.site.register(NextActivities)
-# admin.site.register(EvaluatorActivities)
+admin.site.register(NextActivities)
+admin.site.register(EvaluatorActivities)
 
 
 

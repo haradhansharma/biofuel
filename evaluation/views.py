@@ -717,88 +717,76 @@ def report(request, slug):
     
     
     
+    # get ordered next activities
+    next_activities = NextActivities.objects.all().order_by('priority')    
+    # get common label which is executive summary
+    common_label = eva_label.get(label=DifinedLabel.objects.get(common_status = True))
+    #delete any prevous record for this current report
+    try:
+        EvaLebelStatement.objects.filter(evalebel = common_label, evaluator =  get_report, next_activity = True).delete()        
+    except:
+        pass   
     
-    # next_activities = NextActivities.objects.all().order_by('priority')
+    '''
+    ========
+    part of next activitis started
+    ========
+    '''
+    # to get percentage of related question answered we will make set
+    questions_of_report = set()   
+    for es in eva_statment:    
+        # dont know question will not consider as answere    
+        if es.question and not es.dont_know:            
+            questions_of_report.add(es.question)    
+    # As we are going to enter in the database's next_step field and will be retrive accordingly and diferent label have diferent type of statement we will push the headeing from here.
+    summery_statement_next_activities = EvaLebelStatement(evalebel = common_label, next_step = '<b>Based on your responses, we recommend that you take the following immediate steps to further your development:</b> <ol>',  evaluator =  get_report, next_activity = True)   
+    summery_statement_next_activities.save()
     
-    # common_label = eva_label.get(label=DifinedLabel.objects.get(common_status = True))
-    # #delete any prevous record for this current report
-    # try:
-    #     EvaLebelStatement.objects.filter(evalebel = common_label, evaluator =  get_report, next_activity = True).delete()    
-    # except:
-    #     pass   
-    
-    
-    # questions_of_report = set()
-    
-    
-    # for es in eva_statment:        
-    #     if es.question and not es.dont_know:            
-    #         questions_of_report.add(es.question)
-    
-    # all_eva_ac = EvaluatorActivities.objects.filter(evaluator=get_report)
-    
-    # entry_count = 0
-    # summery_statement_next_activities = EvaLebelStatement(evalebel = common_label, next_step = '<b>THE NEXT STEPS FOR VALIDATION SHOULD BE:</b> <ul>',  evaluator =  get_report, next_activity = True)   
-    # summery_statement_next_activities.save()
-    # for na in next_activities:
-    #     # It should be in the first work of the loop
-    #     if na not in [a.next_activity for a in all_eva_ac]:
-    #         setattr(na, 'is_active', 'Not Started') 
+    for na in next_activities: 
         
-                        
+        #geting perchantage
+        related_questions = set(na.related_questions.all())
+        compulsory_questions = set(na.compulsory_questions.all())
+        rel_ques_pecent_in_report = round(len(questions_of_report.intersection(related_questions))/len(related_questions)*100, 2)
+        com_ques_percent_in_report = round(len(questions_of_report.intersection(compulsory_questions))/len(compulsory_questions)*100, 2)        
+        
+        try:  
+            #if exist we will edit the percentage only      
+            eva_ac = EvaluatorActivities.objects.get(evaluator=get_report, next_activity=na)            
+            eva_ac.related_percent = rel_ques_pecent_in_report
+            eva_ac.compulsory_percent = com_ques_percent_in_report 
+            eva_ac.save()            
+        except:  
+            #otherwise will be created new.                    
+            eva_ac = EvaluatorActivities.objects.create(evaluator=get_report, next_activity=na, related_percent = rel_ques_pecent_in_report, compulsory_percent = com_ques_percent_in_report ) 
+        
+        # as we need 3 type of result we will take help of memory to change change atribute
+        if int(eva_ac.related_percent) >= int(na.related_percent) and int(eva_ac.compulsory_percent) >= int(na.compulsory_percent):            
+            setattr(na, 'is_active', 'Completed')  
+        elif int(eva_ac.related_percent) < int(na.related_percent) and int(eva_ac.related_percent) > 0 and int(eva_ac.compulsory_percent) >= int(na.compulsory_percent):
+            setattr(na, 'is_active', 'Not Completed')  
+        elif int(eva_ac.related_percent) <= 0:  
+            #if 0 we will consider not started becoz if it is touched any percentage can be set.          
+            setattr(na, 'is_active', 'Not Started')                         
+        else:
+            pass     
+        
+       
+        # we will take which is not completed    
+        if na.is_active != 'Completed':  
+            if int(EvaLebelStatement.objects.filter(evalebel = common_label, evaluator =  get_report, next_activity = True).count()) <= 4:  
+                #This is top 5 next activity to the executive summary to save memory space.  
+                summery_statement_next_activities = EvaLebelStatement(evalebel = common_label, next_step = f"<li> <p> <b> {str(na.name_and_standared)}({na.is_active}) </b> </p> <p> Short Description: {str(na.short_description)} </p> </li>",  evaluator =  get_report, next_activity = True)    
+                summery_statement_next_activities.save() 
+            else:
+                pass
+        else:
+            pass
         
         
-                
-        
-    #     related_questions = set(na.related_questions.all())
-    #     compulsory_questions = set(na.compulsory_questions.all())
-    #     rel_ques_pecent_in_report = round(len(questions_of_report.intersection(related_questions))/len(related_questions)*100, 2)
-    #     com_ques_percent_in_report = round(len(questions_of_report.intersection(compulsory_questions))/len(compulsory_questions)*100, 2)
-        
-        
-    #     try:        
-    #         eva_ac = EvaluatorActivities.objects.get(evaluator=get_report, next_activity=na)            
-    #         eva_ac.related_percent = rel_ques_pecent_in_report
-    #         eva_ac.compulsory_percent = com_ques_percent_in_report 
-    #         eva_ac.save()            
-    #     except:
-    #         if rel_ques_pecent_in_report >= 51 and com_ques_percent_in_report >= 100 :            
-    #             eva_ac = EvaluatorActivities.objects.create(evaluator=get_report, next_activity=na, related_percent = rel_ques_pecent_in_report, compulsory_percent = com_ques_percent_in_report ) 
-    #         else:
-    #             continue  
-            
-        
-            
-    #     if int(eva_ac.related_percent) >= 90 and int(eva_ac.compulsory_percent) >= 100:
-    #         setattr(na, 'is_active', 'Completed')  
-    #     elif int(eva_ac.related_percent) >= 50 and int(eva_ac.compulsory_percent) >= 100:
-    #         setattr(na, 'is_active', 'Not Completed')                          
-    #     else:
-    #         continue     
-        
-    #     if entry_count <= 4:
-    #         #This is top 5 next activity to the executive summary to save memory space.  
-    #         summery_statement_next_activities = EvaLebelStatement(evalebel = common_label, next_step = f"<li> {str(na.name_and_standared)}({na.is_active}) </li>",  evaluator =  get_report, next_activity = True)    
-    #         summery_statement_next_activities.save() 
-    #         entry_count += 1
-    #     else:
-    #         continue
-        
-    # summery_statement_next_activities = EvaLebelStatement(evalebel = common_label, next_step ='</ul> <p>PLEASE SEE THE "Deatils of activities" SECTION FOR MORE DETAILS.</p>',  evaluator =  get_report, next_activity = True)
-    # summery_statement_next_activities.save()   
-               
-        
-                   
-                               
-            
-            
-    
-        
-    
-    
-
-    
-    
+    # like heading we will puch fotter as well from here    
+    summery_statement_next_activities = EvaLebelStatement(evalebel = common_label, next_step ='</ol> <p>PLEASE SEE THE "Deatils of activities" SECTION FOR MORE DETAILS.</p>',  evaluator =  get_report, next_activity = True)
+    summery_statement_next_activities.save()   
     
 
     context = {

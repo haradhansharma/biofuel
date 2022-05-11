@@ -135,7 +135,7 @@ def signup(request):
             })
             
             new_user.email_user(subject, '', html_message=message)            
-            messages.success(request, 'Please Confirm your email to complete registration.') 
+            messages.success(request, 'Please confirm your email to complete registration.') 
             #we will redirect after successfull sumission, to avoid cnfusion by user.
             return HttpResponseRedirect(reverse_lazy('login'))          
             
@@ -204,7 +204,7 @@ def activate(request, uidb64, token):
                 'domain': current_site.domain,                            
             })
             user.email_user(subject, '', html_message=message)            
-            messages.success(request, 'Email Verified, please wait for approval!')
+            messages.success(request, 'Email verified, please wait for approval!')
         else:
             #if email verified and user not expert account will be activated
             user.is_active = True 

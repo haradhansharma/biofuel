@@ -314,27 +314,31 @@ class OptionSet(models.Model):
         return str(self.option_list) + str(self.text)
     
     
-# class NextActivities(models.Model):
+class NextActivities(models.Model):
     
-#     name_and_standared = models.CharField(max_length=250)
-#     descriptions = models.TextField()
-#     priority = models.CharField(max_length=2)
-#     related_questions = models.ManyToManyField(Question, related_name="related_next", verbose_name="Please select related questions", help_text="Allow multiple option selection. The selected options should be highlighted.", limit_choices_to={'is_active': True})
-#     compulsory_questions = models.ManyToManyField(Question, related_name="compulsory_next", verbose_name="Please select compulsory questions", help_text="Allow multiple. The selected options should be highlighted.", limit_choices_to={'is_active': True})
-#     is_active = models.BooleanField(default=True)
+    name_and_standared = models.CharField(max_length=250)
+    short_description = models.TextField(max_length=152)
+    descriptions = models.TextField()
+    url = models.URLField(null=True, blank=True)
+    priority = models.CharField(max_length=2)
+    related_questions = models.ManyToManyField(Question, related_name="related_next", verbose_name="Please select related questions", help_text="Allow multiple option selection. The selected options should be highlighted.", limit_choices_to={'is_active': True})
+    compulsory_questions = models.ManyToManyField(Question, related_name="compulsory_next", verbose_name="Please select compulsory questions", help_text="Allow multiple. The selected options should be highlighted.", limit_choices_to={'is_active': True})
+    related_percent = models.IntegerField()
+    compulsory_percent = models.IntegerField()    
+    is_active = models.BooleanField(default=True)
     
     
-#     def __str__(self):
-#         return str(self.name_and_standared)
+    def __str__(self):
+        return str(self.name_and_standared)
     
 
-# class EvaluatorActivities(models.Model):
-#     evaluator = models.ForeignKey(Evaluator, on_delete=models.CASCADE, related_name="eaevaluator")    
-#     next_activity = models.ForeignKey(NextActivities, on_delete=models.CASCADE, related_name="eanextactivities")
-#     related_percent = models.IntegerField()
-#     compulsory_percent = models.IntegerField()
-#     is_active = models.BooleanField(default=False)
+class EvaluatorActivities(models.Model):
+    evaluator = models.ForeignKey(Evaluator, on_delete=models.CASCADE, related_name="eaevaluator")    
+    next_activity = models.ForeignKey(NextActivities, on_delete=models.CASCADE, related_name="eanextactivities")
+    related_percent = models.IntegerField()
+    compulsory_percent = models.IntegerField()
+    is_active = models.BooleanField(default=False)
     
-#     def __str__(self):
-#         return str(self.next_activity.name_and_standared)
+    def __str__(self):
+        return str(self.next_activity.name_and_standared)
     

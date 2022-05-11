@@ -49,14 +49,14 @@
                                 </div>
                                 
                                 {% if request.user.is_authenticated %}
-                                {% if enroll != '' %}
                                 
-                                <h3 class="h5"><a href="{{ enroll }}" class="btn btn-outline-white d-inline-flex align-items-center me-md-3"> Enroll Evaluation </a></h3>
+                                {% for title, url in enroll.items %}
+                                <h3 class="h5"><a href="{{ url }}" class="btn btn-outline-white d-inline-flex align-items-center me-md-3"> {{title}} </a></h3>
                                 
-                                {% endif %}
                                 
+                                {% endfor %}
                         
-                                {% else %}  
+                                {% else %}   
                                 
                                 <h3 class="h5"><a href="{% url 'accounts:signup' %}" class="btn btn-outline-white d-inline-flex align-items-center me-md-3">Join as {{ user_type.name }} </a></h3>
                                 {% endif %}
