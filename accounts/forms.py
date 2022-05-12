@@ -41,7 +41,7 @@ class UserCreationFormFront(UserCreationForm):
     
     
     #implemeting google recapcha.
-    # captcha = ReCaptchaField( widget=ReCaptchaV2Checkbox)  
+    captcha = ReCaptchaField( widget=ReCaptchaV2Checkbox)  
     
     widgets = {
             'type': forms.Select(attrs={ 'class':'form-select', 'aria-label':'type', 'hx-post':"/check_type_to_get_expert/", 'hx-trigger':"change", 'hx-target':"#hx" , 'hx-swap':"innerHTML"}),                    
@@ -137,7 +137,7 @@ class LoginForm(AuthenticationForm):
     remember_me = forms.BooleanField(label = 'Remember me ', initial=False,  required=False, widget=forms.CheckboxInput(attrs={"class": "form-check-input"}))
     
     # implementing google rechapcha.
-    # captcha = ReCaptchaField( widget=ReCaptchaV2Checkbox) 
+    captcha = ReCaptchaField( widget=ReCaptchaV2Checkbox) 
     
     class Meta:
         model = User
@@ -146,13 +146,13 @@ class LoginForm(AuthenticationForm):
     
     # Taking charge oif default method of Django to give more interactiveess.
     def clean(self, *args, **kwargs): 
-        # captcha = self.cleaned_data.get('captcha')       
+        captcha = self.cleaned_data.get('captcha')       
         email = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
         
         # to give more userfriendly experience.
-        # if not captcha:
-        #     raise forms.ValidationError("Captcha Check required")
+        if not captcha:
+            raise forms.ValidationError("Captcha Check required")
             
         if email and password:
             #check email verification                      

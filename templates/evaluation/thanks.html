@@ -78,20 +78,43 @@
                                     <div class="row d-block d-xl-flex align-items-center" style="min-height: 200px;">
                                         <div class="col-12">  
                                             <div class="d-flex">
-                                            <div class="col-6"> <h5> {% if user.get_full_name %} {{ user.get_full_name }} {% else %} There is no name {% endif %} </h5></div> 
-                                             
-                                            <div class="col-3">
-                                            <a class="d-block" href="{% url 'home:user_settings' %}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
-                                                    <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
-                                                  </svg>                                                
-                                            </a> 
+                                            <div class="col-6">  
+                                                <h5>
+                                                {% if user.get_full_name %} 
+                                                
+                                                    <span>{{ user.get_full_name }}</span>
+                                                    {% else %} 
+                                                There is no name 
+                                                {% endif %} 
+                                                <span>
+                                                <a href="{% url 'home:user_settings' %}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                                                        <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
+                                                      </svg>                                                
+                                                </a>
+                                            </span>
+                                                
+                                                
+                                            </h5>
                                             
+                                        </div> 
+                                             
+                                            <div class="col-auto">
+                                                <div class="text-info bg-dark d-flex">
+                                                    {% if request.user.is_authenticated %}
+                                                    {% if request.user.is_producer or request.user.is_staff or request.user.is_superuser %}
+                                                    <a  href="{% url 'evaluation:evaluation2' %}" class="me-2">Begin Evaluating</a>
+                                                    {% endif %}
+                                                    {% if request.user.is_expert or request.user.is_staff or request.user.is_superuser %}
+                                                    <a href="{% url 'home:questions' %}" class="me-2">Questions and Quotations</a>
+                                                    {% endif %}
+                                                   
+                                                    {% endif %}
+    
+                                                </div> 
                                             </div> 
 
-                                            <div class="text-info bg-dark">
-                                                <a  href="{% url 'evaluation:evaluation2' %}">Begin Evaluating</a>
-                                            </div> 
+                                            
                                         
                                                 
                                             </div>
@@ -102,7 +125,7 @@
                                             <div class=" d-xl-flex">
                                                 <div class="col-12 col-md-6 card  border-0 bg-transparent">                                 
                                                 <h6> {{ user.type.name }} </h6>
-                                                <h6> {% if user.type.is_expert %} ({{ user.experts_in.name }}) {% endif %}</h6>
+                                                <h6> {% if user.is_expert %} ({{ user.experts_in.name }}) {% endif %}</h6>
                                                 <h6>{% if user.orgonization %}{{ user.orgonization }}{% else %} There is no organization {% endif %} </h6>
                                             </div>  
                                             <div class="col-12 col-md-6 card  border-0 bg-transparent">

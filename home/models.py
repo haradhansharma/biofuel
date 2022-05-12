@@ -53,3 +53,8 @@ class Quotation(models.Model):
     @property
     def get_quot_url(self):
         return reverse('home:add_quatation', args=[str(self.test_for.slug)])
+    
+    def get_absolute_url(self):        
+        return reverse('home:quotation_report', kwargs={'question': str(self.test_for.slug), 'quotation': int(self.id) })     
+    
+     

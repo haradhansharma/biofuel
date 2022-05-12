@@ -475,7 +475,7 @@ def eva_question(request, evaluator, slug):
         'timing_text': timing_text,    
         'total_question': request.session['total_question'], 
         'qualified_rang' : qualified_ans_rang,   
-        'evaluator':evaluator,
+        'evaluator':evaluator, 
         'selected_option' : selected_option,
         'submitted_comment' : submitted_comment
     }
@@ -787,6 +787,11 @@ def report(request, slug):
     # like heading we will puch fotter as well from here    
     summery_statement_next_activities = EvaLebelStatement(evalebel = common_label, next_step ='</ol> <p>PLEASE SEE THE "Deatils of activities" SECTION FOR MORE DETAILS.</p>',  evaluator =  get_report, next_activity = True)
     summery_statement_next_activities.save()   
+    '''
+    ========
+    part of next activitis end
+    ========
+    '''
     
 
     context = {

@@ -31,13 +31,13 @@
                         <a href="{% url 'evaluation:evaluation2' %}" class="nav-link">Evaluation</a>
                     </li>
                     {% endif %}
-                    <!--
+                    
                     {% if request.user.is_expert or request.user.is_staff or request.user.is_superuser %}
                     <li class="nav-item me-2">
                         <a href="{% url 'home:questions' %}" class="nav-link">Questions and Quotations</a>
                     </li>
                     {% endif %}
-                    -->
+                    
                     
                 </ul>
             </div>
@@ -51,6 +51,7 @@
                 {% else %}
                 
                 <a href="{% url 'login' %}" class="btn btn-outline-white d-inline-flex align-items-center me-md-3">Log In</a>
+                <a href="{% url 'accounts:signup' %}" class="btn btn-outline-white d-inline-flex align-items-center me-md-3">Signup</a>
                 
                 {% endif %}
 

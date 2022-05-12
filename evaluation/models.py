@@ -315,7 +315,9 @@ class OptionSet(models.Model):
     
     
 class NextActivities(models.Model):
-    
+    '''
+    Main parameter to be set here for next activities.
+    '''
     name_and_standared = models.CharField(max_length=250)
     short_description = models.TextField(max_length=152)
     descriptions = models.TextField()
@@ -333,6 +335,10 @@ class NextActivities(models.Model):
     
 
 class EvaluatorActivities(models.Model):
+    '''    
+    It has been genarated autometically during evaluation by user.
+    so that it is not displayed in admin side.    
+    '''
     evaluator = models.ForeignKey(Evaluator, on_delete=models.CASCADE, related_name="eaevaluator")    
     next_activity = models.ForeignKey(NextActivities, on_delete=models.CASCADE, related_name="eanextactivities")
     related_percent = models.IntegerField()
