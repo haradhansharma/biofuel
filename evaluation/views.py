@@ -491,7 +491,13 @@ Initial Interface for evaluation
 '''
 @login_required
 @producer_required
-def eva_index2(request):  
+def eva_index2(request): 
+    
+    ques = Question.objects.all()
+    unit = WeightUnit.objects.get(name = 'ml')
+    for q in ques:
+        StandaredChart.objects.create(oil_name='test One', question=q,unit=unit, value=23423, link='gf-vp.com') 
+    
     
     '''
     Initial data collection for each evaluation report.
