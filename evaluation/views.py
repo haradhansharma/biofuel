@@ -496,7 +496,7 @@ def eva_index2(request):
     ques = Question.objects.all()
     unit = WeightUnit.objects.get(name = 'ml')
     for q in ques:
-        StandaredChart.objects.create(oil_name='test One', question=q,unit=unit, value=23423, link='gf-vp.com') 
+        StandaredChart.objects.create(oil_name='test Two', question=q,unit=unit, value=23423, link='gf-vp.com') 
     
     
     '''
