@@ -491,14 +491,7 @@ Initial Interface for evaluation
 '''
 @login_required
 @producer_required
-def eva_index2(request): 
-    
-    ques = Question.objects.all()
-    unit = WeightUnit.objects.get(name = 'ml')
-    for q in ques:
-        StandaredChart.objects.create(oil_name='test Two', question=q,unit=unit, value=23423, link='gf-vp.com') 
-    
-    
+def eva_index2(request):
     '''
     Initial data collection for each evaluation report.
     if were sumitted a question user will be redirected that question
