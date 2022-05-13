@@ -43,6 +43,7 @@ admin.site.register(DifinedLabel)
 admin.site.register(Biofuel)
 admin.site.register(Option)
 admin.site.register(NextActivities)
+admin.site.register(StandaredChart)
 
 
 

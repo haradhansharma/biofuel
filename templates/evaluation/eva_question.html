@@ -185,13 +185,16 @@
                                 <div class="card-body">      
                                 
                                     <div class="mt-3">
-                                        
+                                        {% if question.get_quotations %}
                                         {% for quotation in question.get_quotations %}
                                         <a href="{{quotation.get_absolute_url}}" target="_blank" class="btn btn-warning" > 
                                            <h4>Provider: {% if quotation.service_provider.orgonization %} {{quotation.service_provider.orgonization}} {% else %} Business name not found {% endif %} </h4> 
                                            <h5>Price: {{quotation.price}} {{quotation.price_unit}} </h5>
                                         </a>                                        
                                         {% endfor %}
+                                        {% else %}
+                                        No Quotation Found
+                                        {% endif %}
                                         
 
                                            
@@ -218,6 +221,41 @@
 </div>
                             </div>
                         </div>
+
+                        <div class="col-sm-12">
+                        <div class="card mt-4 p-4">
+                            <h4>{{question.chart_title}}</h4>
+                            <div class="table-responsive">
+                            <table class="table align-middle">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Oil Name</th>
+                                    <th scope="col">Unit</th>
+                                    <th scope="col">Value</th>
+                                    <th scope="col">Link</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                {% for cd in chart_data %}
+                                
+                                  <tr>
+                                    <th scope="row">{{cd.oil_name }}</th>
+                                    <td>{{cd.unit }}</td>
+                                    <td>{{cd.value }}</td>
+                                    <td>{{cd.link }}</td>
+                                  </tr>
+                                {% endfor %}  
+                                  
+                                </tbody>
+                              </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
                     </div>
                     
                 </div>

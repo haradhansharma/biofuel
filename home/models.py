@@ -1,9 +1,12 @@
+# from accounts.models import User
 from django.db import models
 from django.urls import reverse
 from evaluation.models import Question
 from django.core.validators import FileExtensionValidator
 from django.conf import settings
-from accounts.models import User
+
+User = settings.AUTH_USER_MODEL
+
 
 class PriceUnit(models.Model):
     name = models.CharField(max_length=5)

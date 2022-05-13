@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from doc.models import ExSite
+from home.models import WeightUnit
 from .forms import *
 from .models import *
 from accounts.models import User, UserType
@@ -463,7 +464,7 @@ def eva_question(request, evaluator, slug):
         selected_option = None  
         
              
-        
+    chart_data = StandaredChart.objects.filter(question = question)    
         
     context ={
         'slug' : slug,
@@ -477,7 +478,9 @@ def eva_question(request, evaluator, slug):
         'qualified_rang' : qualified_ans_rang,   
         'evaluator':evaluator, 
         'selected_option' : selected_option,
-        'submitted_comment' : submitted_comment
+        'submitted_comment' : submitted_comment,
+        'chart_data' : chart_data,
+        
     }
     return render(request, 'evaluation/eva_question.html', context = context)
 
@@ -488,7 +491,8 @@ Initial Interface for evaluation
 '''
 @login_required
 @producer_required
-def eva_index2(request):    
+def eva_index2(request):  
+    
     '''
     Initial data collection for each evaluation report.
     if were sumitted a question user will be redirected that question
@@ -617,6 +621,8 @@ def eva_index2(request):
 @login_required
 @producer_required    
 def thanks(request):    
+    
+    
     #essential part where login_required
     null_session(request)  
     '''

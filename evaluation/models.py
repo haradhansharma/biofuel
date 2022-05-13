@@ -73,6 +73,7 @@ class Question(models.Model):
     description = models.TextField()
     is_active = models.BooleanField(default=False)
     is_door = models.BooleanField(default=False)
+    chart_title = models.CharField(max_length=252)
 
     class Meta:
         ordering = ['sort_order']
@@ -347,4 +348,17 @@ class EvaluatorActivities(models.Model):
     
     def __str__(self):
         return str(self.next_activity.name_and_standared)
+    
+class StandaredChart(models.Model):
+    from home.models import WeightUnit    
+    oil_name = models.CharField(max_length=252)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="stanchart")
+    unit = models.ForeignKey(WeightUnit, on_delete=models.CASCADE, related_name= "chrartunit")
+    value = models.CharField(max_length=252)
+    link = models.URLField()
+    
+    def __str__(self):
+        return self.oil_name + ' for question ' + str(self.question.sort_order)
+    
+    
     
