@@ -73,7 +73,7 @@ class Question(models.Model):
     description = models.TextField()
     is_active = models.BooleanField(default=False)
     is_door = models.BooleanField(default=False)
-    chart_title = models.CharField(max_length=252)
+    chart_title = models.CharField(max_length=252, null=True, blank=True)
 
     class Meta:
         ordering = ['sort_order']
