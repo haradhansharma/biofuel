@@ -74,6 +74,8 @@ class Question(models.Model):
     is_active = models.BooleanField(default=False)
     is_door = models.BooleanField(default=False)
     chart_title = models.CharField(max_length=252, null=True, blank=True)
+    create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
 
     class Meta:
         ordering = ['sort_order']
@@ -157,6 +159,9 @@ class Option(models.Model):
     overall = models.CharField(max_length=1, default=0)
     positive = models.CharField(max_length=1, default=0)
     
+    
+    
+    
 
     def __str__(self):
         return self.name + '(' + str(self.question.sort_order) + ')'
@@ -225,6 +230,7 @@ class Evaluator(models.Model):
     orgonization = models.CharField(max_length=252)
     biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, blank=True)
     create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     report_genarated = models.BooleanField(default=False)
     
 
@@ -294,8 +300,9 @@ class EvaLebelStatement(models.Model):
     dont_know = models.BooleanField(default=False)
     assesment = models.BooleanField(default=False)
     next_activity = models.BooleanField(default=False)
-    evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='s_evaluators', null=True)
-    create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='s_evaluators', null=True)    
+    create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
 
     def __str__(self):
         return self.statement
@@ -309,6 +316,8 @@ class OptionSet(models.Model):
     positive = models.CharField(max_length=1, default=0)
     overall = models.CharField(max_length=1, default=0)
     ls_id = models.CharField(max_length=252, default=0)
+    create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
 
 
     def __str__(self):
@@ -329,6 +338,8 @@ class NextActivities(models.Model):
     related_percent = models.IntegerField()
     compulsory_percent = models.IntegerField()    
     is_active = models.BooleanField(default=True)
+    create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     
     
     def __str__(self):
@@ -345,6 +356,8 @@ class EvaluatorActivities(models.Model):
     related_percent = models.IntegerField()
     compulsory_percent = models.IntegerField()
     is_active = models.BooleanField(default=False)
+    create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     
     def __str__(self):
         return str(self.next_activity.name_and_standared)
