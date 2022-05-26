@@ -404,13 +404,67 @@
         </tr>
         <tr>
             <td>
-                <p> <b>Chosen Option :</b> {{e.option.name}}</p>
+                <p> <b>Chosen Option :</b>  
+                    {% if e.option.dont_know %} 
+
+                    {% for quotation in e.question.get_quotations %}
+                    <a href="{{quotation.get_absolute_url}}" target="_blank" class="btn btn-warning" > 
+                        <span>Quotation Provider: {% if quotation.service_provider.orgonization %} {{quotation.service_provider.orgonization}} {% else %} Business name not found {% endif %} <span>Price: {{quotation.price}} {{quotation.price_unit}}, </span> </span> 
+                        
+                    </a>                                        
+                    {% endfor %}
+                    
+                    {% else %}  
+                    {{e.option.name}} 
+                    {% endif %}
+                </p>
+
+
+                <!-- quotations  -->
+
+                
+
                 <p> <b>Comment :</b>
                     {% for qa in e.get_question_comment  %}
                    <p>{{qa.comments}}</p>
                     {% endfor %}
                 </p>
                 <p><b>Feedback :</b> {{e.option.statement}}</p>
+
+
+                <!--std Chart-->
+
+                    <h4>{{e.question.chart_title}} : </h4>
+                    <table  class="table align-middle">
+                        <thead>
+                          <tr>
+                            <th scope="col">Oil Name</th>
+                            <th scope="col">Unit</th>
+                            <th scope="col">Value</th>
+                            <th scope="col">Link</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for cd in e.question.stanchart.all %}
+                        
+                          <tr>
+                            <th scope="row">{{cd.oil_name }}</th>
+                            <td>{{cd.unit }}</td>
+                            <td>{{cd.value }}</td> 
+                            <td>{{cd.link }}</td>
+                          </tr>
+                        {% endfor %}  
+                          
+                        </tbody>
+                      </table>
+                      <br>
+                      <br>
+                    
+
+
+
+
+
             </td>
         </tr>
     </table>
