@@ -744,7 +744,7 @@ def report(request, slug):
         if es.question and not es.dont_know:            
             questions_of_report.add(es.question)    
     # As we are going to enter in the database's next_step field and will be retrive accordingly and diferent label have diferent type of statement we will push the headeing from here.
-    summery_statement_next_activities = EvaLebelStatement(evalebel = common_label, next_step = '<b>Based on your responses, we recommend that you take the following immediate steps to further your development:</b> <ol>',  evaluator =  get_report, next_activity = True)   
+    summery_statement_next_activities = EvaLebelStatement(evalebel = common_label, next_step = '<b>The following is the prioritised list of validation activities that should be undertaken based on your self assessment responses:</b> <ol>',  evaluator =  get_report, next_activity = True)   
     summery_statement_next_activities.save()
     
     for na in next_activities: 

@@ -158,6 +158,8 @@ class Option(models.Model):
     next_step = models.TextField(null = True, blank = True,)
     overall = models.CharField(max_length=1, default=0)
     positive = models.CharField(max_length=1, default=0)
+    create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     
     
     

@@ -1,0 +1,17 @@
+{% autoescape off %}
+Hi {{ evaluator.name }},
+
+Changed: <br>
+{{changed_statement}}
+<ul>
+{% for i in changed_statement %}
+
+    <li> {{ i }}</li>
+
+{% endfor %}
+</ul>
+<br>
+Please visit to see the updated report by clicking on the <a href="/"> Report #{{ evaluator.id }}</a> <br>
+
+http://{{ domain }}
+{% endautoescape %}
