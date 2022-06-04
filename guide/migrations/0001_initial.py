@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=252)),
                 ('anchor', models.CharField(max_length=252)),
-                # ('content', tinymce.models.HTMLField()),
+                ('content', models.CharField(max_length=252)),
             ],
         ),
     ]
