@@ -17,6 +17,8 @@ admin.site.index_title = 'GF-VP administration'
 urlpatterns = [
     
     path('admin/', admin.site.urls),
+    path('__debug__/', include('debug_toolbar.urls')),
+    
     path('', include('evaluation.urls')),
     path('', include('home.urls')),
     path('', include('crm.urls')),

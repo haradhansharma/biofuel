@@ -40,36 +40,38 @@ def set_eva_comments(question, comment, evaluator):
         new_eva_comment.save()
         
 #helper function should be called into the @login_required and @producer_required    
-def set_evastatment(request, selected_option):    
+def set_evastatment(request, selected_option, evaluator):    
     question = selected_option.question    
     #delete previous record of this option
     try:
-        EvaLebelStatement.objects.filter(question = question, evaluator = get_current_evaluator(request), assesment = False).delete()   
+        EvaLebelStatement.objects.filter(question = question, evaluator = evaluator, assesment = False).delete()   
     except:
         pass 
     
     set_labels = Label.objects.filter(question =  question, value = 1)
     for set_label in set_labels:
         defined_label = DifinedLabel.objects.get(name = set_label.name)
-        eva_label = EvaLabel.objects.get(label = defined_label, evaluator = get_current_evaluator(request))
-        new_evalebel_statement = EvaLebelStatement(evalebel = eva_label, option_id = selected_option.id, statement = selected_option.statement, next_step = selected_option.next_step, dont_know = selected_option.dont_know, question = selected_option.question, positive = selected_option.positive, evaluator =  get_current_evaluator(request))
+        eva_label = EvaLabel.objects.get(label = defined_label, evaluator = evaluator)
+        new_evalebel_statement = EvaLebelStatement(evalebel = eva_label, option_id = selected_option.id, statement = selected_option.statement, next_step = selected_option.next_step, dont_know = selected_option.dont_know, question = selected_option.question, positive = selected_option.positive, evaluator =  evaluator)
         new_evalebel_statement.save()
         try:
-            EvaLebelStatement.objects.filter(evalebel = eva_label, evaluator = get_current_evaluator(request), assesment = True).delete()
+            EvaLebelStatement.objects.filter(evalebel = eva_label, evaluator = evaluator, assesment = True).delete()
         except:
             # pass is essential to execute rest of the code
             pass
         
         #This is a calculated assesment based on the answere. Called function gives the idea.    
-        summery_statement_do_not_know = EvaLebelStatement(evalebel = eva_label, statement = label_assesment_for_donot_know(request, eva_label),  evaluator =  get_current_evaluator(request), assesment = True)
+        summery_statement_do_not_know = EvaLebelStatement(evalebel = eva_label, statement = label_assesment_for_donot_know(request, eva_label, evaluator),  evaluator =  evaluator, assesment = True)
         summery_statement_do_not_know.save()
 
         #This is a calculated assesment based on the answere. Called function gives the idea.    
-        summery_statement_positive = EvaLebelStatement(evalebel = eva_label, statement = label_assesment_for_positive(request, eva_label),  evaluator =  get_current_evaluator(request), assesment = True)
+        summery_statement_positive = EvaLebelStatement(evalebel = eva_label, statement = label_assesment_for_positive(request, eva_label, evaluator),  evaluator = evaluator, assesment = True)
         summery_statement_positive.save()
         
+        
+        
 #helper function should be called into the @login_required and @producer_required       
-def set_evastatement_of_logical_string(request, selected_option):    
+def set_evastatement_of_logical_string(request, selected_option, evaluator):    
     #review and revise the logical string
     '''
     Making option set based on logical string
@@ -118,22 +120,22 @@ def set_evastatement_of_logical_string(request, selected_option):
             
     
     defined_common_label = DifinedLabel.objects.get(common_status = True)    
-    eva_label_common = EvaLabel.objects.get(label = defined_common_label, evaluator = get_current_evaluator(request))
-    eva_statement = EvaLebelStatement.objects.filter(evaluator = get_current_evaluator(request))   
+    eva_label_common = EvaLabel.objects.get(label = defined_common_label, evaluator = evaluator)
+    eva_statement = EvaLebelStatement.objects.filter(evaluator = evaluator)   
     
     
     #delete any prevous record for this current report
     try:
-        EvaLebelStatement.objects.filter(evalebel = eva_label_common, evaluator =  get_current_evaluator(request), assesment = True).delete()    
+        EvaLebelStatement.objects.filter(evalebel = eva_label_common, evaluator =  evaluator, assesment = True).delete()    
     except:
         pass
     
     
     #This is a calculated assesment based on the answere. Called function gives the idea.    
-    summery_statement_do_not_know = EvaLebelStatement(evalebel = eva_label_common, statement = overall_assesment_for_donot_know(request, eva_label_common),  evaluator =  get_current_evaluator(request), assesment = True)
+    summery_statement_do_not_know = EvaLebelStatement(evalebel = eva_label_common, statement = overall_assesment_for_donot_know(request, eva_label_common, evaluator),  evaluator =  evaluator, assesment = True)
     summery_statement_do_not_know.save()
     #This is a calculated assesment based on the answere. Called function gives the idea.    
-    summery_statement_positive = EvaLebelStatement(evalebel = eva_label_common, statement = overall_assesment_for_positive(request, eva_label_common),  evaluator =  get_current_evaluator(request), assesment = True)
+    summery_statement_positive = EvaLebelStatement(evalebel = eva_label_common, statement = overall_assesment_for_positive(request, eva_label_common, evaluator),  evaluator =  evaluator, assesment = True)
     summery_statement_positive.save()
     
     
@@ -152,10 +154,10 @@ def set_evastatement_of_logical_string(request, selected_option):
         logical_statement = OptionSet.objects.get(option_list = eoi)
         if (eoi in logical_options) and (logical_statement.overall == str(1)):
             try:
-                EvaLebelStatement(evalebel = eva_label_common, evaluator =  get_current_evaluator(request), positive = logical_statement.positive,).delete()
+                EvaLebelStatement(evalebel = eva_label_common, evaluator =  evaluator, positive = logical_statement.positive,).delete()
             except:
                 pass
-            new_evalebel_statement_common = EvaLebelStatement(evalebel = eva_label_common, statement = logical_statement.text, evaluator =  get_current_evaluator(request), positive = logical_statement.positive,)
+            new_evalebel_statement_common = EvaLebelStatement(evalebel = eva_label_common, statement = logical_statement.text, evaluator =  evaluator, positive = logical_statement.positive,)
             new_evalebel_statement_common.save()
             
         # Check and set to the specific label.    
@@ -163,12 +165,12 @@ def set_evastatement_of_logical_string(request, selected_option):
             ls_labels = Lslabel.objects.filter(logical_string =  logical_statement, value = 1)
             for ls_label in ls_labels:
                 defined_label = DifinedLabel.objects.get(name = ls_label.name)
-                ls_eva_label = EvaLabel.objects.get(label = defined_label, evaluator = get_current_evaluator(request))
+                ls_eva_label = EvaLabel.objects.get(label = defined_label, evaluator = evaluator)
                 try:
-                    EvaLebelStatement(evalebel = ls_eva_label, evaluator =  get_current_evaluator(request), positive = logical_statement.positive,).delete()
+                    EvaLebelStatement(evalebel = ls_eva_label, evaluator =  evaluator, positive = logical_statement.positive,).delete()
                 except:
                     pass
-                new_evalebel_statement_g = EvaLebelStatement(evalebel = ls_eva_label, statement = logical_statement.text, evaluator =  get_current_evaluator(request), positive = logical_statement.positive,)
+                new_evalebel_statement_g = EvaLebelStatement(evalebel = ls_eva_label, statement = logical_statement.text, evaluator =  evaluator, positive = logical_statement.positive,)
                 new_evalebel_statement_g.save()      
                   
     except Exception as e:        
@@ -177,10 +179,10 @@ def set_evastatement_of_logical_string(request, selected_option):
     #Statement of the option will be aded to the summary if overall is set to 1    
     if selected_option.overall == str(1):
         try:
-            EvaLebelStatement(evalebel = eva_label_common, evaluator =  get_current_evaluator(request), assesment = False).delete()
+            EvaLebelStatement(evalebel = eva_label_common, evaluator =  evaluator, assesment = False).delete()
         except:
             pass
-        new_evalebel_statement_common = EvaLebelStatement(evalebel = eva_label_common, statement = selected_option.statement, evaluator =  get_current_evaluator(request))
+        new_evalebel_statement_common = EvaLebelStatement(evalebel = eva_label_common, option_id = selected_option.id, statement = selected_option.statement, evaluator =  evaluator)
         new_evalebel_statement_common.save()    
     
         
@@ -239,10 +241,10 @@ def option_add2(request):
         set_evaluation(question, selected_option, get_current_evaluator(request))  
         
         #control adding or editing
-        set_evastatment(request, selected_option)     
+        set_evastatment(request, selected_option, get_current_evaluator(request))     
            
         #control adding or editing
-        set_evastatement_of_logical_string(request, selected_option)
+        set_evastatement_of_logical_string(request, selected_option, get_current_evaluator(request))
         
         
         #try to find next question if not found report will be genarated and the report(Evaluator) will mark as genarated.

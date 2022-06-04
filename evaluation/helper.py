@@ -23,10 +23,10 @@ def get_current_evaluator(request):
     return evaluator
 
 #calculated statement genarator for report, is called in evaluatin procedure. function name telling what is being calulated
-def label_assesment_for_donot_know(request, evalebel):
+def label_assesment_for_donot_know(request, evalebel, evaluator):
     'label wise Sumamry'
-    ans_to_the_label = EvaLebelStatement.objects.filter(evalebel = evalebel, evaluator = get_current_evaluator(request), question__isnull = False, assesment = False).values('evalebel').distinct().count()
-    dont_know_ans_to_the_lebel = EvaLebelStatement.objects.filter(evalebel = evalebel, evaluator = get_current_evaluator(request), question__isnull = False, dont_know = 1, assesment = False).values('evalebel').distinct().count()
+    ans_to_the_label = EvaLebelStatement.objects.filter(evalebel = evalebel, evaluator = evaluator, question__isnull = False, assesment = False).values('evalebel').distinct().count()
+    dont_know_ans_to_the_lebel = EvaLebelStatement.objects.filter(evalebel = evalebel, evaluator = evaluator, question__isnull = False, dont_know = 1, assesment = False).values('evalebel').distinct().count()
     dont_know_percent_to_the_label = (int(dont_know_ans_to_the_lebel) * 100)/int(ans_to_the_label)
     if dont_know_percent_to_the_label < 20:
         statement = str(evalebel.label.name) + ' assessment of your biofuel shows that you have very detailed knowledge.'
@@ -40,10 +40,10 @@ def label_assesment_for_donot_know(request, evalebel):
     return statement
 
 #calculated statement genarator for report, is called in evaluatin procedure. function name telling what is being calulated
-def label_assesment_for_positive(request, evalebel):
+def label_assesment_for_positive(request, evalebel, evaluator):
     'label wise Sumamry'
-    ans_to_the_label = EvaLebelStatement.objects.filter(evalebel = evalebel, evaluator = get_current_evaluator(request), question__isnull = False, assesment = False).values('evalebel').distinct().count()
-    pos_ans_to_the_lebel = EvaLebelStatement.objects.filter(evalebel = evalebel, evaluator = get_current_evaluator(request), question__isnull = False, positive = 1, assesment = False).values('evalebel').distinct().count()
+    ans_to_the_label = EvaLebelStatement.objects.filter(evalebel = evalebel, evaluator = evaluator, question__isnull = False, assesment = False).values('evalebel').distinct().count()
+    pos_ans_to_the_lebel = EvaLebelStatement.objects.filter(evalebel = evalebel, evaluator = evaluator, question__isnull = False, positive = 1, assesment = False).values('evalebel').distinct().count()
     positive_percent_to_the_label = (int(pos_ans_to_the_lebel) * 100)/int(ans_to_the_label)
     if positive_percent_to_the_label < 50:
         statement = 'Based on the response to the enquiry, the ' + str(evalebel.label.name).lower() + ' evaluation of your oil contains multiple serious shortcomings.'
@@ -57,9 +57,9 @@ def label_assesment_for_positive(request, evalebel):
     return statement
 
 #calculated statement genarator for report, is called in evaluatin procedure. function name telling what is being calulated
-def overall_assesment_for_donot_know(request, evalebel):
-    ans_ques = EvaLebelStatement.objects.filter(evaluator = get_current_evaluator(request), question__isnull = False, assesment = False).values('question').distinct().count()
-    dont_know_ans = EvaLebelStatement.objects.filter(evaluator = get_current_evaluator(request), question__isnull = False, dont_know = 1, assesment = False).values('question').distinct().count()
+def overall_assesment_for_donot_know(request, evalebel, evaluator):
+    ans_ques = EvaLebelStatement.objects.filter(evaluator =evaluator, question__isnull = False, assesment = False).values('question').distinct().count()
+    dont_know_ans = EvaLebelStatement.objects.filter(evaluator = evaluator, question__isnull = False, dont_know = 1, assesment = False).values('question').distinct().count()
     dont_know_percent = (int(dont_know_ans) * 100)/int(ans_ques)
 
     if dont_know_percent < 20:
@@ -73,9 +73,9 @@ def overall_assesment_for_donot_know(request, evalebel):
     return statement
 
 #calculated statement genarator for report, is called in evaluatin procedure. function name telling what is being calulated
-def overall_assesment_for_positive(request, evalebel):
-    ans_ques = EvaLebelStatement.objects.filter(evaluator = get_current_evaluator(request), question__isnull = False, assesment = False).values('question').distinct().count()
-    pos_ans = EvaLebelStatement.objects.filter(evaluator = get_current_evaluator(request), question__isnull = False, positive = 1, assesment = False).values('question').distinct().count()
+def overall_assesment_for_positive(request, evalebel, evaluator):
+    ans_ques = EvaLebelStatement.objects.filter(evaluator = evaluator, question__isnull = False, assesment = False).values('question').distinct().count()
+    pos_ans = EvaLebelStatement.objects.filter(evaluator = evaluator, question__isnull = False, positive = 1, assesment = False).values('question').distinct().count()
     positive_percent = (int(pos_ans) * 100)/int(ans_ques)
     if positive_percent < 50:
         statement = 'Based on the response to the enquiry, the ' + 'overall' + ' evaluation of your oil contains multiple serious shortcomings.'

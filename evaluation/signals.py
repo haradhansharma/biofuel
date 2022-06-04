@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
 from doc.models import ExSite
@@ -39,5 +39,33 @@ def question_update_mail(sender, instance, **kwargs):
         # send_mass_mail((mail_to_staff), fail_silently=False)
         # send_mass_mail((mail_to_producer), fail_silently=False)
         
+
+        
+        
+@receiver(pre_save, sender=Option)
+def on_change(sender, instance, **kwargs):
+    if instance.id is None: # new object will be created
+        pass 
+    else:
+        # get unchanged item
+        previous = sender.objects.get(id=instance.id)
+        if previous.statement != instance.statement or previous.next_step != instance.next_step  : # field will be updated
+            #We will take which is not pending as pending will be update autometically when try to notify and create new one
+            notifiyed_evaluator = Evaluator.objects.filter(feedback_updated = True)
+            # Will track all feedback of this option in the databse
+            evastatements = EvaLebelStatement.objects.filter(option_id = instance.id)
+            #will update all report or evaluator which is upodate pending when changes happend in the statement and in the next step of option.
+            for evastatement in evastatements:
+                current_evaluator = evastatement.evaluator
+                if current_evaluator in notifiyed_evaluator:
+                    if evastatement.statement != previous.statement or evastatement.next_step != previous.next_step:
+                        current_evaluator.feedback_updated = False
+                        current_evaluator.save()
+                    else:
+                        pass
+                else:
+                    pass
+                        
+                    
         
        

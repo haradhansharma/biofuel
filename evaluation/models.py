@@ -148,6 +148,7 @@ class Option(models.Model):
     # 'next_step' will be printed under the label based on selection as per business logic in report and question forms.
     # 'overall' should be filled as 1 or 0 (It was recomended during development, and advised to avoid True/Flse). if overall is 1 then statement will be added to the summary.
     # 'positive' should be filled as 1 or 0 (It was recomended during development, and advised to avoid True/Flse). it is used to calculated assesent under the label in report and question form.
+    # When updated any statement or next_step evaluator notify status will be updated by signal 'on_change'
     '''  
     name = models.CharField(max_length=252)
     yes_status = models.BooleanField(default=False)
@@ -215,7 +216,7 @@ class Biofuel(models.Model):
     
 
     
-
+from django.utils.safestring import mark_safe
 
 class Evaluator(models.Model):
     '''
@@ -235,9 +236,20 @@ class Evaluator(models.Model):
     update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     report_genarated = models.BooleanField(default=False)
     
+    # it is been updated when statement and next_step of option has been changed and when genarate new report based on report 
+    feedback_updated = models.BooleanField(default=False)
+    
+    
+    #Colored output of Pending to notify to the evaluator about feedback update of option
+    def notified(self):
+        if self.feedback_updated:
+            return mark_safe('<b style="background:{};padding:5px;color:#ffffff;" >{}</b>'.format('green', self.feedback_updated))
+        else:
+            return mark_safe('<b style="background:{};padding:5px;color:#ffffff;" >{}</b>'.format('orange', 'Pending'))
+    
 
     def __str__(self):
-        return self.name
+        return self.name + str(self.id)
     
     def get_absolute_url(self):
         return reverse('evaluation:report', args=[str(self.slug)])    

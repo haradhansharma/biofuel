@@ -1,17 +1,12 @@
 {% autoescape off %}
 Hi {{ evaluator.name }},
 
-Changed: <br>
-{{changed_statement}}
+
+
 <ul>
-{% for i in changed_statement %}
-
-    <li> {{ i }}</li>
-
-{% endfor %}
+    <li> New report <a href="{{copy_evaluator.get_absolute_url}}">#{{ copy_evaluator.id }}</a> has been genarated with updated feedback based on report #{{evaluator.id}}</li>
 </ul>
 <br>
-Please visit to see the updated report by clicking on the <a href="/"> Report #{{ evaluator.id }}</a> <br>
 
 http://{{ domain }}
 {% endautoescape %}

@@ -1,4 +1,9 @@
 {% load static %}
+    
+    <!-- Document Wrapper   
+    =============================== -->
+    <div id="main-wrapper"> 
+      
 <!-- Header
       ============================ -->
       <header id="header" class="sticky-top"> 
@@ -19,12 +24,10 @@
             <div id="header-nav" class="collapse navbar-collapse justify-content-end">
               <ul class="navbar-nav">
                 <li><a target="_blank" href="{% url 'home:home' %}">Home</a></li>
-                <li><a target="_blank" href="{% url 'guide:evaluation' %}">Evaluation</a></li>
-                <li><a target="_blank" href="{% url 'guide:evaluation' %}">Accounts</a></li>
-                <li><a target="_blank" href="{% url 'guide:evaluation' %}">CRM</a></li>
-                <li><a target="_blank" href="{% url 'guide:evaluation' %}">Dashboard</a></li>
-                <li><a target="_blank" href="{% url 'guide:evaluation' %}">Questions</a></li>
-                <li><a target="_blank" href="{% url 'guide:evaluation' %}">User Type</a></li>
+                {% for menu in guide_general_menu %}
+                <li><a target="_blank" href="{{ menu.get_absolute_url }}">{{menu.title}}</a></li>
+                {% endfor %}
+                
                 
               </ul>
             </div>

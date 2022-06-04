@@ -8,7 +8,9 @@ app_name = 'guide'
 
 urlpatterns = [
     path('guide', views.guide_home, name='guide_home'),
-    path('guide/evaluation', views.guide_evaluation, name='evaluation'),
+    path('guide/<str:key>', views.guide_type, name='guide_type'),
+    path('guide/<str:type>/<str:slug>', views.genarel_guide, name='genarel_guide'),
+    
     
 ]
 

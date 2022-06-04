@@ -22,6 +22,8 @@ def site_info():
     }
     
     return site_info
+
+
     
 
 def comon_doc(request):
@@ -53,6 +55,7 @@ def comon_doc(request):
     }
     return {   
             'site_info': site_info(),
-            'text': text
+            'text': text,
+            
     }
     

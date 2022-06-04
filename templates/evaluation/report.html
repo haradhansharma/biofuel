@@ -405,8 +405,9 @@
         <tr>
             <td>
                 <p> <b>Chosen Option :</b>  
+                    
                     {% if e.option.dont_know %} 
-
+                    <span>You Selected: {{e.option.name}} ,</span>
                     {% for quotation in e.question.get_quotations %}
                     <a href="{{quotation.get_absolute_url}}" target="_blank" class="btn btn-warning" > 
                         <span>Quotation Provider: {% if quotation.service_provider.orgonization %} {{quotation.service_provider.orgonization}} {% else %} Business name not found {% endif %} <span>Price: {{quotation.price}} {{quotation.price_unit}}, </span> </span> 
