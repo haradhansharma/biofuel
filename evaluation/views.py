@@ -1,3 +1,4 @@
+from pprint import pprint
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from doc.models import ExSite
@@ -13,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 from accounts.decorators import producer_required
 from gfvp import null_session
 from django.core.exceptions import PermissionDenied
+from youtubesearchpython import VideosSearch
 
 #helper function should be called into the @login_required and @producer_required
 def set_evaluation(question, selected_option, evaluator):
@@ -453,7 +455,6 @@ def eva_question(request, evaluator, slug):
     timing_text = f"Depending on how many answers you provide, the self assessment will take anywhere from {round(total_ques/10)} to {round(total_ques/3)} minutes. At the end of the assessment, a PDF report will be provided, which can be retrieved via the Dashboard at a later stage."
     
     
-    
     try:
         submitted_comment = EvaComments.objects.get(evaluator = get_current_evaluator(request), question = question).comments
     except:
@@ -465,8 +466,19 @@ def eva_question(request, evaluator, slug):
     except:
         selected_option = None  
         
-             
-    chart_data = StandaredChart.objects.filter(question = question)    
+        
+    chart_data = StandaredChart.objects.filter(question = question)  
+    
+    
+    search_term = str(question.name) + ', ' + str(question.chapter_name) + ', ' +  str(get_current_evaluator(request).biofuel.name)
+    videosSearch = VideosSearch(search_term, limit = 3)
+    vedio_search_result = videosSearch.result()
+    vedio_urls = []
+    for r in vedio_search_result['result']:        
+        embed_url = 'https://www.youtube.com/embed/{}'.format(r['id'])
+        vedio_urls.append(embed_url)
+
+    
         
     context ={
         'slug' : slug,
@@ -482,6 +494,8 @@ def eva_question(request, evaluator, slug):
         'selected_option' : selected_option,
         'submitted_comment' : submitted_comment,
         'chart_data' : chart_data,
+        'vedio_urls' : vedio_urls,
+        'search_term' : search_term
         
     }
     return render(request, 'evaluation/eva_question.html', context = context)
@@ -491,6 +505,7 @@ def eva_question(request, evaluator, slug):
 Initial Interface for evaluation
 ====
 '''
+
 @login_required
 @producer_required
 def eva_index2(request):

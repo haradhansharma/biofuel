@@ -2,7 +2,11 @@ from django.contrib import admin
 from . models import *
 
 
-admin.site.register(GenarelGuide)
+
+@admin.register(GenarelGuide)
+class GenarelGuideAdmin(admin.ModelAdmin):
+    list_filter = ('menu', )
+    
 
 
 

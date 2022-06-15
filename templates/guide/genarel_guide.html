@@ -44,14 +44,20 @@
         
         <!-- Docs Content
         ============================ -->
+        
         <div class="idocs-content">
           <div class="container"> 
 
             {% for g in guide %}
-            <section id="{{g.anchor}}">
-              <h1>{{g.title}}</h1>
+            <section  id="{{g.anchor}}">
               
-                {{g.content.html|safe}}
+
+              
+              
+              <h3>{{g.title}}</h3>
+              
+              
+                {{g.content|safe}}
               
               </section>
               
@@ -64,6 +70,7 @@
             
           </div>
         </div>
+        
         
       </div>
       <!-- Content end --> 

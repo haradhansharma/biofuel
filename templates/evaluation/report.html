@@ -404,20 +404,26 @@
         </tr>
         <tr>
             <td>
-                <p> <b>Chosen Option :</b>  
+                <p> <b>Chosen Option : {{e.option.name}} </b>  
+                    <p>                   
                     
-                    {% if e.option.dont_know %} 
-                    <span>You Selected: {{e.option.name}} ,</span>
                     {% for quotation in e.question.get_quotations %}
-                    <a href="{{quotation.get_absolute_url}}" target="_blank" class="btn btn-warning" > 
-                        <span>Quotation Provider: {% if quotation.service_provider.orgonization %} {{quotation.service_provider.orgonization}} {% else %} Business name not found {% endif %} <span>Price: {{quotation.price}} {{quotation.price_unit}}, </span> </span> 
+                    <a href="{{quotation.get_absolute_url}}" target="_blank" style="margin: 10px;"> 
+                        <span>Quotation Provider: {% if quotation.service_provider.orgonization %} {{quotation.service_provider.orgonization}} {% else %} Business name not found {% endif %} <span>Price: {{quotation.price}} {{quotation.price_unit}}</span> </span> 
                         
-                    </a>                                        
+                    </a> ||                                       
                     {% endfor %}
+
+                    {% for quotation in e.question.get_related_quotations %}
+                    <a href="{{quotation.get_absolute_url}}" target="_blank" style="margin: 10px;"> 
+                        <span>Quotation Provider: {% if quotation.service_provider.orgonization %} {{quotation.service_provider.orgonization}} {% else %} Business name not found {% endif %} <span>Price: {{quotation.price}} {{quotation.price_unit}}</span> </span> 
+                        
+                    </a> ||                                     
+                    {% endfor %}
+
+                    </p>
                     
-                    {% else %}  
-                    {{e.option.name}} 
-                    {% endif %}
+                   
                 </p>
 
 
@@ -478,6 +484,18 @@
     <table style="font-size: 14px;">
         <tr>
             <th>Activity : {{e.name_and_standared}}</th>
+        </tr>
+        <tr>
+            <th>Related Questions : 
+                <ul>
+                {% for rq in e.related_questions.all %}
+                
+              <li style="font-size: 8px;">{{rq}}</li>  
+
+                {% endfor %}
+            </ul>
+
+            </th>
         </tr>
         <tr>
             <td>

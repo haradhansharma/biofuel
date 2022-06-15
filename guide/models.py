@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
-from django_quill.fields import QuillField
+
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class GuideType(models.Model):
     title = models.CharField(max_length=252)
@@ -30,15 +32,15 @@ class GenarelGuide(models.Model):
     title = models.CharField(max_length=252)
     menu = models.ForeignKey(GuideMenu, on_delete=models.CASCADE, related_name='menuofguide')    
     anchor = models.CharField(max_length=252)
-    parent = models.ForeignKey("guide.GenarelGuide", on_delete=models.CASCADE, null=True, blank=True, related_name='menuchild', limit_choices_to={'parent': None} )
-    content = QuillField()
+    parent = models.ForeignKey("guide.GenarelGuide", on_delete=models.CASCADE, null=True, blank=True, related_name='menuchild', limit_choices_to={'parent': None} )    
+    content = RichTextUploadingField()
     
     def __str__(self):
         
         if self.parent:
-            parent = f'It is child of Parent "{str(self.parent.title)}"' 
+            parent = f'It is child of Parent "{str(self.parent.title)}" of {self.menu.type.title}' 
         else:
-            parent = 'It is Parent'
+            parent = f'It is Parent  of {self.menu.type.title}'
         
         
         return  self.title + ' -- ' + parent
