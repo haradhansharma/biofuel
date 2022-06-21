@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpRequest, HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
 
 from home.models import Quotation
-from .forms import UserForm, ProfileForm, PasswordChangeForm, QuestionForm, OptionForm, QuotationForm
+from .forms import UserForm, ProfileForm, PasswordChangeForm, QuestionForm, OptionForm, QuotationForm, NextActivitiesOnQuotation
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 # from django.contrib.auth.forms import PasswordChangeForm
@@ -255,7 +255,19 @@ def add_quatation(request, slug):
     one question can have one quotation from same user but can be refer to multi question mult time.
     if no quotation can add other wise can edit
     able to see quotation refered by other user.    
-    '''   
+    '''  
+    
+    
+    # if the page is referering from other page we will delete the next_activities session.. it is neccesary to show saved data in the question if coming from another page.
+    # and to ensure to active session when clicking on the go button.
+    if request.build_absolute_uri(request.path) == request.META.get('HTTP_REFERER', None):
+        pass
+    else:
+        try:
+            del request.session['next_activities'] 
+        except:
+            pass
+    
     
     #protect unuseual activity
     try:
@@ -264,13 +276,41 @@ def add_quatation(request, slug):
         messages.warning(request, 'Question not found or inactive!')
         return HttpResponseRedirect(reverse('home:add_quatation', args=[str(slug)]))
     
+    #if session have activities by clicking go button then we will get the session activities.
+    try:
+        session_activities = NextActivities.objects.get(id = int(request.session['next_activities'] if 'next_activities' in request.session else 0)) 
+    except:
+        session_activities = None
+    
     #if question exists ca edit other wise can add
     check_quotation = Quotation.objects.filter(test_for = question, service_provider = request.user)
-    if check_quotation.exists(): 
-        form = QuotationForm(instance=check_quotation.first())   
+    
+    if check_quotation.exists():  
+        #we will change the temporary quatation's session next_activities by session activities    
+        cq = (Quotation.objects.filter(test_for = question, service_provider = request.user)).first()           
+        cq.next_activities = session_activities           
+        if 'next_activities' in request.session:   
+            #if next activitiy in the session we will change temporary related question which is coming from the session activities.
+            (check_quotation.first()).related_questions.set([q for q in session_activities.related_questions.all()]) 
+            #the form is using for the selection of temporary next activity            
+            na_form = NextActivitiesOnQuotation(instance=cq)
+            #as we set the related questions to the quotation from the session activities then it will select with replacement by overwriting default saved value.
+            #please be noted: default new set will remain unchanged until click on the add_quatation as we are deleting session of next activity after saving the quotation.
+            form = QuotationForm(instance=check_quotation.first())             
+        else:
+            #Which we will select it will display
+            na_form = NextActivitiesOnQuotation(initial={'test_for': question, 'next_activities':request.session['next_activities'] if 'next_activities' in request.session else cq.next_activities})  
+            #will display default behaviour.
+            form = QuotationForm(instance=check_quotation.first())      
+        
         report_link = reverse('home:quotation_report', kwargs={'question': str(slug), 'quotation': int(check_quotation.first().id) })             
     else:
-        form = QuotationForm(initial={'test_for': question}) 
+        if 'next_activities' in request.session:           
+            form = QuotationForm(initial={'test_for': question, 'next_activities':session_activities, 'related_questions' :[q for q in session_activities.related_questions.all()]}) 
+        else:
+            form = QuotationForm(initial={'test_for': question}) 
+        #bound to the session
+        na_form = NextActivitiesOnQuotation(initial={'test_for': question, 'next_activities':session_activities})   
         report_link = '#'
     
     
@@ -279,33 +319,49 @@ def add_quatation(request, slug):
     form.fields["related_questions"].queryset = Question.objects.filter(is_active = True, id__in=questions_id)
     
     
-    if request.method == "POST":
-        form = QuotationForm(request.POST,  request.FILES, instance=check_quotation.first(), initial={'test_for': question} )  
-        test_for  = request.POST.get('test_for')        
-        if question.id == int(test_for):
-            if form.is_valid():
-                new_quatation = form.save(commit=False)
-                new_quatation.service_provider = request.user
-                require_document = form.cleaned_data['require_documents']
-                related_question = form.cleaned_data['related_questions']
-                new_quatation.save()
-                #essential to set manytomny reltionship
-                new_quatation.require_documents.set(require_document)
-                new_quatation.related_questions.set(related_question)
-                
-                messages.success(request,('Quatation was successfully updated!'))
-                return HttpResponseRedirect(reverse('home:add_quatation', args=[str(slug)]))
-            else:
-                messages.error(request, 'Invalid form submission.')
-                messages.error(request, form.errors)      
-                return HttpResponseRedirect(reverse('home:add_quatation', args=[str(slug)]))            
-                
-        else:
-            messages.warning(request, f'Change in "Tests for question" is not allowed! It should be "{question}"! Changes was not effected.')
+    if request.method == "POST":           
+        if 'go' in request.POST: 
+            request.session['next_activities'] = request.POST['next_activities']
             return HttpResponseRedirect(reverse('home:add_quatation', args=[str(slug)]))
+         
+        elif 'add_quatation' in request.POST:
+            form = QuotationForm(request.POST,  request.FILES, instance=check_quotation.first(), initial={'test_for': question} )  
+            test_for  = request.POST.get('test_for')        
+            if question.id == int(test_for):
+                if form.is_valid():
+                    
+                        
+                    new_quatation = form.save(commit=False)
+                    new_quatation.service_provider = request.user
+                    new_quatation.next_activities = (NextActivities.objects.get(id = int(request.session['next_activities']))) if 'next_activities' in request.session else form.cleaned_data['next_activities']
+                    require_document = form.cleaned_data['require_documents']
+                    related_question = form.cleaned_data['related_questions']
+                    new_quatation.save()
+                    #essential to set manytomny reltionship
+                    new_quatation.require_documents.set(require_document)
+                    new_quatation.related_questions.set(related_question)
+                    
+                    
+                    #after saving data we will delet the session of next activities.
+                    try:
+                        del request.session['next_activities']
+                    except:
+                        pass
+                    
+                    messages.success(request,('Quatation was successfully updated!'))
+                    return HttpResponseRedirect(reverse('home:add_quatation', args=[str(slug)]))
+                else:
+                    messages.error(request, 'Invalid form submission.')
+                    messages.error(request, form.errors)      
+                    return HttpResponseRedirect(reverse('home:add_quatation', args=[str(slug)]))            
+                    
+            else:
+                messages.warning(request, f'Change in "Tests for question" is not allowed! It should be "{question}"! Changes was not effected.')
+                return HttpResponseRedirect(reverse('home:add_quatation', args=[str(slug)]))
     context = {
         'question': question,
         'form' : form,
+        'na_form' : na_form,
         'quatation' : check_quotation.first(),
         'report_link' : report_link
     }

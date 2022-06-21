@@ -13,7 +13,7 @@
         <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
 
         </nav>
-        <h2 class="h4">To this question, add quatation.</h2>
+        <h2 class="h4">To this question, add quotation.</h2>
         <p class="mb-0">Green Fuel validation Platform.</p>
     </div>
     <div class="btn-toolbar mb-2 mb-md-0">
@@ -21,8 +21,7 @@
     </div>
 </div>
 
->
--->
+
 <div class="card card-body border-0 shadow table-wrapper table-responsive">
 
     {% if messages %}
@@ -37,17 +36,35 @@
 
 
     <div class="d-block">
-    <div class="d-inline h4 mb-4">
-        {{ question.name }} 
-        
+    <div class="row d-inline h4 mb-4">
+        <div class="d-flex">       
+            <div class="">
+                {{ question.name }} 
+            </div>        
+
+            <!--form start-->
+            <form id="quotation_form" class="" method="post" action="">
+                {% csrf_token %}
+                <div class="col-auto d-flex">
+                    {{ na_form.next_activities }}
+                    <input class="btn btn-success btn-block" type="submit" name = "go" value="GO">
+                </div>  
+            </form>
+            <!--form end-->
+            <div class="ms-4" style="float: right;" >
+                {% if quatation %}
+                    <a  href="{{report_link}}">Print</a>
+                {% endif %} 
+            </div>
+        </div>   
     </div>
-    <div class="d-inline h4 mb-4" style="float: right;" >
-        {% if quatation %}
-            <a  href="{{report_link}}">Print</a>
-        {% endif %}    
-        
-        
-    </div>
+
+
+
+
+
+
+    
 </div>
 
     <li role="separator" class="dropdown-divider mb-0 border-gray-700"></li>
@@ -66,6 +83,26 @@
                         <div class="row input-group">
                             
                             <div class="mb-4">
+
+                                <!--form start-->
+                                <div  class="form-group mt-4 d-none">
+                                    <div class="row g-3 align-items-center">
+                                        <div class="text-error invalid-feedback">{{ form.next_activities.errors }}</div>
+                                        <div class="col-auto">
+                                            <label  for="{{ form.price.id_for_label }}">{{ form.next_activities.label }} </label>  
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted" data-bs-toggle="tooltip" data-bs-html="true" title="{% if form.next_activities.help_text %} {{ form.next_activities.help_text|safe }}  {% endif %}">?</span> 
+                                        </div> 
+                                        <div class="col-auto">
+                                            {{ form.next_activities }}
+                                        </div>
+                                    </div>
+                                    
+                                    </div>
+                                   <!--form end-->
+
+                                
+
+
                                 <!--form start-->
                                 <div class="form-group mt-4">
                                 <div class="row g-3 align-items-center">
@@ -231,9 +268,19 @@
         
 
 
-            <input class="btn btn-success btn-block" type="submit" name = "add_quatation" value="Add Quatation">
+            <input class="btn btn-success btn-block" type="submit" name = "add_quatation" value="Add Quotation">
             <a class="btn btn-success btn-block" href="{% url 'home:questions' %}">Go Back to Questions</a>
+            {% if quatation %}
             <a class="btn btn-success btn-block" href="{{report_link}}">See Final Pdf</a>
+            {% endif %}
+
+
+
+
+
+
+
+
            <!-- <input class="btn btn-success btn-block" type="submit" hx-post="#ssss" hx-push-url="{% url 'home:questions' %}"  value="Save" hx-target="#pppp"  hx-swap="outerHTML" hx-vals='{"save": "save"}' hx-trigger="click">--> 
 
             

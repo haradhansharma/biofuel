@@ -8,6 +8,18 @@
 {% block content %}
 
     <div class="row">
+
+        {% if messages %}
+                    
+        <div class="alert alert-secondary mt-5" role="alert">
+            {% for message in messages %}
+            <span class="alert-inner--text">{{ message }}</span>
+            {% endfor %}
+        </div>
+        
+        {% endif %}
+
+
         <div class="col-12">
             <div class="card card-body border-0 shadow mb-4">
                 <h2 class="h5 mb-4">Change Password</h2>

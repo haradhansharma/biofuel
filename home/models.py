@@ -1,7 +1,7 @@
 # from accounts.models import User
 from django.db import models
 from django.urls import reverse
-from evaluation.models import Question
+from evaluation.models import Question, NextActivities
 from django.core.validators import FileExtensionValidator
 from django.conf import settings
 
@@ -49,6 +49,7 @@ class Quotation(models.Model):
     test_for = models.ForeignKey(Question, verbose_name="Tests for question", help_text="Help Text will go here", max_length=252, on_delete=models.CASCADE, related_name='testfor', limit_choices_to={'is_active': True, 'is_door' : False})
     related_questions = models.ManyToManyField(Question, verbose_name="Please select all other question which are also tested within the provided quotation", help_text="Allow multiple option selection. The selected options should be highlighted.", limit_choices_to={'is_active': True, 'is_door' : False})
     quotation_format = models.FileField(upload_to="quotation", help_text="Only '.pdf' are allowed", verbose_name="Upload Quotation (pdf)", validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
+    next_activities = models.ForeignKey(NextActivities, help_text="Select next activities to select related questions from next activities", on_delete=models.PROTECT, related_name='quotnextactivity', null=True, blank=True, unique=False)
     
     def __str__(self):
         return str(self.service_provider) + str(self.id)

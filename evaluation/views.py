@@ -15,6 +15,7 @@ from accounts.decorators import producer_required
 from gfvp import null_session
 from django.core.exceptions import PermissionDenied
 from youtubesearchpython import VideosSearch
+from youtubesearchpython import *
 
 #helper function should be called into the @login_required and @producer_required
 def set_evaluation(question, selected_option, evaluator):
@@ -470,9 +471,11 @@ def eva_question(request, evaluator, slug):
     chart_data = StandaredChart.objects.filter(question = question)  
     
     
-    search_term = str(question.name) + ', ' + str(question.chapter_name) + ', ' +  str(get_current_evaluator(request).biofuel.name)
+    search_term = str(question.name) + ', ' +  str(get_current_evaluator(request).biofuel.name)
+    
     videosSearch = VideosSearch(search_term, limit = 3)
     vedio_search_result = videosSearch.result()
+    
     vedio_urls = []
     for r in vedio_search_result['result']:        
         embed_url = 'https://www.youtube.com/embed/{}'.format(r['id'])

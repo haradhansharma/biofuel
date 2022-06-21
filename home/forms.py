@@ -123,7 +123,7 @@ class QuotationForm(forms.ModelForm):
     
     class Meta:
         model = Quotation
-        fields = ('price', 'price_unit', 'needy_time', 'needy_time_unit', 'sample_amount', 'sample_amount_unit', 'require_documents', 'factory_pickup', 'test_for',  'related_questions', 'quotation_format',   )
+        fields = ('price', 'price_unit', 'needy_time', 'needy_time_unit', 'sample_amount', 'sample_amount_unit', 'require_documents', 'factory_pickup', 'test_for',  'related_questions', 'quotation_format', 'next_activities',  )
         
     
         
@@ -138,10 +138,19 @@ class QuotationForm(forms.ModelForm):
             'factory_pickup': forms.CheckboxInput(attrs={ 'class':'form-check-input', 'aria-label':'pickup' }),   
             'test_for': forms.Select(attrs={'class':'form-select', 'aria-label':'test', 'style':"border: None; box-shadow: None; border-radius:0; border-bottom:1px solid "}),      
             'related_questions': forms.SelectMultiple(attrs={ 'class':'form-select', 'aria-label':'documents', 'style':"border: None; box-shadow: None; border-radius:0; border-bottom:1px solid; border-top:1px solid; height:200px; " }),   
-            'quotation_format': forms.FileInput(attrs={ 'class':'form-control', 'aria-label':'file' }),           
+            'quotation_format': forms.FileInput(attrs={ 'class':'form-control', 'aria-label':'file' }), 
+            'next_activities': forms.Select(attrs={ 'class':'form-select', 'aria-label':'unit', 'style':"border: None; box-shadow: None; border-radius:0; border-bottom:1px solid " }),      
+            
+            # 'next_activities': forms.Select(attrs={ 'class':'form-select', 'aria-label':'unit', 'hx-post':"#", 'hx-trigger':"change", 'hx-swap':"outerHTML", 'hx-target':'#pppp', 'hx-vals':'{"changing_activity": "{question.slug}"}', 'style':"border: None; box-shadow: None; border-radius:0; border-bottom:1px solid " }),          
         }
-
-
+class NextActivitiesOnQuotation(forms.ModelForm):
+    class Meta:
+        model = Quotation
+        fields = ('next_activities',)
+        widgets = {
+            'next_activities': forms.Select(attrs={ 'class':'form-select', 'aria-label':'unit', 'style':"border: None; box-shadow: None; border-radius:0; border-bottom:1px solid " }),
+        }
+      
   
     
 
