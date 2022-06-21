@@ -104,7 +104,9 @@ def dashboard(request):
     
     #dashboard summary
     day_of_week = [key.split(': ') for key, value in weeks_results(request).items()]
+    print(day_of_week)
     total_of_day = [value for key, value in weeks_results(request).items()]   
+    print(total_of_day)
     context = {
         'user_of_labels' : users_under_each_label(request),
         'biofuel_records' : reports_under_each_biofuel(request),
