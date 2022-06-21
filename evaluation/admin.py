@@ -144,8 +144,26 @@ admin.site.register(Evaluator, EvaluatorAdmin)
 admin.site.register(DifinedLabel)
 admin.site.register(Biofuel)
 admin.site.register(Option)
-admin.site.register(NextActivities)
+
 admin.site.register(StandaredChart)
+
+
+
+class NextActivitiesAdmin(admin.ModelAdmin):  
+    @admin.action(description='Duplicate Selected Activities')
+    def duplicate_event(modeladmin, request, queryset):
+        for object in queryset:
+            related_questions = object.related_questions.all()
+            compulsory_questions = object.compulsory_questions.all()
+            object.id = None
+            
+            object.save()
+            object.related_questions.set(related_questions)
+            object.compulsory_questions.set(compulsory_questions)
+            
+    actions = [duplicate_event]
+admin.site.register(NextActivities, NextActivitiesAdmin)
+
 
 
 
