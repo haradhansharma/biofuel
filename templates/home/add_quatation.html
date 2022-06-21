@@ -271,7 +271,7 @@
             <input class="btn btn-success btn-block" type="submit" name = "add_quatation" value="Add Quotation">
             <a class="btn btn-success btn-block" href="{% url 'home:questions' %}">Go Back to Questions</a>
             {% if quatation %}
-            <a class="btn btn-success btn-block" href="{{report_link}}">See Final Pdf</a>
+            <a class="btn btn-success btn-block" target="_blank" href="{{report_link}}">See Final Pdf</a>
             {% endif %}
 
 
