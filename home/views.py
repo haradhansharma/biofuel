@@ -260,6 +260,7 @@ def add_quatation(request, slug):
     '''  
     
     
+    
     # if the page is referering from other page we will delete the next_activities session.. it is neccesary to show saved data in the question if coming from another page.
     # and to ensure to active session when clicking on the go button.
     if request.build_absolute_uri(request.path) == request.META.get('HTTP_REFERER', None):
@@ -609,7 +610,7 @@ def quotation_report(request, question, quotation):
     
     
     quotation_id = quotation    
-    quotation_data = Quotation.objects.get(id = quotation_id)    
+    quotation_data = Quotation.objects.get(id = quotation_id, test_for = Question.objects.get(slug=question) )   
     
     merger = PdfFileMerger()    
 
