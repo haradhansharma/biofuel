@@ -76,7 +76,7 @@
                                     <a class="fw-normal btn btn-success" href="{{ child.get_absolute_url }}">Edit</a>
                                     
 
-                                    {% if child.get_quotations|in_quot:user %}
+                                    {% if child.get_quotations|in_quot:user %} 
                                     {% for quotation in  child.get_quotations|in_quot:user %}   
                                      
                                     <a class="fw-normal btn btn-secondary" href="{{quotation.get_quot_url}}">Quotation #{{quotation.id}}</a>

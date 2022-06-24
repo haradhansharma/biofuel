@@ -341,7 +341,7 @@ def add_quatation(request, slug):
                     new_quatation.save()
                     #essential to set manytomny reltionship
                     new_quatation.require_documents.set(require_document)
-                    new_quatation.related_questions.set(related_question)
+                    new_quatation.related_questions.set(related_question) 
                     
                     
                     #after saving data we will delet the session of next activities.
@@ -364,7 +364,7 @@ def add_quatation(request, slug):
         'question': question,
         'form' : form,
         'na_form' : na_form,
-        'quatation' : check_quotation.first(),
+        'quatation' : check_quotation.first(), 
         'report_link' : report_link
     }
     return render(request, 'home/add_quatation.html', context = context)
@@ -392,6 +392,8 @@ def quotation_report2(request, quotation_data):
     from reportlab.lib.pagesizes import letter, A4    
     from reportlab.lib.colors import black, blue, red
     from reportlab.platypus import  Paragraph
+    
+    site_data = site_info()
     
     # Create a file-like buffer to receive PDF data.
     buffer = io.BytesIO()
@@ -430,6 +432,9 @@ def quotation_report2(request, quotation_data):
     center_style_line = ParagraphStyle(name="Times", fontName='Times-Roman', fontSize=12, leading=14, textColor= blue, alignment=TA_CENTER)
     
     
+    
+    
+    
     data = [       
     ('left_style_red_head' , f'QUOTATION #{quotation_data.id}'),    
     ('left_style_red' , f'Created for question #{quotation_data.test_for.sort_order}'),
@@ -439,7 +444,11 @@ def quotation_report2(request, quotation_data):
     ('left_style_black' , f'-------------------------------------------------------------------------------------'),
     ('left_style_red' , f'<u>Questions which are also tested within this quotation::</u>'),   
      
-    ]     
+    ]  
+    
+    
+    
+       
     aW = 500 # available width and height
     aH = 800    
    
@@ -485,16 +494,32 @@ def quotation_report2(request, quotation_data):
                 aH -= h # reduce the available height   
             continue 
         
-    data = [
-        ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
-        ('left_style_black' , f'-------------------------------------------------------------------------------------'), 
-        ('left_style_blue' , f'<u>QUOTATION PROVIDED BY:</u>'),
-        ('left_style_blue' , f'___creator: {quotation_data.service_provider.get_full_name()}'),         
-        ('left_style_blue' , f'___email: {quotation_data.service_provider.email}'),  
-        ('left_style_blue' , f'___phone: {quotation_data.service_provider.phone}'),  
-        ('left_style_blue' , f'___orgonization: {quotation_data.service_provider.orgonization}'),  
-        ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
-    ]
+    
+    if quotation_data.display_site_address:    
+        data = [
+            ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
+            ('left_style_black' , f'-------------------------------------------------------------------------------------'), 
+            ('left_style_blue' , f'<u>QUOTATION PROVIDED BY:</u>'),
+            ('left_style_blue' , f'___creator: {site_data["name"]}'),         
+            ('left_style_blue' , f'___email: {site_data["email"]}'),  
+            ('left_style_blue' , f'___phone: {site_data["phone"]}'),  
+            ('left_style_blue' , f'___orgonization: {site_data["meta_name"]}'),  
+            ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
+        ]
+        
+    else:
+        data = [
+            ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
+            ('left_style_black' , f'-------------------------------------------------------------------------------------'), 
+            ('left_style_blue' , f'<u>QUOTATION PROVIDED BY:</u>'),
+            ('left_style_blue' , f'___creator: {quotation_data.service_provider.get_full_name()}'),         
+            ('left_style_blue' , f'___email: {quotation_data.service_provider.email}'),  
+            ('left_style_blue' , f'___phone: {quotation_data.service_provider.phone}'),  
+            ('left_style_blue' , f'___orgonization: {quotation_data.service_provider.orgonization}'),  
+            ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
+        ]
+        
+        
     
     for style, values in data:        
         p = Paragraph(values, locals()[style])        
@@ -520,6 +545,7 @@ def quotation_report2(request, quotation_data):
         ('left_style_blue', ('___' + get_verbose_name(quotation_data, 'sample_amount') + (':___' + str(quotation_data.sample_amount) + ' ' + str(quotation_data.sample_amount_unit)))),
         ('left_style_blue', ('___' + get_verbose_name(quotation_data, 'require_documents') + (':___' +  ', '.join([str(q) for q in quotation_data.require_documents.all()])))),
         ('left_style_blue', ('___' + get_verbose_name(quotation_data, 'factory_pickup') + (':___' + str(quotation_data.factory_pickup)))),
+        ('left_style_blue', ('___' + get_verbose_name(quotation_data, 'comments') + (':___' + str(quotation_data.comments)))),
         ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
     ]
     
@@ -546,6 +572,7 @@ def quotation_report2(request, quotation_data):
     data = [
         
         ('left_style_black' , f'-------------------------------------------------------------------------------------'),
+        ('left_style_black' , f'-------------------------------------------------------------------------------------'),        
         ('left_style_blue' , f'___This report has been genarated using {site_info().get("domain")}'),         
         ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),        
         ('left_style_red_head' , f'PLEASE CONSIDER BELOW PAGES UPLOADED BY THE QUOTATION PROVIDER!'),
@@ -630,7 +657,7 @@ def questions_details(request, slug):
             question = question_form.save()
             option_formset = OptionFormSet(request.POST, request.FILES, prefix='options', instance=question)
             option_formset.is_valid()
-            option_formset.save()
+            option_formset.save() 
             
             #controling fronend with htmx
             request.session['extra'] = 0

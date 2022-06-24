@@ -1,6 +1,7 @@
 from pprint import pprint
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+import requests
 from doc.models import ExSite
 from home.models import WeightUnit
 from .forms import *
@@ -14,8 +15,7 @@ from django.contrib.auth.decorators import login_required
 from accounts.decorators import producer_required
 from gfvp import null_session
 from django.core.exceptions import PermissionDenied
-from youtubesearchpython import VideosSearch
-from youtubesearchpython import *
+from django.conf import settings
 
 #helper function should be called into the @login_required and @producer_required
 def set_evaluation(question, selected_option, evaluator):
@@ -471,15 +471,24 @@ def eva_question(request, evaluator, slug):
     chart_data = StandaredChart.objects.filter(question = question)  
     
     
-    search_term = str(question.name) + ', ' +  str(get_current_evaluator(request).biofuel.name)
-    
-    videosSearch = VideosSearch(search_term, limit = 3)
-    vedio_search_result = videosSearch.result()
-    
+    search_term = str(question.name) + ', ' +  str(get_current_evaluator(request).biofuel.name)    
+    search_url = 'https://www.googleapis.com/youtube/v3/search'    
+    params = {
+        'part' : 'snippet',
+        'q' : search_term,
+        'key' : settings.YOUTUBE_DATA_API_KEY,
+        'maxResults' : 3,
+    }
+    r = requests.get(search_url, params=params, )
+    search_results = r.json()
     vedio_urls = []
-    for r in vedio_search_result['result']:        
-        embed_url = 'https://www.youtube.com/embed/{}'.format(r['id'])
+    for item in search_results.get('items'):
+        item_id = item['id']        
+        embed_url = 'https://www.youtube.com/embed/{}'.format(item_id['videoId'])
         vedio_urls.append(embed_url)
+    
+
+    
 
     
         

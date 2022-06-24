@@ -18,7 +18,7 @@ def question_update_mail(sender, instance, **kwargs):
     if instance.is_active:
         producers = UserType.objects.get(is_producer = True)
         current_site = Site.objects.get_current()
-        staffs = User.objects.filter(is_staff = True)
+        staffs = User.objects.filter(is_staff = True, is_superuser = True)
         producers = User.objects.filter(type = producers)
         subject = 'Question updated!'                  
                 
@@ -36,8 +36,8 @@ def question_update_mail(sender, instance, **kwargs):
         #Send multi mail with single conenction
         mail_to_staff = [(subject, message, site.email, [staff]) for staff in staffs]
         mail_to_producer = [(subject, message, site.email, [producer]) for producer in producers]  
-        # send_mass_mail((mail_to_staff), fail_silently=False)
-        # send_mass_mail((mail_to_producer), fail_silently=False)
+        send_mass_mail((mail_to_staff), fail_silently=False)
+        send_mass_mail((mail_to_producer), fail_silently=False)
         
 
         

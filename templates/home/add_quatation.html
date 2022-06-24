@@ -212,6 +212,22 @@
                                 </div>
                                 <!--form end-->
 
+                                <!--form start-->
+                                <div class="form-group mt-4">
+                                    <div class="row g-3 align-items-center">
+                                        <div class="text-error invalid-feedback">{{ form.display_site_address.errors }}</div>                                    
+                                        <div class="col-auto">
+                                            <label  for="{{ form.display_site_address.id_for_label }}">{{ form.display_site_address.label }} </label>  
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted" data-bs-toggle="tooltip" data-bs-html="true" title="{% if form.display_site_address.help_text %} {{ form.display_site_address.help_text|safe }}  {% endif %}">?</span> 
+                                        </div> 
+                                        <div class="col-auto">
+                                            <span>{{ form.display_site_address }}</span> 
+                                        </div>
+                                        
+                                    </div>
+                                    </div>
+                                    <!--form end-->
+
 
                                 <!--form start-->
                                 <div class="form-group mt-4">
@@ -228,6 +244,22 @@
                                 </div>
                                 </div>
                                 <!--form end-->
+
+                                <!--form start-->
+                                <div class="form-group mt-4">
+                                    <div class="row g-3 align-items-center">
+                                        <div class="text-error invalid-feedback">{{ form.comments.errors }}</div>                                    
+                                        <div class="col-auto">
+                                            <label  for="{{ form.comments.id_for_label }}">{{ form.comments.label }} </label>  
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted" data-bs-toggle="tooltip" data-bs-html="true" title="{% if form.comments.help_text %} {{ form.comments.help_text|safe }}  {% endif %}">?</span> 
+                                        </div> 
+                                        <div class="col-auto">
+                                            <span>{{ form.comments }}</span> 
+                                        </div>
+                                        
+                                    </div>
+                                    </div>
+                                    <!--form end-->
 
                                 <!--form start-->
                                 <div class="form-group mt-4">

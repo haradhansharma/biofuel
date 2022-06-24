@@ -50,6 +50,8 @@ class Quotation(models.Model):
     related_questions = models.ManyToManyField(Question, verbose_name="Please select all other question which are also tested within the provided quotation", help_text="Allow multiple option selection. The selected options should be highlighted.", limit_choices_to={'is_active': True, 'is_door' : False})
     quotation_format = models.FileField(upload_to="quotation", help_text="Only '.pdf' are allowed", verbose_name="Upload Quotation (pdf)", validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
     next_activities = models.ForeignKey(NextActivities, help_text="Select next activities to select related questions from next activities", on_delete=models.PROTECT, related_name='quotnextactivity', null=True, blank=True, unique=False)
+    display_site_address = models.BooleanField(default=True, verbose_name="Display Site Address", help_text="Tick will display system address IO Validation partner address")
+    comments = models.TextField(max_length=500, help_text="This field will take charecter upto 500", null=True, blank=True)
     
     def __str__(self):
         return str(self.service_provider) + str(self.id)

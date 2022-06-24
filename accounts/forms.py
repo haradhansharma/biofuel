@@ -9,6 +9,7 @@ from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.contrib.auth import authenticate
 from django.contrib import messages
+from django.contrib.auth.admin import UserAdmin
 
 # Part of googleee recaptcha.
 from captcha.fields import ReCaptchaField
@@ -18,6 +19,17 @@ from captcha.widgets import ReCaptchaV2Invisible, ReCaptchaV2Checkbox
 
 
 class UserCreationForm(UserCreationForm):
+    
+    #adding field to the admin template
+    def __init__(self, *args, **kwargs): 
+        super(UserCreationForm, self).__init__(*args, **kwargs)   
+    UserAdmin.add_form = UserCreationForm
+    UserAdmin.add_fieldsets = ((None, {
+        'classes': ('wide',),
+        'fields': ('type', 'email', 'username', 'password1', 'password2',  'term_agree', 'experts_in', )
+    }),)
+        
+        
     class Meta:
         model = User
         fields = '__all__'       
