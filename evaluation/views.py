@@ -370,8 +370,11 @@ Main interface during evaluation process.
 @producer_required
 def eva_question(request, evaluator, slug):
     
+     
+        
+    
     #This is essential where user loggedin
-    null_session(request)    
+    null_session(request)     
     
     '''
     ========
@@ -388,18 +391,24 @@ def eva_question(request, evaluator, slug):
        
     if 'evaluator' not in request.session:
         messages.warning(request, 'You are not permitted to access the requested webpage!')
-        return HttpResponseRedirect(reverse('evaluation:evaluation2'))    
+        return HttpResponseRedirect(reverse('evaluation:evaluation2')) 
+    
+    
     
     '''
     if anybody coming from initial page then system will get session evaluator
     if no report is in progress evaluator will be '' . it is ensured by middleware.
     if anybody going to edit report then report id will be taken as session evaluator.
     '''
+    eva = Evaluator.objects.get(id = evaluator)   
     if request.session['evaluator'] == '':
         request.session['evaluator'] = evaluator
-        edit_evaluator = Evaluator.objects.get(id = evaluator)        
+        edit_evaluator = eva      
         edit_evaluator.report_genarated = False
-        edit_evaluator.save()      
+        edit_evaluator.save()   
+    
+    
+    
     
     '''
     Below evaluator checking will ensure the correct report are editing.
@@ -408,7 +417,18 @@ def eva_question(request, evaluator, slug):
     ''' 
     if request.session['evaluator'] !=  evaluator:            
         messages.warning(request, f"You have an active, unfinished Report, Report#{request.session['evaluator']}! So you're not permitted to perform this procedure!")        
-        return HttpResponseRedirect(reverse('accounts:user_link', args=[str(request.user.username)]))     
+        return HttpResponseRedirect(reverse('accounts:user_link', args=[str(request.user.username)]))   
+    
+    
+    '''
+    creator can edit own report!
+    '''    
+    if eva.creator.id == request.user.id:
+        pass
+    else:
+        raise PermissionDenied  
+    
+    
     
     question = Question.objects.get(slug = slug)   
     

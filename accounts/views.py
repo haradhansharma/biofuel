@@ -231,14 +231,15 @@ def activate(request, uidb64, token):
 def userpage(request, username):    
     #This is essential where user loggedin
     null_session(request)   
+    user = User.objects.get(username=username)
     
     try:
-        last_reports = Evaluator.objects.filter(creator = request.user, report_genarated = True).order_by('-create_date').first()  
+        last_reports = Evaluator.objects.filter(creator = user, report_genarated = True).order_by('-create_date').first()  
     except:
         last_reports = None
         
     if last_reports is not None: 
-        gretings = 'The summary of the last report genarated by You!'
+        gretings = f'The summary of the last report genarated by {username}!'
         ans_ques = EvaLebelStatement.objects.filter(evaluator = last_reports, question__isnull = False, assesment = False).values('question').distinct().count()
         dont_know_ans = EvaLebelStatement.objects.filter(evaluator = last_reports, question__isnull = False, dont_know = 1, assesment = False).values('question').distinct().count()
         pos_ans = EvaLebelStatement.objects.filter(evaluator = last_reports, question__isnull = False, positive = 1, assesment = False).values('question').distinct().count()
@@ -259,7 +260,7 @@ def userpage(request, username):
             return HttpResponseRedirect(reverse('evaluation:evaluation2'))  
         
         #increadable setattr to reduce time to make report editing url without touch of database 
-        reports = Evaluator.objects.filter(creator = request.user).order_by('-id')  
+        reports = Evaluator.objects.filter(creator = user).order_by('-id')  
         for report in reports:            
             try:   
                 last_question = Evaluation.objects.filter(evaluator = report).order_by('id').last().question        
@@ -279,7 +280,8 @@ def userpage(request, username):
             'dont_know_percent': str("%.2f" % dont_know_percent) + '%',
             'reports': reports,
             'last_reports' : last_reports,
-            'last_report_button_text' : 'Get Last Report'
+            'last_report_button_text' : 'Get Last Report',
+            'username' : username
         }
     else:
         

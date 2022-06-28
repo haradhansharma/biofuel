@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, HttpRequest, HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
+from django.http import Http404, HttpRequest, HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect, JsonResponse
+from doc.models import ExSite
 
 from home.models import Quotation
 from .forms import UserForm, ProfileForm, PasswordChangeForm, QuestionForm, OptionForm, QuotationForm, NextActivitiesOnQuotation
@@ -610,7 +611,7 @@ def quotation_report(request, question, quotation):
     
     
     quotation_id = quotation    
-    quotation_data = Quotation.objects.get(id = quotation_id, test_for = Question.objects.get(slug=question) )   
+    quotation_data = Quotation.objects.get(id = quotation_id)   
     
     merger = PdfFileMerger()    
 
@@ -764,6 +765,35 @@ def sub_extra(request, pk):
     if request.session['extra'] >= 1:
         request.session['extra'] -= 1
     return HttpResponseRedirect(reverse_lazy('home:questions_details', args=[str(pk)]))
+
+
+def webmanifest(request):
+    site = ExSite.on_site.get()    
+    icons = []    
+    ic192 = {
+        "src": site.og_image.url,
+        "sizes": "192x192",
+        "type": "image/png"        
+    }
+    
+    icons.append(ic192)   
+    ic512 = {
+        "src": site.og_image.url,
+        "sizes": "512x512",
+        "type": "image/png"        
+    }
+    icons.append(ic512)    
+    site_info = {
+        'name' : site.site.name,
+        'short_name' : site.site.name,
+        'icons' : icons,
+        
+        "theme_color": "#ffffff",
+        "background_color": "#ffffff",
+        "display": "standalone"        
+    }
+    
+    return JsonResponse(site_info, safe=False)
 
 
 

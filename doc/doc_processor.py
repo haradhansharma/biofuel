@@ -7,7 +7,7 @@ def site_info():
         'canonical' : site.site.domain,
         'meta_name': site.site_meta,
         'description': site.site_description,
-        # 'tag': site.site_meta_tag,
+        'tag': site.site_meta_tag,
         'favicon': site.site_favicon.url,
         'mask_icon': site.mask_icon.url,
         'logo': site.site_logo.url,
@@ -48,7 +48,9 @@ def comon_doc(request):
         'set_a_new' : 'Set a New Password',
         'enter_new' : 'Enter New Password',
         'set_new' : 'Set New Password',
-        'reset_complete' : 'Passowrd Reset Complete'
+        'reset_complete' : 'Passowrd Reset Complete',
+        'error404' : 'Error 404',
+        'error403' : 'Error 403'
         
         
         

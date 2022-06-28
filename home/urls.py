@@ -17,6 +17,7 @@ urlpatterns = [
     path('dashboard/allreports/', views.allreports, name='all_reports'),  
     path('dashboard/new_questions/', views.new_questions, name='new_question'),
     path('quotation/<str:question>/<int:quotation>', views.quotation_report, name='quotation_report'),
+    path('seo/webmanifest/', views.webmanifest, name='webmanifest'),
 ]
 
 hx_urlpatterns = [

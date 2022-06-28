@@ -10,7 +10,7 @@ class ExSite(models.Model):
     site = models.OneToOneField(Site, primary_key=True, verbose_name='site', on_delete=models.CASCADE)
     site_meta = models.CharField(max_length=256)
     site_description = models.TextField(max_length=500)
-    # site_meta_tag =models.CharField(max_length=255)
+    site_meta_tag =models.CharField(max_length=255)
     site_favicon = models.ImageField(upload_to='site_image')
     site_logo = models.ImageField(upload_to='site_image')
     slogan = models.CharField(max_length=150, default='')

@@ -33,6 +33,9 @@ class UserType(models.Model):
     #IF user type representing consumer it must be true
     is_consumer = models.BooleanField(default=False)  
     
+    #IF user type representing consumer it must be true
+    is_marine = models.BooleanField(default=False)  
+    
     #To control display order it is mandatory  
     sort_order = models.IntegerField(default=1)
     
@@ -124,6 +127,12 @@ class User(AbstractUser):
     @property
     def is_consumer(self):
         if self.type.is_consumer:
+            return True
+        return False
+    
+    @property
+    def is_marine(self):
+        if self.type.is_marine:
             return True
         return False
     

@@ -26,6 +26,7 @@ class QuestionAdmin(admin.ModelAdmin):
     list_display = ('sort_order', 'name', 'is_door',)
     list_filter = ('is_door','is_active',)
     inlines = [Labels, Options]
+    
 admin.site.register(Question, QuestionAdmin) 
 
 class LsLabels(admin.TabularInline):
@@ -39,12 +40,7 @@ class LogicalStringAdmin(admin.ModelAdmin):
 admin.site.register(LogicalString, LogicalStringAdmin)
 
 
-class EvaluatorAdmin(admin.ModelAdmin):  
-    
-    
-
-    
-        
+class EvaluatorAdmin(admin.ModelAdmin): 
       
     list_display = ('id', 'notified', 'name','creator', 'email', 'phone', 'biofuel', 'create_date','orgonization', 'report_genarated')
     list_filter = ('biofuel', )

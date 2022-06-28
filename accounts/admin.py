@@ -73,7 +73,7 @@ class UserAdmin(UserAdmin):
         message = render_to_string('emails/expert_mail.html', {                        
             'domain': current_site.domain,            
             })  
-        mail_to_expert = [(subject, message, 'from@example.com', [obj.email]) for obj in queryset]
+        mail_to_expert = [(subject, message, '', [obj.email]) for obj in queryset]
         send_mass_mail((mail_to_expert), fail_silently=False) 
         self.message_user(request, "Mail sent successfully ")
         
