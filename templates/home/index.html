@@ -26,7 +26,12 @@
                                     <div class="col-12 col-lg-7 order-2 order-lg-1 text-start text-lg-left">
                                         <h1 class="mt-5">To begain <span class="text-warning">the registration</span> process.... </h1>
                                         <p class="lead my-4">Please select your business type from the list below. <span class="text-warning">If you are registered,</span><span class="text-primary"> click on the button below to login.</span></p>
-                                        <a class="btn btn-primary animate-hover" href="{% url 'login' %}"><i class="fas fa-chevron-left mr-3 pl-2 animate-left-3"></i>Login To The System</a>
+                                        {% if user.is_authenticated %} 
+                                        <a class="btn btn-primary animate-hover" href="{% url 'accounts:user_link' user.username %}"><i class="fas fa-chevron-left mr-3 pl-2 animate-left-3"></i> You are <span class="text-warning">{{user.username}}</span> </a>
+                                        {% else %}
+                                        <a class="btn btn-primary animate-hover" href="{% url 'login' %}"><i class="fas fa-chevron-left mr-3 pl-2 animate-left-3"></i> <span class="text-warning">Login </span>To The System </a>
+                                        {% endif %}
+                                        
                                     </div>
                                     <div class="col-12 col-lg-5 order-1 order-lg-2 text-end align-items-end justify-content-end d-none d-lg-flex">
                                         <img class="img-fluid w-75" src="{% static 'assets/login.svg' %}" alt="Login To The System">
