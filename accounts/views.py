@@ -74,9 +74,6 @@ def signup(request):
     
     
     '''
-    
-    
-    
      
     #to avoid circular reference it is importing here.
     from .forms import UserCreationFormFront
