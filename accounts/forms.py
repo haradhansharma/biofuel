@@ -105,7 +105,7 @@ class UserCreationFormFront(UserCreationForm):
                                                                
                     is_active_qs = User.objects.filter(email=email, is_active=False).first()                
                     if is_active_qs:  
-                        if is_active_qs.is_expert:
+                        if is_active_qs.is_expert or is_active_qs.is_marine:
                             raise forms.ValidationError("You have an account already with this email. But account is not activated by site admin, please wait for approval!")                              
                         else:             
                             subject = 'Account activation required!'  
@@ -197,7 +197,7 @@ class LoginForm(AuthenticationForm):
                     '''                          
                     is_active_qs = User.objects.filter(email=email, is_active=False).first()                
                     if is_active_qs:  
-                        if is_active_qs.is_expert:
+                        if is_active_qs.is_expert or is_active_qs.is_marine:
                             raise forms.ValidationError("Your account is not activated by site admin, please wait for approval!")     
                         else:             
                             subject = 'Account activation required!'  

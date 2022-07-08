@@ -58,13 +58,13 @@ class UserAdmin(UserAdmin):
         
         
     # Creating custom action for admin to send curtesy mail to expert. It is sending massmail using one connection.       
-    @admin.action(description='Send mail to the domain expert to update feedback ')
+    @admin.action(description='Send mail to the selected Marine Expert to update feedback ')
     def send_mail_to_expert(self, request, queryset):
         user_type = []
         for i in queryset:
-            user_type.append(i.type.is_expert)
+            user_type.append(i.type.is_marine)
         if False in user_type:
-            return self.message_user(request, "Non Expert Selected! Please select experts only!")      
+            return self.message_user(request, "Non Marine Expert Selected! Please select Marine experts only!")      
         
         from django.template.loader import render_to_string
         from django.core.mail import send_mass_mail

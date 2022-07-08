@@ -193,7 +193,7 @@ def activate(request, uidb64, token):
         user.email_verified = True
         
         # if user is expert then need to activate manually by site admin
-        if user.is_expert:            
+        if user.is_expert or user.is_marine:            
             user.is_active = False
             subject = 'Please Wait for approval'               
             message = render_to_string('emails/regi_mail_to_expert.html', {
