@@ -94,6 +94,10 @@ class User(AbstractUser):
                 
             })
             self.email_user(subject, '', html_message=message)
+            
+    @property
+    def get_profile(self):
+        return self.profile
     
     @property
     def get_type(self):

@@ -1,19 +1,20 @@
 {% load static %}
-<footer class="footer py-6 bg-gray-800 text-white">
+<footer class="footer py-6 bg-primary">
     <div class="container">
         
         <hr class="bg-gray-700 my-5">
         <div class="row">
             <div class="col mb-md-0">
                 <a href="/" class="d-flex justify-content-center">
-                    <img src="{{site_info.logo}}" height="100" class="mb-4" alt="{{site_info.name}}">
+                    <img src="{{site_info.logo}}" height="100" class="mb-4 card bg-bgreen" alt="{{site_info.name}}" style="max-width: 120px;">
                 </a>
+               
                 <a class="d-flex justify-content-center" target="_blank" href="{% url 'guide:guide_home' %}" title="gf-vp guide"> <img src="{% static 'guide/logo-02.png' %}" height="50" class="mb-4" alt="gf-vp guide"> </a> 
 
             <div class="d-flex text-center justify-content-center align-items-center" role="contentinfo">
-                <p class="fw-normal font-small mb-0">
-                    &copy; <a href="{% url 'home:home' %}">www.gf-vp.com</a> -<span class="current-year">2022</span> - coded by <a target="_blank" href="https://www.hrdnsh.com">Haradhan Sharma</a>.</p>
-                </div>
+                <p class="fw-normal font-small mb-0 text-tertiary">
+                    &copy; <a class="link-secondary" href="{% url 'home:home' %}">www.gf-vp.com</a> -<span class="current-year">2022</span> - coded by <a target="_blank" href="https://www.hrdnsh.com">Haradhan Sharma</a>.</p>
+                </div> 
             </div>
         </div>
     </div>

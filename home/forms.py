@@ -8,7 +8,6 @@ from home.models import Quotation
 
 
 class PasswordChangeForm(PasswordChangeForm):
-
     def __init__(self, *args, **kwargs):
         super(PasswordChangeForm, self).__init__(*args, **kwargs)
         self.fields['old_password'].widget = forms.PasswordInput(attrs={'autocomplete': 'current-password', 'autofocus': True, 'class':'form-control'})
@@ -23,8 +22,7 @@ class PasswordChangeForm(PasswordChangeForm):
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username','first_name', 'last_name', 'email', 'orgonization', 'phone', )
-        
+        fields = ('username','first_name', 'last_name', 'email', 'orgonization', 'phone', )        
         widgets = {
                       
             'username': forms.TextInput(attrs={'placeholder': 'username', 'class':'form-control', 'aria-label':'username',  }),
@@ -32,8 +30,7 @@ class UserForm(forms.ModelForm):
             'last_name': forms.TextInput(attrs={'placeholder': 'last_name','class':'form-control', 'aria-label':'last_name', }), 
             'orgonization': forms.TextInput(attrs={'placeholder': 'orgonization','class':'form-control', 'aria-label':'orgonization', }), 
             'phone': forms.TextInput(attrs={'placeholder': 'phone','class':'form-control', 'aria-label':'phone', }), 
-            'email': forms.EmailInput(attrs={'placeholder': 'email', 'class':'form-control', 'aria-label':'email' , }),
-            
+            'email': forms.EmailInput(attrs={'placeholder': 'email', 'class':'form-control', 'aria-label':'email' , }),            
             
         }
         labels = {     
@@ -59,9 +56,9 @@ class ProfileForm(forms.ModelForm):
         
         widgets = {
                       
-            'about': forms.Textarea(attrs={'placeholder': 'about', 'class':'form-control', 'aria-label':'about' }),
-            'location': forms.TextInput(attrs={'placeholder': 'location', 'class':'form-control', 'aria-label':'location' }),
-            'established': forms.DateInput(attrs={'data-datepicker': "" , 'class':'form-control', 'aria-label':'established', }), 
+            'about': forms.Textarea(attrs={'placeholder': 'About', 'class':'form-control', 'aria-label':'about' }),
+            'location': forms.TextInput(attrs={'placeholder': 'Location', 'class':'form-control', 'aria-label':'location' }),
+            'established': forms.DateInput(format='%d-%m-%Y', attrs={ 'placeholder':"Select a Date", 'class':'form-control', 'aria-label':'established', }), 
             
             
         }
@@ -77,17 +74,13 @@ class QuestionForm(forms.ModelForm):
     class Meta:
         model   = Question
         fields  = ('name',)
-        widgets = {
-                      
-            'name': forms.TextInput(attrs={'placeholder': 'name', 'class':'form-control', 'aria-label':'name' }),          
-            
-            
+        widgets = {                      
+            'name': forms.TextInput(attrs={'placeholder': 'Title of the question', 'class':'form-control', 'aria-label':'name' }),     
         }
         
-        labels = {     
+        labels = { 
                      
-            'name': 'Edit Question',
-            
+            'name': 'Edit Question',          
                      
         }
         
@@ -97,8 +90,8 @@ class OptionForm(forms.ModelForm):
         model   = Option
         fields  = ('name', 'statement', )
         widgets = {                      
-            'name': forms.TextInput(attrs={'placeholder': 'name', 'class':'form-control', 'aria-label':'name' }),
-            'statement': forms.Textarea(attrs={'placeholder': 'statement', 'class':'form-control', 'aria-label':'statement' }),            
+            'name': forms.TextInput(attrs={'placeholder': 'Label of the Option', 'class':'form-control', 'aria-label':'name' }),
+            'statement': forms.Textarea(attrs={'placeholder': 'Statement for the option', 'class':'form-control', 'aria-label':'statement' }),            
             
         }
         
@@ -110,17 +103,6 @@ class OptionForm(forms.ModelForm):
         }
         
 class QuotationForm(forms.ModelForm):
-    
-    
-    # def __init__(self, *args,**kwargs):        
-    #     from home.views import get_question_of_label
-    #     self.request = kwargs.pop('request', None)
-    #     print(self.request)
-    #     super (QuotationForm, self ).__init__(*args,**kwargs) # populates the post
-        
-        # self.fields['related_questions'].queryset = get_question_of_label(request)
-        
-    
     class Meta:
         model = Quotation
         fields = ('price', 'price_unit', 'needy_time', 'needy_time_unit', 'sample_amount', 'sample_amount_unit', 'require_documents', 'factory_pickup', 'test_for',  'related_questions', 'quotation_format', 'next_activities', 'display_site_address', 'comments', )

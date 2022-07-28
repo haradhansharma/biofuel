@@ -47,55 +47,57 @@ def weeks_results(request):
         record = {
             i['create_date__date'].strftime("%d/%m/%y") : i['total']
         }
-        records.update(record)   
-    print(records)
+        records.update(record)     
     return records
 
 def all_reports(request):
     try:
-        if request.user.is_staff or request.user.is_superuser or request.user.is_expert:
+        if request.user.is_staff or request.user.is_superuser:
             reports = Evaluator.objects.filter(report_genarated = True).order_by('-create_date')  
         else:
             reports = Evaluator.objects.filter(creator = request.user , report_genarated = True).order_by('-create_date')  
+    
+        if reports.exists():
+            reports_set = [] 
+            for evaluator in reports:
+                answered_questiones = EvaLebelStatement.objects.filter(evaluator = evaluator).exclude(question = None).values('question').distinct().count()
+                positive_ans = EvaLebelStatement.objects.filter(evaluator = evaluator, positive=str(1)).exclude(question = None).values('question').distinct().annotate(positive = Count('positive')).count()
+                dont_know_ans = EvaLebelStatement.objects.filter(evaluator = evaluator, dont_know=True).exclude(question = None).values('question').distinct().annotate(positive = Count('dont_know')).count() 
+                dont_know_percent = (int(dont_know_ans) * 100)/int(answered_questiones)
+                positive_percent = (int(positive_ans) * 100)/int(answered_questiones)        
+                
+                g_report = {
+                    'report': evaluator,
+                }  
+                g_report_result = {
+                    'answered_questiones' : answered_questiones,
+                    'positive_ans' : positive_ans,
+                    'dont_know_ans' : dont_know_ans,
+                    'dont_know_percent': str("%.2f" % dont_know_percent) + '%', 
+                    'positive_percent': str("%.2f" % positive_percent) + '%',  
+                }  
+                
+                robj = {
+                    'g_report': g_report,
+                    'g_report_result': g_report_result,           
+                }
+            
+                reports_set.append(robj)
+            
+            page = request.GET.get('page', 1)
+            paginator = Paginator(reports_set, 10)
+            try:
+                reports_set = paginator.page(page)
+            except PageNotAnInteger:
+                reports_set = paginator.page(1)
+            except EmptyPage:
+                reports_set = paginator.page(paginator.num_pages)   
+            
+            return reports_set
+        else:
+            return None    
     except:
         raise Http404
-        
-    reports_set = [] 
-    for evaluator in reports:
-        answered_questiones = EvaLebelStatement.objects.filter(evaluator = evaluator).exclude(question = None).values('question').distinct().count()
-        positive_ans = EvaLebelStatement.objects.filter(evaluator = evaluator, positive=str(1)).exclude(question = None).values('question').distinct().annotate(positive = Count('positive')).count()
-        dont_know_ans = EvaLebelStatement.objects.filter(evaluator = evaluator, dont_know=True).exclude(question = None).values('question').distinct().annotate(positive = Count('dont_know')).count() 
-        dont_know_percent = (int(dont_know_ans) * 100)/int(answered_questiones)
-        positive_percent = (int(positive_ans) * 100)/int(answered_questiones)        
-        
-        g_report = {
-            'report': evaluator,
-        }  
-        g_report_result = {
-            'answered_questiones' : answered_questiones,
-            'positive_ans' : positive_ans,
-            'dont_know_ans' : dont_know_ans,
-            'dont_know_percent': str("%.2f" % dont_know_percent) + '%', 
-            'positive_percent': str("%.2f" % positive_percent) + '%',  
-        }  
-        
-        robj = {
-            'g_report': g_report,
-            'g_report_result': g_report_result,           
-        }
-    
-        reports_set.append(robj)
-    
-    page = request.GET.get('page', 1)
-    paginator = Paginator(reports_set, 10)
-    try:
-        reports_set = paginator.page(page)
-    except PageNotAnInteger:
-        reports_set = paginator.page(1)
-    except EmptyPage:
-        reports_set = paginator.page(paginator.num_pages)   
-    
-    return reports_set
 
 def typewise_user(request):    
     user_types = UserType.objects.all()

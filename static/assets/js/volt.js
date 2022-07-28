@@ -77,6 +77,16 @@ d.addEventListener("DOMContentLoaded", function(event) {
         });
     }
 
+    var topbar = document.getElementById('topbarMenu')
+    if(topbar && d.body.clientWidth < breakpoints.lg) {
+        topbar.addEventListener('shown.bs.collapse', function () {
+            document.querySelector('body').style.position = 'fixed';
+        });
+        topbar.addEventListener('hidden.bs.collapse', function () {
+            document.querySelector('body').style.position = 'relative';
+        });
+    }
+
     var iconNotifications = d.querySelector('.notification-bell');
     if (iconNotifications) {
         iconNotifications.addEventListener('shown.bs.dropdown', function () {

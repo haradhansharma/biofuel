@@ -12,10 +12,11 @@ from django.urls import reverse
 from django_xhtml2pdf.utils import generate_pdf
 from . helper import label_assesment_for_donot_know, label_assesment_for_positive, overall_assesment_for_donot_know, overall_assesment_for_positive, get_current_evaluator
 from django.contrib.auth.decorators import login_required
-from accounts.decorators import producer_required
+from accounts.decorators import producer_required, report_creator_required
 from gfvp import null_session
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
+from django.utils.safestring import mark_safe
 
 #helper function should be called into the @login_required and @producer_required
 def set_evaluation(question, selected_option, evaluator):
@@ -190,7 +191,7 @@ def set_evastatement_of_logical_string(request, selected_option, evaluator):
     
         
         
-
+@login_required
 def option_add2(request):    
     #Ensure session started
     #as report session can not be started without authenticated user
@@ -274,6 +275,7 @@ def option_add2(request):
         
 
 #To check question button and mark with specific color by template
+@login_required
 def question_dataset(request):
     '''
     get sorted question of current report.
@@ -536,7 +538,7 @@ def eva_question(request, evaluator, slug):
 ====
 Initial Interface for evaluation
 ====
-'''
+''' 
 
 @login_required
 @producer_required
@@ -732,6 +734,7 @@ def thanks(request):
 
 
 @login_required
+@report_creator_required
 def report(request, slug):
     #essential part where login_required
     
@@ -748,17 +751,13 @@ def report(request, slug):
     except KeyError:
         pass
 
-    #only creator can can ccess the report now.
-    if request.user.is_producer:
-        try:
-            get_report = Evaluator.objects.get(slug = slug, creator = request.user)
-        except:
-            raise PermissionDenied 
-    #staff and superuser can access the report               
-    elif request.user.is_staff or request.user.is_superuser:
+    #As we are checking the function with decorator then we can query the report directly  
+    try:  
         get_report = Evaluator.objects.get(slug = slug)
-    else:
-        raise PermissionDenied
+    except:
+        messages.warning(request, 'No report found!')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    
     
     
     

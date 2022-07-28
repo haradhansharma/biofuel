@@ -1,195 +1,185 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Settings {% endblock %} 
+{% block title %} Settings {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+{% endblock stylesheets %}
 
 {% block content %}
 
 
-    <div class="row">
-        <div class="col-12 col-xl-8">
-            <div class="card card-body border-0 shadow mb-4">
-
-                {% if messages %}   
-                    <div class="col-12 text-center">
-                        <div class="alert alert-secondary shadow-soft" role="alert">                            
-                            {% for message in messages %}
-                            <span class="alert-inner--text">{{ message }}</span>
-                            {% endfor %}                            
-                        </div>                        
-                    </div>
-                    {% endif %}
-
-
-
-                <h2 class="h5 mb-4">General information</h2>
-
-                
-
-                
-                <form method="post" id="user_form" action="{% url 'home:user_settings' %}"> 
-
-                    {% csrf_token %}
-
-
-                    <div class="row">
-
-                    <!-- Form -->
-                    <div class="col-md-6 mb-3">
-                    <div class="form-group mb-4">
-                        <label for="{{ user_form.username.id_for_label }}">{{ user_form.username.label_tag }} </label>
-                        <div class="input-group">
-                            
-                            {{ user_form.username }}
-                        </div>  
-                        <span class="text-error">{{ user_form.username.errors }}</span>
-                    </div>
-                </div>
-                    <!-- End of Form -->
-
-                    <!-- Form -->
-                    <div class="col-md-6 mb-3">
-                    <div class="form-group mb-4">
-                        <label for="{{ user_form.first_name.id_for_label }}"> First Name </label> 
-                        <div class="input-group">
-                            
-                            {{ user_form.first_name }}
-                        </div>  
-                        <span class="text-error">{{ user_form.first_name.errors }}</span>
-                    </div>
-                </div>
-                    <!-- End of Form -->
-
-                    <!-- Form -->
-                    <div class="col-md-6 mb-3">
-                    <div class="form-group mb-4">
-                        <label for="{{ user_form.last_name.id_for_label }}">{{ user_form.last_name.label_tag }} </label>
-                        <div class="input-group">
-                            
-                            {{ user_form.last_name }}
-                        </div>  
-                        <span class="text-error">{{ user_form.last_name.errors }}</span>
-                    </div>
-                </div>
-                    <!-- End of Form -->
-
-                    <!-- Form -->
-                    <div class="col-md-6 mb-3">
-                    <div class="form-group mb-4">
-                        <label for="{{ user_form.email.id_for_label }}">{{ user_form.email.label_tag }} </label>
-                        <div class="input-group">
-                            
-                            {{ user_form.email }}
-                        </div>  
-                        <span class="text-error">{{ user_form.email.errors }}</span>
-                    </div>
-                </div>
-                    <!-- End of Form -->
-
-                    <!-- Form -->
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group mb-4">
-                            <label for="{{ user_form.phone.id_for_label }}">{{ user_form.phone.label_tag }} </label>
-                            <div class="input-group">
-                                
-                                {{ user_form.phone }}
-                            </div>  
-                            <span class="text-error">{{ user_form.phone.errors }}</span>
-                        </div>
-                    </div>
-                        <!-- End of Form -->
-
-                         <!-- Form -->
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group mb-4">
-                            <label for="{{ user_form.orgonization.id_for_label }}">{{ user_form.orgonization.label_tag }} </label>
-                            <div class="input-group">
-                                
-                                {{ user_form.orgonization }}
-                            </div>  
-                            <span class="text-error">{{ user_form.orgonization.errors }}</span>
-                        </div>
-                    </div>
-                        <!-- End of Form -->
-                </div>
-                   
-                    <div class="mt-3 mb-3">
-                        <input  class="btn btn-gray-800 mt-2 animate-up-2" form="user_form" type="submit" value="Update">                        
-                    </div>
-
-                    
-                </form>
-
-                <form method="post" id = "profile_form" action="{% url 'home:user_settings' %}">
-                    {% csrf_token %}
-                    <h2 class="h5 mb-4">Profile Information</h2>
-                    
-
-                    <div class="row">
-
-                        <!-- Form -->
-                    <div class="col-md-12 mb-3">
-                        <div class="form-group mb-4">
-                            <label for="{{ profile_form.about.id_for_label }}">{{ profile_form.about.label_tag }} </label>
-                            <div class="input-group">
-                                
-                                {{ profile_form.about }}
-                            </div>  
-                            <span class="text-error">{{ profile_form.about.errors }}</span>
-                        </div>
-                    </div>
-                        <!-- End of Form -->
-
-                        <!-- Form -->
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group mb-4">
-                            <label for="{{ profile_form.location.id_for_label }}">{{ profile_form.location.label_tag }} </label>
-                            <div class="input-group">
-                                
-                                {{ profile_form.location }}
-                            </div>  
-                            <span class="text-error">{{ profile_form.location.errors }}</span>
-                        </div>
-                    </div>
-                        <!-- End of Form -->
-
-                         <!-- Form -->
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group mb-4">
-                            <label for="{{ profile_form.established.id_for_label }}">{{ profile_form.established.label_tag }} </label>
-                            <div class="input-group">
-                                
-                                {{ profile_form.established }}
-                            </div>  
-                            <span class="text-error">{{ profile_form.established.errors }}</span>
-                        </div>
-                    </div>
-                        <!-- End of Form -->
-
-                    </div>
-
-
-                    <div class="mt-3">
-                        <input  class="btn btn-gray-800 mt-2 animate-up-2" form = "profile_form" type="submit" value="Update">                        
-                    </div>
-                </form>     
-
-
-
-            </div>
-
-
-
-
-            
-
+<div class="row justify-content-center">
+    {% if messages %}
+    <div class="col-12 text-center">
+        <div class="alert alert-secondary shadow-soft" role="alert">
+            {% for message in messages %}
+            <span class="alert-inner--text">{{ message }}</span>
+            {% endfor %}
         </div>
-
     </div>
+    {% endif %}
+
+    <div class="col-12 col-xl-6 d-flex">
+        <div class="card border-0 shadow mb-4 p-4 flex-fill">
+            <div class="card-header">
+                <h2 class="h5 mb-4">General information</h2>
+            </div>
+            <div class="card-body">
+                <form method="post" id="user_form" action="{% url 'home:user_settings' %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <!-- Form -->
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group mb-4">
+                                <label for="{{ user_form.username.id_for_label }}">{{ user_form.username.label_tag }}
+                                </label>
+                                <div class="input-group">
+
+                                    {{ user_form.username }}
+                                </div>
+                                <span class="text-error">{{ user_form.username.errors }}</span>
+                            </div>
+                        </div>
+                        <!-- End of Form -->
+
+                        <!-- Form -->
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group mb-4">
+                                <label for="{{ user_form.first_name.id_for_label }}"> First Name </label>
+                                <div class="input-group">
+
+                                    {{ user_form.first_name }}
+                                </div>
+                                <span class="text-error">{{ user_form.first_name.errors }}</span>
+                            </div>
+                        </div>
+                        <!-- End of Form -->
+
+                        <!-- Form -->
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group mb-4">
+                                <label for="{{ user_form.last_name.id_for_label }}">{{ user_form.last_name.label_tag }}
+                                </label>
+                                <div class="input-group">
+                                    {{ user_form.last_name }}
+                                </div>
+                                <span class="text-error">{{ user_form.last_name.errors }}</span>
+                            </div>
+                        </div>
+                        <!-- End of Form -->
+
+                        <!-- Form -->
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group mb-4">
+                                <label for="{{ user_form.email.id_for_label }}">{{ user_form.email.label_tag }} </label>
+                                <div class="input-group">
+                                    {{ user_form.email }}
+                                </div>
+                                <span class="text-error">{{ user_form.email.errors }}</span>
+                            </div>
+                        </div>
+                        <!-- End of Form -->
+
+                        <!-- Form -->
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group mb-4">
+                                <label for="{{ user_form.phone.id_for_label }}">{{ user_form.phone.label_tag }} </label>
+                                <div class="input-group">
+                                    {{ user_form.phone }}
+                                </div>
+                                <span class="text-error">{{ user_form.phone.errors }}</span>
+                            </div>
+                        </div>
+                        <!-- End of Form -->
+
+                        <!-- Form -->
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group mb-4">
+                                <label for="{{ user_form.orgonization.id_for_label }}">{{ user_form.orgonization.label_tag }} </label>
+                                <div class="input-group">
+                                    {{ user_form.orgonization }}
+                                </div>
+                                <span class="text-error">{{ user_form.orgonization.errors }}</span>
+                            </div>
+                        </div>
+                        <!-- End of Form -->
+                    </div>
+                    <div class="mt-3 mb-3">
+                        <input class="btn btn-gray-800 mt-2 animate-up-2" form="user_form" type="submit" value="Update">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-xl-6 d-flex">
+        <div class="card border-0 shadow mb-4 p-4 flex-fill">
+            <div class="card-header">
+                <h2 class="h5 mb-4">Profile Information</h2>
+            </div>
+            <div class="card-body">
+                <form method="post" id="profile_form" action="{% url 'home:user_settings' %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <!-- Form -->
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group mb-4">
+                                <label for="{{ profile_form.about.id_for_label }}">{{ profile_form.about.label_tag }}
+                                </label>
+                                <div class="input-group">
+                                    {{ profile_form.about }}
+                                </div>
+                                <span class="text-error">{{ profile_form.about.errors }}</span>
+                            </div>
+                        </div>
+                        <!-- End of Form -->
+
+                        <!-- Form -->
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group mb-4">
+                                <label for="{{ profile_form.location.id_for_label }}">{{ profile_form.location.label_tag }}
+                                </label>
+                                <div class="input-group">
+                                    {{ profile_form.location }}
+                                </div>
+                                <span class="text-error">{{ profile_form.location.errors }}</span>
+                            </div>
+                        </div>
+                        <!-- End of Form -->
+
+                        <!-- Form -->
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group mb-4">
+                                <label for="{{ profile_form.established.id_for_label }}">{{ profile_form.established.label_tag }} </label>
+                                <div class="input-group">
+                                    {{ profile_form.established }}
+                                </div>
+                                <span class="text-error">{{ profile_form.established.errors }}</span>
+                            </div>
+                        </div>
+                        <!-- End of Form -->
+                    </div>
+                    <div class="mt-3">
+                        <input class="btn btn-gray-800 mt-2 animate-up-2" form="profile_form" type="submit"
+                            value="Update">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#id_established').datepicker();
+    });
+</script>
+{% endblock javascripts %}

@@ -2,53 +2,45 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<body>
+<body class="d-flex flex-column h-100">
     {% block header %}   
     {% include 'includes/g_header.html' %}
     {% endblock %}   
     {% block main %}
-    <main>
+    <main class="flex-shrink-0">
         {% include "includes/hero_section.html" %}
 
-        <div class="section pt-0">
-            <div class="container mt-n10 mt-lg-n12 z-2">
-                <div class="row justify-content-center">
-                    
-
-
+        <div class="section bg-dgreen">
+            <div class="container mt-n8 mt-lg-n12 z-2">
+                <div class="row justify-content-center">     
                     <div class="col-12">
                         <div class="card border-0 bg-transparent text-center">
                             <div class="row p-3 justify-content-center">
-
-                                
-
                                   <div class="row align-items-center mb-4 ">
-                                    <div class="col-12 col-lg-7 order-2 order-lg-1 text-start text-lg-left">
-                                        <h1 class="mt-5">To begain <span class="text-warning">the registration</span> process.... </h1>
-                                        <p class="lead my-4">Please select your business type from the list below. <span class="text-warning">If you are registered,</span><span class="text-primary"> click on the button below to login.</span></p>
+                                    <div class="col-12 col-lg-7 order-2 order-lg-1 text-start text-lg-left">                                        
+                                        <h1 class=""><span class="text-danger">To begin </span> <span class="text-secondary">the registration</span> <span class="text-tertiary"> process.... </span></h1>
+                                        <p class="lead my-4 text-tertiary">Choose your company category from the list below. <span class="text-secondary">Click the button below to login</span><span class="text-danger text-decoration-underline" style="text-decoration-style: wavy;"> if you have registered.</span></p>
                                         {% if user.is_authenticated %} 
-                                        <a class="btn btn-primary animate-hover" href="{% url 'accounts:user_link' user.username %}"><i class="fas fa-chevron-left mr-3 pl-2 animate-left-3"></i> You are <span class="text-warning">{{user.username}}</span> </a>
+                                        <a class="btn btn-primary animate-hover" href="{% url 'accounts:user_link' user.username %}"><i class="fas fa-chevron-left mr-3 pl-2 animate-left-3"></i> You are <span class="text-secondary">{{user.username}}</span> </a>
                                         {% else %}
                                         <a class="btn btn-primary animate-hover" href="{% url 'login' %}"><i class="fas fa-chevron-left mr-3 pl-2 animate-left-3"></i> <span class="text-warning">Login </span>To The System </a>
                                         {% endif %}
                                         
                                     </div>
                                     <div class="col-12 col-lg-5 order-1 order-lg-2 text-end align-items-end justify-content-end d-none d-lg-flex">
-                                        <img class="img-fluid w-75" src="{% static 'assets/login.svg' %}" alt="Login To The System">
+                                        <img class="img-fluid w-75 opacity-50" src="{% static 'assets/login.svg' %}" alt="Login To The System">
                                     </div>
-                                </div>
-
-
+                                </div> 
                             {% for user_type in user_types %}                            
                             <div class="col-12 col-sm-6"  >
-                                <div class="card bg-white border-0 shadow mb-3">
+                                <div class="card bg-lgreen border-0 shadow mb-3">
                                     <a href="{{ user_type.get_absolute_url }}"  {% if user_type.active %} {% else %} style = "pointer-events: none; opacity: 0.4;" {% endif %}>
                                     <div class="card-body">
                                         <div class="row d-block d-xl-flex align-items-center">
                                             <div class="text-center">                                   
 
                                             <div class="icon icon-shape rounded mb-4">                                                
-                                                <img src="{{ user_type.icon.url }}" alt="">
+                                                <img src="{{ user_type.icon.url }}" alt="{{user_type.name}}">
                                             </div>
                                             <div class=" text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
                                                 <h3 class="h5">{{ user_type.name }}</h3>
@@ -63,29 +55,39 @@
                         </div>                        
                     </div>  
                 </div>
-                <div class="col-12">
-                    <div class="row p-3 justify-content-center">
-                        <h2 class="text-center p-4 text-decoration-underline text-danger">Basic Introduction</h2>
-                    <iframe width=100% height="630" src="https://www.youtube.com/embed/nYUhoeKWayQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
+                
             </div>
-            </div>
+        </div>
         </div>
 
 
-
-
+        <div class="section bg-lgreen">
+            <div class="container">
+                <div class="row justify-content-center">     
+                    <div class="col-12">
+                        <div class="row p-3 justify-content-center">
+                            <div class="text-center pb-4">
+                                <h2 class="h1 px-lg-5">Basic Introductions</h2>
+                                <p class="lead px-lg-8">Get an idea of our platform from the video below.</p>
+                            </div>
+                            <div class="iframe-container">
+                                <iframe class="responsive-iframe" id="ytplayer" type="text/html" src="https://www.youtube.com/embed/nYUhoeKWayQ?autoplay=0&origin=http://gf-vp.com" frameborder="0"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
+
+
     {% endblock %}
 
-        {% block footer %} 
-       
-            {% include 'includes/g_footer.html' %} 
+    {% block footer %}        
+        {% include 'includes/g_footer.html' %} 
     
+    {% endblock %}
         
-        {% endblock %}
-
-   
 
 </body>
 </html>

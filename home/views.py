@@ -8,7 +8,7 @@ from .forms import UserForm, ProfileForm, PasswordChangeForm, QuestionForm, Opti
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 # from django.contrib.auth.forms import PasswordChangeForm
-from accounts.decorators import expert_required, producer_required, consumer_required
+from accounts.decorators import expert_required, producer_required, consumer_required, marine_required
 from accounts.models import User, UserType
 from accounts.helper import check_type
 from gfvp import null_session
@@ -104,10 +104,10 @@ def dashboard(request):
     null_session(request)    
     
     #dashboard summary
-    day_of_week = [key.split(': ') for key, value in weeks_results(request).items()]
-    print(day_of_week)
+    
+    day_of_week = [key.split(': ') for key, value in weeks_results(request).items()]    
     total_of_day = [value for key, value in weeks_results(request).items()]   
-    print(total_of_day)
+    
     context = {
         'user_of_labels' : users_under_each_label(request),
         'biofuel_records' : reports_under_each_biofuel(request),
@@ -186,7 +186,7 @@ def get_question_of_label(request):
     # if multilabel value is one then this question should be displayed to the multi type of expert.
     label_to_question = Label.objects.filter(name = curent_user_expert_in, value = str(1))
     
-    if request.user.is_staff or request.user.is_superuser:
+    if request.user.is_staff or request.user.is_superuser or request.user.is_marine:
         # Staff of super user are accesable to all questions
         questions = [q for q in Question.objects.filter(is_active = True)]
     else:   
@@ -198,12 +198,55 @@ def get_question_of_label(request):
             else:
                 continue            
     return questions
+
+@login_required
+@expert_required
+def quotations(request):  
+    '''get questions related to the current user'''
+    
+    
+    # This is essential where login_required
+    null_session(request)
+        
+    # we need permitted question based on expertise type
+    questions = get_question_of_label(request)
+    
+    # build parent         
+    parents = []
+    for question in questions:        
+        if question.is_door == True:
+            parents.append(question)
+            
+            
+    #build results of chaptariged questions       
+    results = []    
+    for parent in parents:         
+        data = {
+            parent : [child for child in questions if child.parent_question == parent]
+        }
+        results.append(data)    
+    
+    #Paginated response
+    page = request.GET.get('page', 1)
+    paginator = Paginator(results, 12)
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        results = paginator.page(1)
+    except EmptyPage:
+        results = paginator.page(paginator.num_pages)
+    
+    context = {
+        'questions': results        
+    }
+    
+    return render(request, 'home/quotations.html', context = context)
     
 
 
 
 @login_required
-@expert_required
+@marine_required
 def questions(request):  
     '''get questions related to the current user'''
     
@@ -227,11 +270,7 @@ def questions(request):
         data = {
             parent : [child for child in questions if child.parent_question == parent]
         }
-        results.append(data)     
-
-    
-    
-    
+        results.append(data)    
     
     #Paginated response
     page = request.GET.get('page', 1)
@@ -625,7 +664,7 @@ def quotation_report(request, question, quotation):
     return result
 
 @login_required
-@expert_required
+@marine_required
 def questions_details(request, slug):
     null_session(request)
     
@@ -690,7 +729,7 @@ def questions_details(request, slug):
     return render(request, 'home/questions_details.html', context = context)
 
 @login_required
-@expert_required
+@marine_required
 def new_questions(request):
     null_session(request)
     if 'extra' not in request.session:
@@ -739,8 +778,7 @@ def allreports(request):
     
     
     context = {
-        'allreports' : all_reports(request),
-        
+        'allreports' : all_reports(request),        
     }
     
     return render(request, 'home/all_reports.html', context = context)
@@ -786,10 +824,14 @@ def webmanifest(request):
     site_info = {
         'name' : site.site.name,
         'short_name' : site.site.name,
-        'icons' : icons,
-        
-        "theme_color": "#ffffff",
-        "background_color": "#ffffff",
+        'icons' : icons,  
+        'start_url' : site.site.domain,
+        "scope": "/",
+        'lang' : 'en',
+        'screenshots' : [site.og_image.url, site.site_logo.url],     
+        'description': site.site_description,  
+        "theme_color": "#08793B",
+        "background_color": "#08793B",
         "display": "standalone"        
     }
     

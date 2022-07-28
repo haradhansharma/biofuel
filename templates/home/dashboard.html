@@ -1,84 +1,75 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Dashboard {% endblock %} 
+{% block title %} Dashboard {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 
-    <div class="row">
-        <div class="col-12 mb-4">
-            <div class="card bg-yellow-100 border-0 shadow">
-                <div class="card-header d-sm-flex flex-row align-items-center flex-0">
-                    <div class="d-block mb-3 mb-sm-0">
-                        <div class="fs-5 fw-normal mb-2">Total Reports</div>
-                        <h2 class="fs-3 fw-extrabold">#{{total_reports}}</h2>
-                        
-                    </div>
-                    
-                </div>
-                <div class="card-body p-2">
-                    <div class="ct-chart-sales-value ct-double-octave ct-series-g"></div>
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="card bg-yellow-100 border-0 shadow">
+            <div class="card-header d-sm-flex flex-row align-items-center flex-0">
+                <div class="d-block mb-3 mb-sm-0">
+                    <div class="fs-5 fw-normal mb-2">Total Reports</div>
+                    <h2 class="fs-3 fw-extrabold">#{{total_reports}}</h2>
                 </div>
             </div>
+            <div class="card-body p-2">
+                <div class="ct-chart-sales-value ct-double-octave ct-series-g"></div>
+            </div>
         </div>
-        
-        
-        
     </div>
-
-    <div class="row">
-        
-
-        {% for key, values in user_of_labels.items %}
-        
-        
-        <div class="col-12 col-sm-6 col-xl-4 mb-4">
-            <div class="card border-0 shadow">
-                <div class="card-body">
-                    <div class="row d-block d-xl-flex align-items-center">
-                        <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
-                            <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
-                                <svg class="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path></svg>
+</div>
+<div class="card  bg-bgreen shadow mb-4">
+    <div class="card-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h2 class="fs-5 fw-bold mb-0">Labelwise Partners</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row g-4">
+            {% for key, values in user_of_labels.items %}
+            <div class="col-12 col-sm-6 col-xl-4">
+                <div class="card border-0 shadow bg-lgreen">
+                    <div class="card-body">
+                        <div class="row d-block d-xl-flex justify-content-center align-items-center">
+                            <div class="col-12 col-xl-7 px-xl-0 text-center">
+                                <div class="d-block">
+                                    <h2 class="h6 text-primary mb-0 fw-bold">{{key}} User</h2>
+                                    <h3 class="fw-extrabold text-danger mb-2">{{values}}</h3>
+                                </div>
                             </div>
-                            <div class="d-sm-none">
-                                <h2 class="h5">Customers</h2>
-                                <h3 class="fw-extrabold mb-1">345,678</h3>
-                            </div>
-                        </div>
-                        <div class="col-12 col-xl-7 px-xl-0">
-                            <div class="d-none d-sm-block">
-                                <h2 class="h6 text-gray-400 mb-0">{{key}} User</h2>
-                                <h3 class="fw-extrabold mb-2">{{values}}</h3>
-                            </div>
-                            
                         </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
+</div>
 
-    <div class="row">
-        <div class="col-12 col-xl-8">
-            <div class="row">
-                <div class="col-12 mb-4">
-                    <div class="card border-0 shadow">
-                        <div class="card-header">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h2 class="fs-5 fw-bold mb-0">Latest Report</h2>
-                                </div>
-                                <div class="col text-end">
-                                    <a href="{% url 'home:all_reports' %}" class="btn btn-sm btn-primary">See all</a>
-                                </div>
+<div class="row">
+    <div class="col-12 col-xl-8">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="fs-5 fw-bold mb-0">Latest Reports</h2>
+                            </div>
+                            <div class="col text-end">
+                                <a href="{% url 'home:all_reports' %}" class="btn btn-sm btn-primary">See all</a>
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table align-items-center table-flush">
-                                <thead class="thead-light">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
                                 <tr>
                                     <th class="border-bottom" scope="col">#Report</th>
                                     <th class="border-bottom" scope="col">Bio Fuel</th>
@@ -88,19 +79,15 @@
                                     <th class="border-bottom" scope="col">Don't Know</th>
                                     <th class="border-bottom" scope="col">Don't Know %</th>
                                     <th class="border-bottom" scope="col">Positive %</th>
-                                    
                                 </tr>
-                                </thead>
-                                <tbody>
-
-                                    
-                                 {% for allreport in allreports %}  
-                                 
-                                
-
+                            </thead>
+                            <tbody>
+                                {% if allreports %}
+                                {% for allreport in allreports %}
                                 <tr>
                                     <td class="text-gray-900" scope="row">#
-                                        <a href="{% url 'evaluation:report'  allreport.g_report.report.id %}" target="_blank">{{ allreport.g_report.report.id }}</a>
+                                        <a href="{% url 'evaluation:report'  allreport.g_report.report.slug %}"
+                                            target="_blank">{{ allreport.g_report.report.id }}</a>
                                     </td>
                                     <td class="fw-bolder text-gray-500">
                                         {{ allreport.g_report.report.biofuel }}
@@ -123,145 +110,134 @@
                                     <td class="fw-bolder text-gray-500">
                                         {{ allreport.g_report_result.positive_percent }}
                                     </td>
-                                    
-                                    
                                 </tr>
-                                {% endfor %}             
-                                
-
-
-                               
-                                
-                                
-                                
-                                </tbody>
-                            </table>
-                        </div>
+                                {% endfor %}
+                                {% else %}
+                                <div class="alert alert-primary" role="alert">
+                                    No report Found!
+                                </div>
+                                {% endif %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                {% for key, values in typewise_user.items %}
-                <div class="col-12 col-xxl-6 mb-4">
-                    
-
-                    <div class="card border-0 shadow">
-                        <div class="card-header border-bottom d-flex align-items-center justify-content-between">
-                            <h2 class="fs-5 fw-bold mb-0">{{key.name}}</h2>
-                            <a href="{{key.get_absolute_url}}" target="_blank" class="btn btn-sm btn-primary">Visit</a>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-group list-group-flush list my--3">
-
-                                {% for user in values %}
-                                <li class="list-group-item px-0">
-                                    <div class="row align-items-center">
+            </div>
+            {% for key, values in typewise_user.items %}
+            <div class="col-12 col-xxl-6 mb-4 d-flex">
+                <div class="card border-0 shadow flex-fill bg-lgreen">
+                    <div class="card-header border-bottom border-danger border-3 d-flex align-items-center justify-content-between">
+                        <h2 class="fs-5 fw-bold mb-0">{{key.name}}</h2>
+                        <a href="{{key.get_absolute_url}}" target="_blank" class="btn btn-sm btn-primary">Visit</a>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush list my--3">
+                            {% if values %}
+                            {% for user in values %}
+                            <li class="list-group-item px-1 bg-transparent border-bottom border-primary">
+                                <div class="row align-items-center">
                                     <div class="col-auto">
-                                      
                                     </div>
                                     <div class="col-auto ms--2">
                                         <h4 class="h6 mb-0">
                                             {% if user.get_full_name %}
-                                            
                                             <a href="{{user.get_absolute_url}}">{{user.get_full_name}}</a>
                                             {% else %}
                                             <a href="{{user.get_absolute_url}}">No Name Given</a>
                                             {% endif %}
-
                                         </h4>
-                                        
-                                        <div class="d-flex align-items-center">  
-                                            {% if user.orgonization %}                                          
+                                        <div class="d-flex align-items-center">
+                                            {% if user.orgonization %}
                                             <small>{{user.orgonization}}</small>
                                             {% else %}
                                             No Orgonization Given
                                             {% endif %}
                                         </div>
-
                                     </div>
                                     <div class="col text-end">
-                                        <a href="{{user.get_absolute_url}}" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
-                                            <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                                        <a href="{{user.get_absolute_url}}"
+                                            class="btn btn-sm btn-secondary d-inline-flex align-items-center">
+                                            <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
                                             Visit
                                         </a>
                                     </div>
-                                    </div>
-                                </li>
-                                {% endfor %}
-                                
-                                
-                                
-                            </ul>
-                        </div>
-                    </div>
-
-                    
-
-
-                </div>
-                {% endfor %}
-                
-            </div>
-        </div>
-        <div class="col-12 col-xl-4">
-            
-            <div class="col-12 px-0 mb-4">
-                <div class="card border-0 shadow">
-
-                    <div class="card-header d-flex flex-row align-items-center flex-0 border-bottom">
-                        <div class="d-block">
-                            <div class="h6 fw-normal text-gray mb-2">Report of Biofuels</div>
-                            <h2 class="h3 fw-extrabold">#{{total_reports}}</h2>
-                            
-                        </div>
-                        
-                    </div>
-
-
-
-                    <div class="card-body">
-
-                        {% for key, values in biofuel_records.items %}
-                        <div class="d-flex align-items-center justify-content-between border-bottom pb-3">
-                            <div>
-                                <div class="h6 mb-0 d-flex align-items-center">
-                                    <svg class="icon icon-xs text-gray-500 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"></path></svg>
-                                    {{key}}
                                 </div>
-                            </div>
-                            <div>
-                                <a href="#" class="d-flex align-items-center fw-bold">
-                                    #{{values}}
-                                    <svg class="icon icon-xs text-gray-500 ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                </a>
-                            </div>
-                        </div>
-                        {% endfor %}
-
-
-                        
-                        
+                            </li>
+                            {% endfor %}
+                            {% else %}
+                            <li class="list-group-item px-1 bg-transparent border-bottom border-primary">
+                                <div class="row align-items-center">
+                                    <div class="col-auto ms--2">
+                                        <h4 class="h6 mb-0">
+                                            No User Found!
+                                        </h4>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endif %}
+                        </ul>
                     </div>
                 </div>
             </div>
-
-
-
-
-            
+            {% endfor %}
         </div>
     </div>
+    <div class="col-12 col-xl-4">
+        <div class="col-12 px-0 mb-4">
+            <div class="card border-0 shadow">
+                <div class="card-header d-flex flex-row align-items-center flex-0 border-bottom">
+                    <div class="d-block">
+                        <div class="h6 fw-normal text-gray mb-2">Reports of Biofuels</div>
+                        <h2 class="h3 fw-extrabold">#{{total_reports}}</h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% for key, values in biofuel_records.items %}
+                    <div class="d-flex align-items-center justify-content-between border-bottom pb-3">
+                        <div>
+                            <div class="h6 mb-0 d-flex align-items-center">
+                                <svg class="icon icon-xs text-gray-500 me-2" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                {{key}}
+                            </div>
+                        </div>
+                        <div>
+                            <a href="#" class="d-flex align-items-center fw-bold">
+                                #{{values}}
+                                <svg class="icon icon-xs text-gray-500 ms-1" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <script>   
-            let day_of_week = {{ day_of_week|safe }};         
-            
-    </script>
-
-    <script> 
-        let total_of_day = {{ total_of_day|safe }}; 
-    </script>
-    
 
 {% endblock content %}
 
-<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    let day_of_week = {{ day_of_week | safe }};
+</script>
 
-{% block javascripts %}{% endblock javascripts %}
+<script>
+    let total_of_day = {{ total_of_day | safe }}; 
+</script>
+
+{% endblock javascripts %}

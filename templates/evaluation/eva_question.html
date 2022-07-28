@@ -17,7 +17,7 @@
     
 
     <div  class="section pt-0">   
-        <div class="container-fluid mt-n10 mt-lg-n12 z-2">
+        <div class="container-fluid pt-6 mt-n10 mt-lg-n12 z-2">
             <div class="row justify-content-center">
                 <div class="col-12">                    
                     <button class="btn btn-warning btn-block mb-2" onclick="history.back()">Go Back</button>
@@ -32,8 +32,8 @@
                         
                         <div class="row p-3 justify-content-center">
                             {% for parent, child in question_dataset.items %}                           
-                        <div class="col-md-3 col-lg-2 col-xl-1 mb-3">
-                            <div style="min-height: 5rem;" class="card">  
+                        <div class="col-sm-4 col-md-3 col-lg-2 col-xl-1 mb-3 d-flex">
+                            <div style="min-height: 5rem;" class="card flex-fill">  
                                 <a style="padding: 0.05rem; font-size: 0.25rem;"  class="btn {% if slug == parent.slug %} btn-primary {% else %} {% if parent.stat == 'checked' %} btn-success {% elif parent.stat == 'skipped' %} btn-gray-100  {% else %} btn-outline-success {% endif %} {% endif %} mb-1  col-12 mx-auto " data-bs-toggle="tooltip" data-bs-html="true" title="{{parent.name}}" href="{% url 'evaluation:eva_question' request.session.evaluator parent.slug %}">{% if parent.sort_order %}--{% else %}--{% endif %}</a>
                         
                             <div class="col-12 p-2">
@@ -74,8 +74,8 @@
                     
                     {% endif %}
                     {% endif %}
-                    <div class="row mt-5 mb-10">
-                        <div class="col-sm-6">
+                    <div class="row mt-5 mb-5">
+                        <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
                                     <h5>Options:</h5>
@@ -95,7 +95,7 @@
                                         <h5 class="mt-4">Please submit any further information you have about your fuel oil in answer to the above request. The platform will take your inputs in consideration when evaluating this fuel:</h5>
                                         
                                         <div class="mt-3">
-                                            <textarea class="form-control" id="comment" name="comment">{{submitted_comment}}</textarea>
+                                            <textarea class="form-control" id="comment" name="comment">{{submitted_comment|safe}}</textarea>
                                             <input type="hidden" name="slug" value="{{slug}}">
                                         </div>
 
@@ -106,7 +106,7 @@
 
 
                                         <div class="mt-3">
-                                            <h5>GFVP Feedback:</h5><textarea class="form-control" id="feedback" rows="6" disabled>{{selected_option.statement}}</textarea>
+                                            <h5>GFVP Feedback:</h5><textarea class="form-control" id="feedback" rows="6" disabled>{{selected_option.statement|safe}}</textarea>
                                         </div>
 
 
@@ -131,19 +131,24 @@
                                     </div>  
                                 <div class="card-body">      
                                 
-                                    <div class="mt-3">
+                                    <div class="row mt-3 g-3">
                                         {% if question.get_quotations or question.get_related_quotations %} 
                                         {% for quotation in question.get_quotations %}
-                                        <a href="{{quotation.get_absolute_url}}" target="_blank" class="btn btn-warning mb-2" > 
+
+                                        <div class="col-md-6 col-xl-4 d-flex">
+                                        <a href="{{quotation.get_absolute_url}}" target="_blank" class="p-3 flex-fill card" > 
                                            <h4>Provider: {% if quotation.service_provider.orgonization %} {{quotation.service_provider.orgonization}} {% else %} Business name not found {% endif %} </h4> 
                                            <h5>Price: {{quotation.price}} {{quotation.price_unit}} </h5>
-                                        </a>                                        
+                                        </a>  
+                                    </div>                                      
                                         {% endfor %}
                                         {% for quotation in question.get_related_quotations %}
-                                        <a href="{{quotation.get_absolute_url}}" target="_blank" class="btn btn-warning mb-2" > 
+                                        <div class="col-md-6 col-xl-4 d-flex">
+                                        <a href="{{quotation.get_absolute_url}}" target="_blank" class="p-3 flex-fill card" > 
                                            <h4>Provider: {% if quotation.service_provider.orgonization %} {{quotation.service_provider.orgonization}} {% else %} Business name not found {% endif %} </h4> 
                                            <h5>Price: {{quotation.price}} {{quotation.price_unit}} </h5>
-                                        </a>                                        
+                                        </a>  
+                                    </div>                                      
                                         {% endfor %}
                                         {% else %}
                                         No Quotation Found
@@ -160,7 +165,7 @@
                             
                             
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-md-6">
                             <div class="alert alert-success" role="alert">
                                 Greenfuel Summary
                             </div>
@@ -169,7 +174,7 @@
 {% for eva_lebel in eva_lebels %}{{eva_lebel.label.label}}
 <textarea name="tarea" class="form-control" rows="6" id="floatingTextarea" disabled>{% if total_question >= qualified_rang %}{% for el in eva_lebel.evalebelstatement_set.all %}
 
-{{el.statement.strip}}{{el.next_step.strip}}{% endfor %}{% else %}Need to submit minimum {{ qualified_rang }} qualified ans to view your results! Current is {{ total_question }} !{% endif %}</textarea>
+{{el.statement.strip|safe}}{{el.next_step.strip|safe}}{% endfor %}{% else %}Need to submit minimum {{ qualified_rang }} qualified ans to view your results! Current is {{ total_question }} !{% endif %}</textarea>
 {% endfor %}
 </div>
                             </div>

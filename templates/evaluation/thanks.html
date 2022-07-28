@@ -13,30 +13,22 @@
     {% block main %}
     <main>
 
-
-        {% include "includes/hero_section.html" %}
-        
-        <div class="section pt-0">
+        {% include "includes/hero_section.html" %}        
+        <div class="section pt-7 bg-bgreen">
             <div class="container mt-n10 mt-lg-n12 z-2">
                 <div class="row justify-content-center">
-
-
-                    {% if messages %}
-                        
+                    {% if messages %}                        
                         <div class="alert alert-secondary mt-5" role="alert">
                             {% for message in messages %}
                             <span class="alert-inner--text">{{ message }}</span>
                             {% endfor %}
-                        </div>
-                        
+                        </div>                        
                     {% endif %}
 
-
-
                     <div class="col-12"> 
-                        <div class="row">
-                        <div class="col-12  col-lg-4 mb-4 ">
-                            <div class="card border-0 shadow">
+                        <div class="row g-3 mb-3">
+                        <div class="col-12 col-lg-4 d-flex ">
+                            <div class="card border-0 shadow flex-fill bg-lgreen">
                                 <div class="card-body">
                                     <div class="row d-block d-lg-flex align-items-center " style="min-height: 200px; overflow:hidden;">
                                         <img src="{{ user.type.icon.url }}" class="rounded-circle mx-auto d-block  w-50 img-fluid " alt="">
@@ -44,16 +36,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-8 mb-4 ">  
-                            <div class="card border-0 shadow">
+                        <div class="col-12 col-lg-8 d-flex ">  
+                            <div class="card border-0 shadow flex-fill bg-lgreen">
                                 <div class="card-body">
                                     <div class="row d-block d-xl-flex align-items-center" style="min-height: 200px;">
                                         <div class="col-12">  
-                                            <div class="d-flex">
-                                            <div class="col-6">  
+                                            <div class="d-block d-lg-flex">
+                                            <div class="col-12 col-lg-6">  
                                                 <h5>
-                                                {% if user.get_full_name %} 
-                                                
+                                                {% if user.get_full_name %}                                                 
                                                     <span>{{ user.get_full_name }}</span>
                                                     {% else %} 
                                                 There is no name 
@@ -64,35 +55,24 @@
                                                         <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
                                                       </svg>                                                
                                                 </a>
-                                            </span>
-                                                
-                                                
+                                            </span>     
                                             </h5>
-                                            
                                         </div> 
                                              
                                             <div class="col-auto">
-                                                <div class="text-info bg-dark d-flex">
+                                                <div class="text-info d-block oveflow-hidden">
                                                     {% if request.user.is_authenticated %}
                                                     {% if request.user.is_producer or request.user.is_staff or request.user.is_superuser %}
                                                     <a  href="{% url 'evaluation:evaluation2' %}" class="me-2">Begin Evaluating</a>
                                                     {% endif %}
                                                     {% if request.user.is_expert or request.user.is_staff or request.user.is_superuser %}
-                                                    <a href="{% url 'home:questions' %}" class="me-2">Questions and Quotations</a>
+                                                    <a href="{% url 'home:questions' %}" class="me-2">Ques. and Quot.</a>
                                                     {% endif %}
                                                    
-                                                    {% endif %}
-    
+                                                    {% endif %}    
                                                 </div> 
-                                            </div> 
-
-                                            
-                                        
-                                                
+                                            </div>   
                                             </div>
-                                            
-                                            
-                                            
                                                 <hr> 
                                             <div class=" d-xl-flex">
                                                 <div class="col-12 col-md-6 card  border-0 bg-transparent">                                 
@@ -116,6 +96,39 @@
                     </div>
                 </div>
 
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <div class="card text-center mb-3">
+                            <div class="card-header">
+                              <span class="h5">About Me</span>   <span>
+                                    <a href="{% url 'home:user_settings' %}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                                            <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
+                                          </svg>                                                
+                                    </a>
+                                </span> 
+                            </div>
+                            <div class="card-body">
+                                {% if user.get_profile.about %}
+                                <p>{{user.get_profile.about}}</p>
+                                {% else %}
+                                <p>No information found!</p>
+                                {% endif %}
+                            </div>
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-between">
+                                    <div class="text-mute">
+                                        Location: {% if user.get_profile.location %} {{user.get_profile.location}} {% else %} No location found {% endif %}
+                                    </div>
+                                    <div class="text-mute">
+                                        EST.: {% if user.get_profile.established %} {{user.get_profile.established}} {% else %} No date found {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
 
 
@@ -128,15 +141,15 @@
 
                             <!--for last report -->
                             {% if last_reports  %}
-                            <div class="row p-3">
-                            <div class="col-12 col-sm-6 col-xl-4 mb-4">
-                                <div class="card border-0 shadow">
+                            <div class="row g-3 p-3  justify-content-center">
+                            <div class="col-12 col-sm-6 col-xl-4 d-flex">
+                                <div class="flex-fill card">
                                     <div class="card-body">
-                                        <div class="row d-block d-xl-flex align-items-center">
-                                            <div class="col-12 col-xl-5 text-xl-start mb-3 mb-xl-0 d-flex align-items-start justify-content-xl-start">
+                                        <div class="row d-block  ">
+                                            <div class="col-12 ">
                                                 <h3 class="h5">The number of questions you responded</h3>
                                             </div>
-                                            <div class="col-12 col-xl-7 px-xl-0">
+                                            <div class="col-12 ">
                                                 <h3 class="fw-extrabold mb-2">{{ ans_ques }}</h3>
                                             </div>
                                         </div>
@@ -144,14 +157,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-12 col-sm-6 col-xl-4 mb-4">
-                                <div class="card border-0 shadow">
+                            <div class="col-12 col-sm-6 col-xl-4 d-flex">
+                                <div class="flex-fill card">
                                     <div class="card-body">
-                                        <div class="row d-block d-xl-flex align-items-center">
-                                            <div class="col-12 col-xl-5 text-xl-start mb-3 mb-xl-0 d-flex align-items-start justify-content-xl-start">
+                                        <div class="row d-block ">
+                                            <div class="col-12 ">
                                                 <h3 class="h5">Total number of "Don't know" responses.</h3>
                                             </div>
-                                            <div class="col-12 col-xl-7 px-xl-0">
+                                            <div class="col-12 ">
                                                 <h3 class="fw-extrabold mb-2">{{ dont_know_ans }}</h3>
                                             </div>
                                         </div>
@@ -159,14 +172,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-12 col-sm-6 col-xl-4 mb-4">
-                                <div class="card border-0 shadow">
+                            <div class="col-12 col-sm-6 col-xl-4 d-flex">
+                                <div class="flex-fill card">
                                     <div class="card-body">
-                                        <div class="row d-block d-xl-flex align-items-center">
-                                            <div class="col-12 col-xl-5 text-xl-start mb-3 mb-xl-0 d-flex align-items-start justify-content-xl-start">
+                                        <div class="row d-block ">
+                                            <div class="col-12 ">
                                                 <h3 class="h5">The total number of positive responses received.</h3>
                                             </div>
-                                            <div class="col-12 col-xl-7 px-xl-0">
+                                            <div class="col-12 ">
                                                 <h3 class="fw-extrabold mb-2">{{ pos_ans }}</h3>
                                             </div>
                                         </div>
@@ -174,14 +187,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-12 col-sm-6 col-xl-4 mb-4">
-                                <div class="card border-0 shadow">
+                            <div class="col-12 col-sm-6 col-xl-4 d-flex">
+                                <div class="flex-fill card">
                                     <div class="card-body">
-                                        <div class="row d-block d-xl-flex align-items-center">
-                                            <div class="col-12 col-xl-5 text-xl-start mb-3 mb-xl-0 d-flex align-items-start justify-content-xl-start">
+                                        <div class="row d-block  ">
+                                            <div class="col-12 ">
                                                 <h3 class="h5">The Percentage of positive response.</h3>
                                             </div>
-                                            <div class="col-12 col-xl-7 px-xl-0">
+                                            <div class="col-12 ">
                                                 <h3 class="fw-extrabold mb-2">{{ positive_percent }}</h3>
                                             </div>
                                         </div>
@@ -189,14 +202,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-12 col-sm-6 col-xl-4 mb-4">
-                                <div class="card border-0 shadow">
+                            <div class="col-12 col-sm-6 col-xl-4 d-flex">
+                                <div class="flex-fill card">
                                     <div class="card-body">
-                                        <div class="row d-block d-xl-flex align-items-center">
-                                            <div class="col-12 col-xl-5 text-xl-start mb-3 mb-xl-0 d-flex align-items-start justify-content-xl-start">
+                                        <div class="row d-block  ">
+                                            <div class="col-12 ">
                                                 <h3 class="h5">Percentage of "Don't know" response.</h3>
                                             </div>
-                                            <div class="col-12 col-xl-7 px-xl-0">
+                                            <div class="col-12 ">
                                                 <h3 class="fw-extrabold mb-2">{{ dont_know_percent }}</h3>
                                             </div>
                                         </div>
@@ -205,14 +218,14 @@
                             </div>
 
                             {% if last_reports %}
-                            <div class="col-12 col-sm-6 col-xl-4 mb-4">
-                                <div class="card border-0 shadow">
+                            <div class="col-12 col-sm-6 col-xl-4 d-flex">
+                                <div class="flex-fill card">
                                     <div class="card-body">
-                                        <div class="row d-block d-xl-flex align-items-center">
-                                            <div class="col-12 col-xl-5 text-xl-start mb-3 mb-xl-0 d-flex align-items-start justify-content-xl-start">
+                                        <div class="row d-block ">
+                                            <div class="col-12 ">
                                                 <h3 class="h5">This is report no:</h3>
                                             </div>
-                                            <div class="col-12 col-xl-7 px-xl-0">
+                                            <div class="col-12 ">
                                                 <h3 class="fw-extrabold mb-2">{{ last_reports.id }}</h3>
                                             </div>
                                         </div>
@@ -224,7 +237,7 @@
                             
 
                             <div class="mt-3 mb-3">
-                                <button class="btn btn-success text-white" type="button">
+                                <button class="btn btn-secondary" type="button">
                                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                                 <a href="{{ button }}">{{last_report_button_text}}{{complete_report_button_text}}</a>
                                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
@@ -261,16 +274,16 @@
                                                 <td class="border-0 font-weight-bold col-auto d-flex "> 
                                                     
                                                         {% if report.report_genarated %}  
-                                                        <a class="btn btn-success m-2" href="{{ report.get_absolute_url }}" target="_blank"> View </a> 
+                                                        <a class="btn btn-primary btn-sm m-2" href="{{ report.get_absolute_url }}" target="_blank"> View </a> 
                                                         {% else %}
-                                                       <span class="btn btn-outline-success m-2">Report Pending</span> 
+                                                       <span class="btn btn-outline-primary btn-sm m-2">Pend</span> 
                                                         {% endif %}
                                                     
                                                     
                                                         {% if report.creator.id == user.id %}  
-                                                        <a class="btn btn-success m-2" href="{% url 'evaluation:eva_question' report.id report.last_slug %} " target="_blank"> Edit </a> 
+                                                        <a class="btn btn-primary btn-sm m-2" href="{% url 'evaluation:eva_question' report.id report.last_slug %} " target="_blank"> Edit </a> 
                                                         {% else %}    
-                                                        <span class="btn btn-outline-success m-2"> Creator Can Edit</span> 
+                                                        <span class="btn btn-outline-primary btn-sm m-2"> Creator Can Edit</span> 
                                                         {% endif %}                                                   
                                                     
                                                 </td>    

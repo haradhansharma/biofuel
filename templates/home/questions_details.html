@@ -8,111 +8,66 @@
 {% block content %}
 
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
-    <div class="d-block mb-4 mb-md-0">
-        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
-
-        </nav>
-        <h2 class="h4">Question Edit</h2>
-        <p class="mb-0">Green Fuel validation Platform.</p>
-    </div>
-    <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{% url 'home:new_question'  %}" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
-            <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
-                </path>
-            </svg>
-            New Question
-        </a>
-
-    </div>
-</div>
-
-
-<div class="card card-body border-0 shadow table-wrapper table-responsive">
-
-
-
-    <div class="card card-head border-0 shadow mb-4 p-4">
-        {{ question.name }}
-    </div>
-
-    <div hx-target="this" hx-swap="outerHTML">
-
-        <form id="ssss" method="post" action="{% url 'home:questions_details' question.pk %}">
-            {% csrf_token %}
-
-            {{ option_formset.management_form }}
-
-
-
-
-            <div class="row">
-                <div class="col-12 mb-3">
-                    <div class="form-group mb-4">
-                        <div class="row input-group">
-                            {% for q_form in question_form %}
-                            <div class="card card-body border-0 shadow mb-4">
-                                {{ q_form }}
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
+<div class="card border-0 shadow table-wrapper table-responsive">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center flex-wrap flex-md-nowrap">
+            <div class="d-block">
+                <span class="text-danger">Edit Question: </span> <span class="text-primary">{{ question.name }}</span>
             </div>
-
-
-            <div class="row">
-                <div class="col-12 mb-3">
-                    <div class="form-group mb-4">
-                        <div class="row input-group">
-                            {% for form in option_formset %}
-                            <div class="card card-body border-0 shadow mb-4">
-                                {{ form }}
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
+            <div class="d-block">
+                <a href="{% url 'home:new_question'  %}" class="btn btn-sm btn-primary">
+                    <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+                        </path>
+                    </svg>
+                    New Question
+                </a>
             </div>
-
-
-
-
-            <button class="btn btn-success btn-block" hx-get="{% url 'home:add_extra' question.slug  %}" hx-target="#pppp"
-                hx-swap="outerHTML" hx-name="'sdsad" name="extra" hx-trigger="click">
-                Add Extra
-            </button>
-
-            <button class="btn btn-success btn-block" hx-get="{% url 'home:sub_extra' question.slug  %}" hx-target="#pppp"
-                hx-swap="outerHTML" name="extra" hx-trigger="click">
-                Sub Extra
-            </button>           
-
-
-            <input class="btn btn-success btn-block" type="submit"  hx-post="#ssss" hx-push-url="{% url 'home:questions_details' question.pk %}" value="Save and Stay" hx-target="#pppp"  hx-swap="outerHTML" hx-vals='{"add_more": "Save and Stay"}' hx-trigger="click">
-            <input class="btn btn-success btn-block" type="submit" hx-post="#ssss" hx-push-url="{% url 'home:questions' %}"  value="Save" hx-target="#pppp"  hx-swap="outerHTML" hx-vals='{"save": "save"}' hx-trigger="click">
-
-            
-
-        </form>
-
-
-
-
-
-
+        </div>
     </div>
-
-
-
-
-
-
-
-
-
+    <div class="card-body">
+        <div hx-target="this" hx-swap="outerHTML">
+            <form id="ssss" method="post" action="{% url 'home:questions_details' question.pk %}">
+                {% csrf_token %}
+                {{ option_formset.management_form }}
+                <div class="border rounded border-2 border-primary p-4 mb-4">
+                    <p class="h5 border-bottom">If you want to change the name of the question, you can edit the box below.</p>
+                    {% for q_form in question_form %}
+                    <div class="">
+                        {{ q_form }}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="border rounded border-2 border-primary p-4 mb-4">
+                    <p class="h5 border-bottom">Below are the current options along with the question. You can also edit them or add new options if you want. That's why the buttons are below.</p>
+                {% for form in option_formset %}     
+                <div class="card bg-lgreen p-3 mb-4">
+                    {{ form }}
+                </div>
+                {% endfor %}
+            </div>
+                <div class="btn-group">
+                    <button class="btn btn-outline-primary" hx-get="{% url 'home:add_extra' question.slug  %}"
+                        hx-target="#pppp" hx-swap="outerHTML" hx-name="'sdsad" name="extra" hx-trigger="click">
+                        Add Extra Option
+                    </button>
+                    <button class="btn btn-outline-primary" hx-get="{% url 'home:sub_extra' question.slug  %}"
+                        hx-target="#pppp" hx-swap="outerHTML" name="extra" hx-trigger="click">
+                        Substract Extra Option
+                    </button>
+                    <input class="btn btn-outline-primary" type="submit" hx-post="#ssss"
+                        hx-push-url="{% url 'home:questions_details' question.pk %}" value="Save and Stay"
+                        hx-target="#pppp" hx-swap="outerHTML" hx-vals='{"add_more": "Save and Stay"}'
+                        hx-trigger="click">
+                    <input class="btn btn-outline-primary" type="submit" hx-post="#ssss"
+                        hx-push-url="{% url 'home:questions' %}" value="Save" hx-target="#pppp" hx-swap="outerHTML"
+                        hx-vals='{"save": "save"}' hx-trigger="click">
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 {% endblock content %}

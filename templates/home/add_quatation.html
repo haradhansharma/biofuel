@@ -8,326 +8,291 @@
 {% block content %}
 {% load static %}
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
-    <div class="d-block mb-4 mb-md-0">
-        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+{% if messages %}
 
-        </nav>
-        <h2 class="h4">To this question, add quotation.</h2>
-        <p class="mb-0">Green Fuel validation Platform.</p>
-    </div>
-    <div class="btn-toolbar mb-2 mb-md-0">
-
-    </div>
+<div class="alert alert-secondary mt-5" role="alert">
+    {% for message in messages %}
+    <span class="alert-inner--text">{{ message }}</span>
+    {% endfor %}
 </div>
 
-
-<div class="card card-body border-0 shadow table-wrapper table-responsive">
-
-    {% if messages %}
-                    
-    <div class="alert alert-secondary mt-5" role="alert">
-        {% for message in messages %}
-        <span class="alert-inner--text">{{ message }}</span>
-        {% endfor %}
-    </div>
-    
-    {% endif %}
+{% endif %}
 
 
-    <div class="d-block">
-    <div class="row d-inline h4 mb-4">
-        <div class="d-flex">       
+<div class="card border-0 shadow table-wrapper table-responsive">
+    <div class="card-header">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
             <div class="">
-                {{ question.name }} 
-            </div>        
-
+               <span class="h4 text-danger">Add Quotation to the question: </span> <span class="h4 text-primary">{{ question.name }}</span> 
+            </div>
             <!--form start-->
             <form id="quotation_form" class="" method="post" action="">
                 {% csrf_token %}
                 <div class="col-auto d-flex">
                     {{ na_form.next_activities }}
-                    <input class="btn btn-success btn-block" type="submit" name = "go" value="GO">
-                </div>  
+                    <input class="btn btn-success btn-block" type="submit" name="go" value="GO">
+                </div>
             </form>
             <!--form end-->
-            <div class="ms-4" style="float: right;" >
+            <div class="ms-4" style="float: right;">
                 {% if quatation %}
-                    <a  href="{{report_link}}">Print</a>
-                {% endif %} 
+                <a href="{{report_link}}">Print</a>
+                {% endif %}
             </div>
-        </div>   
+        </div>
     </div>
-
-
-
-
-
-
     
-</div>
-
-    <li role="separator" class="dropdown-divider mb-0 border-gray-700"></li>
-
-    <div hx-target="this" hx-swap="outerHTML">
-
-        <form id="quotation_form" method="post" enctype="multipart/form-data" action="{% url 'home:add_quatation' question.slug %}">
+ 
+    <div class="card-body" hx-target="this" hx-swap="outerHTML">
+        <form id="quotation_form" method="post" enctype="multipart/form-data"
+            action="{% url 'home:add_quatation' question.slug %}">
             {% csrf_token %}
-
-            
-
-
             <div class="row">
                 <div class="col-12 mb-3">
                     <div class="form-group mb-4">
                         <div class="row input-group">
-                            
                             <div class="mb-4">
-
                                 <!--form start-->
-                                <div  class="form-group mt-4 d-none">
+                                <div class="form-group mt-4 d-none">
                                     <div class="row g-3 align-items-center">
                                         <div class="text-error invalid-feedback">{{ form.next_activities.errors }}</div>
                                         <div class="col-auto">
-                                            <label  for="{{ form.price.id_for_label }}">{{ form.next_activities.label }} </label>  
-                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted" data-bs-toggle="tooltip" data-bs-html="true" title="{% if form.next_activities.help_text %} {{ form.next_activities.help_text|safe }}  {% endif %}">?</span> 
-                                        </div> 
+                                            <label for="{{ form.price.id_for_label }}">{{ form.next_activities.label }}
+                                            </label>
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted"
+                                                data-bs-toggle="tooltip" data-bs-html="true"
+                                                title="{% if form.next_activities.help_text %} {{ form.next_activities.help_text|safe }}  {% endif %}">?</span>
+                                        </div>
                                         <div class="col-auto">
                                             {{ form.next_activities }}
                                         </div>
                                     </div>
-                                    
-                                    </div>
-                                   <!--form end-->
-
-                                
-
+                                </div>
+                                <!--form end-->
 
                                 <!--form start-->
                                 <div class="form-group mt-4">
-                                <div class="row g-3 align-items-center">
-                                    <div class="text-error invalid-feedback">{{ form.price.errors }}</div>
-                                    <div class="text-error invalid-feedback">{{ form.price_unit.errors }}</div>
-                                    <div class="col-auto">
-                                        <label  for="{{ form.price.id_for_label }}">{{ form.price.label }} </label>  
-                                        <span class="btn btn-outline-primary p-1 rounded-circle text-muted" data-bs-toggle="tooltip" data-bs-html="true" title="{% if form.price.help_text %} {{ form.price.help_text|safe }}  {% endif %}">?</span> 
-                                    </div> 
-                                    <div class="col-auto">
-                                       <span>{{ form.price }}</span> 
+                                    <div class="row g-3 align-items-center">
+                                        <div class="text-error invalid-feedback">{{ form.price.errors }}</div>
+                                        <div class="text-error invalid-feedback">{{ form.price_unit.errors }}</div>
+                                        <div class="col-auto">
+                                            <label for="{{ form.price.id_for_label }}">{{ form.price.label }} </label>
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted"
+                                                data-bs-toggle="tooltip" data-bs-html="true"
+                                                title="{% if form.price.help_text %} {{ form.price.help_text|safe }}  {% endif %}">?</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span>{{ form.price }}</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            {{ form.price_unit }}
+                                        </div>
                                     </div>
-                                    <div class="col-auto">
-                                        {{ form.price_unit }}
-                                    </div>
-                                </div>
                                 </div>
                                 <!--form end-->
 
 
                                 <!--form start-->
                                 <div class="form-group mt-4">
-                                <div class="row g-3 align-items-center">
-                                    <div class="text-error invalid-feedback">{{ form.needy_time.errors }}</div>
-                                    <div class="text-error invalid-feedback">{{ form.needy_time_unit.errors }}</div>
-                                    <div class="col-auto">
-                                        <label  for="{{ form.needy_time.id_for_label }}">{{ form.needy_time.label }} </label>  
-                                        <span class="btn btn-outline-primary p-1 rounded-circle text-muted" data-bs-toggle="tooltip" data-bs-html="true" title="{% if form.needy_time.help_text %} {{ form.needy_time.help_text|safe }}  {% endif %}">?</span> 
-                                    </div> 
-                                    <div class="col-auto">
-                                        <span>{{ form.needy_time }}</span> 
+                                    <div class="row g-3 align-items-center">
+                                        <div class="text-error invalid-feedback">{{ form.needy_time.errors }}</div>
+                                        <div class="text-error invalid-feedback">{{ form.needy_time_unit.errors }}</div>
+                                        <div class="col-auto">
+                                            <label for="{{ form.needy_time.id_for_label }}">{{ form.needy_time.label }}
+                                            </label>
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted"
+                                                data-bs-toggle="tooltip" data-bs-html="true"
+                                                title="{% if form.needy_time.help_text %} {{ form.needy_time.help_text|safe }}  {% endif %}">?</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span>{{ form.needy_time }}</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            {{ form.needy_time_unit }}
+                                        </div>
                                     </div>
-                                    <div class="col-auto">
-                                        {{ form.needy_time_unit }}
-                                    </div>
-                                </div>
                                 </div>
                                 <!--form end-->
 
 
                                 <!--form start-->
                                 <div class="form-group mt-4">
-                                <div class="row g-3 align-items-center">
-                                    <div class="text-error invalid-feedback">{{ form.sample_amount.errors }}</div>
-                                    <div class="text-error invalid-feedback">{{ form.sample_amount_unit.errors }}</div>
-                                    <div class="col-auto">
-                                        <label  for="{{ form.sample_amount.id_for_label }}">{{ form.sample_amount.label }} </label>  
-                                        <span class="btn btn-outline-primary p-1 rounded-circle text-muted" data-bs-toggle="tooltip" data-bs-html="true" title="{% if form.sample_amount.help_text %} {{ form.sample_amount.help_text|safe }}  {% endif %}">?</span> 
-                                    </div> 
-                                    <div class="col-auto">
-                                        <span>{{ form.sample_amount }}</span> 
+                                    <div class="row g-3 align-items-center">
+                                        <div class="text-error invalid-feedback">{{ form.sample_amount.errors }}</div>
+                                        <div class="text-error invalid-feedback">{{ form.sample_amount_unit.errors }}
+                                        </div>
+                                        <div class="col-auto">
+                                            <label for="{{ form.sample_amount.id_for_label }}">{{  form.sample_amount.label }} </label>
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted"
+                                                data-bs-toggle="tooltip" data-bs-html="true"
+                                                title="{% if form.sample_amount.help_text %} {{ form.sample_amount.help_text|safe }}  {% endif %}">?</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span>{{ form.sample_amount }}</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            {{ form.sample_amount_unit }}
+                                        </div>
                                     </div>
-                                    <div class="col-auto">
-                                        {{ form.sample_amount_unit }}
-                                    </div>
-                                </div>
                                 </div>
                                 <!--form end-->
 
                                 <!--form start-->
                                 <div class="form-group mt-4">
-                                <div class="row g-3 align-items-center">
-                                    <div class="text-error invalid-feedback">{{ form.require_documents.errors }}</div>                                    
-                                    <div class="col-auto">
-                                        <label  for="{{ form.require_documents.id_for_label }}">{{ form.require_documents.label }} </label>  
-                                        <span class="btn btn-outline-primary p-1 rounded-circle text-muted" data-bs-toggle="tooltip" data-bs-html="true" title="{% if form.require_documents.help_text %} {{ form.require_documents.help_text|safe }}  {% endif %}">?</span> 
-                                    </div> 
-                                    <div class="col-auto">
-                                        <span>{{ form.require_documents }}</span> 
+                                    <div class="row g-3 align-items-center">
+                                        <div class="text-error invalid-feedback">{{ form.require_documents.errors }}
+                                        </div>
+                                        <div class="col-auto">
+                                            <label for="{{ form.require_documents.id_for_label }}">{{  form.require_documents.label }} </label>
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted"
+                                                data-bs-toggle="tooltip" data-bs-html="true"
+                                                title="{% if form.require_documents.help_text %} {{ form.require_documents.help_text|safe }}  {% endif %}">?</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span>{{ form.require_documents }}</span>
+                                        </div>
+
                                     </div>
-                                    
-                                </div>
                                 </div>
                                 <!--form end-->
 
 
                                 <!--form start-->
                                 <div class="form-group mt-4">
-                                <div class="row g-3 align-items-center">
-                                    <div class="text-error invalid-feedback">{{ form.factory_pickup.errors }}</div>                                    
-                                    <div class="col-auto">
-                                        <label  for="{{ form.factory_pickup.id_for_label }}">{{ form.factory_pickup.label }} </label>  
-                                        <span class="btn btn-outline-primary p-1 rounded-circle text-muted" data-bs-toggle="tooltip" data-bs-html="true" title="{% if form.factory_pickup.help_text %} {{ form.factory_pickup.help_text|safe }}  {% endif %}">?</span> 
-                                    </div> 
-                                    <div class="col-auto">
-                                        <span>{{ form.factory_pickup }}</span> 
+                                    <div class="row g-3 align-items-center">
+                                        <div class="text-error invalid-feedback">{{ form.factory_pickup.errors }}</div>
+                                        <div class="col-auto">
+                                            <label for="{{ form.factory_pickup.id_for_label }}">{{ form.factory_pickup.label }} </label>
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted"
+                                                data-bs-toggle="tooltip" data-bs-html="true"
+                                                title="{% if form.factory_pickup.help_text %} {{ form.factory_pickup.help_text|safe }}  {% endif %}">?</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span>{{ form.factory_pickup }}</span>
+                                        </div>
+
                                     </div>
-                                    
-                                </div>
                                 </div>
                                 <!--form end-->
 
 
                                 <!--form start-->
                                 <div class="form-group mt-4" style="display: none;">
-                                <div class="row g-3 align-items-center">
-                                    <div class="text-error invalid-feedback">{{ form.test_for.errors }}</div>                                    
-                                    <div class="col-auto">
-                                        <label  for="{{ form.test_for.id_for_label }}">{{ form.test_for.label }} </label>  
-                                        <span class="btn btn-outline-primary p-1 rounded-circle text-muted" data-bs-toggle="tooltip" data-bs-html="true" title="{% if form.test_for.help_text %} {{ form.test_for.help_text|safe }}  {% endif %}">?</span> 
-                                    </div> 
-                                    <div class="col-auto">
-                                        <span>{{ form.test_for }}</span> 
+                                    <div class="row g-3 align-items-center">
+                                        <div class="text-error invalid-feedback">{{ form.test_for.errors }}</div>
+                                        <div class="col-auto">
+                                            <label for="{{ form.test_for.id_for_label }}">{{ form.test_for.label }}
+                                            </label>
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted"
+                                                data-bs-toggle="tooltip" data-bs-html="true"
+                                                title="{% if form.test_for.help_text %} {{ form.test_for.help_text|safe }}  {% endif %}">?</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span>{{ form.test_for }}</span>
+                                        </div>
+
                                     </div>
-                                    
-                                </div>
                                 </div>
                                 <!--form end-->
 
                                 <!--form start-->
                                 <div class="form-group mt-4">
                                     <div class="row g-3 align-items-center">
-                                        <div class="text-error invalid-feedback">{{ form.display_site_address.errors }}</div>                                    
-                                        <div class="col-auto">
-                                            <label  for="{{ form.display_site_address.id_for_label }}">{{ form.display_site_address.label }} </label>  
-                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted" data-bs-toggle="tooltip" data-bs-html="true" title="{% if form.display_site_address.help_text %} {{ form.display_site_address.help_text|safe }}  {% endif %}">?</span> 
-                                        </div> 
-                                        <div class="col-auto">
-                                            <span>{{ form.display_site_address }}</span> 
+                                        <div class="text-error invalid-feedback">{{ form.display_site_address.errors }}
                                         </div>
-                                        
+                                        <div class="col-auto">
+                                            <label for="{{ form.display_site_address.id_for_label }}">{{ form.display_site_address.label }} </label>
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted"
+                                                data-bs-toggle="tooltip" data-bs-html="true"
+                                                title="{% if form.display_site_address.help_text %} {{ form.display_site_address.help_text|safe }}  {% endif %}">?</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span>{{ form.display_site_address }}</span>
+                                        </div>
+
                                     </div>
-                                    </div>
-                                    <!--form end-->
+                                </div>
+                                <!--form end-->
 
 
                                 <!--form start-->
                                 <div class="form-group mt-4">
-                                <div class="row g-3 align-items-center">
-                                    <div class="text-error invalid-feedback">{{ form.related_questions.errors }}</div>                                    
-                                    <div class="col-auto">
-                                        <label  for="{{ form.related_questions.id_for_label }}">{{ form.related_questions.label }} </label>  
-                                        <span class="btn btn-outline-primary p-1 rounded-circle text-muted" data-bs-toggle="tooltip" data-bs-html="true" title="{% if form.related_questions.help_text %} {{ form.related_questions.help_text|safe }}  {% endif %}">?</span> 
-                                    </div> 
-                                    <div class="col-auto">
-                                        <span>{{ form.related_questions }}</span> 
+                                    <div class="row g-3 align-items-center">
+                                        <div class="text-error invalid-feedback">{{ form.related_questions.errors }}
+                                        </div>
+                                        <div class="col-auto">
+                                            <label for="{{ form.related_questions.id_for_label }}">{{ form.related_questions.label }} </label>
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted"
+                                                data-bs-toggle="tooltip" data-bs-html="true"
+                                                title="{% if form.related_questions.help_text %} {{ form.related_questions.help_text|safe }}  {% endif %}">?</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span>{{ form.related_questions }}</span>
+                                        </div>
+
                                     </div>
-                                    
-                                </div>
                                 </div>
                                 <!--form end-->
 
                                 <!--form start-->
                                 <div class="form-group mt-4">
                                     <div class="row g-3 align-items-center">
-                                        <div class="text-error invalid-feedback">{{ form.comments.errors }}</div>                                    
+                                        <div class="text-error invalid-feedback">{{ form.comments.errors }}</div>
                                         <div class="col-auto">
-                                            <label  for="{{ form.comments.id_for_label }}">{{ form.comments.label }} </label>  
-                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted" data-bs-toggle="tooltip" data-bs-html="true" title="{% if form.comments.help_text %} {{ form.comments.help_text|safe }}  {% endif %}">?</span> 
-                                        </div> 
-                                        <div class="col-auto">
-                                            <span>{{ form.comments }}</span> 
+                                            <label for="{{ form.comments.id_for_label }}">{{ form.comments.label }}
+                                            </label>
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted"
+                                                data-bs-toggle="tooltip" data-bs-html="true"
+                                                title="{% if form.comments.help_text %} {{ form.comments.help_text|safe }}  {% endif %}">?</span>
                                         </div>
-                                        
-                                    </div>
-                                    </div>
-                                    <!--form end-->
+                                        <div class="col-auto">
+                                            <span>{{ form.comments }}</span>
+                                        </div>
 
-                                <!--form start-->
-                                <div class="form-group mt-4">
-                                <div class="row g-3 align-items-center">
-                                    <div class="text-error invalid-feedback">{{ form.quotation_format.errors }}</div>                                    
-                                    <div class="col-auto">
-                                        <label  for="{{ form.quotation_format.id_for_label }}">{{ form.quotation_format.label }} </label>  
-                                        <span class="btn btn-outline-primary p-1 rounded-circle text-muted" data-bs-toggle="tooltip" data-bs-html="true" title="{% if form.quotation_format.help_text %} {{ form.quotation_format.help_text|safe }}  {% endif %}">?</span> 
-                                    </div> 
-                                    <div class="col-auto">
-                                        <span >{{ form.quotation_format }}</span> 
                                     </div>
-                                    
-                                </div>
-                                {% if quatation.quotation_format %}
-                                <embed class="mt-4" src="{% static quatation.quotation_format.url  %}#toolbar=0&navpanes=0&scrollbar=0" frameborder="0" width="75%" height="800px"  type="application/pdf">
-                                   {% else %} 
-                                   No PDF Found
-                                   {% endif %}
-                                    
                                 </div>
                                 <!--form end-->
 
-                                
+                                <!--form start-->
+                                <div class="form-group mt-4">
+                                    <div class="row g-3 align-items-center">
+                                        <div class="text-error invalid-feedback">{{ form.quotation_format.errors }}
+                                        </div>
+                                        <div class="col-auto">
+                                            <label for="{{ form.quotation_format.id_for_label }}">{{  form.quotation_format.label }} </label>
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted"
+                                                data-bs-toggle="tooltip" data-bs-html="true"
+                                                title="{% if form.quotation_format.help_text %} {{ form.quotation_format.help_text|safe }}  {% endif %}">?</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span>{{ form.quotation_format }}</span>
+                                        </div>
 
+                                    </div>
+                                    {% if quatation.quotation_format %}
+                                    <embed class="mt-4"
+                                        src="{% static quatation.quotation_format.url  %}#toolbar=0&navpanes=0&scrollbar=0"
+                                        frameborder="0" width="100%" height="800px" type="application/pdf">
+                                    {% else %}
+                                    No PDF Found
+                                    {% endif %}
 
-                                
-
-
+                                </div>
+                                <!--form end-->
                             </div>
-                            
                         </div>
                     </div>
                 </div>
-            </div> 
-
-
-        
-
-
-            <input class="btn btn-success btn-block" type="submit" name = "add_quatation" value="Add Quotation">
-            <a class="btn btn-success btn-block" href="{% url 'home:questions' %}">Go Back to Questions</a>
+            </div>
+        <div class="btn-group">
+            <input class="btn btn-sm btn-outline-primary" type="submit" name="add_quatation" value="Add Quotation">
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'home:questions' %}">Go Back to Questions</a>
             {% if quatation %}
-            <a class="btn btn-success btn-block" target="_blank" href="{{report_link}}">See Final Pdf</a>
+            <a class="btn btn-sm btn-outline-primary" target="_blank" href="{{report_link}}">See Final Pdf</a>
             {% endif %}
-
-
-
-
-            
-
+        </div>
         </form>
-
-
-
-
-
-
     </div>
-
-
-
-
-
-
-
-
-
 </div>
 
 {% endblock content %}

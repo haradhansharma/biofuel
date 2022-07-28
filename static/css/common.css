@@ -20,22 +20,22 @@
 .icon-user-type {
     height: 6rem; }
     
-    .icon-user-type.icon-user-type {
-      height: 6rem; }
+.icon-user-type.icon-user-type {
+  height: 6rem; }
       
     
   
-  .icon-shape-user-type {
-    width: 6rem;
-    height: 6rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center; }
-    .icon-shape-user-type svg {
-      height: 6rem; }
-    
-    .icon-shape-user-type.icon-size-user-type {
-      width: 6rem;
-      height: 6rem; }
-      .icon-shape-user-type.icon-size-user-type svg {
-        height: 6rem; }
+.icon-shape-user-type {
+  width: 6rem;
+  height: 6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center; }
+.icon-shape-user-type svg {
+  height: 6rem; }
+
+.icon-shape-user-type.icon-size-user-type {
+  width: 6rem;
+  height: 6rem; }
+.icon-shape-user-type.icon-size-user-type svg {
+  height: 6rem; }

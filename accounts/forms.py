@@ -48,10 +48,6 @@ class UserCreationFormFront(UserCreationForm):
     password2 = forms.CharField(label = 'Confirm Password', widget=forms.PasswordInput(attrs={"placeholder": "Password check","class": "form-control"}))
     term_agree = forms.BooleanField(label = 'Agree Our', required=True,  widget=forms.CheckboxInput(attrs={"class": "form-check-input"}))
     
-    
-    
-    
-    
     #implemeting google recapcha.
     captcha = ReCaptchaField( widget=ReCaptchaV2Checkbox)  
     

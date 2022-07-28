@@ -1,66 +1,60 @@
-<header class="header-global">
-    <nav id="navbar-main" aria-label="Primary navigation" class="navbar navbar-main navbar-expand-lg pt-4 navbar-dark">
-        <div class="container position-relative">
-            <div class="navbar-collapse collapse me-auto" id="navbar_global">
-                <div class="navbar-collapse-header">
-                    <div class="row">
-                        <div class="col-6 collapse-brand">
-                            <a href="/">
-                                <img src="/static/assets/img/brand/light.svg" alt="Volt logo">
-                            </a>
-                        </div>
-                        <div class="col-6 collapse-close">
-                            <a href="#navbar_global" class="fas fa-times" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" title="close" aria-label="Toggle navigation"></a>
-                        </div>
-                    </div>
-                </div>
-                <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
-                    <li class="nav-item me-2">
-                        <a href="/" class="nav-link">Home</a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a href="{% url 'home:dashboard' %}" class="nav-link">Dashboard</a>
+{% load static %}
+<header class=" bg-primary mb-4 ">
+    <nav class="navbar navbar-expand-lg fixed-top bg-primary border-bottom border-3 border-danger">
+        <div class="container p-2">
+            <a href="/">
+                <img src="{% static site_info.logo %}" class="card bg-bgreen"  height="50px" alt="{{ site.name }}">
+            </a>
+            <button class="navbar-toggler bg-secondary text-primary" style="min-height: 50px;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fs-normal">MENU</span>
+            </button>
+            <div class="collapse navbar-collapse shadow-0 bg-primary" style="top: 100%; height : fit-content!important;" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    
+                    <li class="nav-item">
+                        <a href="{% url 'home:dashboard' %}" class="link-secondary btn">Dashboard</a>
                     </li>
                     {% if request.user.is_authenticated or request.user.is_staff or request.user.is_superuser %}
-                    <li class="nav-item me-2">
-                        <a href="{% url 'accounts:user_link' user.username %}" class="nav-link">My Profile</a>
+                    <li class="nav-item">
+                        <a href="{% url 'accounts:user_link' user.username %}" class="link-secondary btn">My Profile</a>
                     </li>
                     {% endif %}
                     {% if request.user.is_producer or request.user.is_staff or request.user.is_superuser %}
-                    <li class="nav-item me-2">
-                        <a href="{% url 'evaluation:evaluation2' %}" class="nav-link">Evaluation</a>
+                    <li class="nav-item">
+                        <a href="{% url 'evaluation:evaluation2' %}" class="link-secondary btn">Evaluation</a>
                     </li>
                     {% endif %}
                     
                     {% if request.user.is_expert or request.user.is_staff or request.user.is_superuser %}
-                    <li class="nav-item me-2">
-                        <a href="{% url 'home:questions' %}" class="nav-link">Questions and Quotations</a>
+                    <li class="nav-item">
+                        <a href="{% url 'home:questions' %}" class="link-secondary btn">Questions and Quotations</a>
                     </li>
                     {% endif %}
                     
-                    
                 </ul>
-            </div>
-            <div class="d-flex align-items-center ms-auto">
-
-
-                {% if user.is_authenticated %}
-                <span class="me-3"> Hi {{ user.username }}!</span>
-                <a href="{% url 'logout' %}" class="btn btn-outline-white d-inline-flex align-items-center me-md-3">Log Out</a>
-                <a href="{% url 'home:change_pass' %}" class="btn btn-outline-white d-inline-flex align-items-center me-md-3">Reset Password</a>
-                {% else %} 
-                
-                <a href="{% url 'login' %}" class="btn btn-outline-white d-inline-flex align-items-center me-md-3">Log In</a>
-                <a href="{% url 'accounts:signup' %}" class="btn btn-outline-white d-inline-flex align-items-center me-md-3">Signup</a>
-                
-                {% endif %}
-
-
-
-
-                
+                <div class="nav-link dropdown">
+                    {% if user.is_authenticated %}
+                    <span class="dropdown-toggle link-secondary" id="dropdownMenuTop" data-bs-toggle="dropdown"
+                        aria-expanded="false">Hi, {{user.username}}</span>
+                    {% else %}
+                    <span class="dropdown-toggle link-secondary" id="dropdownMenuTop" data-bs-toggle="dropdown"
+                        aria-expanded="false">Account</span>
+                    {% endif %}
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuTop">
+                        {% if user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
+                        <li><a class="dropdown-item" href="{% url 'home:change_pass' %}">Reset Password</a></li>
+                        
+                        {% else %}
+                        <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:signup' %}">Signup</a></li>
+                        {% endif %}
+                    </ul>
+                    
+                </div>
             </div>
         </div>
     </nav>
-                                                                       
 </header>
+

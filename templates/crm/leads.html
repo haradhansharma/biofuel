@@ -1,233 +1,203 @@
 {% extends "layouts/base.html" %}
 {% load static %}
 
-{% block title %} Tables {% endblock %} 
+{% block title %} Tables {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 
-  <div class="py-4">
-      <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
-         
-      </nav>
-      <div class="d-flex justify-content-between w-100 flex-wrap">
-          <div class="mb-3 mb-lg-0">
-              <h1 class="h4">Leads</h1>
-              <p class="mb-0">All Leads are listed Here</p>
-              
-          </div>
-          <div>
-            <!--Send mail using Htmx-->
+<div class="py-4">
+  <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+  </nav>
+  <div class="d-flex justify-content-between w-100 flex-wrap">
+    <div class="mb-3 mb-lg-0">
+      <h1 class="h4">Leads</h1>
+      <p class="mb-0">All Leads are listed Here</p>
+    </div>
+    <div>
+      <!--Send mail using Htmx-->
 
-            <div hx-get="{% url 'crm:send_mail' %}" hx-trigger="every {{EXECUT_MAIL_IN_SECONDS}}s">
-            </div>
-            <p>
-              Do not refresh this page for {{EXECUT_MAIL_IN_SECONDS}} seconds to send <br> queued mail automatically!
-            </p>
-            <p>
-                In other tab is allowed to do anything you want to do!
-              </p>
-            
-          <!--Send mail using Htmx--> 
-          </div>
-
-          {% if messages %}   
-                    <div class="col-12 text-center">
-                        <div class="alert alert-secondary shadow-soft" role="alert">                            
-                            {% for message in messages %}
-                            <span class="alert-inner--text">{{ message }}</span>
-                            {% endfor %}                            
-                        </div>                        
-                    </div>
-        {% endif %}
-          
-         
+      <div hx-get="{% url 'crm:send_mail' %}" hx-trigger="every {{EXECUT_MAIL_IN_SECONDS}}s">
       </div>
-      <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
+      <p>
+        Do not refresh this page for {{EXECUT_MAIL_IN_SECONDS}} seconds to send <br> queued mail automatically!
+      </p>
+      <p>
+        In other tab is allowed to do anything you want to do!
+      </p>
 
-      <div class="d-flex justify-content-between w-100 flex-wrap mt-3">
-        <div>
-
-        <button class="btn btn-outline-gray-600 d-inline-flex align-items-center mr=2" type="submit" name="mail_lead" form="leadform">  Send mail  </button>
-
-        
-
-        <button class="btn btn-outline-gray-600 d-inline-flex align-items-center mr=2" type="submit" name="delete_lead" form="leadform"> Delete Lead </button>
-
-        
-            <a class="btn btn-outline-gray-600 d-inline-flex align-items-center mr-2" href="{% static 'upload/lead.csv' %}" download> Download Example File </a>
-        </div>
-
-        <div>
-            
-            <form method="post" action="" id="csv_upload_form" enctype="multipart/form-data" class="dropzone rounded mb-4">
-                {% csrf_token %}
-                {{ upload_csv_form.as_p }}
-                <input  class="btn btn-gray-800 mt-2 animate-up-2" type="submit" form="csv_upload_form" value="Process">
-            </form>
-        
-        </div>
-
-        
-        
+      <!--Send mail using Htmx-->
     </div>
 
-    
-  </div>
-
-  <div class="card border-0 shadow mb-4">
-      <div class="card-body">
-          <div class="table-responsive">
-              <table class="table table-centered table-nowrap mb-0 rounded">
-                  <thead class="thead-light">
-                      <tr>
-                          <th>                            
-                            <input class="form-check-input" type="checkbox" onClick="toggle(this,'lead')" value=""  id="topcheck" > 
-                          </th>
-                          
-                          <th class="border-0">Lead</th>
-                          <th class="border-0">Email</th>
-                          <th class="border-0">Phone</th>
-                          <th class="border-0">Address 1</th>
-                          <th class="border-0">Address 2</th>
-                          <th class="border-0">City</th>
-                          <th class="border-0 rounded-end">Country</th>
-                          <th class="border-0">Subscribed</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-
-
-                      <!-- Item -->
-
-
-
-                      <form method="post" id="leadform" action="{% url 'crm:leads' %}">
-                        {% csrf_token %}
-
-                      {% for lead in leads %}
-                      <tr>
-                          <td>
-                                <input class="form-check-input" type="checkbox" name="lead" value="{{lead.id}}" id="{{lead.id}}" >
-                          </td>
-                          
-                          <td class="fw-bold d-flex align-items-center">
-                              
-                              {{lead.lead}}
-                          </td>
-                          <td>
-                            {{lead.email_address}}
-                          </td>
-                          <td>
-                            {{lead.phone}}
-                          </td>
-                          <td>
-                            {{lead.address_1}}
-                          </td>
-                          <td>
-                            {{lead.address_2}}
-                          </td>
-                          <td>
-                            {{lead.city}}
-                          </td>
-                          <td>
-                            {{lead.country}}
-                          </td>
-                          <td>
-                            {{lead.subscribed}}
-                          </td>
-                      </tr>
-                    
-
-                      {% endfor %}
-
-                    </form>
-
-
-                      <!-- End of Item -->
-
-                     
-                      
-
-                      
-
-                      
-                  </tbody>
-              </table>
-          </div>
+    {% if messages %}
+    <div class="col-12 text-center">
+      <div class="alert alert-secondary shadow-soft" role="alert">
+        {% for message in messages %}
+        <span class="alert-inner--text">{{ message }}</span>
+        {% endfor %}
       </div>
+    </div>
+    {% endif %}
+
+
   </div>
+  <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
 
-  <div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
-    <nav aria-label="Page navigation ">
-        <ul class="pagination justify-content-center">
-            {% if leads.has_previous %}
-            <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
-            <li class="page-item"><a class="page-link"
-                    href="?page={{ leads.previous_page_number }}">previous</a></li>
-            {% endif %}
+  <div class="d-flex justify-content-between w-100 flex-wrap mt-3">
+    <div class="btn-group">
+      <button class="btn btn-outline-gray-600 btn-sm" type="submit" name="mail_lead" form="leadform"> Send mail
+      </button>
+      <button class="btn btn-outline-gray-600 btn-sm" type="submit" name="delete_lead" form="leadform"> Delete Lead
+      </button>
+      <button class="btn btn-outline-gray-600 btn-sm"><a href="{% static 'upload/lead.csv' %}" download> Download
+          Example File </a></button>
 
-            <li class="page-item page-link"> Page {{ leads.number }} of {{ leads.paginator.num_pages }}.
-            </li>
+    </div>
 
-            {% if leads.has_next %}
-            <li class="page-item"><a class="page-link" href="?page={{ leads.next_page_number }}">next</a></li>
-            <li class="page-item"> <a class="page-link" href="?page={{ leads.paginator.num_pages }}">last
-                    &raquo;</a></li>
-            {% endif %}
-        </ul>
-    </nav>
+    <div class="form-group">
+      <form method="post" action="" id="csv_upload_form" enctype="multipart/form-data" class="dropzone rounded mb-4">
+        {% csrf_token %}
+        <div class="fallback p-2">
+          {{ upload_csv_form }}
+          <input class="btn btn-gray-800 animate-up-2" type="submit" form="csv_upload_form" value="Process">
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
-  
-  <script type="text/javascript" >
-    function toggle(source,lead) {
-        checkboxes = document.getElementsByName(lead);
-        for (var i = 0,
-            n = checkboxes.length; i < n; i++) {
-            checkboxes[i].checked = source.checked;
-        }
-    }
-    </script>
 
+<div class="card border-0 shadow mb-4">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-centered table-nowrap mb-0 rounded">
+        <thead class="thead-light">
+          <tr>
+            <th>
+              <input class="form-check-input" type="checkbox" onClick="toggle(this,'lead')" value="" id="topcheck">
+            </th>
+            <th class="border-0">Lead</th>
+            <th class="border-0">Email</th>
+            <th class="border-0">Phone</th>
+            <th class="border-0">Address 1</th>
+            <th class="border-0">Address 2</th>
+            <th class="border-0">City</th>
+            <th class="border-0 rounded-end">Country</th>
+            <th class="border-0">Subscribed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Item -->
 
-
-    <div class="card border-light shadow-sm py-4">
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-10 col-xl-6">
-                <div class="card-header border-0 text-center">
-                    <h2 class="h3 mb-4">Frequently asked questions</h2>
-                    <p class="text-gray">Here’s what you need to know about CRM feature in the site.</p>
-                </div>
-                <div class="card-body">
-                    <!--Accordion-->
-                    <div class="accordion" id="accordionPricing">
-                        {% for doc in docs %}
-                        <div class="accordion-item">
-                          <h2 class="accordion-header" id="heading{{doc.id}}">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{doc.id}}" aria-expanded="false" aria-controls="collapse{{doc.id}}">
-                                {{doc.button_text|safe}}
-                            </button>
-                          </h2>
-                          <div id="collapse{{doc.id}}" class="accordion-collapse collapse" aria-labelledby="heading{{doc.id}}" data-bs-parent="#accordionPricing" style="">
-                            <div class="accordion-body">
-                                {{doc.button_des|safe}}
-                            </div>
-                          </div>
-                        </div>
-                        {% endfor %}
-                        
-                        
-                    </div>
-                    <!--End of Accordion-->
-                </div>
-            </div>
-        </div>
+          <form method="post" id="leadform" action="{% url 'crm:leads' %}">
+            {% csrf_token %}
+            {% for lead in leads %}
+            <tr>
+              <td>
+                <input class="form-check-input" type="checkbox" name="lead" value="{{lead.id}}" id="{{lead.id}}">
+              </td>
+              <td class="fw-bold d-flex align-items-center">
+                {{lead.lead}}
+              </td>
+              <td>
+                {{lead.email_address}}
+              </td>
+              <td>
+                {{lead.phone}}
+              </td>
+              <td>
+                {{lead.address_1}}
+              </td>
+              <td>
+                {{lead.address_2}}
+              </td>
+              <td>
+                {{lead.city}}
+              </td>
+              <td>
+                {{lead.country}}
+              </td>
+              <td>
+                {{lead.subscribed}}
+              </td>
+            </tr>
+            {% endfor %}
+          </form>
+          <!-- End of Item -->
+        </tbody>
+      </table>
     </div>
+  </div>
+  <div class="card-footer">
+    <div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+      <nav aria-label="Page navigation ">
+        <ul class="pagination justify-content-center">
+          {% if leads.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ leads.previous_page_number }}">previous</a></li>
+          {% endif %}
+    
+          <li class="page-item page-link"> Page {{ leads.number }} of {{ leads.paginator.num_pages }}.
+          </li>
+    
+          {% if leads.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ leads.next_page_number }}">next</a></li>
+          <li class="page-item"> <a class="page-link" href="?page={{ leads.paginator.num_pages }}">last
+              &raquo;</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<div class="card border-light shadow-sm py-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-10 ">
+      <div class="card-header border-0 text-center">
+        <h2 class="h3 mb-4">Frequently asked questions</h2>
+        <p class="text-gray">Here’s what you need to know about CRM feature in the site.</p>
+      </div>
+      <div class="card-body">
+        <!--Accordion-->
+        <div class="accordion" id="accordionPricing">
+          {% for doc in docs %}
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{doc.id}}">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapse{{doc.id}}" aria-expanded="false" aria-controls="collapse{{doc.id}}">
+                {{doc.button_text|safe}}
+              </button>
+            </h2>
+            <div id="collapse{{doc.id}}" class="accordion-collapse collapse" aria-labelledby="heading{{doc.id}}"
+              data-bs-parent="#accordionPricing" style="">
+              <div class="accordion-body">
+                {{doc.button_des|safe}}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <!--End of Accordion-->
+      </div>
+    </div>
+  </div>
+</div>
 
 
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+
+
+<script type="text/javascript">
+  function toggle(source, lead) {
+    checkboxes = document.getElementsByName(lead);
+    for (var i = 0,
+      n = checkboxes.length; i < n; i++) {
+      checkboxes[i].checked = source.checked;
+    }
+  }
+</script>
+{% endblock javascripts %}
