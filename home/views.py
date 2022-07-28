@@ -821,12 +821,13 @@ def webmanifest(request):
         "type": "image/png"        
     }
     icons.append(ic512)    
+    
     site_info = {
         'name' : site.site.name,
         'short_name' : site.site.name,
         'icons' : icons,  
-        'start_url' : site.site.domain,
-        "scope": "/",
+        'start_url' : site.site.domain, 
+        
         'lang' : 'en',
         'screenshots' : [site.og_image.url, site.site_logo.url],     
         'description': site.site_description,  
