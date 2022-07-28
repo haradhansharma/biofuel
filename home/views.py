@@ -826,8 +826,8 @@ def webmanifest(request):
         'name' : site.site.name,
         'short_name' : site.site.name,
         'icons' : icons,  
-        'start_url' : site.site.domain, 
-        
+        'start_url' : '/', 
+        "scope": "/",
         'lang' : 'en',
         'screenshots' : [site.og_image.url, site.site_logo.url],     
         'description': site.site_description,  
