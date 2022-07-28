@@ -26,9 +26,15 @@
                     </li>
                     {% endif %}
                     
+                    {% if request.user.is_marine or request.user.is_staff or request.user.is_superuser %}
+                    <li class="nav-item">
+                        <a href="{% url 'home:questions' %}" class="link-secondary btn">Questions</a>
+                    </li>
+                    {% endif %}
+
                     {% if request.user.is_expert or request.user.is_staff or request.user.is_superuser %}
                     <li class="nav-item">
-                        <a href="{% url 'home:questions' %}" class="link-secondary btn">Questions and Quotations</a>
+                        <a href="{% url 'home:quotations' %}" class="link-secondary btn">Quotations</a>
                     </li>
                     {% endif %}
                     

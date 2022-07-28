@@ -65,8 +65,12 @@
                                                     {% if request.user.is_producer or request.user.is_staff or request.user.is_superuser %}
                                                     <a  href="{% url 'evaluation:evaluation2' %}" class="me-2">Begin Evaluating</a>
                                                     {% endif %}
+                                                    {% if request.user.is_marine or request.user.is_staff or request.user.is_superuser %}
+                                                    <a href="{% url 'home:questions' %}" class="me-2">Questions</a>
+                                                    {% endif %}
+
                                                     {% if request.user.is_expert or request.user.is_staff or request.user.is_superuser %}
-                                                    <a href="{% url 'home:questions' %}" class="me-2">Ques. and Quot.</a>
+                                                    <a href="{% url 'home:quotations' %}" class="me-2">Quotations</a>
                                                     {% endif %}
                                                    
                                                     {% endif %}    
