@@ -23000,3 +23000,129 @@ INFO 2022-09-03 14:51:40,779 django.server Thread-6 13244 I:\django\gfvp\gfvp_en
 INFO 2022-09-03 14:51:41,245 django.server Thread-2 19248 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 11900 "GET /upload/featured_image/2022/07/30/26.07.2022_20.28.18_REC_dSz1h0g.png HTTP/1.1" 200 49320
 INFO 2022-09-03 14:51:42,687 django.server Thread-7 17844 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 11900 "GET /seo/webmanifest/ HTTP/1.1" 200 651
 INFO 2022-09-03 14:51:44,080 django.server Thread-2 19248 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 11900 "GET /upload/site_image/gf_Artboard_14x.png HTTP/1.1" 200 59124
+INFO 2022-09-03 15:43:03,771 django.utils.autoreload MainThread 13532 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 15280 Watching for file changes with StatReloader
+INFO 2022-09-03 15:43:41,427 django.server Thread-2 3564 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /admin HTTP/1.1" 301 0
+INFO 2022-09-03 15:43:43,003 django.server Thread-2 3564 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /admin/ HTTP/1.1" 302 0
+INFO 2022-09-03 15:43:45,195 django.server Thread-2 3564 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 11904
+INFO 2022-09-03 15:43:47,831 django.server Thread-2 3564 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/admin/css/login.css HTTP/1.1" 200 954
+INFO 2022-09-03 15:44:05,184 django.server Thread-2 3564 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2022-09-03 15:44:07,141 django.server Thread-2 3564 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /admin/ HTTP/1.1" 200 30295
+INFO 2022-09-03 15:44:17,184 django.server Thread-2 3564 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /admin/blog/blogpost/ HTTP/1.1" 200 35426
+INFO 2022-09-03 15:44:18,189 django.server Thread-1 8808 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2022-09-03 15:44:18,804 django.server Thread-2 3564 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2022-09-03 15:44:22,925 django.server Thread-2 3564 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /admin/blog/blogpost/8/change/ HTTP/1.1" 200 32208
+INFO 2022-09-03 15:44:23,051 django.server Thread-4 15992 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/ckeditor/ckeditor-init.js HTTP/1.1" 304 0
+INFO 2022-09-03 15:44:23,164 django.server Thread-2 3564 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/jquery-autosuggest/css/autoSuggest-grappelli.css HTTP/1.1" 200 4096
+INFO 2022-09-03 15:44:23,171 django.server Thread-3 14148 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/jquery-autosuggest/js/jquery.autoSuggest.minified.js HTTP/1.1" 200 8259
+INFO 2022-09-03 15:44:23,179 django.server Thread-5 8296 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/ckeditor/ckeditor/ckeditor.js HTTP/1.1" 304 0
+INFO 2022-09-03 15:44:24,449 django.server Thread-1 8808 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2022-09-03 15:44:24,731 django.server Thread-5 8296 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/ckeditor/ckeditor/config.js?t=M6K9 HTTP/1.1" 200 336
+INFO 2022-09-03 15:44:24,930 django.server Thread-1 8808 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/admin/img/tooltag-arrowright.svg HTTP/1.1" 200 280
+INFO 2022-09-03 15:44:25,018 django.server Thread-3 14148 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/ckeditor/ckeditor/lang/en.js?t=M6K9 HTTP/1.1" 200 17445
+INFO 2022-09-03 15:44:25,044 django.server Thread-5 8296 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/ckeditor/ckeditor/skins/moono-lisa/editor.css?t=M6K9 HTTP/1.1" 200 48309
+INFO 2022-09-03 15:44:25,107 django.server Thread-3 14148 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/ckeditor/ckeditor/styles.js?t=M6K9 HTTP/1.1" 200 5577
+INFO 2022-09-03 15:44:25,190 django.server Thread-5 8296 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/ckeditor/ckeditor/plugins/scayt/dialogs/dialog.css?t=M6K9 HTTP/1.1" 200 419
+INFO 2022-09-03 15:44:25,236 django.server Thread-5 8296 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/ckeditor/ckeditor/contents.css?t=M6K9 HTTP/1.1" 200 3092
+INFO 2022-09-03 15:44:25,272 django.server Thread-2 3564 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/ckeditor/ckeditor/plugins/dialog/styles/dialog.css?t=M6K9 HTTP/1.1" 200 249
+INFO 2022-09-03 15:44:25,321 django.server Thread-3 14148 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/ckeditor/ckeditor/plugins/scayt/skins/moono-lisa/scayt.css?t=M6K9 HTTP/1.1" 200 381
+INFO 2022-09-03 15:44:25,378 django.server Thread-4 15992 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/ckeditor/ckeditor/plugins/copyformatting/styles/copyformatting.css?t=M6K9 HTTP/1.1" 200 1511
+INFO 2022-09-03 15:44:25,396 django.server Thread-1 8808 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/ckeditor/ckeditor/plugins/tableselection/styles/tableselection.css?t=M6K9 HTTP/1.1" 200 1145
+INFO 2022-09-03 15:44:25,410 django.server Thread-6 15168 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /static/ckeditor/ckeditor/skins/moono-lisa/icons.png?t=5fe059002f HTTP/1.1" 200 12237
+INFO 2022-09-03 16:08:26,218 django.server Thread-7 5712 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "POST /admin/blog/blogpost/8/change/ HTTP/1.1" 302 0
+INFO 2022-09-03 16:08:27,822 django.server Thread-7 5712 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /admin/blog/blogpost/ HTTP/1.1" 200 35712
+INFO 2022-09-03 16:08:29,360 django.server Thread-7 5712 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2022-09-03 16:20:20,010 django.server Thread-9 17524 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /admin/blog/blogpost/add/ HTTP/1.1" 200 31664
+INFO 2022-09-03 16:20:21,541 django.server Thread-9 17524 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2022-09-03 16:20:51,669 django.server Thread-9 17524 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 76 handle_error 15280 - Broken pipe from ('127.0.0.1', 61374)
+
+ERROR 2022-09-03 16:20:53,721 django.request Thread-10 8208 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 15280 Internal Server Error: /admin/blog/blogpost/add/
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\backends\utils.py", line 85, in _execute
+    return self.cursor.execute(sql, params)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\backends\mysql\base.py", line 73, in execute
+    return self.cursor.execute(query, args)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\MySQLdb\cursors.py", line 206, in execute
+    res = self._query(query)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\MySQLdb\cursors.py", line 319, in _query
+    db.query(q)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\MySQLdb\connections.py", line 254, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.DataError: (1406, "Data too long for column 'slug' at row 1")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\contrib\admin\options.py", line 622, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\decorators.py", line 130, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\views\decorators\cache.py", line 57, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\contrib\admin\sites.py", line 236, in inner
+    return view(request, *args, **kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\contrib\admin\options.py", line 1670, in add_view
+    return self.changeform_view(request, None, form_url, extra_context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\decorators.py", line 43, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\decorators.py", line 130, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\contrib\admin\options.py", line 1549, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\contrib\admin\options.py", line 1599, in _changeform_view
+    self.save_model(request, new_object, form, not add)
+  File "I:\django\gfvp\blog\admin.py", line 29, in save_model
+    super().save_model(request, obj, form, change)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\contrib\admin\options.py", line 1108, in save_model
+    obj.save()
+  File "I:\django\gfvp\blog\models.py", line 54, in save
+    super(BlogPost, self).save(*args, **kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\base.py", line 743, in save
+    self.save_base(using=using, force_insert=force_insert,
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\base.py", line 780, in save_base
+    updated = self._save_table(
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\base.py", line 885, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\base.py", line 923, in _do_insert
+    return manager._insert(
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 1301, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\compiler.py", line 1441, in execute_sql
+    cursor.execute(sql, params)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 196, in execute
+    return self._record(self.cursor.execute, sql, params)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 131, in _record
+    return method(sql, params)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\backends\utils.py", line 99, in execute
+    return super().execute(sql, params)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\backends\utils.py", line 76, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\backends\utils.py", line 85, in _execute
+    return self.cursor.execute(sql, params)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\backends\utils.py", line 85, in _execute
+    return self.cursor.execute(sql, params)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\backends\mysql\base.py", line 73, in execute
+    return self.cursor.execute(query, args)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\MySQLdb\cursors.py", line 206, in execute
+    res = self._query(query)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\MySQLdb\cursors.py", line 319, in _query
+    db.query(q)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\MySQLdb\connections.py", line 254, in query
+    _mysql.connection.query(self, query)
+django.db.utils.DataError: (1406, "Data too long for column 'slug' at row 1")
+ERROR 2022-09-03 16:20:56,380 django.server Thread-10 8208 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15280 "POST /admin/blog/blogpost/add/ HTTP/1.1" 500 292882
+INFO 2022-09-03 16:24:13,897 django.utils.autoreload MainThread 13532 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 15280 I:\django\gfvp\blog\models.py changed, reloading.
+INFO 2022-09-03 16:24:19,306 django.utils.autoreload MainThread 18800 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 17732 Watching for file changes with StatReloader
+INFO 2022-09-03 16:25:07,555 django.utils.autoreload MainThread 3116 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 14772 Watching for file changes with StatReloader
+INFO 2022-09-03 16:25:21,652 django.server Thread-2 2064 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 14772 "POST /admin/blog/blogpost/add/ HTTP/1.1" 302 0
+INFO 2022-09-03 16:25:23,746 django.server Thread-2 2064 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 14772 "GET /admin/blog/blogpost/ HTTP/1.1" 200 36386
+INFO 2022-09-03 16:25:25,162 django.server Thread-2 2064 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 14772 "GET /admin/jsi18n/ HTTP/1.1" 200 3343

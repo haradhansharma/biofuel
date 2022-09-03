@@ -21,7 +21,7 @@ class BlogPost(models.Model):
     )
     title = models.CharField(max_length=252)
     image = models.ImageField(upload_to='featured_image/%Y/%m/%d/') 
-    slug = models.SlugField(null=True, blank=True, editable=False)
+    slug = models.SlugField(null=True, blank=True, editable=False, max_length=250)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='blog_posts', editable=False)
     body = RichTextUploadingField()
     
