@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save, pre_save, post_delete
 from django.dispatch import receiver
 
 from doc.models import ExSite
@@ -7,6 +7,75 @@ from accounts.models import User, UserType
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.core.mail import send_mass_mail
+from django.db import transaction
+
+import logging
+log =  logging.getLogger('log')
+
+'''
+Check manytomany field commited
+'''
+def on_transaction_commit(func):
+    def inner(*args, **kwargs):
+        transaction.on_commit(lambda: func(*args, **kwargs))
+    return inner
+
+'''
+Delete option set related to the logical string when logical string deleted
+'''
+@receiver(post_delete, sender=LogicalString)
+def save_user_profile(sender, instance, **kwargs):    
+    OptionSet.objects.filter(ls_id = instance.id).delete()
+
+'''
+Recreate all optionset based on logical string .
+'''
+@receiver(post_save, sender=LogicalString)
+@on_transaction_commit
+def save_user_profile(sender, instance, **kwargs):
+    log.info('Collecting saved logical strings from the admin backend!')
+    logical_strings = sender.objects.all()
+    log.info(f'{logical_strings.count()} saved logical strings found! ')
+    
+    logical_options = []
+    for logical_string in logical_strings:
+        ls_id = logical_string.id
+        text = logical_string.text
+        overall = logical_string.overall
+        positive = logical_string.positive
+        option_list = logical_string.option_list
+        logical_options.append(option_list)   
+        try:
+            '''
+            edit if any changed
+            '''
+            option_set = OptionSet.objects.get(option_list = option_list)
+            option_set.id = ls_id
+            option_set.text = text
+            option_set.overall = overall
+            option_set.positive = positive
+            option_set.save()
+        except Exception as e:
+            '''
+            delete changed to re input
+            '''
+            lo_except_last = [x for x in logical_options if x != option_list]
+            unmatched = [item for item in logical_options if not item in lo_except_last ]
+            try:
+                for u in unmatched:
+                    try:
+                        OptionSet.objects.get(option_list = u).delete()
+                    except:
+                        continue
+            except Exception as e:
+                continue
+            new_option_set = OptionSet(option_list = option_list, text = text, overall = overall , positive = positive, ls_id = ls_id )
+            new_option_set.save()
+    
+    
+
+
+
 
 
 '''
@@ -65,7 +134,4 @@ def on_change(sender, instance, **kwargs):
                         pass
                 else:
                     pass
-                        
-                    
-        
-       
+                

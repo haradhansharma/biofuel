@@ -12,7 +12,9 @@
             </div>
         </nav> 
 
-        <nav id="sidebarMenu" class="sidebar d-lg-block bg-primary text-white collapse" data-simplebar>
+        
+
+        <nav id="sidebarMenu" class="sidebar d-lg-block bg-primary text-white collapse" data-simplebar>          
           <div class="sidebar-inner px-2 pt-3">
             <div class="user-card d-flex d-lg-none align-items-center justify-content-between justify-content-lg-center pb-4">
               <div class="d-flex align-items-center">
@@ -34,12 +36,10 @@
               </div>
             </div>
             <ul class="nav flex-column pt-3 pt-lg-0">
-
               <div class="rounded mb-4 mx-auto">                                                
                 <img src="{{ user.type.icon.url }}" class="img-fluid" alt="{{user_type.name}}">
-              </div>
-              
-              <li class="nav-item {% if 'dashboard' in segment %} active {% endif %}">
+              </div>              
+              <li class="nav-item {% if 'dashboard' in segment and segment|length == 1 %} active {% endif %}">
                 <a href="{% url 'home:dashboard' %}" class="nav-link">
                   <span class="sidebar-icon">
                     <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
@@ -53,7 +53,6 @@
                     <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M7 6a1 1 0 0 1 2 0v1H7V6z"/>
                       <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-2 6v1.076c.54.166 1 .597 1 1.224v2.4c0 .816-.781 1.3-1.5 1.3h-3c-.719 0-1.5-.484-1.5-1.3V8.3c0-.627.46-1.058 1-1.224V6a2 2 0 1 1 4 0z"/></svg>
                   
-                    
                   </span> 
                   <span class="sidebar-text">Change Password</span>
                 </a>
@@ -65,8 +64,6 @@
                   <span class="sidebar-icon">
                     <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.496 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"/></svg>
                    
-                  
-                  
                   </span>
                   <span class="sidebar-text">Questions</span>
                 </a>
@@ -76,7 +73,7 @@
 
               {% if user.is_marine or user.is_staff or user.is_superuser %}
 
-              <li class="nav-item {% if 'questions' in segment %} active {% endif %}">
+              <li class="nav-item {% if 'quotations' in segment %} active {% endif %}">
                 <a href="{% url 'home:quotations' %}" class="nav-link">
                   <span class="sidebar-icon">
                     <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6zm0 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm10.113-5.373a6.59 6.59 0 0 0-.445-.275l.21-.352c.122.074.272.17.452.287.18.117.35.26.51.428.156.164.289.351.398.562.11.207.164.438.164.692 0 .36-.072.65-.216.873-.145.219-.385.328-.721.328-.215 0-.383-.07-.504-.211a.697.697 0 0 1-.188-.463c0-.23.07-.404.211-.521.137-.121.326-.182.569-.182h.281a1.686 1.686 0 0 0-.123-.498 1.379 1.379 0 0 0-.252-.37 1.94 1.94 0 0 0-.346-.298zm-2.168 0A6.59 6.59 0 0 0 10 6.352L10.21 6c.122.074.272.17.452.287.18.117.35.26.51.428.156.164.289.351.398.562.11.207.164.438.164.692 0 .36-.072.65-.216.873-.145.219-.385.328-.721.328-.215 0-.383-.07-.504-.211a.697.697 0 0 1-.188-.463c0-.23.07-.404.211-.521.137-.121.327-.182.569-.182h.281a1.749 1.749 0 0 0-.117-.492 1.402 1.402 0 0 0-.258-.375 1.94 1.94 0 0 0-.346-.3z"/></svg>
@@ -87,9 +84,9 @@
               </li>
               {% endif %}
 
-
-
-              <li class="nav-item {% if 'all_reports' in segment %} active {% endif %}">
+              
+              {% if user.producer_required or user.is_staff or user.is_superuser %}
+              <li class="nav-item {% if 'allreports' in segment %} active {% endif %}">
                 <a href="{% url 'home:all_reports' %}" class="nav-link">
                   <span class="sidebar-icon">
                     <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 0a.5.5 0 0 1 .5.5V2h10V.5a.5.5 0 0 1 1 0v15a.5.5 0 0 1-1 0V15H3v.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zM3 14h10v-3H3v3zm0-4h10V7H3v3zm0-4h10V3H3v3z"/></svg>
@@ -98,6 +95,7 @@
                   <span class="sidebar-text">All Reports</span>
                 </a>
               </li>
+              {% endif %}
               <li class="nav-item {% if 'settings' in segment %} active {% endif %}">
                 <a href="{% url 'home:user_settings' %}" class="nav-link">
                   <span class="sidebar-icon">
@@ -109,7 +107,7 @@
 
               {% if user.is_staff or user.is_superuser %}
               
-              <li class="nav-item {% if 'tables-bootstrap-' in segment %} active {% endif %}">
+              <li class="nav-item {% if 'crm' in segment %} active {% endif %}">
                 <span
                   class="nav-link  collapsed  d-flex justify-content-between align-items-center"
                   data-bs-toggle="collapse" data-bs-target="#submenu-app">
@@ -124,16 +122,14 @@
                     <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
                   </span>
                 </span>
-                <div class="multi-level collapse {% if 'tables-bootstrap-' in segment %} show {% endif %}"
+                <div class="multi-level collapse {% if 'leads' in segment %} show {% endif %}"
                   role="list" id="submenu-app" aria-expanded="false">
                   <ul class="flex-column nav">
-                    <li class="nav-item {% if 'bootstrap-tables' in segment %} active {% endif %}">
+                    <li class="nav-item {% if 'leads' in segment %} active {% endif %}">
                       <a class="nav-link" href="{% url 'crm:leads' %}">
                         <span class="sidebar-text">Leads</span>
                       </a>
                     </li>
-
-
                   </ul>
                 </div>
               </li>

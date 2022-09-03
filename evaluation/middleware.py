@@ -27,8 +27,8 @@ class EvaMiddleware:
         '''
         delete evaluator without evaluationa after each 1 hrs
         ''' 
-        clear_evaluator(request)
-        # send_lead_mail()
+     
+        
         
         
         if 'evaluator' not in request.session:

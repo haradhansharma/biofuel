@@ -19,6 +19,8 @@ urlpatterns = [
     path('dashboard/new_questions/', views.new_questions, name='new_question'),
     path('quotation/<str:question>/<int:quotation>', views.quotation_report, name='quotation_report'),
     path('seo/webmanifest/', views.webmanifest, name='webmanifest'),
+    
+    
 ]
 
 hx_urlpatterns = [
@@ -26,6 +28,7 @@ hx_urlpatterns = [
     path('check_type_to_get_expert/', views.check_type_to_get_expert, name='check_type_to_get_expert'),
     path('dashboard/add_extra/<str:pk>', views.add_extra, name='add_extra'),
     path('dashboard/sub_extra/<str:pk>', views.sub_extra, name='sub_extra'),
+    path('modal-data/<str:id>', views.child_modal_data, name='child_modal_data'),
     
 ]
 

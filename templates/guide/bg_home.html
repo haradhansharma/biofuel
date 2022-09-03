@@ -1,0 +1,36 @@
+{% extends "guide/bg_base.html" %}
+{% load static %}
+{% block header %}
+{% include "guide/bg_header.html" %}
+{% endblock %}
+{% block main %}
+<div class="container-fluid bg-primary">
+    <div class="row">
+        <main class="col mx-auto  px-4">
+            
+            <div class="container pt-3 ">
+                <div class="row p-3 justify-content-center g-5">
+                    {% for gt in guide_type %}
+                    <div class="col-sm-6 mb-3">
+                        <div class="card bg-light border-0 shadow rounded overflow-hidden">
+                            <a href="{{ gt.get_absolute_url }}">
+                                <div class="card-body p-0">
+                                    <div class="row d-block d-md-flex justify-content-center align-items-center">
+                                        <div class="text-center">
+                                            <div class="rounded p-0">
+                                                <img class="img-fluid" src="{% static gt.icon_image.url %}"
+                                                    alt="{{gt.title}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

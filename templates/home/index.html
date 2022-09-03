@@ -2,92 +2,222 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <body class="d-flex flex-column h-100">
-    {% block header %}   
-    {% include 'includes/g_header.html' %}
-    {% endblock %}   
+    {% block header %}
+    {% include 'includes/g_header_front.html' %}
+    {% endblock %}
     {% block main %}
     <main class="flex-shrink-0">
-        {% include "includes/hero_section.html" %}
+        {% include "includes/hero_section_front.html" %}
+        <div class="section bgjessica-light">
 
-        <div class="section bg-dgreen">
-            <div class="container mt-n8 mt-lg-n12 z-2">
-                <div class="row justify-content-center">     
-                    <div class="col-12">
-                        <div class="card border-0 bg-transparent text-center">
-                            <div class="row p-3 justify-content-center">
-                                  <div class="row align-items-center mb-4 ">
-                                    <div class="col-12 col-lg-7 order-2 order-lg-1 text-start text-lg-left">                                        
-                                        <h1 class=""><span class="text-danger">To begin </span> <span class="text-secondary">the registration</span> <span class="text-tertiary"> process.... </span></h1>
-                                        <p class="lead my-4 text-tertiary">Choose your company category from the list below. <span class="text-secondary">Click the button below to login</span><span class="text-danger text-decoration-underline" style="text-decoration-style: wavy;"> if you have registered.</span></p>
-                                        {% if user.is_authenticated %} 
-                                        <a class="btn btn-primary animate-hover" href="{% url 'accounts:user_link' user.username %}"><i class="fas fa-chevron-left mr-3 pl-2 animate-left-3"></i> You are <span class="text-secondary">{{user.username}}</span> </a>
-                                        {% else %}
-                                        <a class="btn btn-primary animate-hover" href="{% url 'login' %}"><i class="fas fa-chevron-left mr-3 pl-2 animate-left-3"></i> <span class="text-warning">Login </span>To The System </a>
-                                        {% endif %}
-                                        
-                                    </div>
-                                    <div class="col-12 col-lg-5 order-1 order-lg-2 text-end align-items-end justify-content-end d-none d-lg-flex">
-                                        <img class="img-fluid w-75 opacity-50" src="{% static 'assets/login.svg' %}" alt="Login To The System">
-                                    </div>
-                                </div> 
-                            {% for user_type in user_types %}                            
-                            <div class="col-12 col-sm-6"  >
-                                <div class="card bg-lgreen border-0 shadow mb-3">
-                                    <a href="{{ user_type.get_absolute_url }}"  {% if user_type.active %} {% else %} style = "pointer-events: none; opacity: 0.4;" {% endif %}>
-                                    <div class="card-body">
-                                        <div class="row d-block d-xl-flex align-items-center">
-                                            <div class="text-center">                                   
-
-                                            <div class="icon icon-shape rounded mb-4">                                                
-                                                <img src="{{ user_type.icon.url }}" alt="{{user_type.name}}">
-                                            </div>
-                                            <div class=" text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
-                                                <h3 class="h5">{{ user_type.name }}</h3>
-                                            </div>                                        
-                                        </div>                                            
-                                        </div>
-                                    </div>
-                                </a> 
-                                </div>                            
-                            </div>                        
-                            {% endfor %}                           
-                        </div>                        
-                    </div>  
+            <div class="container">
+                <div class="row ring-big-icon" >
+                    <svg id="44c2246f-7158-4e1b-b750-061a9c552f63" data-name="Rings"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1875.93 1281.63" height="100%">
+                        <title>rings</title>
+                        <path
+                            d="M-220.89-114.35c-213.72,0-387.59,173.9-387.59,387.59S-434.6,660.84-220.89,660.84,166.7,486.94,166.7,273.24-7.17-114.35-220.89-114.35Zm0,620.14c-128.23,0-232.55-104.32-232.55-232.55S-349.11,40.69-220.89,40.69,11.67,145,11.67,273.24-92.66,505.8-220.89,505.8Z"
+                            transform="translate(608.48 491.6)" style="fill:#e3e11f" />
+                        <path
+                            d="M1174.44-67.83c0-153.87-125.18-279.07-279.07-279.07S616.31-221.7,616.31-67.83,741.49,211.23,895.37,211.23,1174.44,86,1174.44-67.83ZM895.37,45.86A113.81,113.81,0,0,1,781.68-67.83,113.81,113.81,0,0,1,895.37-181.53,113.81,113.81,0,0,1,1009.07-67.83,113.81,113.81,0,0,1,895.37,45.86Z"
+                            transform="translate(608.48 491.6)" style="fill:#25a64a" />
+                        <circle cx="1710.56" cy="1116.26" r="165.37" style="fill:#7fa63f" />
+                        <path
+                            d="M89.19-491.6A103.36,103.36,0,0,0-14.17-388.24,103.36,103.36,0,0,0,89.19-284.88,103.36,103.36,0,0,0,192.54-388.24,103.36,103.36,0,0,0,89.19-491.6Z"
+                            transform="translate(608.48 491.6)" style="fill:#ed1c24" />
+                    </svg>
+                </div>
+                <div class="row justify-content-center section">
+                    <div class="col-lg-7"  data-aos="fade-right">
+                        {% if user.is_authenticated %} 
+                        <div class="w-100">
+                            <a class="btn btnjessica-primary animate-hover px-4 py-3 mb-4 w-50"
+                                href="{% url 'accounts:user_link' user.username %}"><i
+                                    class="fas fa-chevron-left mr-3 pl-2 animate-left-3"></i> LOGGED IN AS <span
+                                    class="text-secondary">{{user.username}}</span> </a>
+                        </div>
+                        {% else %}
+                        <div class="w-100">
+                            <a class="btn btnjessica-primary animate-hover px-4 py-3 mb-4 w-50" href="#register"><i
+                                    class="fas fa-chevron-left mr-3 pl-2 animate-left-3 mb-3"></i> REGISTER </a>
+                        </div>
+                        <div class="w-100">
+                            <a class="btn btnjessica-primary animate-hover px-4 py-3 mb-4 w-50" href="{% url 'login' %}"><i
+                                    class="fas fa-chevron-left mr-3 pl-2 animate-left-3 mb-3"></i> LOGIN </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-5"  data-aos="fade-left">
+                        <div class="text-center">
+                            <p class="w-100 text-start mb-2 fs-5 jessica-text">Part of</p>
+                            <img class="img-fluid w-75 text-end mb-lg-4"
+                                src="{% static 'assets/shippinglab-logo.svg' %}" alt="Shipping lab">
+                            <p class="text-start fs-5 jessica-text">Financed through Danish Maritime Fund</p>
+                        </div>
+                    </div>
                 </div>
                 
             </div>
         </div>
-        </div>
 
+        <div id="about" class="section bgjessica-light pt-0 pb-0 ">
 
-        <div class="section bg-lgreen">
-            <div class="container">
-                <div class="row justify-content-center">     
-                    <div class="col-12">
-                        <div class="row p-3 justify-content-center">
-                            <div class="text-center pb-4">
-                                <h2 class="h1 px-lg-5">Basic Introductions</h2>
-                                <p class="lead px-lg-8">Get an idea of our platform from the video below.</p>
+            <div class="col-12 card-header">
+                <div class="text-center jessica-text">
+                    <h2 class="h1 jessica-text">ABOUT</h2>
+                </div>
+
+                <div class="container">
+                    <div class="pt-5">
+                        <div class="row justify-content-center align-items-lg-stretch"  data-aos="zoom-in">
+                            <div class="col-lg-6 mb-3 mb-lg-0">
+                                <div class="h-100 ">
+                                    <div class="iframe-container">
+                                        <iframe class="responsive-iframe" id="ytplayer" type="text/html"
+                                            src="https://www.youtube.com/embed/nYUhoeKWayQ?autoplay=0&origin=http://gf-vp.com"
+                                            frameborder="0"></iframe>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="iframe-container">
-                                <iframe class="responsive-iframe" id="ytplayer" type="text/html" src="https://www.youtube.com/embed/nYUhoeKWayQ?autoplay=0&origin=http://gf-vp.com" frameborder="0"></iframe>
+                            <div class="col-lg-6 text-start mb-3 mb-lg-0 jessica-text">
+                                <div class="h-100">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quia excepturi
+                                        saepe,
+                                        harum
+                                        ex, eveniet nulla consectetur modi facilis neque,
+                                        eius molestiae laudantium? Provident aut distinctio facere illo, quis possimus?
+                                        Lorem,
+                                        ipsum
+                                        dolor sit amet consectetur adipisicing elit. Tempore provident dolorem,
+                                        consequuntur nihil veritatis accusantium maiores unde voluptatem itaque labore
+                                        odit
+                                        perspiciatis
+                                        excepturi iure laboriosam dignissimos doloremque vel earum inventore.
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae fugiat, saepe
+                                        inventore
+                                        nulla
+                                        optio aspernatur magnam nostrum earum a laudantium adipisci tenetur neque
+                                        numquam, omnis
+                                        nam
+                                        debitis minima praesentium ad.
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque dignissimos modi
+                                        voluptas
+                                        necessitatibus. Inventore neque omnis sint recusandae magnam voluptatum sapiente
+                                        ipsa
+                                        minima
+                                        porro adipisci numquam similique, labore veritatis ad?
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quia
+                                        excepturi saepe,
+                                        harum
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+        <div id="register" class="section bgjessica-light pt-0 pb-4">
+            <div class="col-12">
+                <div class="text-center pt-3 jessica-text">
+                    {% if not user.is_authenticated %}
+                    <h2 class="h1 jessica-text">REGISTER AS</h2>
+                    {% else %}
+                    <h2 class="h1 jessica-text">GO TO USER-TYPE</h2>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="container">
+                <div class="row pt-5">
+                    <p class="text-center fs-4 jessica-text">{% if not user.is_authenticated %}To register{% else %}To Go to
+                        user type{% endif %}, choose the appropriate business category from the list
+                        below!</p>
+                    {% for user_type in user_types %}
+                    <div class="col-12 col-sm-6" data-aos="zoom-in">
+                        <div class="card bgjessica-light border-0 shadow mb-3">
+                            <a href="{{ user_type.get_absolute_url }}" {% if user_type.active %} {% else %}
+                                style="pointer-events: none; opacity: 0.4;" {% endif %}>
+                                <div class="card-body">
+                                    <div class="row d-block d-xl-flex align-items-center">
+                                        <div class="text-center">
+                                            <div class="icon icon-shape rounded mb-4">
+                                                <img src="{{ user_type.icon.url }}" alt="{{user_type.name}}">
+                                            </div>
+                                            <div
+                                                class="jessica-text text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                                <h3 class="h5">{{ user_type.name }}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="section py-5 bgjessica-light pb-0">
+            <div class="col-12 card-header">
+                <div class="text-center">
+                    <h2 class="h1 px-lg-5 jessica-text">LATEST BLOGS</h2>
+                </div>
+
+                <div class="container">
+
+                    <div class="text-center pb-4 pt-4">
+                        <p class="lead px-lg-8 jessica-text">Here is a list of the last three blogs. To view all blogs, click the
+                            button
+                            below.</p>
+                        <a class="btn btnjessica-primary" href="{% url 'blog:post_list' %}">View All Blogs</a>
+                    </div>
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3" >
+                        {% for blog in latest_blogs %}
+                        <div class="col d-flex"  data-aos="zoom-in">
+                            <div class="card bgjessica-light shadow-sm flex-fill overflow-hidden">
+                                <img src="{{blog.image.url}}" class="img-fluid" alt="{{blog.title}}">
+                                <div class="card-body">
+                                    <p class="card-text jessica-text">{{blog.body|safe|truncatechars:200}}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a class="btn btn-sm btn-outline-primary"
+                                                href="{{blog.get_absolute_url}}">Read
+                                                More</a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <div class="btn btn-sm btn-warning">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="#ffffff" class="bi bi-folder2" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5v-9zM2.5 3a.5.5 0 0 0-.5.5V6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5zM14 7H2v5.5a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5V7z" />
+                                                </svg>
+                                            </div>
+                                            {% for tag in blog.tags.all %}
+                                            <a href="{% url 'blog:post_tag' tag.slug %}"
+                                                class="btn btn-sm btn-outline-warning">
+                                                {{tag.name}}
+                                            </a>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
-
-
     {% endblock %}
-
-    {% block footer %}        
-        {% include 'includes/g_footer.html' %} 
-    
+    {% block footer %}
+    {% include 'includes/g_footer_front.html' %}
     {% endblock %}
-        
-
 </body>
+
 </html>

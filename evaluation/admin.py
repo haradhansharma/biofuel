@@ -10,6 +10,8 @@ from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
 from django.core.mail import send_mass_mail 
 import uuid
+from import_export.admin import ExportActionMixin
+from import_export import resources
 
 class Labels(admin.TabularInline):
     model = Label
@@ -22,12 +24,26 @@ class Options(admin.TabularInline):
     extra = 0 
     fk_name = "question"
 
-class QuestionAdmin(admin.ModelAdmin):
+class QuestionAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ('sort_order', 'name', 'is_door',)
     list_filter = ('is_door','is_active',)
-    inlines = [Labels, Options]
-    
+    ordering = ('sort_order',)
+    inlines = [Labels, Options]    
 admin.site.register(Question, QuestionAdmin) 
+
+
+class OptionResource(resources.ModelResource):
+
+    class Meta:
+        model = Option
+        fields = ('name','question__name', 'next_question__name',)
+
+class OptionAdmin(ExportActionMixin, admin.ModelAdmin):    
+    list_display = ('name', 'question', 'next_question',)
+    list_filter = ('yes_status','dont_know', 'overall','positive', 'question', 'next_question', )   
+    ordering = ('question', 'name',)
+    # resource_class = OptionResource
+admin.site.register(Option, OptionAdmin) 
 
 class LsLabels(admin.TabularInline):
     model = Lslabel
@@ -35,8 +51,9 @@ class LsLabels(admin.TabularInline):
     fk_name = "logical_string"
 
 class LogicalStringAdmin(admin.ModelAdmin):
-    list_display = ('text',)
+    list_display = ('option_list', 'text', 'overall', 'positive', 'Label_value_one_to', )
     inlines = [LsLabels]
+    list_filter = ('overall', 'positive' ,)
 admin.site.register(LogicalString, LogicalStringAdmin)
 
 
@@ -139,7 +156,9 @@ admin.site.register(Evaluator, EvaluatorAdmin)
 
 admin.site.register(DifinedLabel)
 admin.site.register(Biofuel)
-admin.site.register(Option)
+# admin.site.register(Option)
+
+
 
 admin.site.register(StandaredChart)
 

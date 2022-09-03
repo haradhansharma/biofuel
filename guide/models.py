@@ -6,6 +6,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 class GuideType(models.Model):
     title = models.CharField(max_length=252)
+    position = models.IntegerField()
     key = models.SlugField()
     icon_image = models.ImageField(upload_to = 'guideicon/')
     
@@ -17,6 +18,7 @@ class GuideType(models.Model):
     
 class GuideMenu(models.Model):
     title = models.CharField(max_length=252)   
+    position = models.IntegerField()
     type = models.ForeignKey(GuideType, on_delete=models.CASCADE, related_name='typeofguide')
     slug = models.SlugField() 
     
@@ -30,6 +32,7 @@ class GuideMenu(models.Model):
 
 class GenarelGuide(models.Model):
     title = models.CharField(max_length=252)
+    position = models.IntegerField()
     menu = models.ForeignKey(GuideMenu, on_delete=models.CASCADE, related_name='menuofguide')    
     anchor = models.CharField(max_length=252)
     parent = models.ForeignKey("guide.GenarelGuide", on_delete=models.CASCADE, null=True, blank=True, related_name='menuchild', limit_choices_to={'parent': None} )    

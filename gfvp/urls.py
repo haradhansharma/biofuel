@@ -4,6 +4,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from home.views import user_types
+from django.views.generic.base import TemplateView
 
 
 
@@ -23,10 +24,15 @@ urlpatterns = [
     path('', include('home.urls')),
     path('', include('crm.urls')),
     path('', include('guide.urls')),
+    path('', include('blog.urls')),
     path('types/<str:slug>/', user_types, name='types'),
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('taggit_autosuggest/', include('taggit_autosuggest.urls')),
+    path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
+    path("gdpr-policy/", TemplateView.as_view(template_name="includes/gdpr.html"), name='gdpr'),
+    path("terms/", TemplateView.as_view(template_name="includes/terms.html"), name='term'),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

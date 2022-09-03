@@ -1,0 +1,45 @@
+{% extends "guide/bg_base.html" %}
+{% load static %}
+{% block header %}
+{% include "guide/bg_header.html" %}
+{% endblock %}
+{% block main %}
+<div class="container-fluid">
+  <div class="row">
+    <main class="col-12 mx-auto px-4">
+      <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      </div>
+      <div class="row p-3 justify-content-center">
+        <div class="d-block mx-auto col-9 col-md-6 ">
+          <ul>
+            {% for t in type %}
+            <li>{{t.title}}</li>
+            <ul>
+              {% for m in t.typeofguide.all %}
+              <li><a href="{{m.get_absolute_url}}">{{m.title}}</a></li>
+              <ul>
+                {% for ggm in m.menuofguide.all %}
+                {% if not ggm.parent %}
+                <li>
+                  <a href="{{m.get_absolute_url}}#{{ggm.anchor}}">{{ggm.title}}</a>
+                </li>
+                {% else %}
+                <ul>   
+                  <li>
+                    <a href="{{m.get_absolute_url}}#{{ggm.anchor}}">{{ggm.title}}</a>
+                  </li>     
+                </ul>
+                {% endif %}                
+                {% endfor %}
+              </ul>
+              {% endfor %}
+            </ul>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+{% endblock %}

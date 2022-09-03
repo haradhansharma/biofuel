@@ -13,23 +13,21 @@
   </nav>
   <div class="d-flex justify-content-between w-100 flex-wrap">
     <div class="mb-3 mb-lg-0">
-      <h1 class="h4">Leads</h1>
-      <p class="mb-0">All Leads are listed Here</p>
-    </div>
-    <div>
-      <!--Send mail using Htmx-->
-
-      <div hx-get="{% url 'crm:send_mail' %}" hx-trigger="every {{EXECUT_MAIL_IN_SECONDS}}s">
-      </div>
+      <h1 class="border-bottom">LEADS</h1>
+      <h2>All Leads are listed Here</h2>
       <p>
-        Do not refresh this page for {{EXECUT_MAIL_IN_SECONDS}} seconds to send <br> queued mail automatically!
+        If we click on the 'send mail' button after selecting the lead or leads from the below table the selected lead/leads will be added to the mail queue. 
+        As our mail batch is current set to {{ LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME }} by parameter LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME in setttings, so in each call of cron will sent that amount of mail in backend.
       </p>
       <p>
-        In other tab is allowed to do anything you want to do!
+        If Selected lead already is in the mail queue list then the lead will not be adde to the queue.
       </p>
-
-      <!--Send mail using Htmx-->
+      <p>
+        Whatever crontab settings are the mail will sent afte {{ EXECUT_MAIL_IN_MIN }} minutes based on the parameter EXECUT_MAIL_IN_SECONDS in settings and Failed mail will be retry after {{RETRY_AFTER_FAILURE_MINS}} minutes as per parameter RETRY_AFTER_FAILURE_MINS in the 'SendQueueMail' class of crm.lead_mail_jobs
+      </p>
     </div>
+    
+
 
     {% if messages %}
     <div class="col-12 text-center">
@@ -70,6 +68,7 @@
 
 <div class="card border-0 shadow mb-4">
   <div class="card-body">
+    <p>Total Mail in Queue : {{pending_queue_count}}</p>
     <div class="table-responsive">
       <table class="table table-centered table-nowrap mb-0 rounded">
         <thead class="thead-light">
@@ -98,7 +97,7 @@
                 <input class="form-check-input" type="checkbox" name="lead" value="{{lead.id}}" id="{{lead.id}}">
               </td>
               <td class="fw-bold d-flex align-items-center">
-                {{lead.lead}}
+                {{lead.lead}} {% if lead.lead_in_que %} <span class="text-danger"> - Under Queue </span>{% endif %}
               </td>
               <td>
                 {{lead.email_address}}

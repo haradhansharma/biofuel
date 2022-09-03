@@ -102,7 +102,7 @@ class Question(models.Model):
     
     
     @property
-    def get_related_quotations(self):  
+    def get_related_quotations(self):   
         from home.models import Quotation
         quotations = Quotation.objects.filter(related_questions = self)
         
@@ -183,8 +183,44 @@ class LogicalString(models.Model):
     text = models.TextField(null = True, blank = True,)
     overall = models.CharField(max_length=1, default=0)
     positive = models.CharField(max_length=1, default=0)
+    
+    
+ 
+        
+    @property
+    def option_list(self):
+        option_set = [str(option.id) for option in self.options.all()]       
+        return str(sorted(option_set))
+    
+    @property
+    def Label_value_one_to(self):
+        assigned = [label.name for label in self.logical_strings.filter(value=1) ]
+        return assigned
+    
+  
+        
+            
 
     def __str__(self):
+        #do not change this, if done then return same as optionset
+        return self.text
+    
+class OptionSet(models.Model):
+    '''    
+    It has been genarated autometically during evaluation by user.
+    so that it is not displayed in admin side.    
+    '''
+    option_list = models.CharField(max_length=252, unique = True)
+    text = models.TextField()
+    positive = models.CharField(max_length=1, default=0)
+    overall = models.CharField(max_length=1, default=0)
+    ls_id = models.CharField(max_length=252, default=0)
+    create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
+
+
+    def __str__(self):
+        #do not change below, if done then return same as logicalstring
         return self.text
 
 class Lslabel(models.Model):
@@ -320,22 +356,7 @@ class EvaLebelStatement(models.Model):
 
     def __str__(self):
         return self.statement
-class OptionSet(models.Model):
-    '''    
-    It has been genarated autometically during evaluation by user.
-    so that it is not displayed in admin side.    
-    '''
-    option_list = models.CharField(max_length=252, unique = True)
-    text = models.TextField()
-    positive = models.CharField(max_length=1, default=0)
-    overall = models.CharField(max_length=1, default=0)
-    ls_id = models.CharField(max_length=252, default=0)
-    create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
-    update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
 
-
-    def __str__(self):
-        return str(self.option_list) + str(self.text)
     
     
 class NextActivities(models.Model):
@@ -386,6 +407,17 @@ class StandaredChart(models.Model):
     
     def __str__(self):
         return self.oil_name + ' for question ' + str(self.question.sort_order)
+    
+    
+#to reduce youtube API call we will save the dat in our databse
+class Youtube_data(models.Model):
+    term = models.TextField()
+    urls = models.TextField()
+    create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    update_date = models.DateTimeField(auto_now=True, null=True, blank=True)
+    
+    def __str__(self):
+        return self.term
     
     
     

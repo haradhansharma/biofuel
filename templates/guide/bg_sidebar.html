@@ -1,0 +1,20 @@
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <div class="position-sticky pt-3">
+      <ul class="nav flex-column">
+          {% for ggm in guide %} 
+              {% if not ggm.parent %}
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#{{ggm.anchor}}">{{ggm.title}}</a>  
+                    <ul class="nav flex-column">
+                      {% for child in guide %}
+                      {% if child.parent == ggm  %}
+                      <li class="nav-item"><a class="nav-link" href="#{{child.anchor}}"><span class="ps-3" ></span> {{child.title}}</a> </li>
+                      {% endif %}
+                      {% endfor %}
+                  </ul>
+                  </li>
+              {% endif %}                    
+              {% endfor %}
+      </ul>
+    </div>
+  </nav>

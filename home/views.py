@@ -7,7 +7,6 @@ from home.models import Quotation
 from .forms import UserForm, ProfileForm, PasswordChangeForm, QuestionForm, OptionForm, QuotationForm, NextActivitiesOnQuotation
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
-# from django.contrib.auth.forms import PasswordChangeForm
 from accounts.decorators import expert_required, producer_required, consumer_required, marine_required
 from accounts.models import User, UserType
 from accounts.helper import check_type
@@ -20,6 +19,11 @@ from django.core.exceptions import PermissionDenied
 from .helper import users_under_each_label, reports_under_each_biofuel, weeks_results, all_reports, total_reports, typewise_user
 from django.db.models import Count, Min
 from doc.doc_processor import site_info
+from blog.models import BlogPost
+import logging
+log =  logging.getLogger('log')
+
+
 
 
 def home(request):
@@ -27,8 +31,11 @@ def home(request):
     null_session(request)  
     # pass user type  
     user_types = UserType.objects.all().order_by('sort_order') 
+    latest_blogs = BlogPost.published.filter(status = 'published').order_by('-publish')[:3]
     context = {
-        'user_types': user_types        
+        'user_types': user_types ,
+        
+        'latest_blogs' : latest_blogs       
     }
     return render(request, 'home/index.html', context = context)
 
@@ -59,18 +66,26 @@ def user_types(request, slug):
             enroll = {
                 'Enroll Evaluation' : reverse('evaluation:evaluation2') 
                 }
+        elif slug == curent_user_type_slug and request.user.is_marine and (request.user.is_staff and request.user.is_superuser):
+            enroll = {
+                'Questions' : reverse('home:questions')
+                } 
         elif slug == curent_user_type_slug and request.user.is_expert and (request.user.is_staff and request.user.is_superuser):
             enroll = {
-                'Questions and Quotations' : reverse('home:questions')
+                'Quotations' : reverse('home:quotations')
                 } 
         elif slug == curent_user_type_slug and request.user.is_producer:
             enroll = {
                 'Enroll Evaluation' : reverse('evaluation:evaluation2') 
                 }
+        elif slug == curent_user_type_slug and request.user.is_marine:
+            enroll = {
+                'Questions' : reverse('home:questions')
+                }       
         elif slug == curent_user_type_slug and request.user.is_expert:
             enroll = {
-                'Questions and Quotations' : reverse('home:questions')
-                }        
+                'Quotations' : reverse('home:quotations')
+                }  
         else:
             enroll = {'Thank You for Joining!' : reverse('accounts:user_link', args=[str(request.user.username)])}
     else:
@@ -101,7 +116,9 @@ def user_types(request, slug):
 @login_required
 def dashboard(request):
     #skipping session error essential for signup process
-    null_session(request)    
+    null_session(request)  
+    
+    
     
     #dashboard summary
     
@@ -115,11 +132,8 @@ def dashboard(request):
         'total_of_day': total_of_day,  
         'total_reports': total_reports(request),      
         'allreports' : all_reports(request),
-        'typewise_user' : typewise_user(request)
-        
-    }
-    
-    
+        'typewise_user' : typewise_user(request)        
+    }   
     
     return render(request, 'home/dashboard.html', context = context)
 
@@ -148,8 +162,7 @@ def user_setting(request):
     context = {
         "user":request.user,
         "user_form":user_form,
-        "profile_form":profile_form,
-        
+        "profile_form":profile_form,        
     }
     return render(request, 'home/settings.html', context = context)
 
@@ -164,10 +177,9 @@ def password_change(request):
             messages.success(request,('Your password was successfully updated!')) 
         else:
             messages.error(request, 'Invalid form submission.')            
-            messages.error(request, password_form.errors)       
+            messages.error(request, password_form.errors)      
         
-        return HttpResponseRedirect(reverse('home:change_pass'))
-    
+        return HttpResponseRedirect(reverse('home:change_pass'))    
     password_form = PasswordChangeForm(request.user)  
     
     context = {
@@ -199,6 +211,16 @@ def get_question_of_label(request):
                 continue            
     return questions
 
+def child_modal_data(request, id):
+    questions = Question.objects.get(id=id)
+    
+    context = {
+        'qquestion': questions      
+    }
+    
+    return render(request, 'home/child_modal_data.html', context = context)
+    
+
 @login_required
 @expert_required
 def quotations(request):  
@@ -211,7 +233,7 @@ def quotations(request):
     # we need permitted question based on expertise type
     questions = get_question_of_label(request)
     
-    # build parent         
+    # build parent          
     parents = []
     for question in questions:        
         if question.is_door == True:
@@ -773,6 +795,7 @@ def new_questions(request):
     return render(request, 'home/new_question.html', context = context)
 
 @login_required
+@producer_required
 def allreports(request):  
     null_session(request)
     

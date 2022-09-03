@@ -1,0 +1,35 @@
+{% load custom_tags %}
+<div id="modal-backdrop{{qquestion.id}}" class="modal-backdrop fade show" style="display:block;"></div>
+<div id="modal{{qquestion.id}}" class="modal fade show" tabindex="-1" style="display:block;">
+	<div class="modal-dialog modal-dialog-centered">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title">Referred Quotations</h5>
+		</div>
+		<div class="modal-body">
+            {% for quotation in  qquestion.get_related_quotations|in_quot:user  %}                                                       
+            <a target="_blank" class="fw-normal btn btn-outline-secondary m-2" href="{{quotation.get_quot_url}}">Ceated By {{quotation.service_provider.orgonization}} From Question#{{quotation.test_for.sort_order}}. Quotation #{{quotation.id}}</a> <br>                                                    
+            {% endfor %}   
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <script>
+    function closeModal() {
+        var container = document.getElementById("modals-here{{qquestion.id}}")
+        var backdrop = document.getElementById("modal-backdrop{{qquestion.id}}")
+        var modal = document.getElementById("modal{{qquestion.id}}")
+    
+        modal.classList.remove("show")
+        backdrop.classList.remove("show")
+    
+        setTimeout(function() {
+            container.removeChild(backdrop)
+            container.removeChild(modal)
+        }, 200)
+    }
+</script>  

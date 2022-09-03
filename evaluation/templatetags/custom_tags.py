@@ -21,5 +21,5 @@ def get_verbose_name(instance, field_name):
     return instance._meta.get_field(field_name).verbose_name.title()
 
 @register.filter(name='in_quot') 
-def in_quot(quote, user):
+def in_quot(quote, user): 
     return quote.filter(service_provider=user)

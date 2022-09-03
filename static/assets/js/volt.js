@@ -19,13 +19,13 @@
 const d = document;
 d.addEventListener("DOMContentLoaded", function(event) {
 
-    const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-            confirmButton: 'btn btn-primary me-3',
-            cancelButton: 'btn btn-gray'
-        },
-        buttonsStyling: false
-    });
+    // const swalWithBootstrapButtons = Swal.mixin({
+    //     customClass: {
+    //         confirmButton: 'btn btn-primary me-3',
+    //         cancelButton: 'btn btn-gray'
+    //     },
+    //     buttonsStyling: false
+    // });
 
     var themeSettingsEl = document.getElementById('theme-settings');
     var themeSettingsExpandEl = document.getElementById('theme-settings-expand');
@@ -297,10 +297,10 @@ d.addEventListener("DOMContentLoaded", function(event) {
         });
     }
 
-    var scroll = new SmoothScroll('a[href*="#"]', {
-        speed: 500,
-        speedAsDuration: true
-    });
+    // var scroll = new SmoothScroll('a[href*="#"]', {
+    //     speed: 500,
+    //     speedAsDuration: true
+    // });
 
     if(d.querySelector('.current-year')){
         d.querySelector('.current-year').textContent = new Date().getFullYear();
@@ -308,65 +308,65 @@ d.addEventListener("DOMContentLoaded", function(event) {
 
     // Glide JS
 
-    if (d.querySelector('.glide')) {
-        new Glide('.glide', {
-            type: 'carousel',
-            startAt: 0,
-            perView: 3
-          }).mount();
-    }
+    // if (d.querySelector('.glide')) {
+    //     new Glide('.glide', {
+    //         type: 'carousel',
+    //         startAt: 0,
+    //         perView: 3
+    //       }).mount();
+    // }
 
-    if (d.querySelector('.glide-testimonials')) {
-        new Glide('.glide-testimonials', {
-            type: 'carousel',
-            startAt: 0,
-            perView: 1,
-            autoplay: 2000
-          }).mount();
-    }
+    // if (d.querySelector('.glide-testimonials')) {
+    //     new Glide('.glide-testimonials', {
+    //         type: 'carousel',
+    //         startAt: 0,
+    //         perView: 1,
+    //         autoplay: 2000
+    //       }).mount();
+    // }
 
-    if (d.querySelector('.glide-clients')) {
-        new Glide('.glide-clients', {
-            type: 'carousel',
-            startAt: 0,
-            perView: 5,
-            autoplay: 2000
-          }).mount();
-    }
+    // if (d.querySelector('.glide-clients')) {
+    //     new Glide('.glide-clients', {
+    //         type: 'carousel',
+    //         startAt: 0,
+    //         perView: 5,
+    //         autoplay: 2000
+    //       }).mount();
+    // }
 
-    if (d.querySelector('.glide-news-widget')) {
-        new Glide('.glide-news-widget', {
-            type: 'carousel',
-            startAt: 0,
-            perView: 1,
-            autoplay: 2000
-          }).mount();
-    }
+    // if (d.querySelector('.glide-news-widget')) {
+    //     new Glide('.glide-news-widget', {
+    //         type: 'carousel',
+    //         startAt: 0,
+    //         perView: 1,
+    //         autoplay: 2000
+    //       }).mount();
+    // }
 
-    if (d.querySelector('.glide-autoplay')) {
-        new Glide('.glide-autoplay', {
-            type: 'carousel',
-            startAt: 0,
-            perView: 3,
-            autoplay: 2000
-          }).mount();
-    }
+    // if (d.querySelector('.glide-autoplay')) {
+    //     new Glide('.glide-autoplay', {
+    //         type: 'carousel',
+    //         startAt: 0,
+    //         perView: 3,
+    //         autoplay: 2000
+    //       }).mount();
+    // }
 
     // Pricing countup
-    var billingSwitchEl = d.getElementById('billingSwitch');
-    if(billingSwitchEl) {
-        const countUpStandard = new countUp.CountUp('priceStandard', 99, { startVal: 199 });
-        const countUpPremium = new countUp.CountUp('pricePremium', 199, { startVal: 299 });
+    // var billingSwitchEl = d.getElementById('billingSwitch');
+    // if(billingSwitchEl) {
+    //     const countUpStandard = new countUp.CountUp('priceStandard', 99, { startVal: 199 });
+    //     const countUpPremium = new countUp.CountUp('pricePremium', 199, { startVal: 299 });
         
-        billingSwitchEl.addEventListener('change', function() {
-            if(billingSwitch.checked) {
-                countUpStandard.start();
-                countUpPremium.start();
-            } else {
-                countUpStandard.reset();
-                countUpPremium.reset();
-            }
-        });
-    }
+    //     billingSwitchEl.addEventListener('change', function() {
+    //         if(billingSwitch.checked) {
+    //             countUpStandard.start();
+    //             countUpPremium.start();
+    //         } else {
+    //             countUpStandard.reset();
+    //             countUpPremium.reset();
+    //         }
+    //     });
+    // }
 
 });

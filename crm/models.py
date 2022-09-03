@@ -19,6 +19,15 @@ class Lead(models.Model):
     def __str__(self):
         return self.lead
     
+    @property
+    def lead_in_que(self):
+        queue = MailQueue.objects.filter(processed = False)
+        q_emails = [q.to for q in queue]
+        if self.email_address in q_emails:
+            return True
+        else:
+            return False
+    
 class MailQueue(models.Model):
     to = models.CharField(max_length=256, null=True, blank=True)
     added_at = models.DateTimeField(auto_now_add=True)

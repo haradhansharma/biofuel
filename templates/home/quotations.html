@@ -51,16 +51,13 @@
                                 <td>
                                     <span class="fw-normal">{{ child.name }}({{child.sort_order}})</span>
                                 </td>
-                                <td>
-                                    
+                                <td>                                   
 
                                     {% if child.get_quotations|in_quot:user %} 
-                                    {% for quotation in  child.get_quotations|in_quot:user %}   
-                                    
+                                    {% for quotation in  child.get_quotations|in_quot:user %}                                       
                                     {% if user.is_expert or user.is_staff or user.is_superuser %}
                                     <a class="fw-normal btn btn-secondary" href="{{quotation.get_quot_url}}">Quotation #{{quotation.id}}</a>
-                                    {% endif %}
-                                    
+                                    {% endif %}                                    
                                     {% endfor %}
                                     {% else %}
                                     {% if user.is_expert or user.is_staff or user.is_superuser %}
@@ -69,37 +66,12 @@
                                     {% endif %}
                                     {% if child.get_related_quotations|in_quot:user  %}
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#refered{{child.id}}">
+                                    <button type="button" class="btn btn-primary" hx-get="{% url 'home:child_modal_data' child.id %}" hx-target="#modals-here{{child.id}}" hx-trigger="click" _="on htmx:afterOnLoad wait 10ms then add .show to #modal{{child.id}} then add .show to #modal-backdrop{{child.id}}">
                                         Referred from other questions
                                     </button>
                                     {% endif %}
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="refered{{child.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="referedLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                            <h5 class="modal-title" id="referedLabel">Referred Quotations</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">                                                
-                                                    {% for quotation in  child.get_related_quotations|in_quot:user  %}                                                       
-                                                    <a target="_blank" class="fw-normal btn btn-outline-secondary m-2" href="{{quotation.get_quot_url}}">Ceated By {{quotation.service_provider.orgonization}} From Question#{{quotation.test_for.sort_order}}. Quotation #{{quotation.id}}</a> <br>
-                                                    
-                                                    {% endfor %}
-                                                    
-                                            </div>
-                                            <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div>
-  
-
-                                    
-
+                                    <div id="modals-here{{child.id}}"></div>    
+                                                                  
 
                                 </td>
                             </tr>
@@ -165,4 +137,6 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+
+{% endblock javascripts %}

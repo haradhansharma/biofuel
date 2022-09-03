@@ -1,0 +1,129 @@
+{% extends "includes/g_base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<body class="d-flex flex-column h-100">
+    {% block header %}
+    {% include 'includes/g_header.html' %}
+    {% endblock %}
+    {% block main %}
+    <main class="flex-shrink-0">
+        {% include "includes/blog_hero_section.html" %}
+        <div class="section bg-lgreen">
+            <div class="container mt-n8 mt-lg-n12 z-2">
+                <article>
+                    <div class="col-12 d-flex">
+                        <img src="{{ post.image.url }}" class="img-fluid flex-fill" alt="{{post.title}}">
+                    </div>
+                    <div
+                        class="d-block d-sm-flex justify-content-between border-top border-bottom border-2 border-danger pt-2 px-0">
+                        <div class="mb-2">
+                            <div class="text-mute">
+                                Published {{ post.publish.date }} by <strong>{{ post.author.username }}</strong>
+                            </div>
+                        </div>
+                        <div class=" mb-2">
+                            <span class="text-mute">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ffffff"
+                                    class="bi bi-folder2" viewBox="0 0 16 16">
+                                    <path
+                                        d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5v-9zM2.5 3a.5.5 0 0 0-.5.5V6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5zM14 7H2v5.5a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5V7z" />
+                                </svg>
+                            </span>
+                            {% for tag in post.tags.all %}
+                            <a href="{% url 'blog:post_tag' tag.slug %}" class="text-mute badge bg-warning">
+                                {{tag.name}}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="article-body">
+                        {{post.body|safe}}
+                    </div>
+                    <div class="my-3">
+                        <h3>Share Post To:</h3>
+                    </div>
+                    <div class="addthis_inline_share_toolbox_spsh mt-2"></div>
+                </article>
+                <div
+                    class="col-12 d-block d-sm-flex justify-content-between border-top border-bottom border-2 border-danger p-2">
+                    <div>
+                        {% if post.get_previous_by_publish %}
+                        <div class="previous">
+                            <a class="d-block" href="{% url 'blog:post_detail' post.get_previous_by_publish.slug %}">&larr; Previous
+                                Posts</a>
+                            <a class="d-block" href="{% url 'blog:post_detail' post.get_previous_by_publish.slug %}">{{post.get_previous_by_publish.slug}}</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        {% if post.get_next_by_publish %}
+                        <div class="next">
+                            <a class="d-block" href="{% url 'blog:post_detail' post.get_next_by_publish.slug %}">Next Posts &rarr;</a>
+                            <a class="d-block" href="{% url 'blog:post_detail' post.get_next_by_publish.slug %}">{{post.get_next_by_publish.slug}}</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="my-3">
+                    <h3>Similar Posts</h3>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    {% for blog in similar_posts %}
+                    <div class="col d-flex">
+                        <div class="card bg-lgreen shadow-sm flex-fill overflow-hidden">
+                            <img src="{{blog.image.url}}" class="img-fluid" alt="{{blog.title}}">
+                            <div class="card-title px-2 mb-0 border-bottom pb-2">
+                                {{blog.title|upper}}
+                            </div>
+                            <div class="card-body pt-0">
+                                {{blog.body|safe|truncatechars:150}}
+                                <div class="d-sm-flex d-block justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a class="btn btn-sm btn-outline-primary" href="{{blog.get_absolute_url}}">Read
+                                            More</a>
+                                    </div>
+                                    <div class="btn-group">
+                                        <div class="btn btn-sm btn-warning">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="#ffffff" class="bi bi-folder2" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5v-9zM2.5 3a.5.5 0 0 0-.5.5V6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5zM14 7H2v5.5a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5V7z" />
+                                            </svg>
+                                        </div>
+                                        {% for tag in blog.tags.all %}
+                                        <a href="{% url 'blog:post_tag' tag.slug %}"
+                                            class="btn btn-sm btn-outline-warning">
+                                            {{tag.name}}
+                                        </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
+    {% endblock %}
+    {% block footer %}
+    {% include 'includes/g_footer.html' %}
+    {% endblock %}
+    {% block javascripts %}
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4d95fcae2a2f4222"></script>
+    <script type="text/javascript">
+        var addthis_share = {
+            url: "{{request.build_absolute_uri}}",
+            title: "{{post.title}} ",
+        }
+        var addthis_config = {
+            data_track_clickback: false,
+            data_track_addressbar: false,
+        } 
+    </script>
+    {% endblock javascripts %}
+</body>
+</html>

@@ -1,0 +1,24 @@
+{% extends "guide/bg_base.html" %}
+{% load static %}
+{% block header %}
+{% include "guide/bg_header.html" %}
+{% endblock %}
+{% block main %}
+<div class="container-fluid">
+    <div class="row">
+        {% include "guide/bg_sidebar.html" %}
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div
+                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-5 pb-2 mb-5 border-bottom">
+            </div>
+            {% for g in guide %}
+            <section id="{{g.anchor}}">
+                <h3>{{g.title}}</h3>
+                {{g.content|safe}}
+            </section>
+            <hr class="divider">
+            {% endfor %}
+        </main>
+    </div>
+</div>
+{% endblock %}

@@ -17,65 +17,104 @@ from gfvp import null_session
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
 from django.utils.safestring import mark_safe
+from django.utils import timezone
+import ast
+from concurrent.futures import ProcessPoolExecutor, as_completed, ThreadPoolExecutor
+import django
+
+import logging
+log =  logging.getLogger('log')
 
 #helper function should be called into the @login_required and @producer_required
 def set_evaluation(question, selected_option, evaluator):
+    log.info(f'initilizing set_evaluation for the question {question} of the evaluator {evaluator} !')
     #delete prevous record if have to ensure reentry.
-    try:   
+    try:
+        log.info('Deleteing previous Evaluation Entry...........')   
         Evaluation.objects.filter(evaluator = evaluator, question = question).delete()    
+        log.info(f'Deleted previous Evaluation entry for the question {question} of the evaluator {evaluator}!')
     except:
-        pass
+        log.info(f'No Previous Evaluation entry found for the question {question} of the evaluator {evaluator} to delete!')
     new_evaluation = Evaluation(evaluator = evaluator, option = selected_option, question = question ) 
     new_evaluation.save()
+    log.info(f'{new_evaluation} has been saved for the question number {question} of the evaluatior {evaluator}! selected option was {selected_option}')
         
     
 #helper function should be called into the @login_required and @producer_required
 def set_eva_comments(question, comment, evaluator):    
+    log.info(f'Initializing set_eva_cooments for the question {question} of the evaluator {evaluator} !')
     #check editing or fresh entry
     evacomments = EvaComments.objects.filter(evaluator = evaluator, question = question)
-    if evacomments.exists():
-        evacomments = EvaComments.objects.get(evaluator = evaluator, question = question)
+    if evacomments.exists():        
         #Ensure new comments
         if comment != '':
-            evacomments.comments = comment
-            evacomments.save()        
+            com = evacomments[0]
+            com.comments = comment
+            com.save() 
+            log.info('Previous comments found so updated previous comments!')       
     else:
+        log.info('No previous comments found!')
         new_eva_comment = EvaComments(evaluator = evaluator, question = question, comments = comment)
         new_eva_comment.save()
+        log.info(f'Saved comments for the question {question} for the evaluator {evaluator}! ')
         
 #helper function should be called into the @login_required and @producer_required    
 def set_evastatment(request, selected_option, evaluator):    
-    question = selected_option.question    
+    question = selected_option.question  
+    log.info(f'{question} detected to set_evastatment for the evaluator {evaluator} ! selected option {selected_option} found! ')  
     #delete previous record of this option
     try:
+        log.info(f'Deleteing previous EvalebelStatement which is not assesment............')
         EvaLebelStatement.objects.filter(question = question, evaluator = evaluator, assesment = False).delete()   
+        log.info(f'Deleted previous evalabelstatement for the option {selected_option} under the question {question} for the evaluator {evaluator} which is not assesment !')
     except:
-        pass 
-    
+        log.info(f'No previous EvalebelStatement found to delete for the option {selected_option} under question {question} of evaluator {evaluator} !')
+        
+    #assined labels to the questions
+    log.info(f'Collecting labels for the question {question} where value set to "1" ')
     set_labels = Label.objects.filter(question =  question, value = 1)
+    log.info(f'{set_labels.count()} set labels found in the question {question} !')
+    
     for set_label in set_labels:
-        defined_label = DifinedLabel.objects.get(name = set_label.name)
-        eva_label = EvaLabel.objects.get(label = defined_label, evaluator = evaluator)
+        # defined_label = DifinedLabel.objects.get(name = set_label.name)
+        eva_label = EvaLabel.objects.get(label__name = set_label.name, evaluator = evaluator)
         new_evalebel_statement = EvaLebelStatement(evalebel = eva_label, option_id = selected_option.id, statement = selected_option.statement, next_step = selected_option.next_step, dont_know = selected_option.dont_know, question = selected_option.question, positive = selected_option.positive, evaluator =  evaluator)
         new_evalebel_statement.save()
+        log.info(f'non assesment evlabelstatment saved for the label {eva_label} for evaluator {evaluator} !')
         try:
-            EvaLebelStatement.objects.filter(evalebel = eva_label, evaluator = evaluator, assesment = True).delete()
-        except:
+            #delete previous record of this label
+            log.info(f'Deleting previous evalabelstatment which was saved by assesment for evaluator {evaluator}!')
+            EvaLebelStatement.objects.filter(evalebel = eva_label, evaluator = evaluator, assesment = True).delete()     
+            log.info(f'Deleted evalebelstatment which was saved by assesment for evaluator {evaluator} !')       
+        except Exception as e:
             # pass is essential to execute rest of the code
-            pass
+            log.info('No assesmented evalabelstatent found to delete! ')
         
         #This is a calculated assesment based on the answere. Called function gives the idea.    
-        summery_statement_do_not_know = EvaLebelStatement(evalebel = eva_label, statement = label_assesment_for_donot_know(request, eva_label, evaluator),  evaluator =  evaluator, assesment = True)
+        summery_statement_do_not_know = EvaLebelStatement(evalebel = eva_label, statement = label_assesment_for_donot_know(request, eva_label, evaluator),  evaluator =  evaluator, question = question,  assesment = True)
         summery_statement_do_not_know.save()
+        log.info(f'Saved new evalebelstatement for do_not_know answer for the label {eva_label}')
 
         #This is a calculated assesment based on the answere. Called function gives the idea.    
-        summery_statement_positive = EvaLebelStatement(evalebel = eva_label, statement = label_assesment_for_positive(request, eva_label, evaluator),  evaluator = evaluator, assesment = True)
+        summery_statement_positive = EvaLebelStatement(evalebel = eva_label, statement = label_assesment_for_positive(request, eva_label, evaluator),  evaluator = evaluator, question = question,  assesment = True)
         summery_statement_positive.save()
+        log.info(f'Saved new evalebelstatement for positive answer for the label {eva_label}')
+    log.info(f'set_evalabelstatement completed for the question {question} ! ')
         
-        
+def get_eoi(eva_statement):
+    '''
+    Make as it is optionset have saved in database.
+    '''
+    es_option_id = set()
+    for es in eva_statement:
+        if es.option_id is not None:
+            es_option_id.add(es.option_id)
+    eoi = list(sorted(es_option_id))     
+    return eoi     
         
 #helper function should be called into the @login_required and @producer_required       
 def set_evastatement_of_logical_string(request, selected_option, evaluator):    
+    log.info(f'initializing set_evastatement_of_logical_string for evaluator {evaluator} ')
     #review and revise the logical string
     '''
     Making option set based on logical string
@@ -84,108 +123,92 @@ def set_evastatement_of_logical_string(request, selected_option, evaluator):
     So Each time of option submitting, we will check if anychange in logicalStrngs and will edit optionset acordingly.
     Then wil be comitted to the report.     
     '''
+    log.info('Collecting saved logical strings from the admin backend!')
     logical_strings = LogicalString.objects.all()
-    
-    logical_options = []
-    for logical_string in logical_strings:
-        ls_id = logical_string.id
-        text = logical_string.text
-        overall = logical_string.overall
-        positive = logical_string.positive
-        sting_options = logical_string.options.all()
-        option_list = []
-        for s_o in sting_options:
-            option_list.append(str(s_o.id))
-        logical_options.append(option_list)
+    log.info(f'{logical_strings.count()} saved logical strings found! ')    
 
-        try:
-            '''
-            edit if any changed
-            '''
-            option_set = OptionSet.objects.get(option_list = option_list)
-            option_set.id = ls_id
-            option_set.text = text
-            option_set.overall = overall
-            option_set.positive = positive
-            option_set.save()
-        except Exception as e:
-            '''
-            delete changed to re input
-            '''
-            lo_except_last = [x for x in logical_options if x != option_list]
-            unmatched = [item for item in logical_options if not item in lo_except_last ]
-            try:
-                for u in unmatched:
-                    OptionSet.objects.get(option_list = u).delete()
-            except Exception as e:
-                pass
-            new_option_set = OptionSet(option_list = option_list, text = text, overall = overall , positive = positive, ls_id = ls_id )
-            new_option_set.save()
-            
     
-    defined_common_label = DifinedLabel.objects.get(common_status = True)    
-    eva_label_common = EvaLabel.objects.get(label = defined_common_label, evaluator = evaluator)
-    eva_statement = EvaLebelStatement.objects.filter(evaluator = evaluator)   
+    #make a list of selected_options for each logical strings
+    logical_options = [ls_option.option_list for ls_option in logical_strings]  
     
+    #geting common lebel
+    eva_label_common = EvaLabel.objects.get(label__common_status = True, evaluator = evaluator)
     
-    #delete any prevous record for this current report
+    #delete any prevous record for this current report of common label
     try:
+        log.info(f'deleting assesment of common label if any.......')
         EvaLebelStatement.objects.filter(evalebel = eva_label_common, evaluator =  evaluator, assesment = True).delete()    
-    except:
-        pass
+    except Exception as e:
+        log.info(f'Assement deleting was not possible due to {e} !')
     
     
     #This is a calculated assesment based on the answere. Called function gives the idea.    
+    log.info(f'Recording donot_know_assesment for common label based on answer for report {evaluator} !')
     summery_statement_do_not_know = EvaLebelStatement(evalebel = eva_label_common, statement = overall_assesment_for_donot_know(request, eva_label_common, evaluator),  evaluator =  evaluator, assesment = True)
     summery_statement_do_not_know.save()
+    
     #This is a calculated assesment based on the answere. Called function gives the idea.    
+    log.info(f'Recording positive_assement for common label based on answer for report {evaluator}!')
     summery_statement_positive = EvaLebelStatement(evalebel = eva_label_common, statement = overall_assesment_for_positive(request, eva_label_common, evaluator),  evaluator =  evaluator, assesment = True)
     summery_statement_positive.save()
     
+    #get statements of this evaluator
+    eva_statement = EvaLebelStatement.objects.filter(evaluator = evaluator) 
     
+    #get sorted eoi list to check later
+    log.info(f'geting option_id list of evaluation which is name as eoi')
+    eoi = get_eoi(eva_statement)
 
     try:
-        '''
-        Make as it is optionset have saved in database.
-        '''
-        es_option_id = set()
-        for es in eva_statement:
-            es_option_id.add(es.option_id)
-        eoi = list(es_option_id)
         
+        log.info(f'Recording logical statment based on eoi to put into the each label of the report {evaluator} ')          
+        logical_statement = OptionSet.objects.get(option_list = eoi)
         
         # Check and set to the summary.
-        logical_statement = OptionSet.objects.get(option_list = eoi)
-        if (eoi in logical_options) and (logical_statement.overall == str(1)):
+        log.info(f'Setting logical statement to the common label based on answered question to the report {evaluator} !')
+        if (str(eoi) in logical_options) and (logical_statement.overall == str(1)):
             try:
-                EvaLebelStatement(evalebel = eva_label_common, evaluator =  evaluator, positive = logical_statement.positive,).delete()
-            except:
-                pass
-            new_evalebel_statement_common = EvaLebelStatement(evalebel = eva_label_common, statement = logical_statement.text, evaluator =  evaluator, positive = logical_statement.positive,)
+                log.info(f'Deleting previous logical string record in the common label!')
+                EvaLebelStatement.objects.filter(evalebel = eva_label_common, evaluator =  evaluator, positive = logical_statement.positive).delete()                
+            except Exception as e:
+                log.info(f'No logical string record found in common label for the eoi!')
+            log.info(f'Saving logical statement to the common label based on the eoi to the report {evaluator} ')
+            new_evalebel_statement_common = EvaLebelStatement(evalebel = eva_label_common, statement = logical_statement.text, evaluator =  evaluator, positive = logical_statement.positive)
             new_evalebel_statement_common.save()
             
-        # Check and set to the specific label.    
-        if (eoi in logical_options) and (logical_statement.overall == str(0)):
-            ls_labels = Lslabel.objects.filter(logical_string =  logical_statement, value = 1)
-            for ls_label in ls_labels:
-                defined_label = DifinedLabel.objects.get(name = ls_label.name)
-                ls_eva_label = EvaLabel.objects.get(label = defined_label, evaluator = evaluator)
-                try:
-                    EvaLebelStatement(evalebel = ls_eva_label, evaluator =  evaluator, positive = logical_statement.positive,).delete()
-                except:
-                    pass
-                new_evalebel_statement_g = EvaLebelStatement(evalebel = ls_eva_label, statement = logical_statement.text, evaluator =  evaluator, positive = logical_statement.positive,)
-                new_evalebel_statement_g.save()      
-                  
-    except Exception as e:        
-        pass
+            
+        # Check and set to the specific label.  
+        log.info(f'setting logical stement to the each label for the report {evaluator} !')  
+        if (str(eoi) in logical_options) and (logical_statement.overall == str(0)):
+            log.info(f'eoi found in the logical options')
+            ls_id = logical_statement.ls_id
+                    
+            ls_labels = Lslabel.objects.filter(logical_string__id = ls_id, value = 1)            
+            log.info(f'total {ls_labels.count()} Label found to add logical string for the eoi in the report {evaluator} ')
+            for ls_label in ls_labels:                          
+                ls_eva_label = EvaLabel.objects.get(label__name = ls_label.name, evaluator = evaluator)                
+                try: 
+                    log.info(f'Deleting previous record for this eoi label. ')                    
+                    EvaLebelStatement.objects.filter(evalebel = ls_eva_label, evaluator =  evaluator, positive = logical_statement.positive,).delete()                    
+                except Exception as e:
+                    log.info(f'Not able to delete previous record for the {e} ')   
+                log.info(f'Saving new logical string record for the label {ls_label} ') 
+                new_evalebel_statement_g = EvaLebelStatement(evalebel = ls_eva_label, statement = logical_statement.text, evaluator =  evaluator, positive = logical_statement.positive)
+                new_evalebel_statement_g.save()  
+        else:
+            log.info(f'eoi not found in the logical options')          
+    except Exception as e:     
+        log.info(f'There was problem in recording logical string due to {e} ............................')
     
     #Statement of the option will be aded to the summary if overall is set to 1    
+    log.info(f'Recording statement of the selected option to the common label. ')
     if selected_option.overall == str(1):
         try:
-            EvaLebelStatement(evalebel = eva_label_common, evaluator =  evaluator, assesment = False).delete()
-        except:
-            pass
+            log.info(f'deleting previous statement form the common label for this selected option')
+            EvaLebelStatement.objects.filter(evalebel = eva_label_common, evaluator =  evaluator, assesment = False).delete()
+        except Exception as e:
+            log.info(f'There was a problem in deleting previous rrecord due to {e} ')
+        log.info(f'Saving record to the common label for the selected option1')
         new_evalebel_statement_common = EvaLebelStatement(evalebel = eva_label_common, option_id = selected_option.id, statement = selected_option.statement, evaluator =  evaluator)
         new_evalebel_statement_common.save()    
     
@@ -193,19 +216,19 @@ def set_evastatement_of_logical_string(request, selected_option, evaluator):
         
 @login_required
 def option_add2(request):    
-    #Ensure session started
+    
     #as report session can not be started without authenticated user
     try:
         Evaluator.objects.get(id = request.session['evaluator'])
     except:
         messages.warning(request, "What you're trying to do isn't a good idea!")
+        log.warning(f'Somebody try tried to access evaluation procedure without login!')
         return HttpResponseRedirect(reverse('evaluation:evaluation2'))   
     
     #essential part for authenticated user where logedin_required
     null_session(request) 
-    
+    log.info(f'starting answer and question procedure for {request.user}!')
     if request.method == 'POST':        
-        
         question_slug = request.POST['slug']       
         option_id = request.POST['option_id'] 
         comment = request.POST['comment']
@@ -226,10 +249,11 @@ def option_add2(request):
         # I showed the result by tooltips on the frontend
         # But it was requirment.
         if 'get_feedback' in request.POST:
-            # save or update by checking existing coments of user of this report is exist.
-            set_eva_comments(question, comment,  get_current_evaluator(request) )
-            #save or update evaluation by checking existing evaluation
-            set_evaluation(question, selected_option, get_current_evaluator(request))  
+            with ThreadPoolExecutor(max_workers=2, initializer=django.setup) as executor:
+                # save or update by checking existing coments of user of this report is exist.
+                set_eva_comments(question, comment,  get_current_evaluator(request) )
+                #save or update evaluation by checking existing evaluation
+                set_evaluation(question, selected_option, get_current_evaluator(request))  
             return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(request.session['evaluator']), str(question_slug)]))
         
         #check Option Submitted or not
@@ -241,16 +265,24 @@ def option_add2(request):
             return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(request.session['evaluator']), str(question_slug)]))          
         
         
-        #re-confirm to avoid oparation mistak. as an unnecessary function running from client recomendation
-        set_evaluation(question, selected_option, get_current_evaluator(request))  
+        # #re-confirm to avoid oparation mistak. as an unnecessary function running from client recomendation
+        # set_evaluation(question, selected_option, get_current_evaluator(request))  
         
-        #control adding or editing
-        set_evastatment(request, selected_option, get_current_evaluator(request))     
+        # #control adding or editing
+        # set_evastatment(request, selected_option, get_current_evaluator(request))     
            
-        #control adding or editing
-        set_evastatement_of_logical_string(request, selected_option, get_current_evaluator(request))
+        # #control adding or editing
+        # set_evastatement_of_logical_string(request, selected_option, get_current_evaluator(request))
         
-        
+        with ThreadPoolExecutor(max_workers=2, initializer=django.setup) as executor:
+            #re-confirm to avoid oparation mistak. as an unnecessary function running from client recomendation
+            executor.submit(set_evaluation, question, selected_option, get_current_evaluator(request))
+            #control adding or editing
+            executor.submit(set_evastatment, question, selected_option, get_current_evaluator(request))
+            #control adding or editing
+            executor.submit(set_evastatement_of_logical_string, question, selected_option, get_current_evaluator(request))
+            
+            
         #try to find next question if not found report will be genarated and the report(Evaluator) will mark as genarated.
         try:  
             # to forward to next question after submitting a question.          
@@ -362,7 +394,35 @@ def question_dataset(request):
     
     return results
 
-    
+def get_vedio_urls(search_term):
+    search_url = 'https://www.googleapis.com/youtube/v3/search'     
+    params = {
+        'part' : 'snippet',
+        'q' : search_term,
+        'key' : settings.YOUTUBE_DATA_API_KEY,
+        'maxResults' : 3,
+    }
+    r = requests.get(search_url, params=params, )
+    search_results = r.json()
+    vedio_urls = []
+    for item in search_results.get('items'):
+        item_id = item['id']        
+        embed_url = 'https://www.youtube.com/embed/{}'.format(item_id['videoId'])
+        vedio_urls.append(embed_url)
+    return vedio_urls
+
+def vedio_urls(search_term):
+    saved_urls = Youtube_data.objects.filter(term = search_term) 
+    if saved_urls.exists():
+        saved_url = saved_urls[0]
+        vedio_urls = ast.literal_eval(saved_url.urls) #convert string list to list
+        if (saved_url.update_date + timezone.timedelta(days=7))  < timezone.now():
+            saved_url.urls = get_vedio_urls(search_term)
+            saved_url.save()         
+    else:
+        vedio_urls = get_vedio_urls(search_term)        
+        Youtube_data.objects.create(term = search_term, urls = vedio_urls)  
+    return vedio_urls  
 '''
 ====
 Main interface during evaluation process.
@@ -370,10 +430,7 @@ Main interface during evaluation process.
 '''
 @login_required
 @producer_required
-def eva_question(request, evaluator, slug):
-    
-     
-        
+def eva_question(request, evaluator, slug):      
     
     #This is essential where user loggedin
     null_session(request)     
@@ -407,11 +464,7 @@ def eva_question(request, evaluator, slug):
         request.session['evaluator'] = evaluator
         edit_evaluator = eva      
         edit_evaluator.report_genarated = False
-        edit_evaluator.save()   
-    
-    
-    
-    
+        edit_evaluator.save()    
     '''
     Below evaluator checking will ensure the correct report are editing.
     Otherwise user will put data by thinking one report but data can be edited in another report. Things can be messy.
@@ -492,27 +545,13 @@ def eva_question(request, evaluator, slug):
         
     chart_data = StandaredChart.objects.filter(question = question)  
     
-    
+    '''
+    Geting data from youtube data api 
+    update data in each week   
+     
+    '''
     search_term = str(question.name) + ', ' +  str(get_current_evaluator(request).biofuel.name)    
-    search_url = 'https://www.googleapis.com/youtube/v3/search'    
-    params = {
-        'part' : 'snippet',
-        'q' : search_term,
-        'key' : settings.YOUTUBE_DATA_API_KEY,
-        'maxResults' : 3,
-    }
-    r = requests.get(search_url, params=params, )
-    search_results = r.json()
-    vedio_urls = []
-    for item in search_results.get('items'):
-        item_id = item['id']        
-        embed_url = 'https://www.youtube.com/embed/{}'.format(item_id['videoId'])
-        vedio_urls.append(embed_url)
-    
-
-    
-
-    
+       
         
     context ={
         'slug' : slug,
@@ -528,7 +567,7 @@ def eva_question(request, evaluator, slug):
         'selected_option' : selected_option,
         'submitted_comment' : submitted_comment,
         'chart_data' : chart_data,
-        'vedio_urls' : vedio_urls,
+        'vedio_urls' : vedio_urls(search_term),
         'search_term' : search_term
         
     }
@@ -773,7 +812,8 @@ def report(request, slug):
     # get ordered next activities
     next_activities = NextActivities.objects.all().order_by('priority')    
     # get common label which is executive summary
-    common_label = eva_label.get(label=DifinedLabel.objects.get(common_status = True))
+    # common_label = eva_label.get(label=DifinedLabel.objects.get(common_status = True))
+    common_label = eva_label.get(label__common_status = True)
     #delete any prevous record for this current report
     try:
         EvaLebelStatement.objects.filter(evalebel = common_label, evaluator =  get_report, next_activity = True).delete()        

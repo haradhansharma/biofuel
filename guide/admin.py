@@ -19,5 +19,6 @@ class GuideTypeAdmin(admin.ModelAdmin):
 @admin.register(GuideMenu)
 class GuideMenuAdmin(admin.ModelAdmin):    
     prepopulated_fields = {'slug': ('title',)}   
+    list_filter = ('type', )
     
     

@@ -96,7 +96,7 @@ def signup(request):
             messages.warning(request, f'Select your business type to register!') 
             
             # user type selected facility in the home page so we will forwared user there     
-            return HttpResponseRedirect(reverse('home:home'))     
+            return HttpResponseRedirect(reverse('home:home') + '#register')     
  
     #session controlled Interactivenes in frontend
     #to protect from messup and confusion.

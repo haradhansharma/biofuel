@@ -23,7 +23,7 @@
     <div class="card-header">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
             <div class="">
-               <span class="h4 text-danger">Add Quotation to the question: </span> <span class="h4 text-primary">{{ question.name }}</span> 
+               <span class="h4 text-danger">{% if not quatation %}Add Quotation to the question:{% endif %} </span> <span class="h4 text-primary">{{ question.name }}</span> 
             </div>
             <!--form start-->
             <form id="quotation_form" class="" method="post" action="">

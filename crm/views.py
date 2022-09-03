@@ -13,120 +13,129 @@ from django.contrib import messages
 from .forms import UploadLead
 from django.core.files.storage import default_storage
 import os
-from .lead_mail_jobs import pending_queue_count, send_lead_mail
+from .lead_mail_jobs import pending_queue_count, send_lead_mail, last_process_time, CURRENT, SendQueueMail
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from doc.models import Acordion
+from django.utils import timezone 
 
-
-def mail_schedule(request):
-    total_mail = send_lead_mail()
-    return HttpResponse( f"Total {total_mail} Mail sent to the lead!" )
-    
-
+import logging
+log =  logging.getLogger('log')
 
 #helper function
 def random_digits():
     return "%0.12d" % random.randint(0, 999999999999)
 
+@login_required
 @staff_member_required
 def leads(request):
     #default behavior to avoid error
     null_session(request)
-    print( request.POST)
+    
     
     #Post method event    
-    if request.method == "POST": 
-        
-        
+    if request.method == "POST":        
         '''Lead delete method'''
         if 'delete_lead' in request.POST:
+            log.info('Initializing lead deleting action from frontend...........')
             #If no data selected return
             if not request.POST.getlist('lead'):
                 messages.warning(request, "Please select lead")
+                log.info('No lead selected to delete so that redirecting.....')
                 return HttpResponseRedirect(reverse('crm:leads')) 
             #get selected data 
             lead_ids = request.POST.getlist('lead')
             #delete selected lead   
-            delete_count = 0         
+            delete_count = 0       
+            log.info(f"deleting selected leads by {request.user} ........")  
             for li in lead_ids:
                 Lead.objects.get(id = li).delete()
                 delete_count += 1
             messages.success(request, f"{ delete_count } lead deleted successfully.")
+            log.info(f"{ delete_count } lead deleted successfully by {request.user}.")
                    
         
-        '''lead to queue to sent later. 50 lead can be added at a time. it can be adjusted form setting file. But More then 50 site can be slow.'''
-        if 'mail_lead' in request.POST:
-            
+        '''lead to queue to sent later. settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME lead can be added at a time. it can be adjusted form setting file. But More then 50 site can be slow.'''
+        if 'mail_lead' in request.POST:            
             #IF unsent more then setting value in the queue no lead will be added to the queue
             if pending_queue_count() >= settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME:
-                messages.warning(request, f"There are {pending_queue_count()} mail in queue! The command can be proccessed if queue less then {settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME}")
+                mgs_string_for_mail_lead = f"There are {pending_queue_count()} mail in queue! The command can be proccessed if queue less then {settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME}!"
+                messages.warning(request, mgs_string_for_mail_lead )
+                log.info(str(mgs_string_for_mail_lead) + str('so that redirecting...........'))
                 return HttpResponseRedirect(reverse('crm:leads'))   
-                            
-            #If no data selected return
-            if not request.POST.getlist('lead'):
-                messages.warning(request, "Please select lead")
-                return HttpResponseRedirect(reverse('crm:leads'))   
-            
-            #Allowed limited email per action to reduce RAM load
-            if len(request.POST.getlist('lead')) > settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME:
-                messages.warning(request, "Please select less then 50! " + "There was " + str(len(request.POST.getlist('lead'))) + " selected!" )
-                return HttpResponseRedirect(reverse('crm:leads'))       
             
             #get selected datalist
-            lead_ids = request.POST.getlist('lead')  
+            lead_ids = request.POST.getlist('lead') 
+            log.info(f'recorded {len(lead_ids)} leads!')
+                            
+            #If no data selected return
+            if not lead_ids:
+                messages.warning(request, "Please select lead")
+                log.info('As no lead recorded redirecting after giving message to select the lead................')
+                return HttpResponseRedirect(reverse('crm:leads'))   
             
-            # If no qualified lead found system will redirect.
-            try:      
-                result_lead = Lead.objects.filter(pk__in = lead_ids, subscribed = True) 
-            except:
+            #Allowed limited email per action to reduce load
+            if len(lead_ids) > settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME:
+                messages.warning(request, f"Please select less then {settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME}! " + "There was " + str(len(request.POST.getlist('lead'))) + " selected!" )
+                log.info(f'As selected lead is more than {settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME} , so that redirecting by giving message to select allowed leads............')
+                return HttpResponseRedirect(reverse('crm:leads'))             
+             
+            
+            # If no qualified lead found system will redirect.                
+            result_lead = Lead.objects.filter(pk__in = lead_ids, subscribed = True) 
+            log.info('recording leads whose are subscribed only...........')
+            if not result_lead.exists():
                 messages.warning(request, "No Subscribed lead found")
+                log.info('As there is no subscribed leads found in the selected leads, we are redirecting............')
                 return HttpResponseRedirect(reverse('crm:leads'))  
             
             
             process_count = 0
             pending_in_queue = 0
-            for rl in result_lead:            
-                
-                #To protect to be unsubscribe lead by robotic action
-                try:
-                    pending_exists = MailQueue.objects.filter(to = rl.email_address, processed = False).count()
+            log.info('Changing confirmation code of the lead to be secure from robotic actions!')
+            for rl in result_lead:                
+                #To protect to be unsubscribe lead by robotic action                
+                pending_exists = MailQueue.objects.filter(to = rl.email_address, processed = False).count()   
+                try:             
+                    if not pending_exists:     
+                        confirm_code = random_digits()
+                        lead = Lead.objects.get(email_address = rl.email_address)
+                        lead.confirm_code = confirm_code
+                        lead.save() 
+                        
+                        process_count += 1                    
+                        
+                        #save to mail queue                
+                        que = MailQueue(to = rl.email_address)
+                        que.save()
+                    else:
+                        pending_in_queue += 1   
                 except:
-                    pending_exists = 0
-                    
-                if pending_exists == 0:     
-                    confirm_code = random_digits()
-                    lead = Lead.objects.get(email_address = rl.email_address)
-                    lead.confirm_code = confirm_code
-                    lead.save() 
-                    
-                    process_count += 1                    
-                    
-                    #save to mail queue                
-                    que = MailQueue(to = rl.email_address)
-                    que.save()
-                else:
-                    pending_in_queue += 1                
+                    log.info(f'There was an error while trying to change the code for lead {rl}, so that going to process to the next............... ')
+                    continue    
+            log.info(f'Code changed to all selected subscribed leads where no error found. Total {process_count} processed out of {len(result_lead)}.......')         
                 
-                
-            messages.success(request, f"{process_count} Mail processed successfully in mail queue and {pending_in_queue} mail still exists in queue to sent. Mail in queue has not been queued yet!")
+            msg_process_to_queue = f"{process_count} Mail processed successfully in mail queue and {pending_in_queue} mail still exists in queue to sent!"     
+            messages.success(request, msg_process_to_queue)
+            log.info(msg_process_to_queue)
             
         '''Save lead form CSV file'''    
-        if 'lead_upload' in request.FILES:
-            
-            upload_csv_form = UploadLead(request.POST, request.FILES)
-            
-            if upload_csv_form.is_valid():
-                
+        if 'lead_upload' in request.FILES:    
+            log.info('Uploading leads through CSV...........')        
+            upload_csv_form = UploadLead(request.POST, request.FILES)            
+            if upload_csv_form.is_valid():   
+                log.info('upload form is valid......')             
                 lead_upload = upload_csv_form.cleaned_data['lead_upload'] 
                 #alow only csv
                 if not lead_upload.name.endswith('.csv'):
                     messages.error(request, 'File is not CSV type! Pleas Save your excel file in .csv format')
+                    log.info('file is not CSV, so redirecting...........')
                     return HttpResponseRedirect(reverse('crm:leads'))  
                 
                 #protect to extra large
                 if lead_upload.multiple_chunks():
                     messages.error(request, 'Uploaded file is too big (%.2f MB)' %(lead_upload.size(1000*1000),))
+                    log.info('File is too big, redirecting.......')
                     return HttpResponseRedirect(reverse('crm:leads'))  
                 
                 
@@ -142,20 +151,26 @@ def leads(request):
                     except Exception as e:
                         error_count += 1
                 messages.success(request, f'{entry_count} lead has beed added! \n')
-                messages.error(request, f"\n There was {error_count} error! Please check file format, record's title and duplicate email before each upload! \n")            
+                messages.error(request, f"\n There was {error_count} error! Please check file format, record's title and duplicate email before each upload! \n")       
+                log.info(f'{entry_count} leads added to the lead table and there was {error_count} error during saving.......')   
+            else:
+                log.info('Upload form was Invalid')  
             
     upload_csv_form = UploadLead()
+    log.info('Lead upload form ready on get request.............')
     
         
     #List of Leads
     leads = Lead.objects.all().order_by('lead')
+    log.info(f'Found {leads.count()} leads...........')
     
     #pagination
     page = request.GET.get('page', 1)
+    log.info('Creating pagination............')
     paginator = Paginator(leads, 50)
     try:
         leads = paginator.page(page)
-    except PageNotAnInteger:
+    except PageNotAnInteger: 
         leads = paginator.page(1)
     except EmptyPage:
         leads = paginator.page(paginator.num_pages)
@@ -166,30 +181,40 @@ def leads(request):
         'leads': leads,
         'upload_csv_form': upload_csv_form,
         'docs': docs,
-        'EXECUT_MAIL_IN_SECONDS': settings.EXECUT_MAIL_IN_SECONDS
+        'EXECUT_MAIL_IN_MIN': SendQueueMail.RUN_EVERY_MINS,
+        'RETRY_AFTER_FAILURE_MINS': SendQueueMail.RETRY_AFTER_FAILURE_MINS,
+        'LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME' : settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME,
+        'pending_queue_count' : pending_queue_count()
+        
     }
     return render(request, 'crm/leads.html', context = context)
 
 def unsubscrib(request, **kwargs):  
-    
+    un_email = kwargs['email']
+    un_code = kwargs['code']
     try:  
-        lead = Lead.objects.get(email_address = kwargs['email'], confirm_code = kwargs['code'])
+        lead = Lead.objects.get(email_address = un_email, confirm_code = un_code)
         lead.subscribed = False
-        lead.save()    
+        lead.save() 
+        log.info(f'{un_email} unsubscribed from CRM mail!............')   
     except:
-        messages.warning(request, "No email found!")
+        messages.warning(request, "No email found or code expired!")
+        log.warning(f'Unsubscribed action attempt where no {un_email} email found or code exppired!!!!!!!!!!!!!!!!!!!!')
         return HttpResponseRedirect(reverse('home:home'))        
         
         
     return render(request, 'crm/unsubscribed.html', {'lead': lead, 'action': 'unsubscribed'})
 
-def subscrib(request, **kwargs):    
+def subscrib(request, **kwargs): 
+    email =  kwargs['email']  
     try:
-        lead = Lead.objects.get(email_address = kwargs['email'])
+        lead = Lead.objects.get(email_address = email)
         lead.subscribed = True
         lead.save()    
+        log.info(f'{email} subscribed to CRM!............')  
     except:
         messages.warning(request, "No email found!")
+        log.warning(f'CRM subscription for email {email} unsuccessfull!............')  
         return HttpResponseRedirect(reverse('home:home'))      
         
     return render(request, 'crm/subscribed.html', {'lead': lead, 'action': 'subscribed'})

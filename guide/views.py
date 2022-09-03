@@ -1,45 +1,33 @@
-from pprint import pprint
 from django.shortcuts import render
 from .models import *
 
-# Create your views here.
-def guide_home(request):
-    
-    
 
-     
-    guide_type = GuideType.objects.all()
+def guide_home(request):     
+    guide_type = GuideType.objects.all().order_by('position')  
     context = {
-        "guide_type": guide_type,    
-        
+        "guide_type": guide_type,          
     }
-    return render(request, 'guide/home.html', context = context)
+    return render(request, 'guide/bg_home.html', context = context)
 
-def guide_type(request, key):
-
-    
-    guide_general_menu = GuideMenu.objects.filter(type = GuideType.objects.get(key=key))    
-    type = GuideType.objects.filter(key=key)  
+def guide_type(request, key):    
+    guide_general_menu = GuideMenu.objects.filter(type = GuideType.objects.get(key=key)).order_by('position')      
+    type = GuideType.objects.filter(key=key).order_by('position')   
     
     context = {
         "type": type,
         'guide_general_menu' : guide_general_menu
     }
-    return render(request, 'guide/guide_type.html', context = context)
+    return render(request, 'guide/bg_guide_type.html', context = context)
 
 
     
 def genarel_guide(request, slug, type):
-    guide_general_menu = GuideMenu.objects.filter(type =  GuideType.objects.get(key=type))  
-    
-    guide = GenarelGuide.objects.filter(menu = guide_general_menu.get(slug=slug))
-      
+    guide_general_menu = GuideMenu.objects.filter(type =  GuideType.objects.get(key=type)).order_by('position')      
+    guide = GenarelGuide.objects.filter(menu = guide_general_menu.get(slug=slug)).order_by('position')       
     
     context = {
         'guide_general_menu' : guide_general_menu ,
-        'guide' : guide     ,
-        
-        'aaa' : 'asdasdasdasdasdasd'
+        'guide' : guide ,      
     }
-    return render(request, 'guide/genarel_guide.html', context = context)
+    return render(request, 'guide/bg_genarel_guide.html', context = context)
         

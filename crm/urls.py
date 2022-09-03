@@ -9,7 +9,6 @@ app_name = 'crm'
 urlpatterns = [
     path('crm/leads', views.leads, name='leads'),
     path('crm/unsubscrib/<email>/<code>', views.unsubscrib, name='unsubscrib'),
-    path('crm/subscrib/<str:email>', views.subscrib, name='subscrib'),
-    path('crm/send_mail', views.mail_schedule, name='send_mail'),
+    path('crm/subscrib/<str:email>', views.subscrib, name='subscrib'),   
 ]
 

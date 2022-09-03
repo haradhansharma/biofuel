@@ -27,6 +27,7 @@ def site_info():
     
 
 def comon_doc(request):
+    load_template = list(filter(None, request.path.split('/')))
     text = {
         'user_congrets': f"Hi , {request.user.username}",
         'signup':' Sign Up',
@@ -58,6 +59,7 @@ def comon_doc(request):
     return {   
             'site_info': site_info(),
             'text': text,
+            'segment' : load_template
             
     }
     
