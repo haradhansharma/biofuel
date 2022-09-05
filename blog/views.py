@@ -16,17 +16,21 @@ import requests
 def post_list(request, tag_slug=None):
  
     context = {}    
-    posts = BlogPost.published.all()#using custom manager    
-    paginator = Paginator(posts, 3)
-    page = request.GET.get('page')
-    tag = None
-    if tag_slug:
-        tag = get_object_or_404(Tag, slug=tag_slug)
-        posts=posts.filter(tags__in=[tag])    
-            
     query = request.GET.get("q")      
-    if query:
-        posts=BlogPost.published.filter(Q(title__icontains=query) | Q(tags__name__icontains=query)).distinct()
+    
+    
+    
+    tag = None
+    if tag_slug:       
+        tag = get_object_or_404(Tag, slug=tag_slug)        
+        posts = BlogPost.published.filter(tags__in=[tag]).order_by('-updated')
+    elif query:
+        posts = BlogPost.published.filter(Q(title__icontains=query) | Q(tags__name__icontains=query)).order_by('-updated').distinct()
+    else:
+        posts = BlogPost.published.all().order_by('-updated') #using custom manager   
+        
+    paginator = Paginator(posts, 10)
+    page = request.GET.get('page')   
     
     
     try:

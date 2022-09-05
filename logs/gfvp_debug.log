@@ -2763,3 +2763,119 @@ INFO 2022-09-03 16:24:55,904 I:\django\gfvp\evaluation\helper.py 58 Initializing
 INFO 2022-09-03 16:24:55,905 I:\django\gfvp\crm\lead_mail_jobs.py 75 Initializing CRONJOB to send bulk mail from MailQueue Table!!
 INFO 2022-09-03 16:25:07,602 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
 INFO 2022-09-03 16:25:07,604 I:\django\gfvp\crm\lead_mail_jobs.py 75 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-03 21:30:28,577 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-03 21:30:28,796 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-03 21:32:29,443 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-03 21:32:29,445 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-03 21:56:20,821 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-03 21:56:20,857 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-03 21:57:05,878 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-03 21:57:05,944 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-03 23:05:14,549 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-03 23:05:14,650 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-03 23:12:54,983 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-03 23:12:54,991 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 14:37:07,362 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 14:37:07,405 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 14:41:48,946 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 14:41:48,951 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 14:43:26,270 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 14:43:26,273 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 14:43:49,033 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 14:43:49,035 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 14:44:19,485 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 14:44:19,487 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 14:45:27,588 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 14:45:27,594 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 14:48:35,163 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 14:48:35,173 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 14:49:02,264 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 14:49:02,266 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 14:49:28,442 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 14:49:28,444 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 14:49:55,450 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 14:49:55,455 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 14:50:39,294 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 14:50:39,297 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 14:50:57,581 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 14:50:57,584 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 14:51:09,378 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 14:51:09,385 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 14:52:29,465 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 14:52:29,468 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:06:56,750 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:06:56,754 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:07:15,066 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:07:15,069 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:08:31,982 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:08:31,985 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:08:56,062 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:08:56,066 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:09:25,461 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:09:25,484 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:10:23,676 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:10:23,691 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:10:47,472 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:10:47,474 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:13:09,250 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:13:09,260 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:13:58,163 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:13:58,176 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:15:14,354 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:15:14,356 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:15:38,593 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:15:38,600 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:16:12,705 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:16:12,707 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:16:29,373 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:16:29,376 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:16:43,289 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:16:43,291 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:17:30,301 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:17:30,308 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:17:43,873 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:17:43,875 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:18:14,737 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:18:14,742 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:18:27,852 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:18:27,854 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:19:07,483 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:19:07,487 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:19:38,378 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:19:38,383 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:25:04,064 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:25:04,071 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:26:52,102 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:26:52,105 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:27:22,696 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:27:22,699 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:31:16,840 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:31:16,842 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:31:47,318 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:31:47,320 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:31:55,472 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:31:55,484 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:32:14,933 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:32:14,939 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:32:54,686 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:32:54,689 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:34:27,577 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:34:27,579 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:34:52,121 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:34:52,127 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:36:39,444 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:36:39,446 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:38:03,442 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:38:03,448 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:38:27,053 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:38:27,059 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:39:49,558 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:39:49,560 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:47:22,462 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:47:22,467 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:48:13,030 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:48:13,031 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:48:28,177 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:48:28,179 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!
+INFO 2022-09-05 15:49:57,044 I:\django\gfvp\evaluation\helper.py 58 Initializing CRONJOB to delete incomplete report!!
+INFO 2022-09-05 15:49:57,046 I:\django\gfvp\crm\lead_mail_jobs.py 77 Initializing CRONJOB to send bulk mail from MailQueue Table!!

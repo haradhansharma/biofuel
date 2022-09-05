@@ -23126,3 +23126,771 @@ INFO 2022-09-03 16:25:07,555 django.utils.autoreload MainThread 3116 I:\django\g
 INFO 2022-09-03 16:25:21,652 django.server Thread-2 2064 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 14772 "POST /admin/blog/blogpost/add/ HTTP/1.1" 302 0
 INFO 2022-09-03 16:25:23,746 django.server Thread-2 2064 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 14772 "GET /admin/blog/blogpost/ HTTP/1.1" 200 36386
 INFO 2022-09-03 16:25:25,162 django.server Thread-2 2064 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 14772 "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2022-09-03 21:30:27,932 django.utils.autoreload MainThread 17896 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 4196 Watching for file changes with StatReloader
+INFO 2022-09-03 21:31:18,487 django.server Thread-1 18176 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET / HTTP/1.1" 200 44587
+INFO 2022-09-03 21:31:18,915 django.server Thread-1 18176 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /static/css/common.css HTTP/1.1" 200 2434
+INFO 2022-09-03 21:31:18,926 django.server Thread-2 15188 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /static/assets/vendor/%40popperjs/core/dist/umd/popper.min.js HTTP/1.1" 200 18835
+INFO 2022-09-03 21:31:19,283 django.server Thread-1 18176 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /static/assets/vendor/jquery/jquery.min.js HTTP/1.1" 200 86927
+INFO 2022-09-03 21:31:19,302 django.server Thread-3 7004 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /static/assets/vendor/chartist/dist/chartist.min.js HTTP/1.1" 200 40312
+INFO 2022-09-03 21:31:19,303 django.server Thread-2 15188 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /static/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js HTTP/1.1" 200 78420
+INFO 2022-09-03 21:31:19,473 django.server Thread-2 15188 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /static/assets/vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js HTTP/1.1" 200 2977
+INFO 2022-09-03 21:31:19,726 django.server Thread-2 15188 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /static/assets/js/volt.js HTTP/1.1" 200 12339
+INFO 2022-09-03 21:31:19,739 django.server Thread-3 7004 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /static/assets/vendor/vanillajs-datepicker/dist/js/datepicker.min.js HTTP/1.1" 200 31587
+INFO 2022-09-03 21:31:20,343 django.server Thread-1 18176 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /static/assets/shippinglab-logo.svg HTTP/1.1" 200 10323
+INFO 2022-09-03 21:31:20,356 django.server Thread-3 7004 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /static/upload/site_image/gf_Artboard_12x.png HTTP/1.1" 200 26091
+INFO 2022-09-03 21:31:20,940 django.server Thread-2 15188 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /static/new_logo.png HTTP/1.1" 200 113487
+INFO 2022-09-03 21:31:27,030 django.server Thread-3 7004 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /upload/usertype/biodiesel.png HTTP/1.1" 200 11536
+INFO 2022-09-03 21:31:27,323 django.server Thread-1 18176 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /upload/usertype/maniren.png HTTP/1.1" 200 53719
+INFO 2022-09-03 21:31:27,947 django.server Thread-2 15188 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /upload/usertype/lab-scientist-icon.png HTTP/1.1" 200 78374
+INFO 2022-09-03 21:31:32,944 django.server Thread-3 7004 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /upload/usertype/5b1f9062e36e1_thumb900_baBsHBO.png HTTP/1.1" 200 72271
+INFO 2022-09-03 21:31:33,184 django.server Thread-1 18176 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /upload/featured_image/2022/09/03/GettyImages-753300407-59c59e239abed50011909e5d_UUtAJmG.jpg HTTP/1.1" 200 135672
+INFO 2022-09-03 21:31:33,223 django.server Thread-1 18176 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /static/guide/logo-02.png HTTP/1.1" 200 3890
+INFO 2022-09-03 21:31:33,863 django.server Thread-2 15188 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /upload/featured_image/2022/07/30/OpenCart-Logo.wine.png HTTP/1.1" 200 31367
+INFO 2022-09-03 21:31:35,930 django.server Thread-3 7004 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /upload/featured_image/2022/07/30/images_1_8msiFBa.jpg HTTP/1.1" 200 4597
+INFO 2022-09-03 21:31:40,493 django.server Thread-3 7004 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /upload/site_image/gf_Artboard_1.png HTTP/1.1" 200 11956
+INFO 2022-09-03 21:31:40,870 django.server Thread-4 15376 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-03 21:31:42,456 django.server Thread-3 7004 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 4196 "GET /upload/site_image/gf_Artboard_14x.png HTTP/1.1" 200 59124
+INFO 2022-09-03 21:32:27,483 django.utils.autoreload MainThread 17896 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 4196 I:\django\gfvp\blog\models.py changed, reloading.
+INFO 2022-09-03 21:32:29,380 django.utils.autoreload MainThread 18984 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 5764 Watching for file changes with StatReloader
+INFO 2022-09-03 21:52:45,815 django.server Thread-1 812 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 5764 "GET / HTTP/1.1" 200 44587
+INFO 2022-09-03 21:52:52,164 django.server Thread-3 8984 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 5764 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-03 21:54:09,380 django.server Thread-1 812 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 5764 "GET /blog/ HTTP/1.1" 200 34342
+INFO 2022-09-03 21:54:11,868 django.server Thread-3 8984 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 5764 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-03 21:55:35,675 django.server Thread-1 812 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 5764 "GET /blog/tag/arctic-alliance/ HTTP/1.1" 200 34523
+INFO 2022-09-03 21:55:37,321 django.server Thread-3 8984 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 5764 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-03 21:55:50,463 django.server Thread-1 812 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 5764 "GET /blog/tag/arctic-alliance/ HTTP/1.1" 200 34523
+INFO 2022-09-03 21:55:51,929 django.server Thread-3 8984 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 5764 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-03 21:55:57,687 django.server Thread-1 812 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 5764 "GET /blog/tag/biofuel/ HTTP/1.1" 200 34515
+INFO 2022-09-03 21:55:59,569 django.server Thread-3 8984 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 5764 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-03 21:56:15,346 django.utils.autoreload MainThread 18984 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 5764 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-03 21:56:20,402 django.utils.autoreload MainThread 2440 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 18504 Watching for file changes with StatReloader
+INFO 2022-09-03 21:56:30,511 django.server Thread-1 8820 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 18504 "GET /blog/tag/arctic-alliance/ HTTP/1.1" 200 34523
+INFO 2022-09-03 21:56:32,234 django.server Thread-3 16680 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 18504 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-03 21:56:38,631 django.server Thread-1 8820 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 18504 "GET /blog/tag/biofuel/ HTTP/1.1" 200 34515
+INFO 2022-09-03 21:56:40,259 django.server Thread-3 16680 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 18504 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-03 21:57:03,951 django.utils.autoreload MainThread 2440 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 18504 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-03 21:57:05,812 django.utils.autoreload MainThread 9840 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 15240 Watching for file changes with StatReloader
+INFO 2022-09-03 22:17:25,219 django.server Thread-2 15692 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15240 "GET /blog/aiming-to-spur-green-corridors-in-arctic-waters-is-the-clean-arctic-alliance/ HTTP/1.1" 200 27733
+INFO 2022-09-03 22:17:26,926 django.server Thread-2 15692 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15240 "GET /upload/featured_image/2022/09/03/GettyImages-753300407-59c59e239abed50011909e5d_UUtAJmG.jpg HTTP/1.1" 304 0
+INFO 2022-09-03 22:17:28,414 django.server Thread-3 13928 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15240 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-03 22:17:29,715 django.server Thread-2 15692 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15240 "GET /upload/site_image/gf_Artboard_14x.png HTTP/1.1" 200 59124
+INFO 2022-09-03 23:04:31,691 django.utils.autoreload MainThread 9840 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 15240 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-03 23:05:13,751 django.utils.autoreload MainThread 3956 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 8012 Watching for file changes with StatReloader
+INFO 2022-09-03 23:12:53,301 django.utils.autoreload MainThread 3956 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 8012 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-03 23:12:54,913 django.utils.autoreload MainThread 17096 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 16136 Watching for file changes with StatReloader
+INFO 2022-09-03 23:13:20,807 django.server Thread-1 4748 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /blog/ HTTP/1.1" 200 43749
+INFO 2022-09-03 23:13:30,934 django.server Thread-1 4748 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /upload/featured_image/2022/09/03/GettyImages-753300407-59c59e239abed50011909e5d_UUtAJmG.jpg HTTP/1.1" 304 0
+INFO 2022-09-03 23:13:32,562 django.server Thread-2 13992 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /upload/featured_image/2022/07/30/26.07.2022_20.28.18_REC_dSz1h0g.png HTTP/1.1" 200 49320
+INFO 2022-09-03 23:13:32,776 django.server Thread-6 14952 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /upload/featured_image/2022/07/30/OpenCart-Logo.wine.png HTTP/1.1" 200 31367
+INFO 2022-09-03 23:13:34,159 django.server Thread-5 4228 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /upload/featured_image/2022/07/30/images_1_8msiFBa.jpg HTTP/1.1" 200 4597
+INFO 2022-09-03 23:13:34,166 django.server Thread-4 1172 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /upload/featured_image/2022/07/30/26.07.2022_20.28.18_REC.png HTTP/1.1" 200 49320
+INFO 2022-09-03 23:13:34,223 django.server Thread-3 13116 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /upload/featured_image/2022/07/30/26.07.2022_20.28.53_REC.png HTTP/1.1" 200 52299
+INFO 2022-09-03 23:13:36,803 django.server Thread-1 4748 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /blog/tag/arctic-alliance/ HTTP/1.1" 200 43930
+INFO 2022-09-03 23:13:37,575 django.server Thread-7 13300 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 76 handle_error 16136 - Broken pipe from ('127.0.0.1', 51541)
+
+INFO 2022-09-03 23:13:38,830 django.server Thread-8 984 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-03 23:13:40,704 django.server Thread-1 4748 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /upload/site_image/gf_Artboard_14x.png HTTP/1.1" 200 59124
+INFO 2022-09-03 23:24:29,766 django.server Thread-10 17184 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /admin/blog/blogpost/5/change/ HTTP/1.1" 200 32226
+INFO 2022-09-03 23:24:30,955 django.server Thread-9 18404 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /static/jquery-autosuggest/js/jquery.autoSuggest.minified.js HTTP/1.1" 200 8259
+INFO 2022-09-03 23:24:30,958 django.server Thread-10 17184 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /static/jquery-autosuggest/css/autoSuggest-grappelli.css HTTP/1.1" 200 4096
+INFO 2022-09-03 23:24:32,088 django.server Thread-11 16836 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2022-09-03 23:24:32,630 django.server Thread-11 16836 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /static/admin/img/tooltag-arrowright.svg HTTP/1.1" 200 280
+INFO 2022-09-03 23:24:32,956 django.server Thread-10 17184 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /static/ckeditor/ckeditor/config.js?t=M6K9 HTTP/1.1" 200 336
+INFO 2022-09-03 23:24:33,171 django.server Thread-11 16836 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /static/ckeditor/ckeditor/lang/en.js?t=M6K9 HTTP/1.1" 200 17445
+INFO 2022-09-03 23:24:33,350 django.server Thread-10 17184 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /static/ckeditor/ckeditor/skins/moono-lisa/editor.css?t=M6K9 HTTP/1.1" 200 48309
+INFO 2022-09-03 23:24:33,376 django.server Thread-11 16836 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /static/ckeditor/ckeditor/styles.js?t=M6K9 HTTP/1.1" 200 5577
+INFO 2022-09-03 23:24:33,551 django.server Thread-10 17184 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /static/ckeditor/ckeditor/plugins/scayt/dialogs/dialog.css?t=M6K9 HTTP/1.1" 200 419
+INFO 2022-09-03 23:24:33,591 django.server Thread-11 16836 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /static/ckeditor/ckeditor/plugins/scayt/skins/moono-lisa/scayt.css?t=M6K9 HTTP/1.1" 200 381
+INFO 2022-09-03 23:24:33,696 django.server Thread-10 17184 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /static/ckeditor/ckeditor/plugins/dialog/styles/dialog.css?t=M6K9 HTTP/1.1" 200 249
+INFO 2022-09-03 23:24:33,734 django.server Thread-11 16836 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /static/ckeditor/ckeditor/contents.css?t=M6K9 HTTP/1.1" 200 3092
+INFO 2022-09-03 23:24:33,739 django.server Thread-12 14476 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /static/ckeditor/ckeditor/plugins/copyformatting/styles/copyformatting.css?t=M6K9 HTTP/1.1" 200 1511
+INFO 2022-09-03 23:24:33,756 django.server Thread-9 18404 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /static/ckeditor/ckeditor/plugins/tableselection/styles/tableselection.css?t=M6K9 HTTP/1.1" 200 1145
+INFO 2022-09-03 23:24:33,763 django.server Thread-13 4984 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /static/ckeditor/ckeditor/skins/moono-lisa/icons.png?t=5fe059002f HTTP/1.1" 200 12237
+INFO 2022-09-03 23:24:44,311 django.server Thread-13 4984 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /admin/blog/blogpost/ HTTP/1.1" 200 36115
+INFO 2022-09-03 23:24:44,448 django.server Thread-9 18404 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2022-09-03 23:24:45,811 django.server Thread-13 4984 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2022-09-03 23:24:45,850 django.server Thread-13 4984 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 16136 "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+INFO 2022-09-05 14:37:07,010 django.utils.autoreload MainThread 12208 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 8976 Watching for file changes with StatReloader
+WARNING 2022-09-05 14:38:00,303 django.request Thread-1 2212 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 8976 Not Found: /at/fashion/
+INFO 2022-09-05 14:38:00,445 django.server Thread-1 2212 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 76 handle_error 8976 - Broken pipe from ('127.0.0.1', 51997)
+
+INFO 2022-09-05 14:38:01,821 django.server Thread-2 15268 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET / HTTP/1.1" 200 43960
+INFO 2022-09-05 14:38:01,892 django.server Thread-2 15268 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /static/css/common.css HTTP/1.1" 304 0
+INFO 2022-09-05 14:38:02,058 django.server Thread-2 15268 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /static/assets/vendor/%40popperjs/core/dist/umd/popper.min.js HTTP/1.1" 200 18835
+INFO 2022-09-05 14:38:02,153 django.server Thread-2 15268 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /static/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js HTTP/1.1" 200 78420
+INFO 2022-09-05 14:38:02,260 django.server Thread-2 15268 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /static/assets/vendor/jquery/jquery.min.js HTTP/1.1" 200 86927
+INFO 2022-09-05 14:38:02,396 django.server Thread-2 15268 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /static/assets/vendor/chartist/dist/chartist.min.js HTTP/1.1" 200 40312
+INFO 2022-09-05 14:38:02,490 django.server Thread-2 15268 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /static/assets/vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js HTTP/1.1" 200 2977
+INFO 2022-09-05 14:38:02,646 django.server Thread-2 15268 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /static/assets/vendor/vanillajs-datepicker/dist/js/datepicker.min.js HTTP/1.1" 200 31587
+INFO 2022-09-05 14:38:03,831 django.server Thread-2 15268 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /static/assets/js/volt.js HTTP/1.1" 200 12339
+INFO 2022-09-05 14:38:03,959 django.server Thread-5 7936 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /static/assets/shippinglab-logo.svg HTTP/1.1" 200 10323
+INFO 2022-09-05 14:38:03,981 django.server Thread-3 14256 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /static/upload/site_image/gf_Artboard_12x.png HTTP/1.1" 200 26091
+INFO 2022-09-05 14:38:04,069 django.server Thread-4 12516 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /static/new_logo.png HTTP/1.1" 200 113487
+INFO 2022-09-05 14:38:14,758 django.server Thread-2 15268 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /upload/usertype/lab-scientist-icon.png HTTP/1.1" 200 78374
+INFO 2022-09-05 14:38:14,782 django.server Thread-6 15296 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /upload/usertype/biodiesel.png HTTP/1.1" 200 11536
+INFO 2022-09-05 14:38:14,803 django.server Thread-6 15296 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /static/guide/logo-02.png HTTP/1.1" 200 3890
+INFO 2022-09-05 14:38:14,942 django.server Thread-3 14256 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /upload/featured_image/2022/09/03/GettyImages-753300407-59c59e239abed50011909e5d_UUtAJmG.jpg HTTP/1.1" 200 135672
+INFO 2022-09-05 14:38:14,999 django.server Thread-7 14232 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /upload/usertype/maniren.png HTTP/1.1" 200 53719
+INFO 2022-09-05 14:38:15,009 django.server Thread-5 7936 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /upload/usertype/5b1f9062e36e1_thumb900_baBsHBO.png HTTP/1.1" 200 72271
+INFO 2022-09-05 14:38:15,061 django.server Thread-4 12516 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /upload/featured_image/2022/07/30/OpenCart-Logo.wine.png HTTP/1.1" 200 31367
+INFO 2022-09-05 14:38:16,491 django.server Thread-2 15268 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /upload/featured_image/2022/07/30/images_1_8msiFBa.jpg HTTP/1.1" 200 4597
+INFO 2022-09-05 14:38:21,464 django.server Thread-2 15268 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /upload/site_image/gf_Artboard_1.png HTTP/1.1" 200 11956
+INFO 2022-09-05 14:38:21,620 django.server Thread-8 6316 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 14:38:23,369 django.server Thread-4 12516 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 76 handle_error 8976 - Broken pipe from ('127.0.0.1', 52007)
+
+INFO 2022-09-05 14:38:25,955 django.server Thread-5 7936 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 76 handle_error 8976 - Broken pipe from ('127.0.0.1', 52008)
+
+INFO 2022-09-05 14:38:26,721 django.server Thread-2 15268 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /upload/site_image/gf_Artboard_14x.png HTTP/1.1" 200 59124
+INFO 2022-09-05 14:38:26,866 django.server Thread-7 14232 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /admin/ HTTP/1.1" 302 0
+INFO 2022-09-05 14:38:28,593 django.server Thread-7 14232 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 11904
+INFO 2022-09-05 14:38:28,750 django.server Thread-7 14232 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /static/admin/css/login.css HTTP/1.1" 200 954
+WARNING 2022-09-05 14:38:30,308 django.request Thread-7 14232 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 8976 Not Found: /favicon.ico
+WARNING 2022-09-05 14:38:30,310 django.server Thread-7 14232 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8976 "GET /favicon.ico HTTP/1.1" 404 18821
+INFO 2022-09-05 14:41:46,821 django.utils.autoreload MainThread 12208 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 8976 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 14:41:48,854 django.utils.autoreload MainThread 7872 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 6348 Watching for file changes with StatReloader
+INFO 2022-09-05 14:41:56,501 django.server Thread-1 9556 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 6348 "GET /blog/ HTTP/1.1" 200 42949
+INFO 2022-09-05 14:42:01,655 django.server Thread-1 9556 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 6348 "GET /upload/featured_image/2022/07/30/26.07.2022_20.28.18_REC_dSz1h0g.png HTTP/1.1" 200 49320
+INFO 2022-09-05 14:42:01,754 django.server Thread-2 32 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 6348 "GET /upload/featured_image/2022/07/30/26.07.2022_20.28.53_REC.png HTTP/1.1" 200 52299
+INFO 2022-09-05 14:42:01,807 django.server Thread-3 10352 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 6348 "GET /upload/featured_image/2022/07/30/26.07.2022_20.28.18_REC.png HTTP/1.1" 200 49320
+INFO 2022-09-05 14:42:03,857 django.server Thread-4 3068 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 6348 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 14:42:05,290 django.server Thread-3 10352 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 6348 "GET /blog/tag/python/ HTTP/1.1" 200 43121
+INFO 2022-09-05 14:42:06,940 django.server Thread-4 3068 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 6348 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 14:43:24,656 django.utils.autoreload MainThread 7872 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 6348 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 14:43:26,198 django.utils.autoreload MainThread 8208 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 3808 Watching for file changes with StatReloader
+INFO 2022-09-05 14:43:47,561 django.utils.autoreload MainThread 8208 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 3808 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 14:43:48,957 django.utils.autoreload MainThread 13256 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 13500 Watching for file changes with StatReloader
+ERROR 2022-09-05 14:43:55,752 django.request Thread-2 8824 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 13500 Internal Server Error: /blog/tag/python/
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "I:\django\gfvp\blog\views.py", line 28, in post_list
+    posts=posts.filter(tags__icontains = tag)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 974, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 992, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 999, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1375, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1396, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1329, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1171, in build_lookup
+    raise FieldError('Related Field got invalid lookup: {}'.format(lookup_name))
+django.core.exceptions.FieldError: Related Field got invalid lookup: icontains
+ERROR 2022-09-05 14:43:57,332 django.server Thread-2 8824 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 13500 "GET /blog/tag/python/ HTTP/1.1" 500 135334
+INFO 2022-09-05 14:44:17,791 django.utils.autoreload MainThread 13256 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 13500 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 14:44:19,397 django.utils.autoreload MainThread 15268 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 6864 Watching for file changes with StatReloader
+INFO 2022-09-05 14:44:24,179 django.server Thread-1 6028 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 6864 "GET /blog/tag/python/ HTTP/1.1" 200 43121
+INFO 2022-09-05 14:44:25,849 django.server Thread-4 2408 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 6864 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 14:45:25,683 django.utils.autoreload MainThread 15268 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 6864 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 14:45:27,506 django.utils.autoreload MainThread 12312 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 13872 Watching for file changes with StatReloader
+ERROR 2022-09-05 14:45:31,091 django.request Thread-1 10648 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 13872 Internal Server Error: /blog/tag/python/
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "I:\django\gfvp\blog\views.py", line 28, in post_list
+    posts=posts.filter(tags_in = tag)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 974, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 992, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 999, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1375, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1396, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1271, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1099, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1522, in names_to_path
+    raise FieldError("Cannot resolve keyword '%s' into field. "
+django.core.exceptions.FieldError: Cannot resolve keyword 'tags_in' into field. Choices are: author, author_id, body, created, id, image, publish, slug, status, tagged_items, tags, title, updated
+ERROR 2022-09-05 14:45:32,869 django.server Thread-1 10648 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 13872 "GET /blog/tag/python/ HTTP/1.1" 500 137768
+INFO 2022-09-05 14:48:33,597 django.utils.autoreload MainThread 12312 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 13872 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 14:48:35,070 django.utils.autoreload MainThread 6028 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 6864 Watching for file changes with StatReloader
+ERROR 2022-09-05 14:48:39,453 django.request Thread-2 6300 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 6864 Internal Server Error: /blog/tag/python/
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "I:\django\gfvp\blog\views.py", line 28, in post_list
+    posts=posts.filter(tags_icontains = tag)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 974, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 992, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 999, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1375, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1396, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1271, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1099, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1522, in names_to_path
+    raise FieldError("Cannot resolve keyword '%s' into field. "
+django.core.exceptions.FieldError: Cannot resolve keyword 'tags_icontains' into field. Choices are: author, author_id, body, created, id, image, publish, slug, status, tagged_items, tags, title, updated
+ERROR 2022-09-05 14:48:40,837 django.server Thread-2 6300 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 6864 "GET /blog/tag/python/ HTTP/1.1" 500 137901
+INFO 2022-09-05 14:49:00,395 django.utils.autoreload MainThread 6028 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 6864 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 14:49:02,158 django.utils.autoreload MainThread 1216 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 3068 Watching for file changes with StatReloader
+ERROR 2022-09-05 14:49:05,097 django.request Thread-1 13968 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 3068 Internal Server Error: /blog/tag/python/
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "I:\django\gfvp\blog\views.py", line 28, in post_list
+    posts=posts.filter(tags_icontains = [tag])
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 974, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 992, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 999, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1375, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1396, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1271, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1099, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1522, in names_to_path
+    raise FieldError("Cannot resolve keyword '%s' into field. "
+django.core.exceptions.FieldError: Cannot resolve keyword 'tags_icontains' into field. Choices are: author, author_id, body, created, id, image, publish, slug, status, tagged_items, tags, title, updated
+ERROR 2022-09-05 14:49:06,761 django.server Thread-1 13968 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 3068 "GET /blog/tag/python/ HTTP/1.1" 500 137921
+INFO 2022-09-05 14:49:26,649 django.utils.autoreload MainThread 1216 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 3068 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 14:49:28,346 django.utils.autoreload MainThread 14152 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 3964 Watching for file changes with StatReloader
+ERROR 2022-09-05 14:49:31,397 django.request Thread-1 13948 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 3964 Internal Server Error: /blog/tag/python/
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "I:\django\gfvp\blog\views.py", line 28, in post_list
+    posts=posts.filter(tags__icontains = [tag])
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 974, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 992, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 999, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1375, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1396, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1329, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1171, in build_lookup
+    raise FieldError('Related Field got invalid lookup: {}'.format(lookup_name))
+django.core.exceptions.FieldError: Related Field got invalid lookup: icontains
+ERROR 2022-09-05 14:49:33,034 django.server Thread-1 13948 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 3964 "GET /blog/tag/python/ HTTP/1.1" 500 135356
+INFO 2022-09-05 14:49:53,859 django.utils.autoreload MainThread 14152 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 3964 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 14:49:55,380 django.utils.autoreload MainThread 15028 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 5108 Watching for file changes with StatReloader
+ERROR 2022-09-05 14:49:58,334 django.request Thread-1 13880 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 5108 Internal Server Error: /blog/tag/python/
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "I:\django\gfvp\blog\views.py", line 28, in post_list
+    posts=posts.filter(tags__icontains = tag)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 974, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 992, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 999, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1375, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1396, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1329, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1171, in build_lookup
+    raise FieldError('Related Field got invalid lookup: {}'.format(lookup_name))
+django.core.exceptions.FieldError: Related Field got invalid lookup: icontains
+ERROR 2022-09-05 14:49:59,895 django.server Thread-1 13880 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 5108 "GET /blog/tag/python/ HTTP/1.1" 500 135333
+INFO 2022-09-05 14:50:37,660 django.utils.autoreload MainThread 15028 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 5108 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 14:50:39,228 django.utils.autoreload MainThread 14796 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 9444 Watching for file changes with StatReloader
+ERROR 2022-09-05 14:50:42,267 django.request Thread-1 14840 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 9444 Internal Server Error: /blog/tag/python/
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "I:\django\gfvp\blog\views.py", line 28, in post_list
+    posts=posts.filter(tags__name_icontains = tag.name)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 974, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 992, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 999, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1375, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1396, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1329, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1171, in build_lookup
+    raise FieldError('Related Field got invalid lookup: {}'.format(lookup_name))
+django.core.exceptions.FieldError: Related Field got invalid lookup: name_icontains
+ERROR 2022-09-05 14:50:43,807 django.server Thread-1 14840 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 9444 "GET /blog/tag/python/ HTTP/1.1" 500 135419
+INFO 2022-09-05 14:50:56,092 django.utils.autoreload MainThread 14796 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 9444 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 14:50:57,512 django.utils.autoreload MainThread 5764 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 6168 Watching for file changes with StatReloader
+INFO 2022-09-05 14:51:07,700 django.utils.autoreload MainThread 5764 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 6168 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 14:51:09,312 django.utils.autoreload MainThread 13848 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 15116 Watching for file changes with StatReloader
+ERROR 2022-09-05 14:51:12,093 django.request Thread-1 864 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 15116 Internal Server Error: /blog/tag/python/
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "I:\django\gfvp\blog\views.py", line 28, in post_list
+    posts=posts.filter(tags__icontains = tag.name)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 974, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 992, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 999, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1375, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1396, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1329, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1171, in build_lookup
+    raise FieldError('Related Field got invalid lookup: {}'.format(lookup_name))
+django.core.exceptions.FieldError: Related Field got invalid lookup: icontains
+ERROR 2022-09-05 14:51:13,629 django.server Thread-1 864 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 15116 "GET /blog/tag/python/ HTTP/1.1" 500 135334
+INFO 2022-09-05 14:52:27,842 django.utils.autoreload MainThread 13848 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 15116 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 14:52:29,347 django.utils.autoreload MainThread 4576 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 6032 Watching for file changes with StatReloader
+INFO 2022-09-05 14:53:26,161 django.server Thread-1 13180 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 6032 "GET /blog/tag/python/ HTTP/1.1" 200 43121
+INFO 2022-09-05 14:53:28,318 django.server Thread-3 14620 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 6032 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:06:55,011 django.utils.autoreload MainThread 4576 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 6032 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:06:56,665 django.utils.autoreload MainThread 1076 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 9240 Watching for file changes with StatReloader
+ERROR 2022-09-05 15:06:59,854 django.request Thread-1 9228 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 9240 Internal Server Error: /blog/tag/python/
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\fields\__init__.py", line 1822, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'python'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "I:\django\gfvp\blog\views.py", line 28, in post_list
+    posts=posts.filter(tags__in=['python'])
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 974, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 992, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 999, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1375, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1396, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1329, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1180, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\lookups.py", line 22, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\fields\related_lookups.py", line 62, in get_prep_lookup
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\fields\related_lookups.py", line 62, in <listcomp>
+    self.rhs = [target_field.get_prep_value(v) for v in self.rhs]
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\fields\__init__.py", line 1824, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got 'python'.
+ERROR 2022-09-05 15:07:01,706 django.server Thread-1 9228 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 9240 "GET /blog/tag/python/ HTTP/1.1" 500 156484
+INFO 2022-09-05 15:07:13,540 django.utils.autoreload MainThread 1076 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 9240 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:07:14,978 django.utils.autoreload MainThread 13776 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 12368 Watching for file changes with StatReloader
+INFO 2022-09-05 15:08:30,468 django.utils.autoreload MainThread 13776 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 12368 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:08:31,924 django.utils.autoreload MainThread 15040 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 14444 Watching for file changes with StatReloader
+INFO 2022-09-05 15:08:36,741 django.server Thread-1 15256 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 14444 "GET /blog/tag/python/ HTTP/1.1" 200 43121
+INFO 2022-09-05 15:08:38,476 django.server Thread-4 5360 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 14444 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:08:54,438 django.utils.autoreload MainThread 15040 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 14444 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:08:55,978 django.utils.autoreload MainThread 252 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 13012 Watching for file changes with StatReloader
+ERROR 2022-09-05 15:08:58,808 django.request Thread-1 7856 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 13012 Internal Server Error: /blog/tag/python/
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "I:\django\gfvp\blog\views.py", line 21, in post_list
+    print(p.tags.objects.all())
+AttributeError: '_TaggableManager' object has no attribute 'objects'
+ERROR 2022-09-05 15:09:00,384 django.server Thread-1 7856 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 13012 "GET /blog/tag/python/ HTTP/1.1" 500 97572
+INFO 2022-09-05 15:09:23,755 django.utils.autoreload MainThread 252 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 13012 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:09:25,401 django.utils.autoreload MainThread 9892 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 8468 Watching for file changes with StatReloader
+INFO 2022-09-05 15:10:21,906 django.utils.autoreload MainThread 9892 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 8468 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:10:23,600 django.utils.autoreload MainThread 7000 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 3152 Watching for file changes with StatReloader
+INFO 2022-09-05 15:10:45,959 django.utils.autoreload MainThread 7000 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 3152 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:10:47,377 django.utils.autoreload MainThread 13992 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 12448 Watching for file changes with StatReloader
+INFO 2022-09-05 15:10:53,789 django.server Thread-1 11400 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12448 "GET /blog/tag/python/ HTTP/1.1" 200 43121
+INFO 2022-09-05 15:10:55,451 django.server Thread-3 4712 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12448 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:13:07,393 django.utils.autoreload MainThread 13992 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 12448 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:13:09,186 django.utils.autoreload MainThread 5872 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 14676 Watching for file changes with StatReloader
+INFO 2022-09-05 15:13:17,569 django.server Thread-2 7548 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 14676 "GET /blog/tag/python/ HTTP/1.1" 200 43121
+INFO 2022-09-05 15:13:19,227 django.server Thread-3 5360 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 14676 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:13:56,588 django.utils.autoreload MainThread 5872 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 14676 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:13:58,076 django.utils.autoreload MainThread 12660 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 3236 Watching for file changes with StatReloader
+INFO 2022-09-05 15:15:12,804 django.utils.autoreload MainThread 12660 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 3236 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:15:14,284 django.utils.autoreload MainThread 8284 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 876 Watching for file changes with StatReloader
+INFO 2022-09-05 15:15:37,076 django.utils.autoreload MainThread 8284 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 876 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:15:38,497 django.utils.autoreload MainThread 4852 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 4848 Watching for file changes with StatReloader
+INFO 2022-09-05 15:16:11,101 django.utils.autoreload MainThread 4852 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 4848 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:16:12,654 django.utils.autoreload MainThread 4720 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 13428 Watching for file changes with StatReloader
+INFO 2022-09-05 15:16:18,397 django.server Thread-2 7812 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 13428 "GET /blog/tag/python/ HTTP/1.1" 200 43026
+INFO 2022-09-05 15:16:20,058 django.server Thread-3 6488 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 13428 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:16:27,847 django.utils.autoreload MainThread 4720 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 13428 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:16:29,302 django.utils.autoreload MainThread 9864 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 11804 Watching for file changes with StatReloader
+INFO 2022-09-05 15:16:34,261 django.server Thread-1 11240 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 11804 "GET /blog/tag/python/ HTTP/1.1" 200 42732
+INFO 2022-09-05 15:16:35,774 django.server Thread-4 10956 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 11804 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:16:41,730 django.utils.autoreload MainThread 9864 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 11804 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:16:43,212 django.utils.autoreload MainThread 9052 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 7824 Watching for file changes with StatReloader
+INFO 2022-09-05 15:16:47,914 django.server Thread-1 7828 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 7824 "GET /blog/tag/python/ HTTP/1.1" 200 43026
+INFO 2022-09-05 15:16:49,499 django.server Thread-4 11788 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 7824 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:17:01,192 django.server Thread-1 7828 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 7824 "GET /blog/ HTTP/1.1" 200 42854
+INFO 2022-09-05 15:17:02,922 django.server Thread-4 11788 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 7824 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:17:28,473 django.utils.autoreload MainThread 9052 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 7824 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:17:30,239 django.utils.autoreload MainThread 13132 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 11972 Watching for file changes with StatReloader
+ERROR 2022-09-05 15:17:33,041 django.request Thread-1 10436 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 11972 Internal Server Error: /blog/
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "I:\django\gfvp\blog\views.py", line 19, in post_list
+    posts = BlogPost.published.all().order_by('-updated', 'tags.name') #using custom manager
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\query.py", line 1180, in order_by
+    obj.query.add_ordering(*field_names)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1960, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\db\models\sql\query.py", line 1522, in names_to_path
+    raise FieldError("Cannot resolve keyword '%s' into field. "
+django.core.exceptions.FieldError: Cannot resolve keyword 'tags.name' into field. Choices are: author, author_id, body, created, id, image, publish, slug, status, tagged_items, tags, title, updated
+ERROR 2022-09-05 15:17:34,567 django.server Thread-1 10436 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 11972 "GET /blog/ HTTP/1.1" 500 112361
+INFO 2022-09-05 15:17:42,496 django.utils.autoreload MainThread 13132 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 11972 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:17:43,820 django.utils.autoreload MainThread 2520 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 13300 Watching for file changes with StatReloader
+INFO 2022-09-05 15:18:13,170 django.utils.autoreload MainThread 2520 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 13300 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:18:14,669 django.utils.autoreload MainThread 9464 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 14000 Watching for file changes with StatReloader
+INFO 2022-09-05 15:18:26,267 django.utils.autoreload MainThread 9464 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 14000 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:18:27,754 django.utils.autoreload MainThread 11272 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 14196 Watching for file changes with StatReloader
+INFO 2022-09-05 15:18:32,445 django.server Thread-1 3476 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 14196 "GET /blog/ HTTP/1.1" 200 42854
+INFO 2022-09-05 15:18:34,076 django.server Thread-4 11976 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 14196 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:18:39,459 django.server Thread-1 3476 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 14196 "GET /blog/tag/python/ HTTP/1.1" 200 43020
+INFO 2022-09-05 15:18:41,017 django.server Thread-4 11976 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 14196 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:19:05,992 django.utils.autoreload MainThread 11272 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 14196 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:19:07,401 django.utils.autoreload MainThread 1496 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 13924 Watching for file changes with StatReloader
+INFO 2022-09-05 15:19:12,507 django.server Thread-1 2544 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 13924 "GET /blog/tag/python/ HTTP/1.1" 200 43020
+INFO 2022-09-05 15:19:14,132 django.server Thread-3 8276 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 13924 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:19:36,793 django.utils.autoreload MainThread 1496 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 13924 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:19:38,296 django.utils.autoreload MainThread 5228 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 12312 Watching for file changes with StatReloader
+INFO 2022-09-05 15:25:02,425 django.utils.autoreload MainThread 5228 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 12312 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:25:03,998 django.utils.autoreload MainThread 5364 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 11044 Watching for file changes with StatReloader
+INFO 2022-09-05 15:25:11,477 django.server Thread-2 1716 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 11044 "GET /blog/tag/python/ HTTP/1.1" 200 43026
+INFO 2022-09-05 15:25:13,112 django.server Thread-3 12540 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 11044 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:26:50,593 django.utils.autoreload MainThread 5364 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 11044 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:26:52,037 django.utils.autoreload MainThread 9540 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 14488 Watching for file changes with StatReloader
+INFO 2022-09-05 15:26:59,552 django.server Thread-1 4848 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 14488 "GET /blog/tag/python/ HTTP/1.1" 200 43026
+INFO 2022-09-05 15:27:01,056 django.server Thread-3 6260 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 14488 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:27:21,184 django.utils.autoreload MainThread 9540 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 14488 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:27:22,622 django.utils.autoreload MainThread 13192 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 9132 Watching for file changes with StatReloader
+INFO 2022-09-05 15:27:49,733 django.server Thread-1 11808 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 9132 "GET /blog/tag/python/ HTTP/1.1" 200 43026
+INFO 2022-09-05 15:27:51,336 django.server Thread-3 14892 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 9132 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:27:56,254 django.server Thread-1 11808 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 9132 "GET /blog/tag/python/ HTTP/1.1" 200 43026
+INFO 2022-09-05 15:27:57,903 django.server Thread-3 14892 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 9132 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:28:00,872 django.server Thread-1 11808 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 9132 "GET /blog/tag/arctic-alliance/ HTTP/1.1" 200 43035
+INFO 2022-09-05 15:28:03,303 django.server Thread-3 14892 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 9132 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:31:15,159 django.utils.autoreload MainThread 13192 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 9132 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:31:16,779 django.utils.autoreload MainThread 9136 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 14332 Watching for file changes with StatReloader
+INFO 2022-09-05 15:31:45,823 django.utils.autoreload MainThread 9136 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 14332 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:31:47,255 django.utils.autoreload MainThread 5276 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 248 Watching for file changes with StatReloader
+INFO 2022-09-05 15:31:54,125 django.utils.autoreload MainThread 5276 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 248 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:31:55,404 django.utils.autoreload MainThread 876 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 3808 Watching for file changes with StatReloader
+INFO 2022-09-05 15:32:13,325 django.utils.autoreload MainThread 876 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 3808 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:32:14,839 django.utils.autoreload MainThread 14940 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 10540 Watching for file changes with StatReloader
+INFO 2022-09-05 15:32:21,358 django.server Thread-2 8256 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 10540 "GET /blog/tag/arctic-alliance/ HTTP/1.1" 200 43035
+INFO 2022-09-05 15:32:23,013 django.server Thread-3 1084 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 10540 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:32:53,169 django.utils.autoreload MainThread 14940 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 10540 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:32:54,595 django.utils.autoreload MainThread 13760 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 12240 Watching for file changes with StatReloader
+INFO 2022-09-05 15:33:17,237 django.server Thread-1 11044 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12240 "GET /blog/tag/green/ HTTP/1.1" 200 43025
+INFO 2022-09-05 15:33:18,893 django.server Thread-3 6648 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12240 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:33:43,675 django.server Thread-1 11044 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12240 "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2022-09-05 15:33:45,467 django.server Thread-1 11044 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12240 "GET /admin/ HTTP/1.1" 200 30295
+INFO 2022-09-05 15:33:45,543 django.server Thread-1 11044 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12240 "GET /static/admin/css/dashboard.css HTTP/1.1" 200 380
+INFO 2022-09-05 15:33:50,237 django.server Thread-1 11044 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12240 "GET /admin/blog/blogpost/ HTTP/1.1" 200 36114
+INFO 2022-09-05 15:33:50,563 django.server Thread-2 10944 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12240 "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2022-09-05 15:33:51,709 django.server Thread-1 11044 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12240 "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2022-09-05 15:33:51,840 django.server Thread-1 11044 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12240 "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+INFO 2022-09-05 15:34:25,862 django.utils.autoreload MainThread 13760 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 12240 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:34:27,510 django.utils.autoreload MainThread 11624 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 13412 Watching for file changes with StatReloader
+INFO 2022-09-05 15:34:32,282 django.server Thread-1 13656 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 13412 "GET /blog/tag/green/ HTTP/1.1" 200 43825
+INFO 2022-09-05 15:34:35,163 django.server Thread-1 13656 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 13412 "GET /upload/site_image/gf_Artboard_1.png HTTP/1.1" 200 11956
+INFO 2022-09-05 15:34:35,396 django.server Thread-3 10036 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 13412 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:34:36,796 django.server Thread-1 13656 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 13412 "GET /upload/site_image/gf_Artboard_14x.png HTTP/1.1" 200 59124
+INFO 2022-09-05 15:34:50,462 django.utils.autoreload MainThread 11624 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 13412 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:34:52,055 django.utils.autoreload MainThread 5044 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 684 Watching for file changes with StatReloader
+INFO 2022-09-05 15:34:56,695 django.server Thread-1 12764 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /blog/tag/green/ HTTP/1.1" 200 43825
+INFO 2022-09-05 15:34:58,279 django.server Thread-4 11116 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:35:01,952 django.server Thread-1 12764 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /blog/ HTTP/1.1" 200 43654
+INFO 2022-09-05 15:35:03,495 django.server Thread-4 11116 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:35:39,096 django.server Thread-1 12764 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /admin/blog/blogpost/9/change/ HTTP/1.1" 200 32261
+INFO 2022-09-05 15:35:39,232 django.server Thread-2 13340 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /static/jquery-autosuggest/js/jquery.autoSuggest.minified.js HTTP/1.1" 200 8259
+INFO 2022-09-05 15:35:39,234 django.server Thread-1 12764 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /static/jquery-autosuggest/css/autoSuggest-grappelli.css HTTP/1.1" 200 4096
+INFO 2022-09-05 15:35:40,481 django.server Thread-3 11404 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2022-09-05 15:35:40,588 django.server Thread-3 11404 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /static/admin/img/tooltag-arrowright.svg HTTP/1.1" 200 280
+INFO 2022-09-05 15:35:40,647 django.server Thread-3 11404 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /static/ckeditor/ckeditor/config.js?t=M6K9 HTTP/1.1" 200 336
+INFO 2022-09-05 15:35:40,705 django.server Thread-1 12764 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /static/ckeditor/ckeditor/lang/en.js?t=M6K9 HTTP/1.1" 200 17445
+INFO 2022-09-05 15:35:40,710 django.server Thread-3 11404 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /static/ckeditor/ckeditor/skins/moono-lisa/editor.css?t=M6K9 HTTP/1.1" 200 48309
+INFO 2022-09-05 15:35:40,760 django.server Thread-3 11404 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /static/ckeditor/ckeditor/styles.js?t=M6K9 HTTP/1.1" 200 5577
+INFO 2022-09-05 15:35:40,793 django.server Thread-3 11404 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /static/ckeditor/ckeditor/plugins/scayt/skins/moono-lisa/scayt.css?t=M6K9 HTTP/1.1" 200 381
+INFO 2022-09-05 15:35:40,794 django.server Thread-5 13464 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /static/ckeditor/ckeditor/plugins/dialog/styles/dialog.css?t=M6K9 HTTP/1.1" 200 249
+INFO 2022-09-05 15:35:40,800 django.server Thread-1 12764 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /static/ckeditor/ckeditor/plugins/scayt/dialogs/dialog.css?t=M6K9 HTTP/1.1" 200 419
+INFO 2022-09-05 15:35:40,823 django.server Thread-2 13340 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /static/ckeditor/ckeditor/plugins/tableselection/styles/tableselection.css?t=M6K9 HTTP/1.1" 200 1145
+INFO 2022-09-05 15:35:40,830 django.server Thread-6 4520 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /static/ckeditor/ckeditor/plugins/copyformatting/styles/copyformatting.css?t=M6K9 HTTP/1.1" 200 1511
+INFO 2022-09-05 15:35:40,863 django.server Thread-5 13464 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /static/ckeditor/ckeditor/contents.css?t=M6K9 HTTP/1.1" 200 3092
+INFO 2022-09-05 15:35:40,875 django.server Thread-1 12764 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /static/ckeditor/ckeditor/skins/moono-lisa/icons.png?t=5fe059002f HTTP/1.1" 200 12237
+INFO 2022-09-05 15:35:47,202 django.server Thread-1 12764 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 76 handle_error 684 - Broken pipe from ('127.0.0.1', 52826)
+
+INFO 2022-09-05 15:35:47,533 django.server Thread-5 13464 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /taggit_autosuggest/list/taggit.tag/?q=bio&limit=20 HTTP/1.1" 200 41
+INFO 2022-09-05 15:35:47,812 django.server Thread-5 13464 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /__debug__/history_sidebar/?store_id=dc50db6d2c29492e8fba9a8606b4d1a8 HTTP/1.1" 200 9879
+INFO 2022-09-05 15:35:52,478 django.server Thread-5 13464 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "POST /admin/blog/blogpost/9/change/ HTTP/1.1" 302 0
+INFO 2022-09-05 15:35:54,327 django.server Thread-5 13464 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /admin/blog/blogpost/ HTTP/1.1" 200 36329
+INFO 2022-09-05 15:35:56,096 django.server Thread-5 13464 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2022-09-05 15:35:59,787 django.server Thread-5 13464 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /blog/ HTTP/1.1" 200 44276
+INFO 2022-09-05 15:36:01,459 django.server Thread-4 11116 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 684 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:36:37,499 django.utils.autoreload MainThread 5044 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 684 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:36:39,346 django.utils.autoreload MainThread 8904 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 8536 Watching for file changes with StatReloader
+INFO 2022-09-05 15:36:49,068 django.server Thread-1 15188 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8536 "GET /blog/ HTTP/1.1" 200 43989
+INFO 2022-09-05 15:36:51,966 django.server Thread-1 15188 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8536 "GET /upload/featured_image/2022/07/30/26.07.2022_20.28.53_REC.png HTTP/1.1" 200 52299
+INFO 2022-09-05 15:36:52,153 django.server Thread-2 1716 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8536 "GET /upload/featured_image/2022/07/30/26.07.2022_20.28.18_REC.png HTTP/1.1" 200 49320
+INFO 2022-09-05 15:36:53,731 django.server Thread-3 12488 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 8536 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:38:01,574 django.utils.autoreload MainThread 8904 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 8536 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:38:03,378 django.utils.autoreload MainThread 6916 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 5804 Watching for file changes with StatReloader
+ERROR 2022-09-05 15:38:06,228 django.request Thread-1 7768 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 5804 Internal Server Error: /blog/
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "I:\django\gfvp\blog\views.py", line 21, in post_list
+    paginator = Paginator(posts, 10)
+UnboundLocalError: local variable 'posts' referenced before assignment
+ERROR 2022-09-05 15:38:07,765 django.server Thread-1 7768 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 5804 "GET /blog/ HTTP/1.1" 500 96685
+INFO 2022-09-05 15:38:25,613 django.utils.autoreload MainThread 6916 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 5804 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:38:26,973 django.utils.autoreload MainThread 11804 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 10516 Watching for file changes with StatReloader
+INFO 2022-09-05 15:38:32,883 django.server Thread-1 14596 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 10516 "GET /blog/ HTTP/1.1" 200 43989
+INFO 2022-09-05 15:38:37,537 django.server Thread-1 14596 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 10516 "GET /upload/featured_image/2022/07/30/OpenCart-Logo.wine.png HTTP/1.1" 200 31367
+INFO 2022-09-05 15:38:37,636 django.server Thread-2 1404 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 10516 "GET /upload/featured_image/2022/09/03/GettyImages-753300407-59c59e239abed50011909e5d_UUtAJmG.jpg HTTP/1.1" 200 135672
+INFO 2022-09-05 15:38:37,710 django.server Thread-3 13492 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 10516 "GET /upload/featured_image/2022/07/30/images_1_8msiFBa.jpg HTTP/1.1" 200 4597
+INFO 2022-09-05 15:38:38,943 django.server Thread-1 14596 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 10516 "GET /upload/featured_image/2022/07/30/26.07.2022_20.28.18_REC_dSz1h0g.png HTTP/1.1" 200 49320
+INFO 2022-09-05 15:38:40,376 django.server Thread-4 9420 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 10516 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:39:20,167 django.server Thread-1 14596 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 10516 "GET /blog/tag/python/ HTTP/1.1" 200 27274
+INFO 2022-09-05 15:39:21,781 django.server Thread-4 9420 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 10516 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:39:48,010 django.utils.autoreload MainThread 11804 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 10516 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:39:49,511 django.utils.autoreload MainThread 9524 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 12660 Watching for file changes with StatReloader
+INFO 2022-09-05 15:40:30,954 django.server Thread-2 13968 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12660 "GET /blog/tag/biofuel/ HTTP/1.1" 200 34073
+INFO 2022-09-05 15:40:32,702 django.server Thread-3 3208 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12660 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:40:55,697 django.server Thread-2 13968 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12660 "GET /blog/ HTTP/1.1" 200 43989
+INFO 2022-09-05 15:40:57,370 django.server Thread-3 3208 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12660 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:43:57,724 django.server Thread-2 13968 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12660 "GET /admin/blog/blogpost/ HTTP/1.1" 200 36114
+ERROR 2022-09-05 15:43:59,072 django.request Thread-4 14628 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 12660 Internal Server Error: /blog/
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "I:\django\gfvp\blog\views.py", line 48, in post_list
+    return render(request, 'blog/blogs.html', context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 176, in render
+    return self._render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\test\utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 977, in render
+    return SafeString(''.join([
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 978, in <listcomp>
+    node.render_annotated(context) for node in self
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 938, in render_annotated
+    return self.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\loader_tags.py", line 153, in render
+    return compiled_parent._render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\test\utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 977, in render
+    return SafeString(''.join([
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 978, in <listcomp>
+    node.render_annotated(context) for node in self
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 938, in render_annotated
+    return self.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 977, in render
+    return SafeString(''.join([
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 978, in <listcomp>
+    node.render_annotated(context) for node in self
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 938, in render_annotated
+    return self.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\defaulttags.py", line 214, in render
+    nodelist.append(node.render_annotated(context))
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 938, in render_annotated
+    return self.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\defaulttags.py", line 442, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\urls\base.py", line 86, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\urls\resolvers.py", line 729, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'post_tag' with arguments '('',)' not found. 1 pattern(s) tried: ['blog/tag/(?P<tag_slug>[-a-zA-Z0-9_]+)/\\Z']
+INFO 2022-09-05 15:44:00,201 django.server Thread-2 13968 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12660 "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+ERROR 2022-09-05 15:44:01,285 django.server Thread-4 14628 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12660 "GET /blog/ HTTP/1.1" 500 223329
+ERROR 2022-09-05 15:44:47,118 django.request Thread-4 14628 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 12660 Internal Server Error: /blog/
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "I:\django\gfvp\blog\views.py", line 48, in post_list
+    return render(request, 'blog/blogs.html', context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 176, in render
+    return self._render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\test\utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 977, in render
+    return SafeString(''.join([
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 978, in <listcomp>
+    node.render_annotated(context) for node in self
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 938, in render_annotated
+    return self.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\loader_tags.py", line 153, in render
+    return compiled_parent._render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\test\utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 977, in render
+    return SafeString(''.join([
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 978, in <listcomp>
+    node.render_annotated(context) for node in self
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 938, in render_annotated
+    return self.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 977, in render
+    return SafeString(''.join([
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 978, in <listcomp>
+    node.render_annotated(context) for node in self
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 938, in render_annotated
+    return self.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\defaulttags.py", line 214, in render
+    nodelist.append(node.render_annotated(context))
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 938, in render_annotated
+    return self.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\defaulttags.py", line 442, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\urls\base.py", line 86, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\urls\resolvers.py", line 729, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'post_tag' with arguments '('',)' not found. 1 pattern(s) tried: ['blog/tag/(?P<tag_slug>[-a-zA-Z0-9_]+)/\\Z']
+ERROR 2022-09-05 15:44:48,480 django.server Thread-4 14628 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12660 "GET /blog/ HTTP/1.1" 500 223353
+ERROR 2022-09-05 15:45:11,111 django.request Thread-4 14628 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\log.py 225 log_response 12660 Internal Server Error: /blog/
+Traceback (most recent call last):
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "I:\django\gfvp\blog\views.py", line 48, in post_list
+    return render(request, 'blog/blogs.html', context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 176, in render
+    return self._render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\test\utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 977, in render
+    return SafeString(''.join([
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 978, in <listcomp>
+    node.render_annotated(context) for node in self
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 938, in render_annotated
+    return self.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\loader_tags.py", line 153, in render
+    return compiled_parent._render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\test\utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 977, in render
+    return SafeString(''.join([
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 978, in <listcomp>
+    node.render_annotated(context) for node in self
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 938, in render_annotated
+    return self.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 977, in render
+    return SafeString(''.join([
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 978, in <listcomp>
+    node.render_annotated(context) for node in self
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 938, in render_annotated
+    return self.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\defaulttags.py", line 214, in render
+    nodelist.append(node.render_annotated(context))
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\base.py", line 938, in render_annotated
+    return self.render(context)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\template\defaulttags.py", line 442, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\urls\base.py", line 86, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "I:\django\gfvp\gfvp_env\lib\site-packages\django\urls\resolvers.py", line 729, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'post_tag' with arguments '('',)' not found. 1 pattern(s) tried: ['blog/tag/(?P<tag_slug>[-a-zA-Z0-9_]+)/\\Z']
+ERROR 2022-09-05 15:45:12,466 django.server Thread-4 14628 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12660 "GET /blog/ HTTP/1.1" 500 223360
+INFO 2022-09-05 15:46:20,919 django.server Thread-4 14628 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12660 "GET /blog/ HTTP/1.1" 200 43989
+INFO 2022-09-05 15:46:22,707 django.server Thread-5 2544 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12660 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:46:27,646 django.server Thread-4 14628 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12660 "GET /blog/tag/biofuel/ HTTP/1.1" 200 34073
+INFO 2022-09-05 15:46:29,332 django.server Thread-5 2544 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 12660 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:47:20,837 django.utils.autoreload MainThread 9524 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 12660 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:47:22,411 django.utils.autoreload MainThread 8136 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 14000 Watching for file changes with StatReloader
+INFO 2022-09-05 15:48:11,491 django.utils.autoreload MainThread 8136 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 14000 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:48:12,934 django.utils.autoreload MainThread 10024 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 15244 Watching for file changes with StatReloader
+INFO 2022-09-05 15:48:26,749 django.utils.autoreload MainThread 10024 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 15244 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:48:28,073 django.utils.autoreload MainThread 5100 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 2188 Watching for file changes with StatReloader
+INFO 2022-09-05 15:49:27,893 django.server Thread-2 11204 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 2188 "GET /blog/tag/python/ HTTP/1.1" 200 27274
+INFO 2022-09-05 15:49:29,638 django.server Thread-3 4712 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 2188 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:49:33,042 django.server Thread-2 11204 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 2188 "GET /blog/ HTTP/1.1" 200 43989
+INFO 2022-09-05 15:49:34,738 django.server Thread-3 4712 I:\django\gfvp\gfvp_env\lib\site-packages\django\core\servers\basehttp.py 179 log_message 2188 "GET /seo/webmanifest/ HTTP/1.1" 200 651
+INFO 2022-09-05 15:49:55,402 django.utils.autoreload MainThread 5100 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 257 trigger_reload 2188 I:\django\gfvp\blog\views.py changed, reloading.
+INFO 2022-09-05 15:49:56,976 django.utils.autoreload MainThread 412 I:\django\gfvp\gfvp_env\lib\site-packages\django\utils\autoreload.py 643 run_with_reloader 8000 Watching for file changes with StatReloader

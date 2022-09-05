@@ -70,7 +70,9 @@ def send_lead_mail():
 
 
 # crontab codein linux
-# */5 * * * * source /home/ubuntu/.bashrc && source /home/ubuntu/env/bin/activate && python /home/ubuntu/project-root/manage.py runcrons > /home/ubuntu/project-root/cronjob.log   
+# */5 * * * * source /home/krishnahara/.bashrc && source /home/krishnahara/env/bin/activate && python /home/krishnahara/project-root/manage.py runcrons > /home/ubuntu/project-root/cronjob.log   
+# source virtualenvwrapper.sh && workon env && python /home/krishnahara/biofuel/manage.py runcrons
+# /home/krishnahara/env/bin/python3.9   /home/krishnahara/biofuel/manage.py  runcrons
 class SendQueueMail(CronJobBase):
     log.info('Initializing CRONJOB to send bulk mail from MailQueue Table!!')
     RUN_EVERY_MINS = settings.EXECUT_MAIL_IN_SECONDS/60
