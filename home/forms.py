@@ -105,7 +105,7 @@ class OptionForm(forms.ModelForm):
 class QuotationForm(forms.ModelForm):
     class Meta:
         model = Quotation
-        fields = ('price', 'price_unit', 'needy_time', 'needy_time_unit', 'sample_amount', 'sample_amount_unit', 'require_documents', 'factory_pickup', 'test_for',  'related_questions', 'quotation_format', 'next_activities', 'display_site_address', 'comments', )
+        fields = ('price', 'price_unit', 'needy_time', 'needy_time_unit', 'sample_amount', 'sample_amount_unit', 'require_documents', 'factory_pickup', 'test_for',  'related_questions', 'quotation_format', 'next_activities', 'display_site_address', 'show_alternate_email', 'show_alternate_business', 'show_alternate_phone', 'comments', )
         
     
         
@@ -122,7 +122,10 @@ class QuotationForm(forms.ModelForm):
             'related_questions': forms.SelectMultiple(attrs={ 'class':'form-select', 'aria-label':'documents', 'style':"border: None; box-shadow: None; border-radius:0; border-bottom:1px solid; border-top:1px solid; height:200px; " }),   
             'quotation_format': forms.FileInput(attrs={ 'class':'form-control', 'aria-label':'file' }), 
             'next_activities': forms.Select(attrs={ 'class':'form-select', 'aria-label':'unit', 'style':"border: None; box-shadow: None; border-radius:0; border-bottom:1px solid " }),            
-            'display_site_address': forms.CheckboxInput(attrs={ 'class':'form-check-input', 'aria-label':'address' }),         
+            'display_site_address': forms.CheckboxInput(attrs={ 'class':'form-check-input', 'aria-label':'address' }),    
+            'show_alternate_email': forms.TextInput(attrs={'class':'form-control', 'aria-label':'show_alternate_email' , 'style':"border: None; box-shadow: None; border-radius:0; border-bottom:1px solid "}),
+            'show_alternate_phone': forms.TextInput(attrs={'class':'form-control', 'aria-label':'show_alternate_email' , 'style':"border: None; box-shadow: None; border-radius:0; border-bottom:1px solid "}),            
+            'show_alternate_business': forms.TextInput(attrs={'class':'form-control', 'aria-label':'show_alternate_business' , 'style':"border: None; box-shadow: None; border-radius:0; border-bottom:1px solid "}),                 
             'comments': forms.Textarea(attrs={'rows': 3,'class':'form-control', 'aria-label':'Comments' , }),
             
             # 'next_activities': forms.Select(attrs={ 'class':'form-select', 'aria-label':'unit', 'hx-post':"#", 'hx-trigger':"change", 'hx-swap':"outerHTML", 'hx-target':'#pppp', 'hx-vals':'{"changing_activity": "{question.slug}"}', 'style':"border: None; box-shadow: None; border-radius:0; border-bottom:1px solid " }),          

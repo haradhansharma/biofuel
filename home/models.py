@@ -9,20 +9,20 @@ User = settings.AUTH_USER_MODEL
 
 
 class PriceUnit(models.Model):
-    name = models.CharField(max_length=5)
+    name = models.CharField(max_length=10)
     
     def __str__(self):
         return self.name
     
 class TimeUnit(models.Model):
-    name = models.CharField(max_length=5)
+    name = models.CharField(max_length=10)
     
     def __str__(self):
         return self.name
     
     
 class WeightUnit(models.Model):
-    name = models.CharField(max_length=5)
+    name = models.CharField(max_length=10)
     
     def __str__(self):
         return self.name
@@ -35,9 +35,11 @@ class QuotationDocType(models.Model):
 
 
 
-class Quotation(models.Model): 
-    
+class Quotation(models.Model):     
     service_provider = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quotationserviceprovider')   
+    show_alternate_email = models.EmailField(help_text='You can show alternate email address in quotation.', null=True, blank=True)
+    show_alternate_business = models.CharField(help_text='You can show alternate email address in quotation.', max_length = 50, null=True, blank=True)    
+    show_alternate_phone = models.CharField(help_text='You can show alternate phone number in quotation.', max_length = 50, null=True, blank=True)     
     price = models.DecimalField(verbose_name='Quotation Price' , help_text='Write the proper price and remember to choose the appropriate pricing unit from the options next to the price box.', decimal_places=2, max_digits=10)
     price_unit = models.ForeignKey(PriceUnit, verbose_name='Price Unit', on_delete=models.CASCADE, related_name='priceunitquatation')
     needy_time = models.IntegerField(verbose_name='Total needed time for the test', help_text="Write the proper needy time to conduct the test and remember to choose the appropriate time unit from the options next to the needy time box.")

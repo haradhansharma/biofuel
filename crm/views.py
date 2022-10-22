@@ -18,21 +18,140 @@ from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from doc.models import Acordion
 from django.utils import timezone 
+from crm.forms import SubscriberForm
+import urllib.request
+import json
+from django_countries import countries
+from django.core.mail import send_mail
+from django.contrib.sites.shortcuts import get_current_site
 
 import logging
 log =  logging.getLogger('log')
 
-#helper function
+#helper function to create confirm code
 def random_digits():
     return "%0.12d" % random.randint(0, 999999999999)
+
+#helper function to get ip address
+def get_ip(request):
+    log.info('Recording users IP............')
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:        
+        ip = x_forwarded_for.split(',')[-1].strip()    
+    elif request.META.get('HTTP_CLIENT_IP'):        
+        ip = request.META.get('HTTP_CLIENT_IP')
+    elif request.META.get('HTTP_X_REAL_IP'):        
+        ip = request.META.get('HTTP_X_REAL_IP')
+    elif request.META.get('HTTP_X_FORWARDED'):        
+        ip = request.META.get('HTTP_X_FORWARDED')
+    elif request.META.get('HTTP_X_CLUSTER_CLIENT_IP'):        
+        ip = request.META.get('HTTP_X_CLUSTER_CLIENT_IP')
+    elif request.META.get('HTTP_FORWARDED_FOR'):        
+        ip = request.META.get('HTTP_FORWARDED_FOR')
+    elif request.META.get('HTTP_FORWARDED'):        
+        ip = request.META.get('HTTP_FORWARDED')
+    elif request.META.get('HTTP_VIA'):        
+        ip = request.META.get('HTTP_VIA')    
+    else:        
+        ip = request.META.get('REMOTE_ADDR')
+    
+    log.info(f'Ip found {ip} ')
+        
+    return ip
+
+#get ip location using ipinfo database's free token whenre has 50k query free per month.
+def get_location_info(request):
+    log.info('Geting Location details based on IP')
+    ip = get_ip(request)
+    token = '6ef5b9c92955e8'
+    info_url = f'https://ipinfo.io/{ip}?token={token}'
+    data = {}
+    with urllib.request.urlopen(info_url) as url:
+        data =  json.loads(url.read().decode())
+        data.update(data)
+    log.info(f'Location data {data} found for user {request.user} ')
+    return data
+    
+
+def subscription(request):
+    '''
+    To Subscribe newsletter need to supply Name and email address in correct formate.
+    If email wrong then function will give error to the user
+    Firstly System will check the supplied email already exists or not
+    If email exists and subscription status is true then will show email already subscribed
+    If email exists and subscription status is false then will send email for subscription confirm.
+    If email is not exists new lead will save and confirmation mail will send by system
+    Response will return by HTMX technology so we are returning HTTPResponse.
+    
+    '''
+    location_info = get_location_info(request)
+    subscription_form = SubscriberForm()
+    name= None    
+    email = None   
+    city =  location_info.get('city') 
+    country_code = location_info.get('country')
+    country = country_code
+    domain = get_current_site(request).domain
+    
+    if request.method == 'POST':
+        log.info('Subscription form submitted')        
+        if 'new_subscriber' in request.POST:
+            log.info('Somebody want to subscribe to our newsletter!')
+            subscription_form = SubscriberForm(request.POST)
+            if subscription_form.is_valid():
+                log.info('Subscription Form Submitted successfully!')
+                name = subscription_form.cleaned_data['name']                
+                email = subscription_form.cleaned_data['email']
+                confirm_url = request.build_absolute_uri(reverse('crm:subscrib', kwargs={'email': email}))                    
+                subject = 'Please confirm your subscription!'
+                message = f'Hi {name}, <br> Thank you for subscription request to our newsletter. <br> Please confirm your subscription by clicking the link below... <br> {confirm_url} <br> With Thanks <br><br> {domain} Team.'
+                email_from = settings.DEFAULT_FROM_EMAIL
+                email_to = [email]
+                
+                try:
+                    lead = Lead.objects.get(email_address = email)  
+                    log.info('Tried email for subscription already exists')                 
+                except Exception as e:
+                    log.info('Going to record new subscription')
+                    lead = None
+                    
+                if lead is not None:
+                    if lead.subscribed:
+                        return HttpResponse(f' <span class="text-danger"> The {email} already subscribed! </span>')
+                    else: 
+                        log.info('But the requested email is not confirmed! So that confirmation mail sending!')                       
+                        send_mail(subject, message, email_from, email_to )   
+                        log.info(f'Confirmation Email sent to the email {email} ')                     
+                        return HttpResponse(f' <span class="text-danger"> An email for confirmation has been sent to {email} ! Please confirm! </span>')
+                else:
+                    try:
+                        log.info(f'{email} saving as new lead! ')
+                        Lead.objects.create(lead = name, email_address=email,city=city,country=country,subscribed=False)
+                        log.info(f'{email} created as new lead!')
+                    except Exception as e:
+                        log.warning(f'There was a problem to save {email} as new lead due to {e}')
+                    
+                    log.info('Confirmation mail sending to new lead')    
+                    send_mail(subject, message, email_from, email_to ) 
+                    log.info('Confirmation mail sent to new lead!')
+                    return HttpResponse(f' <span class="text-danger"> An email for confirmation has been sent to {email} ! Please confirm! </span>')
+            else:
+                log.warning(f'Wrong data found during subscription!')
+                return HttpResponse(f' <span class="text-danger">Please check email is correctly written! </span>')
+                
+    log.warning(f'Something wrong during subscription process!')
+    return HttpResponse(f' <span class="text-danger"> Soemthing Wrong! </span>')
+                    
+                        
+                        
+                
+                
 
 @login_required
 @staff_member_required
 def leads(request):
     #default behavior to avoid error
-    null_session(request)
-    
-    
+    null_session(request)   
     #Post method event    
     if request.method == "POST":        
         '''Lead delete method'''
@@ -211,10 +330,10 @@ def subscrib(request, **kwargs):
         lead = Lead.objects.get(email_address = email)
         lead.subscribed = True
         lead.save()    
-        log.info(f'{email} subscribed to CRM!............')  
-    except:
+        log.info(f'{email} confirm subscription to CRM!............')  
+    except Exception as e:
         messages.warning(request, "No email found!")
-        log.warning(f'CRM subscription for email {email} unsuccessfull!............')  
+        log.warning(f'CRM confirmation to subscription for email {email} unsuccessfull due to {e} !')  
         return HttpResponseRedirect(reverse('home:home'))      
         
     return render(request, 'crm/subscribed.html', {'lead': lead, 'action': 'subscribed'})

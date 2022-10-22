@@ -15,6 +15,7 @@ def total_reports(request):
 def total_this_user_report(request):
     total_reports = Evaluator.objects.filter(creator = request.user).count()
     return total_reports
+
 def users_under_each_label(request):    
     labels = DifinedLabel.objects.filter(common_status = False)
     record_dict = {}

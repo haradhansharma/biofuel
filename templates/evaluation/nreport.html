@@ -1,0 +1,271 @@
+{% extends "includes/g_base_print.html" %}
+
+
+    {% block main %}
+    <main>
+
+        <div class="section pt-3">
+            <div class="container">   
+                <div id="labeldata" class="row justify-content-center mb-3">
+                    <div class=" col-12">
+                        <div class="col-report card text-center">
+                            <div class="card-header">
+                                <p class="text-start">Green fuel validation platform-Analysis Report</p>
+                            </div>
+                            <div class="row g-3 p-3  justify-content-center">
+                                <div class="card-body p-2">
+                                    <h2>{{site_name.upper}}</h2>     
+                                    <p class="h4 my-4 text-danger border-top border-bottom border-danger">Report ID:{{ current_evaluator.id }}</p>  
+                                    <div class="text-start mt-8">                                    
+                                        <h3 class="border-bottom border-3 border-danger">DISCLAIMER:</h3>
+                                        <p> Use of any knowledge, information or data contained in this document shall be at the user's sole risk. The
+                                            members of the ShippingLab Project accept no liability or responsibility, in negligence or otherwise, for
+                                            any loss, damage or expense whatever sustained by any person as a result of the use, in any manner or form,
+                                            of any knowledge, information or data contained in this document, or due to any inaccuracy, omission or
+                                            error therein contained.</p>
+
+                                        <p> Danish Maritime Fund shall not in any way be liable or responsible for the use of any such knowledge,
+                                            information or data, or of the consequences thereof.</p>  
+                                    </div> 
+                                    <div class="text-start mt-8">    
+                                        <h3 class="border-bottom border-3 border-danger">CONTENTS:</h3>  
+                                        <ol>
+                                            <li><a href="#bs">Basic Summary</a></li>
+                                            {% for el in eva_label %}
+                                            <li><a href="#{{el.id}}l">{{el.label.label}}</a></li>
+                                            {% endfor %}
+                                            <li><a href="#qsf">Question Specific Feedback</a></li>
+                                            <li><a href="#doa">Details of activities</a></li>
+                                            <li><a href="#bfh">Biofuel History</a></li>
+
+
+                                            
+                                        </ol>
+                                    </div>
+                                    <div class="row text-start mt-8">
+                                        <h3 class="border-bottom border-3 border-danger">LATEST STATUS OF REPORT:</h3>  
+                                        <div class="col-8 d-flex">
+                                            <div class="flex-fill border rounded p-2 bg-white">
+                                            <div class="">
+                                            <h6 class="border-bottom border-danger">Graphical Visualization</h6>
+                                            <div class="ct-chart-ranking ct-golden-section ct-series-a col-12"></div>   
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="row pt-4">
+                                                <div class="col-6">
+                                                    <div class=" p-2">
+                                                    <h6 class="border-bottom border-danger">Negative Points</h6>
+                                                        <ul>
+                                                            <li>Some Datas</li>
+                                                            <li>Some Datas</li>
+                                                            <li>Some Datas</li>
+                                                            <li>Some Datas</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class=" p-2">
+                                                    <h6 class="border-bottom border-danger">Positive Points</h6>
+                                                        <ul>
+                                                            <li>Some Datas</li>
+                                                            <li>Some Datas</li>
+                                                            <li>Some Datas</li>
+                                                            <li>Some Datas</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 d-flex">
+                                            <div class="flex-fill border rounded p-2 bg-white">
+                                            <div class="">
+                                                <h6 class="border-bottom border-danger">To Dos</h6>
+                                            <ol>
+                                                {% for na in na_ac %}
+                                                <li>                                                    
+                                                    <b>{{na.name_and_standared|upper}}</b> ({{na.is_active}})  
+                                                    <div>         
+                                                    {% for quotation in na.get_quotations %}                                                     
+                                                    <a href="{{quotation.get_absolute_url}}" target="_blank" class="badge bg-success">  
+                                                    Quot#{{quotation.id}}::{{quotation.price}}
+                                                    </a>                                                                                                      
+                                                    {% endfor %}   
+                                                    </div>                               
+                                                </li>
+                                                {% endfor %}
+                                            </ol>                           
+
+                                        </div>
+                                        <a href="{% url 'evaluation:nreport_pdf' current_evaluator.slug %}" class="btn btn-primary mt-4 w-100">
+                                        Get PDF Report
+                                        </a>
+
+                                        
+                                         </div>
+                                        </div>  
+                                    </div> 
+                                    <div class="text-start mt-8">
+                                        <h3 class="border-bottom border-3 border-danger">BIOFUEL SUMMARY:</h3> 
+                                        
+                                        <h4 id="bs" class="mt-5 border-bottom border-2 border-primary">Basic Summary:</h4>
+                                        <table class="table table-bordered border-primary">
+                                            <tr>
+                                                <th scope="col">Name And Organization</th>
+                                                <th scope="col">Email And Phone</th>
+                                                <th scope="col">Selected Biofuel</th>
+                                            </tr>
+                                            <tr>
+                                                <td>{{current_evaluator.name}}</td>
+                                                <td>{{current_evaluator.email}}</td>
+                                                <td rowspan="2">{{current_evaluator.biofuel.name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{current_evaluator.orgonization}}</td>
+                                                <td>{{current_evaluator.phone}}</td>                                                
+                                            </tr>
+                                        </table>
+                                        {% for el in eva_label %}
+                                        <h4 id="{{el.id}}l" class="mt-4  border-bottom border-2 border-primary">{{el.label.label}}:</h4>
+                                        {% for es in el.evalebelstatement_set.all %}
+                                        {% if es.statement is not None %}
+                                        <p class="text-start">{{es.statement}}</p>
+                                        {% endif %}
+                                        {% if es.next_step is not None %}
+                                        <p class="text-start">{{es.next_step|safe}}</p>
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% endfor %}
+                                        <div>
+                                        <h4 id="qsf" class="mt-4  border-bottom border-2 border-primary">Question Specific Feedback:</h4>
+
+                                        {% for e in evaluation %}
+                                        <table class="bg-light my-3 p-2 d-block rounded ">
+                                            <tr>
+                                                <th class="border-bottom border-bottom-2 border-success text-success"> Question : {{e.question.name}}</th>
+                                            </tr>
+                                            <tr class="">
+                                                <td class="ms-2 d-block">
+                                                    <p class="mb-1"><b>Chosen Option :</b> {{e.option.name}} </p>
+                                                        <p class="mb-1"> 
+                                                        <b>Suggested Quotations :</b>                                                         
+                                                            {% for quotation in e.question.get_quotations %}
+                                                            <a href="{{quotation.get_absolute_url}}" target="_blank" class="badge bg-success"> 
+                                                                <span >Quotation#{{quotation.id}}: {% if quotation.service_provider.orgonization %} {{quotation.service_provider.orgonization}} {% else %} Business name unknown {% endif %} <span>Price: {{quotation.price}} {{quotation.price_unit}}</span> </span>                                                            
+                                                            </a>                                      
+                                                            {% endfor %}
+                                        
+                                                            {% for quotation in e.question.get_related_quotations %}
+                                                            <a href="{{quotation.get_absolute_url}}" target="_blank" class="badge bg-success"> 
+                                                                <span>Quotation#{{quotation.id}}: {% if quotation.service_provider.orgonization %} {{quotation.service_provider.orgonization}} {% else %} Business name unknown {% endif %} <span>Price: {{quotation.price}} {{quotation.price_unit}}</span> </span>                                                             
+                                                            </a>                                 
+                                                            {% endfor %}                                    
+                                                        </p>  
+                                                    <!-- quotations  -->     
+                                                    <p class="mb-1"> 
+                                                        <b>Self Comment :</b>
+                                                        {% for qa in e.get_question_comment  %}
+                                                        {{qa.comments}}
+                                                        {% endfor %}
+                                                    </p>
+                                                    <p class="mb-1"><b>GFVP Feedback :</b> {{e.option.statement}}</p>
+                                                    <!--std Chart-->  
+                                                    <p class="mb-1">                               
+                                                        <b>Typical std values : </b>
+                                                        <table class="table align-middle">
+                                                            <thead>
+                                                              <tr>
+                                                                <th>Oil Name</th>
+                                                                <th>Unit</th>
+                                                                <th>Value</th>
+                                                                <th>Link</th>
+                                                              </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            {% for cd in e.question.stanchart.all %}                                                            
+                                                              <tr>
+                                                                <th>{{cd.oil_name }}</th>
+                                                                <td>{{cd.unit }}</td>
+                                                                <td>{{cd.value }}</td> 
+                                                                <td>{{cd.link }}</td>
+                                                              </tr>
+                                                            {% endfor %}                                                               
+                                                            </tbody>
+                                                          </table>
+                                                        </p>                                                    
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        {% endfor %}
+                                        </div>
+                                        <div>
+                                        <h4 id="doa" class="mt-4  border-bottom border-2 border-primary">Details of activities:</h4>
+                                        {% for e in next_activities %}
+                                        <table style="font-size: 14px;">
+                                            <tr>
+                                                <th class="border-bottom border-bottom-2 border-success text-success">Activity : {{e.name_and_standared}}</th>
+                                            </tr>
+                                            <tr class="ms-2 d-block">
+                                                <th>Related Questions : 
+                                                    <ul class="mb-1">
+                                                    {% for rq in e.related_questions.all %}                                                    
+                                                        <li><small>{{rq}}</small></li> 
+                                                    {% endfor %}
+                                                    </ul>
+                                                </th>
+                                            </tr>
+                                            <tr class="ms-2 d-block">
+                                                <td>                                                    
+                                                    <p class="mb-1"> <b>Descriptions :</b>                    
+                                                    {{e.descriptions}}
+                                                    </p>                                                    
+                                                    <p class="mb-1"><b>Completed :</b> {{e.is_active}}</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        {% endfor %}
+                                        </div>
+                                    </div>   
+                                    <div class="row justify-content-center align-items-center">
+                                        <h3 id="bfh" class="border-bottom border-3 border-danger">BIOFUEL HISTORY:</h3> 
+                                    {% for d in dfh %} 
+                                    {% for k, label_and_datalist in d.items %}  
+                                    
+                                    <div class="col-6 d-flex mb-4">
+                                        <div class="flex-fill border rounded p-2">                                                                      
+                                            <div class="ct-chart-compjs ct-chart-com ct-chart-compare{{k}} ct-golden-section ct-series-a"></div> 
+                                            <small>{{k}}</small>                                            
+                                        </div>
+                                        
+                                    </div>
+                                    {% endfor %}
+                                    {% endfor %}
+                                    </div>
+
+                                                       
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </main>
+    {% endblock %}
+
+
+    {% block javascripts %}
+    <script>
+        var item_label, item_seris, dfh;
+        item_label = {{ item_label | safe }};   
+        item_seris = {{ item_seris | safe }}; 
+        dfh = {{ dfh | safe }};
+
+        
+    </script>
+
+    {% endblock javascripts %}

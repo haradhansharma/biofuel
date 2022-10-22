@@ -3,6 +3,8 @@
 '''
 
 from django.contrib import admin
+
+from home.models import WeightUnit
 from . models import *
 from django.contrib import messages
 from django.utils.translation import ngettext
@@ -61,9 +63,7 @@ class EvaluatorAdmin(admin.ModelAdmin):
       
     list_display = ('id', 'notified', 'name','creator', 'email', 'phone', 'biofuel', 'create_date','orgonization', 'report_genarated')
     list_filter = ('biofuel', )
-    readonly_fields = ('report_genarated', 'orgonization', 'name','creator', 'email', 'phone', 'biofuel', 'create_date', 'id')
-    
-    
+    readonly_fields = ('report_genarated', 'orgonization', 'name','creator', 'email', 'phone', 'biofuel', 'create_date', 'id')   
     
     
     @admin.action(description='Genarate updated report and notify to the creator')
@@ -77,7 +77,7 @@ class EvaluatorAdmin(admin.ModelAdmin):
         
         
         #parameter to be happend check and send mail
-        happen_time_restriction = 2
+        happen_time_restriction = 50
         #count happening   
         done = 0   
         #we will check only which report is genarated
@@ -160,9 +160,52 @@ admin.site.register(Biofuel)
 
 
 
-admin.site.register(StandaredChart)
-
-
+class StandaredChartAdmin(admin.ModelAdmin):
+    list_display = ('oil_name', 'question', 'unit', 'value', 'link')
+    list_filter = ('oil_name','question',)
+    ordering = ('question',)
+    
+    # to exclude option field if no question selected
+    def get_fields(self, request, obj=None):
+        if obj is None:
+            '''
+            If creating new from admin interface then the option field we will keep hide
+            '''
+            context = ('oil_name', 'question', 'unit', 'value', 'link')
+        else:
+            context = super().get_fields(request, obj)         
+        return context
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        obj_id = request.resolver_match.kwargs.get('object_id')
+        try:
+            '''
+            As we are overwriting default behaviour then we will delete the option if no question is there, this is essential during editing
+            '''
+            obj = StandaredChart.objects.get(id = int(obj_id))            
+            if not obj.question:
+                obj.option = None
+                obj.save()
+        except:
+            obj = None
+        
+        if db_field.name == "option":
+            '''
+            Pverwriting option field to narrow down based on selected question.
+            '''
+            kwargs["queryset"] = Option.objects.filter(question = obj.question if obj else None)           
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    
+    def add_view(self, request, form_url='', extra_context=None):
+        '''
+        Show only sve and continue in admin inerface on addition form
+        '''
+        extra_context = extra_context or {}
+        extra_context['show_save'] = False # Here
+        extra_context['show_save_and_continue'] = True # Here        
+        extra_context['show_save_and_add_another'] = False # Here
+        return super().add_view(request, form_url, extra_context)
+admin.site.register(StandaredChart, StandaredChartAdmin)
 
 class NextActivitiesAdmin(admin.ModelAdmin):  
     @admin.action(description='Duplicate Selected Activities')
@@ -174,8 +217,7 @@ class NextActivitiesAdmin(admin.ModelAdmin):
             
             object.save()
             object.related_questions.set(related_questions)
-            object.compulsory_questions.set(compulsory_questions)
-            
+            object.compulsory_questions.set(compulsory_questions)            
     actions = [duplicate_event]
 admin.site.register(NextActivities, NextActivitiesAdmin)
 

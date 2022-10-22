@@ -30,6 +30,9 @@ def home(request):
     #skip session error
     null_session(request)  
     # pass user type  
+    
+    
+    
     user_types = UserType.objects.all().order_by('sort_order') 
     latest_blogs = BlogPost.published.filter(status = 'published').order_by('-publish')[:3]
     context = {
@@ -571,14 +574,32 @@ def quotation_report2(request, quotation_data):
         ]
         
     else:
+        
+        if quotation_data.show_alternate_email:
+            email = quotation_data.show_alternate_email
+        else:
+            email = quotation_data.service_provider.email
+            
+        if quotation_data.show_alternate_business:
+            org = quotation_data.show_alternate_business
+        else:
+            org = quotation_data.service_provider.orgonization
+            
+        if quotation_data.show_alternate_phone:
+            phn = quotation_data.show_alternate_phone
+        else:
+            phn = quotation_data.service_provider.phone
+        
+        
+        
         data = [
             ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
             ('left_style_black' , f'-------------------------------------------------------------------------------------'), 
             ('left_style_blue' , f'<u>QUOTATION PROVIDED BY:</u>'),
             ('left_style_blue' , f'___creator: {quotation_data.service_provider.get_full_name()}'),         
-            ('left_style_blue' , f'___email: {quotation_data.service_provider.email}'),  
-            ('left_style_blue' , f'___phone: {quotation_data.service_provider.phone}'),  
-            ('left_style_blue' , f'___orgonization: {quotation_data.service_provider.orgonization}'),  
+            ('left_style_blue' , f'___email: {email}'),  
+            ('left_style_blue' , f'___phone: {phn}'),  
+            ('left_style_blue' , f'___orgonization: {org}'),  
             ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
         ]
         

@@ -9,4 +9,7 @@ admin.site.register(Lead)
 class MailQueueAdmin(admin.ModelAdmin):
     list_display = [f.name for f in MailQueue._meta.fields if not f.name == "id"] 
     
+@admin.register(BlogMailQueue)
+class BlogMailQueueAdmin(admin.ModelAdmin):
+    list_display = [f.name for f in BlogMailQueue._meta.fields if not f.name == "id"] 
     

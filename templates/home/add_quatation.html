@@ -214,6 +214,65 @@
                                 </div>
                                 <!--form end-->
 
+                                <!--form start-->
+                                <div class="form-group mt-4">
+                                    <div class="row g-3 align-items-center">
+                                        <div class="text-error invalid-feedback">{{ form.show_alternate_email.errors }}</div>
+                                        
+                                        <div class="col-auto">
+                                            <label for="{{ form.show_alternate_email.id_for_label }}">{{ form.show_alternate_email.label }} </label>
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted"
+                                                data-bs-toggle="tooltip" data-bs-html="true"
+                                                title="{% if form.show_alternate_email.help_text %} {{ form.show_alternate_email.help_text|safe }}  {% endif %}">?</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span>{{ form.show_alternate_email }}</span>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                                <!--form end-->
+
+                                <!--form start-->
+                                <div class="form-group mt-4">
+                                    <div class="row g-3 align-items-center">
+                                        <div class="text-error invalid-feedback">{{ form.show_alternate_phone.errors }}</div>
+                                        
+                                        <div class="col-auto">
+                                            <label for="{{ form.show_alternate_phone.id_for_label }}">{{ form.show_alternate_phone.label }} </label>
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted"
+                                                data-bs-toggle="tooltip" data-bs-html="true"
+                                                title="{% if form.show_alternate_phone.help_text %} {{ form.show_alternate_phone.help_text|safe }}  {% endif %}">?</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span>{{ form.show_alternate_phone }}</span>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                                <!--form end-->
+
+                                <!--form start-->
+                                <div class="form-group mt-4">
+                                    <div class="row g-3 align-items-center">
+                                        <div class="text-error invalid-feedback">{{ form.show_alternate_business.errors }}</div>
+                                        
+                                        <div class="col-auto">
+                                            <label for="{{ form.show_alternate_business.id_for_label }}">{{ form.show_alternate_business.label }} </label>
+                                            <span class="btn btn-outline-primary p-1 rounded-circle text-muted"
+                                                data-bs-toggle="tooltip" data-bs-html="true"
+                                                title="{% if form.show_alternate_business.help_text %} {{ form.show_alternate_business.help_text|safe }}  {% endif %}">?</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span>{{ form.show_alternate_business }}</span>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                                <!--form end-->
+
+
+
 
                                 <!--form start-->
                                 <div class="form-group mt-4">

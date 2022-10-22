@@ -2,7 +2,9 @@
 <html lang="en">
 
 <head>
+
     {% load static %}
+    <meta charset="UTF-8">
     <style>
         @page title_template { margin: 5cm; }
         @page regular_template { margin: 2cm; }
@@ -62,6 +64,7 @@
 </head>
 
 <body>
+    
     <div class="page-break">
 
 
@@ -81,7 +84,7 @@
             <br>
             <br>
             <br>
-            <br>
+            <br> 
 
 <!--
             <span style="font-size: 22px;"> CO2 NEGATIVE-NEUTRAL ISO</span> <br>
@@ -382,16 +385,26 @@
 
 
     {% for el in eva_label %}
-    <h2 style="font-size: 20px;">{{el.label.label}}</h2>
+    <h2 style="font-size: 20px;">{{el.label.label}}</h2>   
 
     {% for es in el.evalebelstatement_set.all %}
     {% if es.statement is not None %}
-    <p style="font-size: 14px;">{{es.statement}}</p>
+    <p style="font-size: 14px;">{{es.statement}}</p>    
     {% endif %}
+    
     {% if es.next_step is not None %}
     <p style="font-size: 14px;">{{es.next_step|safe}}</p>
     {% endif %}
     {% endfor %}
+    {% if forloop.first %}
+    <p style="font-size: 14px;"><b>The following is the prioritised list of validation activities that should be undertaken based on your self assessment responses:</b></p>
+    <ol>
+    {% for na in na_ac %}
+        <li style="font-size: 12px;">{{na.name_and_standared}} ({{na.is_active}})</li>
+    {% endfor %}
+    </ol>
+    <p>PLEASE SEE THE "Deatils of activities" SECTION FOR MORE DETAILS.</p>'
+    {% endif %}
 
     {% endfor %}
 </div>

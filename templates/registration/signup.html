@@ -83,7 +83,7 @@
                             
                             </div>
 
-                            <!-- Form -->
+                            <!-- Form --> 
                             <div class="form-group mb-4">
                                 <!--<label class="mb-2 text-muted" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>-->  
                                 <div class="input-group">                                    
@@ -101,7 +101,7 @@
                                     {{ form.username }}
                                 </div>  
                                 <span class="text-error invalid-feedback">{{ form.username.errors }}</span>
-                                <div id="username_error" class="text-danger"></div>
+                                <div id="username_error" class="text-danger"></div> 
                             </div>
                             <!-- End of Form -->
 
@@ -160,6 +160,17 @@
 
 
 
+                                <!-- End of Form -->
+
+                                <!-- Form -->
+                                <div class="form-check">
+                                    {{ form.newsletter_subscription }}
+                                    <label class="mb-2 text-muted" for="{{ form.newsletter_subscription.id_for_label }}">
+                                        {{ form.newsletter_subscription.label }} 
+                                        
+                                    </label>
+                                    <span class="text-error invalid-feedback">{{ form.newsletter_subscription.errors }}</span>
+                                </div>
                                 <!-- End of Form -->
 
                                  <!-- Form -->

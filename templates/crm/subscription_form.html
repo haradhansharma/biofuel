@@ -1,0 +1,16 @@
+<form class="row g-3 justify-content-center align-items-center">
+
+    <h3 class="text-center">Subscribe to our newsletter</h3>
+    {% csrf_token %}
+    <div class="col-auto">
+        {{subscription_form.name}}
+    </div>
+    <div class="col-auto">
+        {{subscription_form.email}}
+    </div>
+    <div class="col-auto">
+        <input type="submit" value="Subscribe" hx-vals='{"new_subscriber": "new_subscriber"}' hx-post="{% url 'crm:subscription' %}" hx-target="#subscription_response" hx-trigger="click" class="btn btn-secondary">
+    </div>
+    
+    <div id="subscription_response" class="text-center"></div>
+</form>

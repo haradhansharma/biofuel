@@ -56,15 +56,26 @@
 
 
 
-.htmx-indicator{
+.confirm-indicator{
   display:none;
 }
-.htmx-request .my-indicator{
+.htmx-request .confirm-indicator{
   display:inline;
 }
-.htmx-request.my-indicator{
+.htmx-request.confirm-indicator{
   display:inline;
 }
+
+.feedback-indicator{
+  display:none;
+}
+.htmx-request .feedback-indicator{
+  display:inline;
+}
+.htmx-request.feedback-indicator{
+  display:inline;
+}
+
 
 
 .icon-user-type {
@@ -99,3 +110,63 @@
     left: 0;
     width: 100%;
   }
+
+
+  .col-report{
+
+   
+    background-image:  url('https://shippinglab.dk/wp-content/uploads/2019/07/tugboat-on-big-sea-slider.jpg');
+    /* background-size: cover; */
+    background-position: top;
+    /* background-blend-mode: luminosity; */
+    background-repeat: no-repeat;
+}
+
+  .ct-chart-ranking .ct-label{
+    display: block;
+
+  }
+  .ct-chart-ranking .ct-series-a .ct-bar{
+    stroke: green
+  }
+
+  .ct-chart-ranking .ct-series-b .ct-bar{
+    stroke: grey
+  }
+
+  .ct-chart-ranking .ct-series-c .ct-bar{
+    stroke: Red
+  }
+  .ct-chart-com .ct-series-a .ct-bar{
+    stroke: green
+  }
+
+  .ct-chart-com .ct-series-b .ct-bar{
+    stroke: grey
+  }
+
+  .ct-chart-com .ct-series-c .ct-bar{
+    stroke: Red
+  }
+
+.htmx-indicator{
+    opacity:0;
+    transition: opacity 500ms ease-in;
+}
+.htmx-request .htmx-indicator{
+    opacity:1
+}
+.htmx-request.htmx-indicator{
+    opacity:1
+}
+
+.my-indicator{
+  display:none;
+}
+.htmx-request .my-indicator{
+  display:inline;
+}
+.htmx-request.my-indicator{
+  display:inline;
+}
+

@@ -1,7 +1,8 @@
+from pprint import pprint
 from django.contrib import messages
 from urllib.parse import urlparse
 from django.http import HttpResponse, HttpResponseRedirect
-
+from evaluation.helper import get_current_evaluator
 from doc.models import ExSite
 from evaluation.models import EvaComments, EvaLabel, EvaLebelStatement, Evaluation, Evaluator, Question
 from .models import *
@@ -17,6 +18,11 @@ from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import LoginView
+from crm.models import *
+from crm.views import get_location_info
+from evaluation.helper import LabelWiseData
+import logging
+log =  logging.getLogger('log')
 
 
 '''
@@ -120,7 +126,7 @@ def signup(request):
             new_user = form.save(commit=False)      
             #ensure user inactive to verify email.              
             new_user.is_active = False
-            new_user.save()  
+            new_user.save()   
             subject = f'{current_site.domain}-Account activation required!' 
             message = render_to_string('emails/account_activation_email.html', {
                 #parameters to the mail template.
@@ -162,8 +168,11 @@ def signup(request):
         
         
         #interacting behind the scenes
+        #By Default site is set to all ticked in Term agree and newsletter subscription and user type
         initial_dict = {
-            'type': type            
+            'type': type,
+            'newsletter_subscription' : True,
+            'term_agree' : True           
         }     
         
         form = UserCreationFormFront(initial = initial_dict)
@@ -214,29 +223,79 @@ def activate(request, uidb64, token):
             })
             #User will recive activation mail.
             user.email_user(subject, '', html_message=message)   
-            messages.success(request, ('Your account have been confirmed.'))    
+            messages.success(request, ('Your account have been confirmed.'))                
+            
+                
             
         # we will save user after checking what is the type. as diferent user type have deferent approving policy.           
         user.save()   
-             
+        
+        '''
+        CREATING LEAD 
+        '''
+        #if email verified and user ticked to recive newsletter then we will save the user to the CRM
+        location_info = get_location_info(request)
+        city =  location_info.get('city') 
+        country_code = location_info.get('country')
+        country = country_code
+        full_name = user.get_full_name()
+        
+        #If user ticked to get our newsletter during signup process
+        #We will check the email already have in our crm or not
+        #If already exists then whatever his subscription status is we will make the status to True as email is verified here and ticked on the subscription
+        #If not exists we will create a lead having the user data.
+        if user.newsletter_subscription:
+            log.info(f'Creating lead for {user.email} ')
+            try:
+                lead = Lead.objects.get(email_address = user.email)                             
+            except Exception as e:                
+                lead = None
+                
+            if lead is not None:
+                lead.update(subscribed=True)                
+            else:
+                Lead.objects.create(lead = full_name if full_name else user.username, email_address=user.email,city=city,country=country,subscribed=True)
         return HttpResponseRedirect(reverse_lazy('login'))
     else:
         messages.warning(request, ('Activation link is invalid!'))
         return HttpResponseRedirect(reverse_lazy('home:home'))
+    
+
+
+
+
 
 @login_required
-def userpage(request, username):    
+def userpage(request, username):     
+    
+    
+    
     #This is essential where user loggedin
     null_session(request)   
     user = User.objects.get(username=username)
+    report_slug = request.GET.get('slug')
+    if report_slug:
+        try:
+            last_reports = Evaluator.objects.get(slug = report_slug, report_genarated = True)
+        except:
+            last_reports = None 
+    else: 
+        
+        try:
+            last_reports = Evaluator.objects.filter(creator = user, report_genarated = True).order_by('-create_date').first()  
+        except:
+            last_reports = None
+
+
     
-    try:
-        last_reports = Evaluator.objects.filter(creator = user, report_genarated = True).order_by('-create_date').first()  
-    except:
-        last_reports = None
+    df = LabelWiseData(last_reports).packed_labels()
+  
+    
+    
+
         
     if last_reports is not None: 
-        gretings = f'The summary of the last report genarated by {username}!'
+        gretings = f'The summary of the report number {last_reports.id} genarated by {username}!'
         ans_ques = EvaLebelStatement.objects.filter(evaluator = last_reports, question__isnull = False, assesment = False).values('question').distinct().count()
         dont_know_ans = EvaLebelStatement.objects.filter(evaluator = last_reports, question__isnull = False, dont_know = 1, assesment = False).values('question').distinct().count()
         pos_ans = EvaLebelStatement.objects.filter(evaluator = last_reports, question__isnull = False, positive = 1, assesment = False).values('question').distinct().count()
@@ -278,7 +337,10 @@ def userpage(request, username):
             'reports': reports,
             'last_reports' : last_reports,
             'last_report_button_text' : 'Get Last Report',
-            'username' : username
+            'username' : username,
+            'item_label' : df.columns.values.tolist(),
+            'item_seris' : df.values.tolist()
+            
         }
     else:
         
@@ -302,7 +364,7 @@ def userpage(request, username):
 def check_username(request):
     username = request.POST.get('username')
     if User.objects.filter(username = username).exists():
-        return HttpResponse(' <span class="text-danger"> This username already exists! </span>')
+        return HttpResponse(' <span class="text-danger"> This username already exists! </span>') 
     else:
         return HttpResponse('<span class="text-success">This username avialable!</span>')
     

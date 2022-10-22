@@ -112,6 +112,14 @@
                     {% else %}
                     <h1 class="text-secondary">ALL BLOGS </h1>
                     {% endif %}
+                    <form method="get" action="" class="row g-1 justify-content-center align-items-center text-center">       
+                        <div class="col-auto">
+                            <input type="text" name="q" class="form-control" value="{{request.session.q}}" placeholder="Search blogs...">
+                        </div> 
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-secondary">Search</button>
+                        </div>                       
+                    </form>            
                 </div>
             </div>
         </div>

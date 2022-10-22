@@ -3,6 +3,11 @@ from django.conf import settings
 from django.db import models
 from django.forms import ValidationError
 from django.urls import reverse
+from django.utils.safestring import mark_safe
+from django.template.defaultfilters import slugify
+import random
+import string
+
 
 #Validator in admin to protect from more then one common status to be entry.
 def get_common_status(value):
@@ -97,30 +102,18 @@ class Question(models.Model):
     @property
     def labels(self):
         return Label.objects.filter(question = self)
- 
-    
-    
     
     @property
     def get_related_quotations(self):   
         from home.models import Quotation
-        quotations = Quotation.objects.filter(related_questions = self)
-        
+        quotations = Quotation.objects.filter(related_questions = self)        
         return quotations
     
     @property
-    def get_quotations(self): 
-        
+    def get_quotations(self):         
         from home.models import Quotation
-        quotations = Quotation.objects.filter(test_for = self)
-        
+        quotations = Quotation.objects.filter(test_for = self)        
         return quotations
-        
-        
-
-
-
- 
     
  
 class Label(models.Model):
@@ -162,9 +155,6 @@ class Option(models.Model):
     create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     
-    
-    
-    
 
     def __str__(self):
         return self.name + '(' + str(self.question.sort_order) + ')'
@@ -183,9 +173,6 @@ class LogicalString(models.Model):
     text = models.TextField(null = True, blank = True,)
     overall = models.CharField(max_length=1, default=0)
     positive = models.CharField(max_length=1, default=0)
-    
-    
- 
         
     @property
     def option_list(self):
@@ -196,9 +183,6 @@ class LogicalString(models.Model):
     def Label_value_one_to(self):
         assigned = [label.name for label in self.logical_strings.filter(value=1) ]
         return assigned
-    
-  
-        
             
 
     def __str__(self):
@@ -236,9 +220,6 @@ class Lslabel(models.Model):
     def __str__(self):
         return self.name.name
 
-
-
-
 class Biofuel(models.Model):
     '''
     The biofuel selected by user in initial page of evaluation.
@@ -252,7 +233,6 @@ class Biofuel(models.Model):
     
 
     
-from django.utils.safestring import mark_safe
 
 class Evaluator(models.Model):
     '''
@@ -288,7 +268,7 @@ class Evaluator(models.Model):
         return self.name + str(self.id)
     
     def get_absolute_url(self):
-        return reverse('evaluation:report', args=[str(self.slug)])    
+        return reverse('evaluation:nreport', args=[str(self.slug)])    
 
 
 class Evaluation(models.Model):
@@ -380,6 +360,16 @@ class NextActivities(models.Model):
     def __str__(self):
         return str(self.name_and_standared)
     
+    def get_quotations(self):
+        quotations = set()
+        for question in self.related_questions.all():
+            for quotation in question.get_quotations:
+                quotations.add(quotation)
+            for quotation in question.get_related_quotations:
+                quotations.add(quotation)
+        return quotations
+                
+    
 
 class EvaluatorActivities(models.Model):
     '''    
@@ -396,14 +386,34 @@ class EvaluatorActivities(models.Model):
     
     def __str__(self):
         return str(self.next_activity.name_and_standared)
-    
+
 class StandaredChart(models.Model):
+    '''
+    Please check admin for this model if you changing anythig as here option is overwriting form admin to narrow down.
+    '''
     from home.models import WeightUnit    
-    oil_name = models.CharField(max_length=252)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="stanchart")
+    oil_name = models.CharField(max_length=252)  
+    key = models.CharField(null=True, blank=True, editable=False, max_length=250)    
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="stanchart", limit_choices_to={'is_active': True})
     unit = models.ForeignKey(WeightUnit, on_delete=models.CASCADE, related_name= "chrartunit")
     value = models.CharField(max_length=252)
     link = models.URLField()
+    option = models.ForeignKey(Option, on_delete=models.SET_NULL, related_name='stoption', null=True, blank=True)
+    
+    @property
+    def oil_key(self):
+        return self.oil_name.lower() 
+    
+    
+    def save(self, *args, **kwargs):        
+        key_sample = slugify(self.oil_name)    
+        self.key = key_sample
+        super(StandaredChart, self).save(*args, **kwargs)
+        
+       
+
+
+        
     
     def __str__(self):
         return self.oil_name + ' for question ' + str(self.question.sort_order)
@@ -418,6 +428,15 @@ class Youtube_data(models.Model):
     
     def __str__(self):
         return self.term
+    
+class LabelDataHistory(models.Model):
+    evaluator = models.ForeignKey(Evaluator, on_delete=models.CASCADE)
+    # label = models.TextField(max_length=250)
+    items= models.TextField(max_length=250)
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    
+    def __str__(self):
+        return self.items
     
     
     

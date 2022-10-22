@@ -32,6 +32,7 @@ class BlogPost(models.Model):
     tags = TaggableManager() 
     
     
+    
     objects = models.Manager()#default manager
     published = PublishedManager()#Cutom Manager
     

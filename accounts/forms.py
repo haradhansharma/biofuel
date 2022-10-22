@@ -40,13 +40,14 @@ class UserCreationFormFront(UserCreationForm):
     
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2', 'term_agree', 'type', 'experts_in',)  
+        fields = ('username', 'email', 'password1', 'password2', 'term_agree', 'newsletter_subscription', 'type', 'experts_in',)  
               
     username = forms.CharField(label = 'Username',widget=forms.TextInput(attrs={"placeholder": "Username", "class": "form-control", 'hx-post': reverse_lazy('accounts:check_username'), 'hx-target': '#username_error', 'hx-trigger': 'keyup[target.value.length > 3]' }))
     email = forms.EmailField(label = 'E-mail Address',  widget=forms.EmailInput(attrs={"placeholder": "Email", "class": "form-control" , 'hx-post': reverse_lazy('accounts:check_email'), 'hx-target': '#email_error', 'hx-trigger': 'keyup[target.value.length > 3]'}))
     password1 = forms.CharField(label = 'Password', widget=forms.PasswordInput(attrs={"placeholder": "Password","class": "form-control" }))
     password2 = forms.CharField(label = 'Confirm Password', widget=forms.PasswordInput(attrs={"placeholder": "Password check","class": "form-control"}))
     term_agree = forms.BooleanField(label = 'Agree Our', required=True,  widget=forms.CheckboxInput(attrs={"class": "form-check-input"}))
+    newsletter_subscription = forms.BooleanField(label = 'Subscribe to our newsletter', required=True,  widget=forms.CheckboxInput(attrs={"class": "form-check-input"}))
     
     #implemeting google recapcha.
     captcha = ReCaptchaField( widget=ReCaptchaV2Checkbox)  

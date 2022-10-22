@@ -20,6 +20,7 @@
 {% block head %}
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
   <!-- Primary Meta Tags -->
   <title>
     {{site_info.meta_name}}-{% block title %}{% endblock %}
@@ -71,6 +72,7 @@
   <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
 </head>
 {% endblock %}
+<body>
 
 {% block header %}
 {% endblock %}
@@ -80,8 +82,11 @@
 
 {% block footer %}
 {% endblock %}
-
 {% include 'includes/scripts.html' %}
 {% block javascripts %}
 
 {% endblock javascripts %}
+
+
+</body>
+</html>

@@ -1,6 +1,12 @@
 {% load static %}
 <footer class="footer bgjessica-primary pt-4">   
     <div class="container-fluid pb-1" >
+        {% if not user.is_subscriber %}
+        <div class="mx-auto" >
+            {% include "crm/subscription_form.html" %}
+        </div>
+        {% endif %}
+        
         
         
         <div class="d-flex justify-content-between align-items-center" >
@@ -20,6 +26,8 @@
                 </a>
             </div>
         </div>
+
+        
 
         <div class="d-flex text-center justify-content-center align-items-center" role="contentinfo">
             <p class="fw-normal font-small">

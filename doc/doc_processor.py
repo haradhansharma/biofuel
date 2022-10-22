@@ -1,3 +1,11 @@
+from crm.forms import SubscriberForm
+
+
+
+        
+        
+
+
 def site_info():
     from .models import ExSite
     site = ExSite.on_site.get()   
@@ -27,6 +35,7 @@ def site_info():
     
 
 def comon_doc(request):
+   
     load_template = list(filter(None, request.path.split('/')))
     text = {
         'user_congrets': f"Hi , {request.user.username}",
@@ -59,7 +68,8 @@ def comon_doc(request):
     return {   
             'site_info': site_info(),
             'text': text,
-            'segment' : load_template
+            'segment' : load_template,
+            'subscription_form' : SubscriberForm()
             
     }
     

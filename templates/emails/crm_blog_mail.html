@@ -1,0 +1,44 @@
+{% load static %}
+{% autoescape off %}
+<!DOCTYPE html>
+<html>
+<body>
+
+Dear {{ lead.lead }},
+<br>
+<br>
+Below blog has been published on {{ domain }} .
+<br>
+<br>
+<h3>{{blog.title}}</h3>
+<p>Created on {{blog.created}}</p>
+<hr>
+<img src="http://{{ domain }}{{blog.image.url}}" alt="{{blog.title}}" style="width: 100%;">
+{{blog.body|truncatechars:150}}
+<a href="http://{{ domain }}{{blog.get_absolute_url}}">Read More...</a>
+<br>
+<br>
+
+
+
+Best regards,<br><br>
+Green Fuel Validation Platform<br>
+{{ domain }}<br>
+24/7/365 Support: Live Chat | Helpdesk | Email<br><br>
+
+Krishna Hara Chakravarty<br>
+GDPR Officer<br>
+krishna.hara.chakravarti@gmail.com <br><br>
+
+
+Follow us on<br>
+https://twitter.com/<br>
+https://www.facebook.com/<br>
+https://www.linkedin.com/company/<br>
+
+
+
+</body>
+</html>
+{% endautoescape %}
+

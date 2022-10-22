@@ -71,6 +71,7 @@
                             {% endif %}
                         </div>
                     </div>
+                    
                     <div class="row mb-5">
                         {% if messages and total_question <= qualified_rang %} 
                         <div class="alert alert-secondary mt-5" role="alert">
@@ -87,7 +88,10 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h5>Options:</h5>
-                                    <form method="POST" action="{% url 'evaluation:option_add2' %}#ques">
+
+                                    
+                                    
+                                    <form id="op" method="POST" action="{% url 'evaluation:option_add2' %}#ques">
                                         {% csrf_token %}
                                         {% for optn in optns %}
                                         <fieldset>
@@ -95,8 +99,10 @@
                                                 <input class="form-check-input" type="radio" name="option_id"  id="{{optn.id}}" value="{{optn.id}}" {% if optn.id == selected_option.id %} checked {% endif %} required>
                                                 <label class="form-check-label" for="{{optn.id}}">{{optn.name}}</label>
                                             </div>
+                                            
                                         </fieldset>
                                         {% endfor %}
+                                        
                                         <h5 class="mt-4">
                                             Please submit any further information you have about your fuel
                                             oil
@@ -109,12 +115,28 @@
                                             <input type="hidden" name="slug" value="{{slug}}">
                                         </div>
                                         <div class="mt-3 d-flex">
+                                            <!--
                                             <button 
                                                 type="submit"
                                                 name="get_feedback"
+                                                hx-post="."
+                                                id="get_feedback"
                                                 class="btn btn-success btn-block m-2">
                                                 Submit
                                             </button>
+                                            -->
+                                            <input class="btn btn-success btn-block m-2" type="submit" hx-post="{% url 'evaluation:option_add2' %}{% if messages %}#msg{% else %}#ques{% endif %}"
+                                            hx-push-url="{{request.path}}#ques" value="Submit" hx-indicator="#feedbackspinner"
+                                            hx-target="body" hx-swap="innerHTML" hx-vals='{"get_feedback": "get_feedback"}'
+                                            hx-trigger="click">
+                                            
+                                            <div id="feedbackspinner" class="feedback-indicator">                                                
+                                                <button class="btn btn-primary btn-block m-2" type="button" disabled>
+                                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                                Working...
+                                                </button>
+                                            </div>
+                                            
                                         </div>
                                         <div class="mt-3">
                                             <h5>GFVP Feedback:</h5>
@@ -122,7 +144,10 @@
 {{selected_option.statement|safe}}
 </textarea>
                                         </div>
+
+                                        
                                         <div class="mt-3 d-flex">
+                                            <!--
                                             <button 
                                                 type="submit" 
                                                 name="submit_and_auto" 
@@ -130,8 +155,28 @@
                                                 class="btn btn-success btn-block m-2">
                                                 Confirm
                                             </button>
+                                            -->
+
+                                            
+
+
+                                            <input class="btn btn-success btn-block m-2" type="submit" hx-post="{% url 'evaluation:option_add2' %}#ques"
+                                            hx-push-url="{{request.session.push_url}}" value="Confirm" hx-indicator="#confirmspinner"
+                                            hx-target="body" hx-swap="outerHTML" hx-vals='{"submit_and_auto": "submit_and_auto"}'
+                                            hx-trigger="click">
+                                            
+                                            <div id="confirmspinner" class="confirm-indicator">                                                
+                                                <button class="btn btn-primary btn-block m-2" type="button" disabled>
+                                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                                Working...
+                                                </button>
+                                            </div>
+                                            
+
+
                                         </div>
                                     </form>
+                                    
                                 </div>
                             </div>      
 
@@ -230,6 +275,25 @@
                                     </table>
                                 </div>
                             </div>
+
+                            <div class="card text-center mb-4 mt-4">
+                            <div class="row justify-content-center align-items-center">
+                                <h3 id="osc" >Oil's Standard Chart:</h3> 
+                                {% for d in oil_graph_data %} 
+                                {% for k, label_and_datalist in d.items %}                                  
+                                <div class="col-12 col-lg-4 col-md-6 d-flex mb-4">
+                                    <div class="flex-fill border rounded p-2">                                                                      
+                                        <div class="ct-chart-com ct-chart-oil{{k}} ct-golden-section ct-series-a"></div> 
+                                        <small class="border-top border-3 border-danger">{{k}}</small>                                            
+                                    </div>                                    
+                                </div>
+                                {% endfor %}
+                                {% endfor %}
+                                </div>
+                            </div>
+
+
+
                             <div class="card text-center mb-4 mt-4">
                                 <h4>Some relevant videos are listed below:</h4>
                                 <div class="row p-3 justify-content-center">
@@ -260,4 +324,51 @@
 
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+    <script>
+        var oil_graph_data;    
+        
+        oil_graph_data = {{ oil_graph_data | safe }};   
+        for (var ogd in oil_graph_data){
+            var grap_oils;
+            grap_oils = oil_graph_data[ogd];            
+            for (var grap_oil in grap_oils){
+                var go, label, series;
+                go = grap_oils[grap_oil];
+                label = go[0];
+                series = go[1];
+                if(document.querySelector('.ct-chart-oil' + grap_oil)) {
+                    var compchart = new Chartist.Bar('.ct-chart-oil' + grap_oil, {
+                        labels: label,
+                        series: series
+                      }, {           
+                        
+                        seriesBarDistance: 10,
+                        plugins: [
+                          Chartist.plugins.tooltip()
+                        ],
+                        
+                        axisX: {                        
+                            offset: 100,                        
+                          },
+                        axisY: {
+                            offset: 100,
+                            labelInterpolationFnc: function(value) {
+                                return value + ' %'
+                                },
+                                scaleMinSpace: 15    
+                        }                    
+                        });                  
+                      compchart.on('draw', function(data) {
+                        if(data.type === 'bar') {
+                            data.element.attr({
+                              style: 'stroke-width: 10px;stroke-linecap: square; width:auto;height:auto;'
+                            });
+                        }                     
+                    });
+                }
+            } 
+        }     
+    </script>
+
+    {% endblock javascripts %}

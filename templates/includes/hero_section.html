@@ -1,7 +1,7 @@
 {% load static %}
 <section class="section-header overflow-hidden pt-7 pb-9 pb-lg-12 bg-primary text-lgreen">
     <div class="container">
-        <div class="row">
+        <div id="msg" class="row">
             {% if messages %}   
                 <div class="col-12 text-center">
                     <div class="alert alert-secondary shadow-soft" role="alert">                            
@@ -10,7 +10,7 @@
                         {% endfor %}                            
                     </div>                        
                 </div>
-                {% endif %} 
+            {% endif %} 
             <div class="col-12 text-center">
                 <div class="bootstrap-big-icon d-none d-lg-block">
                     <svg xmlns="http://www.w3.org/2000/svg" width="700" height="622" class="d-block my-1"

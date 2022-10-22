@@ -2,6 +2,7 @@ from evaluation.models import DifinedLabel
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
+from crm.models import *
 
 
 class UserType(models.Model):
@@ -67,6 +68,7 @@ class User(AbstractUser):
     experts_in = models.ForeignKey(DifinedLabel, on_delete=models.SET_NULL, null=True, blank=True, related_name = 'user_label', limit_choices_to={'common_status': False} )  
     term_agree = models.BooleanField(null=False, blank=False,)
     email_verified = models.BooleanField(default=False)
+    newsletter_subscription = models.BooleanField(default=True)
     
     #don't change this
     USERNAME_FIELD = 'email'
@@ -82,16 +84,14 @@ class User(AbstractUser):
         from django.template.loader import render_to_string
         from django.contrib.sites.shortcuts import get_current_site
         current_site = get_current_site(request)
-        subject = 'Account has been created, you can login now!'                  
-                
-        # load a template like get_template() 
+        subject = 'Account has been created, you can login now!'      
+       
         # and calls its render() method immediately.
         if self.email is not None:
             message = render_to_string('emails/account_activated.html', {
                 'user': self,                    
                 'domain': current_site.domain,
-                'login' : request.build_absolute_uri('login') 
-                
+                'login' : request.build_absolute_uri('login')                 
             })
             self.email_user(subject, '', html_message=message)
             
@@ -119,8 +119,7 @@ class User(AbstractUser):
     def is_producer(self):
         if self.type.is_producer:
             return True
-        return False
-    
+        return False    
     
     @property
     def is_expert(self):
@@ -140,6 +139,14 @@ class User(AbstractUser):
             return True
         return False
     
+    @property
+    def is_subscriber(self):        
+        lead = Lead.objects.filter(email_address = self.email)
+        if lead.exists():            
+            return True
+        else:            
+            return False            
+    
     def get_absolute_url(self):        
         return reverse('accounts:user_link', args=[str(self.username)])
     
@@ -151,5 +158,8 @@ class Profile(models.Model):
     about = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
     established = models.DateField(null=True, blank=True)
+    
+    def __str__(self):
+        return 'Profile for ' +  str(self.user.username)
 
 

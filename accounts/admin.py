@@ -2,9 +2,14 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.sites.models import Site
 from .forms import UserCreationForm, UserChangeForm
-from .models import User, UserType
+from .models import User, UserType, Profile
 from django.contrib import messages
 from django.utils.translation import ngettext
+
+class ProfileInline(admin.StackedInline):
+    model = Profile
+    can_delete = False  
+    
 
 
 '''***DO not change anything here in this file.'''
@@ -13,22 +18,18 @@ class UserAdmin(UserAdmin):
     
     
     #taking charge of default Django form.
-    add_form = UserCreationForm
-    
-    
+    add_form = UserCreationForm   
     
     #taking charge of default Django form.
-    form = UserChangeForm
-    
-    
-    
+    form = UserChangeForm   
+    inlines = [ProfileInline]    
     model = User
     list_display = ['type', 'experts_in', 'email', 'username', 'is_staff', 'is_active', 'email_verified',]    
     list_filter = ('type', 'is_active', 'is_staff', 'experts_in', 'email_verified',)
     search_fields = ('email', 'phone', 'orgonization', 'username', 'experts_in', 'email_verified', )
     
     fieldsets =  (
-        (None, {'fields': ('type', 'experts_in',)}),
+        (None, {'fields': ('type', 'experts_in','orgonization',)}),
     ) + UserAdmin.fieldsets 
     
     
@@ -78,9 +79,7 @@ class UserAdmin(UserAdmin):
         self.message_user(request, "Mail sent successfully ")
         
     actions = [activate_account, deactivate_account, send_mail_to_expert]
-
 admin.site.register(User, UserAdmin)
-
 
 @admin.register(UserType)
 class UserTypeAdmin(admin.ModelAdmin):

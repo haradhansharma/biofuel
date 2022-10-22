@@ -16,8 +16,8 @@
 */
 
 "use strict";
-const d = document;
-d.addEventListener("DOMContentLoaded", function(event) {
+const dd = document;
+dd.addEventListener("DOMContentLoaded", function(event) {
 
     // const swalWithBootstrapButtons = Swal.mixin({
     //     customClass: {
@@ -68,7 +68,7 @@ d.addEventListener("DOMContentLoaded", function(event) {
     };
 
     var sidebar = document.getElementById('sidebarMenu')
-    if(sidebar && d.body.clientWidth < breakpoints.lg) {
+    if(sidebar && dd.body.clientWidth < breakpoints.lg) {
         sidebar.addEventListener('shown.bs.collapse', function () {
             document.querySelector('body').style.position = 'fixed';
         });
@@ -78,7 +78,7 @@ d.addEventListener("DOMContentLoaded", function(event) {
     }
 
     var topbar = document.getElementById('topbarMenu')
-    if(topbar && d.body.clientWidth < breakpoints.lg) {
+    if(topbar && dd.body.clientWidth < breakpoints.lg) {
         topbar.addEventListener('shown.bs.collapse', function () {
             document.querySelector('body').style.position = 'fixed';
         });
@@ -87,28 +87,28 @@ d.addEventListener("DOMContentLoaded", function(event) {
         });
     }
 
-    var iconNotifications = d.querySelector('.notification-bell');
+    var iconNotifications = dd.querySelector('.notification-bell');
     if (iconNotifications) {
         iconNotifications.addEventListener('shown.bs.dropdown', function () {
             iconNotifications.classList.remove('unread');
         });
     }
 
-    [].slice.call(d.querySelectorAll('[data-background]')).map(function(el) {
+    [].slice.call(dd.querySelectorAll('[data-background]')).map(function(el) {
         el.style.background = 'url(' + el.getAttribute('data-background') + ')';
     });
 
-    [].slice.call(d.querySelectorAll('[data-background-lg]')).map(function(el) {
+    [].slice.call(dd.querySelectorAll('[data-background-lg]')).map(function(el) {
         if(document.body.clientWidth > breakpoints.lg) {
             el.style.background = 'url(' + el.getAttribute('data-background-lg') + ')';
         }
     });
 
-    [].slice.call(d.querySelectorAll('[data-background-color]')).map(function(el) {
+    [].slice.call(dd.querySelectorAll('[data-background-color]')).map(function(el) {
         el.style.background = 'url(' + el.getAttribute('data-background-color') + ')';
     });
 
-    [].slice.call(d.querySelectorAll('[data-color]')).map(function(el) {
+    [].slice.call(dd.querySelectorAll('[data-color]')).map(function(el) {
         el.style.color = 'url(' + el.getAttribute('data-color') + ')';
     });
 
@@ -127,15 +127,15 @@ d.addEventListener("DOMContentLoaded", function(event) {
     
 
     // Datepicker
-    var datepickers = [].slice.call(d.querySelectorAll('[data-datepicker]'))
+    var datepickers = [].slice.call(dd.querySelectorAll('[data-datepicker]'))
     var datepickersList = datepickers.map(function (el) {
         return new Datepicker(el, {
             buttonClass: 'btn'
           });
     })
 
-    if(d.querySelector('.input-slider-container')) {
-        [].slice.call(d.querySelectorAll('.input-slider-container')).map(function(el) {
+    if(dd.querySelector('.input-slider-container')) {
+        [].slice.call(dd.querySelectorAll('.input-slider-container')).map(function(el) {
             var slider = el.querySelector(':scope .input-slider');
             var sliderId = slider.getAttribute('id');
             var minValue = slider.getAttribute('data-range-value-min');
@@ -145,8 +145,8 @@ d.addEventListener("DOMContentLoaded", function(event) {
             var sliderValueId = sliderValue.getAttribute('id');
             var startValue = sliderValue.getAttribute('data-range-value-low');
 
-            var c = d.getElementById(sliderId),
-                id = d.getElementById(sliderValueId);
+            var c = dd.getElementById(sliderId),
+                id = dd.getElementById(sliderValueId);
 
             noUiSlider.create(c, {
                 start: [parseInt(startValue)],
@@ -160,11 +160,11 @@ d.addEventListener("DOMContentLoaded", function(event) {
         });
     }
 
-    if (d.getElementById('input-slider-range')) {
-        var c = d.getElementById("input-slider-range"),
-            low = d.getElementById("input-slider-range-value-low"),
-            e = d.getElementById("input-slider-range-value-high"),
-            f = [d, e];
+    if (dd.getElementById('input-slider-range')) {
+        var c = dd.getElementById("input-slider-range"),
+            low = dd.getElementById("input-slider-range-value-low"),
+            e = dd.getElementById("input-slider-range-value-high"),
+            f = [dd, e];
 
         noUiSlider.create(c, {
             start: [parseInt(low.getAttribute('data-range-value-low')), parseInt(e.getAttribute('data-range-value-high'))],
@@ -183,11 +183,9 @@ d.addEventListener("DOMContentLoaded", function(event) {
 
     
     
-    if(d.querySelector('.ct-chart-sales-value')) {
+    if(dd.querySelector('.ct-chart-sales-value')) {
         //Chart 5
-          new Chartist.Line('.ct-chart-sales-value', 
-          
-          
+          new Chartist.Line('.ct-chart-sales-value',          
           {
             labels: day_of_week,
             series: [
@@ -215,48 +213,94 @@ d.addEventListener("DOMContentLoaded", function(event) {
             }
         });
     }
-
-    if(d.querySelector('.ct-chart-ranking')) {
+    if(document.querySelector('.ct-chart-ranking')) {
         var chart = new Chartist.Bar('.ct-chart-ranking', {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-            series: [
-              [1, 5, 2, 5, 4, 3],
-              [2, 3, 4, 8, 1, 2],
-            ]
+            labels: item_label,
+            
+            series: item_seris
           }, {
-            low: 0,
-            showArea: true,
+            // width: 800,
+            // height: 150,
+            // donut: true,
+            stackBars: true,
+            horizontalBars: true,
+            // seriesBarDistance: 0,
             plugins: [
-              Chartist.plugins.tooltip()
+            //   Chartist.plugins.tooltip()
             ],
+            
             axisX: {
-                // On the x-axis start means top and end means bottom
-                position: 'end'
-            },
-            axisY: {
-                // On the y-axis start means left and end means right
-                showGrid: false,
+                // labelInterpolationFnc: function(value) {
+                //   return (value / 1000) + 'k';
+                // },
+                // offset: 100,
+                // showGrid: false,
                 showLabel: false,
-                offset: 0
-            }
+              },
+            axisY: {
+                offset: 100,
+                // showGrid: false,
+            }            
             });
           
           chart.on('draw', function(data) {
-            if(data.type === 'line' || data.type === 'area') {
-              data.element.animate({
-                d: {
-                  begin: 2000 * data.index,
-                  dur: 2000,
-                  from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-                  to: data.path.clone().stringify(),
-                  easing: Chartist.Svg.Easing.easeOutQuint
-                }
-              });
-            }
+            if(data.type === 'bar') {
+                data.element.attr({
+                  style: 'stroke-width: 40px;stroke-linecap: square;'
+                });
+            }            
         });
     }
+    if(document.querySelector('.ct-chart-compjs')) {
+    for (var df in dfh){
+        var xxxx;
+        xxxx = dfh[df];            
+        for (var xx in xxxx){
+            var yyyy, label, series;
+            yyyy = xxxx[xx];
+            label = yyyy[0];
+            series = yyyy[1];
+            if(document.querySelector('.ct-chart-compare' + xx)) {
+                var compchart = new Chartist.Bar('.ct-chart-compare' + xx, {
+                    labels: label,
+                    series: series
+                  }, {           
+                    
+                    seriesBarDistance: 10,
+                    plugins: [
+                      Chartist.plugins.tooltip()
+                    ],
+                    
+                    axisX: {                        
+                        offset: 100,                        
+                      },
+                    axisY: {
+                        offset: 100,
+                        labelInterpolationFnc: function(value) {
+                            return value + ' %'
+                            },
+                            scaleMinSpace: 15    
+                    }                    
+                    });                  
+                  compchart.on('draw', function(data) {
+                    if(data.type === 'bar') {
+                        data.element.attr({
+                          style: 'stroke-width: 10px;stroke-linecap: square; width:auto;height:auto;'
+                        });
+                    }                     
+                });
+            }
+        } 
+    }
+}
 
-    if(d.querySelector('.ct-chart-traffic-share')) {
+
+
+
+
+
+
+    if(dd.querySelector('.ct-chart-traffic-share')) {
         var data = {
             series: [70, 20, 10]
           };
@@ -280,11 +324,11 @@ d.addEventListener("DOMContentLoaded", function(event) {
         });         
     }
 
-    if (d.getElementById('loadOnClick')) {
-        d.getElementById('loadOnClick').addEventListener('click', function () {
+    if (dd.getElementById('loadOnClick')) {
+        dd.getElementById('loadOnClick').addEventListener('click', function () {
             var button = this;
-            var loadContent = d.getElementById('extraContent');
-            var allLoaded = d.getElementById('allLoadedText');
+            var loadContent = dd.getElementById('extraContent');
+            var allLoaded = dd.getElementById('allLoadedText');
     
             button.classList.add('btn-loading');
             button.setAttribute('disabled', 'true');
@@ -302,8 +346,8 @@ d.addEventListener("DOMContentLoaded", function(event) {
     //     speedAsDuration: true
     // });
 
-    if(d.querySelector('.current-year')){
-        d.querySelector('.current-year').textContent = new Date().getFullYear();
+    if(dd.querySelector('.current-year')){
+        dd.querySelector('.current-year').textContent = new Date().getFullYear();
     }
 
     // Glide JS
@@ -370,3 +414,5 @@ d.addEventListener("DOMContentLoaded", function(event) {
     // }
 
 });
+
+

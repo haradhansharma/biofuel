@@ -1,3 +1,5 @@
+import datetime
+from . nreport_class import ReportPDFData
 from pprint import pprint
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
@@ -10,39 +12,44 @@ from accounts.models import User, UserType
 from django.contrib import messages
 from django.urls import reverse
 from django_xhtml2pdf.utils import generate_pdf
-from . helper import label_assesment_for_donot_know, label_assesment_for_positive, overall_assesment_for_donot_know, overall_assesment_for_positive, get_current_evaluator
+from . helper import label_assesment_for_donot_know, label_assesment_for_positive, overall_assesment_for_donot_know, overall_assesment_for_positive, get_current_evaluator, nreport_context, OilComparision
 from django.contrib.auth.decorators import login_required
 from accounts.decorators import producer_required, report_creator_required
 from gfvp import null_session
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
-from django.utils.safestring import mark_safe
 from django.utils import timezone
 import ast
 from concurrent.futures import ProcessPoolExecutor, as_completed, ThreadPoolExecutor
 import django
+from evaluation.helper import LabelWiseData
+from django.contrib.sites.shortcuts import get_current_site
+import io  
+from django.http import FileResponse
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
+from reportlab.lib.units import inch
 
 import logging
 log =  logging.getLogger('log')
 
 #helper function should be called into the @login_required and @producer_required
 def set_evaluation(question, selected_option, evaluator):
-    log.info(f'initilizing set_evaluation for the question {question} of the evaluator {evaluator} !')
+    log.info(f'initilizing set_evaluation for the question {question.id} of the evaluator {evaluator} !')
     #delete prevous record if have to ensure reentry.
     try:
         log.info('Deleteing previous Evaluation Entry...........')   
         Evaluation.objects.filter(evaluator = evaluator, question = question).delete()    
-        log.info(f'Deleted previous Evaluation entry for the question {question} of the evaluator {evaluator}!')
+        log.info(f'Deleted previous Evaluation entry for the question {question.id} of the evaluator {evaluator}!')
     except:
-        log.info(f'No Previous Evaluation entry found for the question {question} of the evaluator {evaluator} to delete!')
+        log.info(f'No Previous Evaluation entry found for the question {question.id} of the evaluator {evaluator} to delete!')
     new_evaluation = Evaluation(evaluator = evaluator, option = selected_option, question = question ) 
     new_evaluation.save()
-    log.info(f'{new_evaluation} has been saved for the question number {question} of the evaluatior {evaluator}! selected option was {selected_option}')
+    log.info(f'{new_evaluation} has been saved for the question number {question.id} of the evaluatior {evaluator}! selected option was {selected_option}')
         
     
 #helper function should be called into the @login_required and @producer_required
 def set_eva_comments(question, comment, evaluator):    
-    log.info(f'Initializing set_eva_cooments for the question {question} of the evaluator {evaluator} !')
+    log.info(f'Initializing set_eva_cooments for the question {question.id} of the evaluator {evaluator} !')
     #check editing or fresh entry
     evacomments = EvaComments.objects.filter(evaluator = evaluator, question = question)
     if evacomments.exists():        
@@ -56,24 +63,24 @@ def set_eva_comments(question, comment, evaluator):
         log.info('No previous comments found!')
         new_eva_comment = EvaComments(evaluator = evaluator, question = question, comments = comment)
         new_eva_comment.save()
-        log.info(f'Saved comments for the question {question} for the evaluator {evaluator}! ')
+        log.info(f'Saved comments for the question {question.id} for the evaluator {evaluator}! ')
         
 #helper function should be called into the @login_required and @producer_required    
 def set_evastatment(request, selected_option, evaluator):    
     question = selected_option.question  
-    log.info(f'{question} detected to set_evastatment for the evaluator {evaluator} ! selected option {selected_option} found! ')  
+    log.info(f'{question.id} detected to set_evastatment for the evaluator {evaluator} ! selected option {selected_option} found! ')  
     #delete previous record of this option
     try:
         log.info(f'Deleteing previous EvalebelStatement which is not assesment............')
         EvaLebelStatement.objects.filter(question = question, evaluator = evaluator, assesment = False).delete()   
-        log.info(f'Deleted previous evalabelstatement for the option {selected_option} under the question {question} for the evaluator {evaluator} which is not assesment !')
+        log.info(f'Deleted previous evalabelstatement for the option {selected_option} under the question {question.id} for the evaluator {evaluator} which is not assesment !')
     except:
-        log.info(f'No previous EvalebelStatement found to delete for the option {selected_option} under question {question} of evaluator {evaluator} !')
+        log.info(f'No previous EvalebelStatement found to delete for the option {selected_option} under question {question.id} of evaluator {evaluator} !')
         
     #assined labels to the questions
-    log.info(f'Collecting labels for the question {question} where value set to "1" ')
+    log.info(f'Collecting labels for the question {question.id} where value set to "1" ')
     set_labels = Label.objects.filter(question =  question, value = 1)
-    log.info(f'{set_labels.count()} set labels found in the question {question} !')
+    log.info(f'{set_labels.count()} set labels found in the question {question.id} !')
     
     for set_label in set_labels:
         # defined_label = DifinedLabel.objects.get(name = set_label.name)
@@ -99,7 +106,7 @@ def set_evastatment(request, selected_option, evaluator):
         summery_statement_positive = EvaLebelStatement(evalebel = eva_label, statement = label_assesment_for_positive(request, eva_label, evaluator),  evaluator = evaluator, question = question,  assesment = True)
         summery_statement_positive.save()
         log.info(f'Saved new evalebelstatement for positive answer for the label {eva_label}')
-    log.info(f'set_evalabelstatement completed for the question {question} ! ')
+    log.info(f'set_evalabelstatement completed for the question {question.id} ! ')
         
 def get_eoi(eva_statement):
     '''
@@ -221,23 +228,27 @@ def option_add2(request):
     try:
         Evaluator.objects.get(id = request.session['evaluator'])
     except:
-        messages.warning(request, "What you're trying to do isn't a good idea!")
+        messages.warning(request, "What you're trying to do isn't a good idea, please start from begiing!")
         log.warning(f'Somebody try tried to access evaluation procedure without login!')
         return HttpResponseRedirect(reverse('evaluation:evaluation2'))   
     
     #essential part for authenticated user where logedin_required
     null_session(request) 
     log.info(f'starting answer and question procedure for {request.user}!')
+    
+    
     if request.method == 'POST':        
-        question_slug = request.POST['slug']       
-        option_id = request.POST['option_id'] 
-        comment = request.POST['comment']
-        
+        question_slug = request.POST['slug']    
         
         #checking options from server side, if frontend skipped by anyhow.        
         if 'option_id' not in request.POST:
+            log.info(f'Redirecting as no option selected by the user{request.user}')
             messages.warning(request, 'To proceed, please select an option!')
             return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(request.session['evaluator']), str(question_slug)]))       
+        
+           
+        option_id = request.POST['option_id'] 
+        comment = request.POST['comment']
         
         
         question = Question.objects.get(slug = question_slug)        
@@ -249,18 +260,21 @@ def option_add2(request):
         # I showed the result by tooltips on the frontend
         # But it was requirment.
         if 'get_feedback' in request.POST:
-            with ThreadPoolExecutor(max_workers=2, initializer=django.setup) as executor:
-                # save or update by checking existing coments of user of this report is exist.
-                set_eva_comments(question, comment,  get_current_evaluator(request) )
-                #save or update evaluation by checking existing evaluation
-                set_evaluation(question, selected_option, get_current_evaluator(request))  
+            # with ThreadPoolExecutor(max_workers=2, initializer=django.setup) as executor:
+            # save or update by checking existing coments of user of this report is exist.
+            log.info(f'Setting eva comments for {get_current_evaluator(request)}____________')
+            set_eva_comments(question, comment,  get_current_evaluator(request) )
+            #save or update evaluation by checking existing evaluation
+            log.info(f'setting evaluation during geting feedback for report {get_current_evaluator(request)}_______________')
+            set_evaluation(question, selected_option, get_current_evaluator(request))  
             return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(request.session['evaluator']), str(question_slug)]))
         
-        #check Option Submitted or not
+        #check Option Submitted or not on confirming the feedback
         #This is for first time.
         try: 
             Evaluation.objects.get(evaluator = get_current_evaluator(request), question = question).option
         except:
+            log.info(f'Optin not found_______________')
             messages.warning(request, 'To proceed, please select an option!')
             return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(request.session['evaluator']), str(question_slug)]))          
         
@@ -274,13 +288,22 @@ def option_add2(request):
         # #control adding or editing
         # set_evastatement_of_logical_string(request, selected_option, get_current_evaluator(request))
         
-        with ThreadPoolExecutor(max_workers=2, initializer=django.setup) as executor:
-            #re-confirm to avoid oparation mistak. as an unnecessary function running from client recomendation
-            executor.submit(set_evaluation, question, selected_option, get_current_evaluator(request))
-            #control adding or editing
-            executor.submit(set_evastatment, question, selected_option, get_current_evaluator(request))
-            #control adding or editing
-            executor.submit(set_evastatement_of_logical_string, question, selected_option, get_current_evaluator(request))
+        # with ThreadPoolExecutor(max_workers=2, initializer=django.setup) as executor:
+        #     #re-confirm to avoid oparation mistak. as an unnecessary function running from client recomendation
+        #     executor.submit(set_evaluation, question, selected_option, get_current_evaluator(request))
+        #     #control adding or editing
+        #     executor.submit(set_evastatment, question, selected_option, get_current_evaluator(request))
+        #     #control adding or editing
+        #     executor.submit(set_evastatement_of_logical_string, question, selected_option, get_current_evaluator(request))
+        #re-confirm to avoid oparation mistak. as an unnecessary function running from client recomendation
+        log.info(f'Setting evaluation for report {get_current_evaluator(request)}')
+        set_evaluation(question, selected_option, get_current_evaluator(request))
+        #control adding or editing
+        log.info(f'Setting evastatement for report {get_current_evaluator(request)}')        
+        set_evastatment(question, selected_option, get_current_evaluator(request))
+        #control adding or editing
+        log.info(f'Setting logical string for report {get_current_evaluator(request)}')        
+        set_evastatement_of_logical_string(question, selected_option, get_current_evaluator(request))
             
             
         #try to find next question if not found report will be genarated and the report(Evaluator) will mark as genarated.
@@ -289,17 +312,33 @@ def option_add2(request):
             next_question = selected_option.next_question  
             
             #This will force user to go to the question if trying to access initial page of evaluation.      
-            request.session['question'] = next_question.slug            
-        except:            
+            request.session['question'] = next_question.slug    
+            log.info(f'Next question found_______')              
+        except: 
+            log.info(f'Next question not found_____________')           
             #Mark report as genarated. if no next question found and redirect to Thanks page.                  
             evaluator = Evaluator.objects.get(id = request.session['evaluator'])            
             evaluator.report_genarated = True
             evaluator.save()
+            log.info(f'report marked as genareted_____')
+          
+            
+            #create history
+            log.info(f'Creating history of the report {evaluator}')
+            dfd = LabelWiseData(evaluator).picked_labels_dict()             
+            ldf =  LabelDataHistory.objects.filter(evaluator = evaluator)             
+            today = timezone.localtime(timezone.now()).date()            
+            ldf.filter(created__gte = today).delete()
+            LabelDataHistory.objects.create(evaluator = evaluator, items = dfd)
+            
+                
+                
+            log.info(f'Redirecting to the thankyou page')
             return HttpResponseRedirect(reverse('evaluation:thanks'))
         
         #It is for manual submission but button hide in front-end
-        if 'submit_and_stay' in request.POST:   
-            return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(request.session['evaluator']), question_slug]))
+        # if 'submit_and_stay' in request.POST:   
+        #     return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(request.session['evaluator']), question_slug]))
         
         #It is for automatic detection where to go to next based on selection of admin
         if 'submit_and_auto' in request.POST:            
@@ -318,8 +357,8 @@ def question_dataset(request):
     check if do not know
     check if 'no'    
     '''
-    #sort_order is most important here
-    # childs = Question.objects.filter(is_door =False, is_active = True).order_by('sort_order')
+    log.info(f'BNuilding question dataset to show in the evaluation question form')
+    #sort_order is most important here    
     stored_questions = Question.objects.filter(is_active = True).order_by('sort_order')   
     
     #build parentwise shorted question    
@@ -391,7 +430,7 @@ def question_dataset(request):
         }
         results.update(data)       
             
-    
+    log.info(f'Question dataset build___________')
     return results
 
 def get_vedio_urls(search_term):
@@ -414,12 +453,14 @@ def get_vedio_urls(search_term):
 def vedio_urls(search_term):
     saved_urls = Youtube_data.objects.filter(term = search_term) 
     if saved_urls.exists():
+        log.info(f'Found saved url for youtube video________')
         saved_url = saved_urls[0]
         vedio_urls = ast.literal_eval(saved_url.urls) #convert string list to list
         if (saved_url.update_date + timezone.timedelta(days=7))  < timezone.now():
             saved_url.urls = get_vedio_urls(search_term)
             saved_url.save()         
     else:
+        log.info(f'Hiting api for youtube video as no saved video found_______')
         vedio_urls = get_vedio_urls(search_term)        
         Youtube_data.objects.create(term = search_term, urls = vedio_urls)  
     return vedio_urls  
@@ -449,6 +490,7 @@ def eva_question(request, evaluator, slug):
     '''
        
     if 'evaluator' not in request.session:
+        log.info(f'Found unusual activity by user {request.user} as he tried to access evaluation process where he is not permitted.')
         messages.warning(request, 'You are not permitted to access the requested webpage!')
         return HttpResponseRedirect(reverse('evaluation:evaluation2')) 
     
@@ -464,13 +506,15 @@ def eva_question(request, evaluator, slug):
         request.session['evaluator'] = evaluator
         edit_evaluator = eva      
         edit_evaluator.report_genarated = False
+        log.info(f'As report is being edited so report_genarated set to false________________')
         edit_evaluator.save()    
     '''
     Below evaluator checking will ensure the correct report are editing.
     Otherwise user will put data by thinking one report but data can be edited in another report. Things can be messy.
      
     ''' 
-    if request.session['evaluator'] !=  evaluator:            
+    if request.session['evaluator'] !=  evaluator:      
+        log.info(f'Without completing a report trying to edit another report, so it is abroted________')      
         messages.warning(request, f"You have an active, unfinished Report, Report#{request.session['evaluator']}! So you're not permitted to perform this procedure!")        
         return HttpResponseRedirect(reverse('accounts:user_link', args=[str(request.user.username)]))   
     
@@ -481,11 +525,18 @@ def eva_question(request, evaluator, slug):
     if eva.creator.id == request.user.id:
         pass
     else:
+        log.info(f'The report is being edited is not created you user {request.user}______abroating______')
         raise PermissionDenied  
     
     
+    all_questions = Question.objects.all()
+    question = all_questions.get(slug = slug)   
+    evaluator_data = get_current_evaluator(request)
+    evaluation_data = Evaluation.objects.all()
     
-    question = Question.objects.get(slug = slug)   
+    
+    
+    
     
     '''
     =====
@@ -498,19 +549,21 @@ def eva_question(request, evaluator, slug):
     otherwise will give message and will not allow to go to inside.    
     '''
     if question.is_door:
-        pass
+        log.info(f'Parent Question Clicked________for report {evaluator_data}_______')        
     else:
         parent = question.parent_question
-        evaluations = Evaluation.objects.filter(evaluator = get_current_evaluator(request)).order_by('id')
+        evaluations = evaluation_data.filter(evaluator = evaluator_data).order_by('id')
         questions_of_report = []
         for evaluation in evaluations:
             questions_of_report.append(evaluation.question) 
         try:
-            get_option = Evaluation.objects.get(evaluator = get_current_evaluator(request), question = parent).option
+            get_option = evaluation_data.get(evaluator = evaluator_data, question = parent).option
             if parent not in questions_of_report or get_option.yes_status == False:
+                log.info(f'Parent question is not answered as "yes" to go inside of this quesion block_____so abroating to the parent question')
                 messages.warning(request, 'To go inside this block, you must answer "Yes" to the specified question!')
                 return HttpResponseRedirect(reverse('evaluation:eva_question' ,  args=[int(evaluator),  str(parent.slug)]))  
-        except:            
+        except:   
+            log.info(f'Parent question is not answered as "yes" to go inside of this quesion block_____so abroating to the parent question')                     
             messages.warning(request, 'To go inside this block, you must answer "Yes" to the specified question!')
             return HttpResponseRedirect(reverse('evaluation:eva_question' ,  args=[int(evaluator), str(parent.slug)]))  
         
@@ -518,40 +571,66 @@ def eva_question(request, evaluator, slug):
     '''
     The qualified rang can be set from Admin>>Site>>qualified ans rang
     '''
-    qualified_ans_rang = int(ExSite.on_site.get().qualified_ans_range)
-    
+    qualified_ans_rang = int(ExSite.on_site.get().qualified_ans_range)    
         
     options = Option.objects.filter(question = question)
-    evaluator_data = get_current_evaluator(request)
+    
     eva_lebels = EvaLabel.objects.filter(evaluator = evaluator_data).order_by('sort_order')
     
     
-    request.session['total_question'] = Evaluation.objects.filter(evaluator = evaluator).count()  
-    total_ques = Question.objects.all().count() - request.session['total_question']
-    timing_text = f"Depending on how many answers you provide, the self assessment will take anywhere from {round(total_ques/10)} to {round(total_ques/3)} minutes. At the end of the assessment, a PDF report will be provided, which can be retrieved via the Dashboard at a later stage."
+    request.session['total_question'] = evaluation_data.filter(evaluator = evaluator).count()  
+    total_ques = all_questions.count() - request.session['total_question']
+    timing_text = f"Depending on how many answers you provide, the self assessment will take n\
+        anywhere from {round(total_ques/10)} to {round(total_ques/3)} minutes. At the end of the n\
+            assessment, a PDF report will be provided, which can be retrieved via the Dashboard at a later stage."
     
     
     try:
-        submitted_comment = EvaComments.objects.get(evaluator = get_current_evaluator(request), question = question).comments
+        submitted_comment = EvaComments.objects.get(evaluator = evaluator_data, question = question).comments
     except:
         submitted_comment = None   
     
       
     try:
-        selected_option = Evaluation.objects.get(evaluator = get_current_evaluator(request), question = question).option
+        selected_option = evaluation_data.get(evaluator =evaluator_data, question = question).option
     except:
         selected_option = None  
+    
+    
+    # Create push url for HTMX     
+    question_in_evaluation = evaluation_data.filter(evaluator = evaluator_data, question = question)      
+    if question_in_evaluation.exists():
+        try:
+            next_question_slug = ((question_in_evaluation.get()).option).next_question.slug
+            request.session['push_url'] = reverse('evaluation:eva_question', args=[int(request.session['evaluator']), next_question_slug])            
+        except:
+            request.session['push_url'] = reverse('evaluation:thanks')
+    else:
+        request.session['push_url'] = ''
         
-        
-    chart_data = StandaredChart.objects.filter(question = question)  
+    # Get Chart Data of this question    
+    log.info(f'Geting standared oil data for the question {question.id}___for the report {evaluator_data}__________')
+    chart_data = StandaredChart.objects.filter(question = question)      
+    oil_graph_data = []
+    for oil in chart_data:            
+        try:             
+            oil_data = OilComparision(oil).packed_labels()      
+            item_label = oil_data.columns.values.tolist()
+            item_seris = oil_data.values.tolist()
+            data_dict = {
+                oil.oil_name : [item_label, item_seris]
+            }
+            oil_graph_data.append(data_dict)
+        except Exception as e:
+            continue
     
     '''
     Geting data from youtube data api 
     update data in each week   
      
     '''
-    search_term = str(question.name) + ', ' +  str(get_current_evaluator(request).biofuel.name)    
-       
+    search_term = str(question.name) + ', ' +  str(evaluator_data.biofuel.name) 
+    log.info(f'Youtube search term {search_term}___________')     
         
     context ={
         'slug' : slug,
@@ -568,7 +647,8 @@ def eva_question(request, evaluator, slug):
         'submitted_comment' : submitted_comment,
         'chart_data' : chart_data,
         'vedio_urls' : vedio_urls(search_term),
-        'search_term' : search_term
+        'search_term' : search_term,
+        'oil_graph_data' : oil_graph_data
         
     }
     return render(request, 'evaluation/eva_question.html', context = context)
@@ -581,7 +661,7 @@ Initial Interface for evaluation
 
 @login_required
 @producer_required
-def eva_index2(request):
+def eva_index2(request): 
     '''
     Initial data collection for each evaluation report.
     if were sumitted a question user will be redirected that question
@@ -594,16 +674,19 @@ def eva_index2(request):
     
     
     #Preparing guard to check whether system should take initial data or need to forwared to next_question of selected question previously.
+    log.info(f'Checking new creating or adding or editing_______')
     try:
-        session_evaluator = Evaluator.objects.get(id = request.session['evaluator'])
+        session_evaluator = Evaluator.objects.get(id = request.session['evaluator'])      
     except Exception as e:        
         session_evaluator = False  
         
         
     #get first question of evaluation process based on short_order. If no first question set by admin will redirect to homepage with warning message.
+    log.info(f'Check first question is set or not by admin______________')
     try:
         first_of_parent = Question.objects.filter(is_door = True).order_by('sort_order').first()        
     except:
+        log.info(f'First question has not been set by the admin____________________')
         messages.warning(request,'There is something wrong in procedure setting by site admin, Please try again latter!')
         return HttpResponseRedirect(reverse('evaluation:evaluation2'))   
     
@@ -691,25 +774,36 @@ def eva_index2(request):
         if an active incomplete report user will forwared to the recorde next question.
         Otherwise will go to the first question of evaluation decided by admin.        
         '''
-        
+        new_report = request.session['evaluator']
+        next_question = request.session['question']
         if 'question' in request.session:
-            return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(request.session['evaluator']), str(request.session['question'])]))
+            log.info(f' Going to the next question {next_question} of the report {new_report}_________')
+            return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(new_report), str(next_question)]))
         else:
-            return HttpResponseRedirect(reverse('evaluation:eva_question' ,  args=[int(request.session['evaluator']), str(first_of_parent.slug)]))
+            
+            log.info(f'Report {new_report} being started with the first qestion {first_of_parent}______________')
+            return HttpResponseRedirect(reverse('evaluation:eva_question' ,  args=[int(new_report), str(first_of_parent.slug)]))
             
     total_ques = Question.objects.all().count()
-    box_timing = f"Depending on how many answers you provide, the self assessment will take anywhere from {round(total_ques/10)} to {round(total_ques/3)} minutes. At the end of the assessment, a PDF report will be provided, which can be retrieved via the Dashboard at a later stage."
+    box_timing = f"Depending on how many answers you provide, the self assessment will take n\
+    anywhere from {round(total_ques/10)} to {round(total_ques/3)} minutes. At the end of the n\
+        assessment, a PDF report will be provided, which can be retrieved via the Dashboard at a later stage."
    
     context ={
         'form': form,
         'box_timing': box_timing,        
     }
     return render(request, 'evaluation/new_index.html', context = context)
+
+
+
+
     
    
 @login_required
 @producer_required    
 def thanks(request):    
+    
     
     
     #essential part where login_required
@@ -720,7 +814,8 @@ def thanks(request):
    
     
     try:
-        last_reports = Evaluator.objects.filter(creator = request.user, report_genarated = True).order_by('-create_date').first()  
+        # last_reports = Evaluator.objects.filter(creator = request.user, report_genarated = True).order_by('-create_date').first()  
+        last_reports = get_current_evaluator(request)        
     except:
         last_reports = None    
     
@@ -729,15 +824,18 @@ def thanks(request):
     if request.session['evaluator'] == '':        
         return HttpResponseRedirect(reverse('accounts:user_link', args=[str(request.user.username)]))
     
+    evaluator =  get_current_evaluator(request)
     #Calculation to display on the thankyou page.
-    ans_ques = EvaLebelStatement.objects.filter(evaluator = get_current_evaluator(request), question__isnull = False, assesment = False).values('question').distinct().count()
-    dont_know_ans = EvaLebelStatement.objects.filter(evaluator = get_current_evaluator(request), question__isnull = False, dont_know = 1, assesment = False).values('question').distinct().count()
-    pos_ans = EvaLebelStatement.objects.filter(evaluator = get_current_evaluator(request), question__isnull = False, positive = 1, assesment = False).values('question').distinct().count()
+    ans_ques = EvaLebelStatement.objects.filter(evaluator = evaluator, question__isnull = False, assesment = False).values('question').distinct().count()
+    dont_know_ans = EvaLebelStatement.objects.filter(evaluator = evaluator, question__isnull = False, dont_know = 1, assesment = False).values('question').distinct().count()
+    pos_ans = EvaLebelStatement.objects.filter(evaluator = evaluator, question__isnull = False, positive = 1, assesment = False).values('question').distinct().count()
     positive_percent = (int(pos_ans) * 100)/int(ans_ques)
     dont_know_percent = (int(dont_know_ans) * 100)/int(ans_ques)
     
+    
+     
     gretings = 'Thank you very much! Your information has been saved!'
-    button = reverse('evaluation:report', args=[last_reports.slug])
+    button = reverse('evaluation:nreport', args=[last_reports.slug])
     
     '''
     Build all report editing url
@@ -752,10 +850,14 @@ def thanks(request):
             setattr(report, 'last_slug', last_question.slug )
         except:
             setattr(report, 'last_slug', first_of_parent.slug )
+            
+    df = LabelWiseData(last_reports).packed_labels()  
     
-       
+    item_label = df.columns.values.tolist()
+    item_seris = df.values.tolist()
     
     context = {
+        
         'gretings': gretings,
         'button': button,
         'ans_ques': ans_ques,
@@ -765,8 +867,12 @@ def thanks(request):
         'dont_know_percent': str("%.2f" % dont_know_percent) + '%',
         'reports': reports,
         'last_reports' : last_reports,
+        'item_label' : item_label,
+        'item_seris' : item_seris,
         'complete_report_button_text': 'Confirm and Generate',
-        'complete_warning' : 'Please confirm that this session of self-evaluation has been completed by clicking here. It will generate a comprehensive report. Before any changes to other reports can be made, the confirmation is required. You may also amend the report in the future after confirmation.'
+        'complete_warning' : 'Please confirm that this session of self-evaluation has been completed by clicking here. n\
+            It will generate a comprehensive report. Before any changes to other reports can be made, the confirmation is n\
+                required. You may also amend the report in the future after confirmation.'
     }
     
     return render(request, 'evaluation/thanks.html', context = context)
@@ -774,7 +880,7 @@ def thanks(request):
 
 @login_required
 @report_creator_required
-def report(request, slug):
+def report(request, slug): 
     #essential part where login_required
     
     null_session(request) 
@@ -795,10 +901,7 @@ def report(request, slug):
         get_report = Evaluator.objects.get(slug = slug)
     except:
         messages.warning(request, 'No report found!')
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    
-    
-    
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))  
     
     
     #genarating PDF . Please ensure django-xhtml2pdf==0.0.4 installed
@@ -807,12 +910,9 @@ def report(request, slug):
     eva_statment = EvaLebelStatement.objects.filter(evaluator = get_report).order_by('pk')
     
     
-    
-    
     # get ordered next activities
     next_activities = NextActivities.objects.all().order_by('priority')    
-    # get common label which is executive summary
-    # common_label = eva_label.get(label=DifinedLabel.objects.get(common_status = True))
+    # get common label which is executive summary    
     common_label = eva_label.get(label__common_status = True)
     #delete any prevous record for this current report
     try:
@@ -831,12 +931,9 @@ def report(request, slug):
         # dont know question will not consider as answere    
         if es.question and not es.dont_know:            
             questions_of_report.add(es.question)    
-    # As we are going to enter in the database's next_step field and will be retrive accordingly and diferent label have diferent type of statement we will push the headeing from here.
-    summery_statement_next_activities = EvaLebelStatement(evalebel = common_label, next_step = '<b>The following is the prioritised list of validation activities that should be undertaken based on your self assessment responses:</b> <ol>',  evaluator =  get_report, next_activity = True)   
-    summery_statement_next_activities.save()
-    
-    for na in next_activities: 
-        
+
+    na_ac = []    
+    for na in next_activities:         
         #geting perchantage
         related_questions = set(na.related_questions.all())
         compulsory_questions = set(na.compulsory_questions.all())
@@ -863,23 +960,16 @@ def report(request, slug):
             setattr(na, 'is_active', 'Not Started')                         
         else:
             pass     
-        
-       
-        # we will take which is not completed    
+    
         if na.is_active != 'Completed':  
-            if int(EvaLebelStatement.objects.filter(evalebel = common_label, evaluator =  get_report, next_activity = True).count()) <= 4:  
-                #This is top 5 next activity to the executive summary to save memory space.  
-                summery_statement_next_activities = EvaLebelStatement(evalebel = common_label, next_step = f"<li> <p> <b> {str(na.name_and_standared)}({na.is_active}) </b> </p> <p> Short Description: {str(na.short_description)} </p> </li>",  evaluator =  get_report, next_activity = True)    
-                summery_statement_next_activities.save() 
+            if len(na_ac) <= 5:
+                na_ac.append(na)
             else:
-                pass
+                break
         else:
-            pass
+            continue
         
-        
-    # like heading we will puch fotter as well from here    
-    summery_statement_next_activities = EvaLebelStatement(evalebel = common_label, next_step ='</ol> <p>PLEASE SEE THE "Deatils of activities" SECTION FOR MORE DETAILS.</p>',  evaluator =  get_report, next_activity = True)
-    summery_statement_next_activities.save()   
+
     '''
     ========
     part of next activitis end
@@ -895,7 +985,9 @@ def report(request, slug):
         'current_evaluator': get_report,
         'eva_label': eva_label,
         'eva_statment': eva_statment,
-        'next_activities' : next_activities
+        'next_activities' : next_activities,
+        'na_ac' : na_ac,
+        
     }
 
     resp = HttpResponse(content_type='application/pdf')
@@ -908,7 +1000,59 @@ def report(request, slug):
 
 
 
+@login_required
+@report_creator_required
+def nreport(request, slug): 
+    context = nreport_context(request, slug)
+    return render(request, 'evaluation/nreport.html', context = context)   
 
+        
+@login_required
+@report_creator_required       
+def nreport_pdf(request, slug):
+    '''
+    new df report based on reportlab
+    '''
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(buffer)   
+    rpf = ReportPDFData(request, slug)
+    
+    doc.leftMargin = rpf.M
+    doc.rightMargin = rpf.M   
+    doc.topMargin = rpf.M
+    doc.bottomMargin = rpf.M
+    doc.pagesize = rpf.pagesize
+    
+    title = f'EVALUATION REPORT OF {rpf.evaluator().biofuel.name.upper()}--#{rpf.evaluator().id}'
+    
+    doc.title = title
+    doc.author = rpf.author    
+    doc.creator = rpf.creator    
+    doc.producer = rpf.producer
+    
+    author = Paragraph(rpf.author, rpf.Footer)
+    creator = Paragraph(rpf.creator, rpf.Footer)   
+    producer = Paragraph(rpf.producer, rpf.Footer)
+    
+    
+    Story = rpf.wrapped_pdf()
+    Story.append(PageBreak())
+    Story.append(Spacer(rpf.PH/2,rpf.PH/2))    
+    Story.append(rpf.ulineDG100())
+    Story.append(Paragraph('<a name = "on"/><b>:Author:</b>', rpf.Footer))
+    Story.append(author)
+    Story.append(Paragraph('<b>:Creator:</b>', rpf.Footer))    
+    Story.append(creator)
+    Story.append(Paragraph('<b>:Producer:</b>', rpf.Footer))    
+    Story.append(producer)
+    Story.append(Spacer(0.25*inch,0.25*inch))   
+    Story.append(Paragraph('<b>:::::::::::::::::THE END::::::::::::::::::</b>', rpf.Footer))    
+     
+       
+    doc.build(Story, onFirstPage=rpf.first_page, onLaterPages=rpf.later_page)
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=False, filename=title + '.pdf')
+    
 
 
 
