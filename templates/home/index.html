@@ -180,7 +180,7 @@
                         {% for blog in latest_blogs %}
                         <div class="col d-flex"  data-aos="zoom-in">
                             <div class="card bgjessica-light shadow-sm flex-fill overflow-hidden">
-                                <img src="{{blog.image.url}}" class="img-fluid" alt="{{blog.title}}">
+                                <img src="{% static 'blog.image.url' %}" class="img-fluid" alt="{{blog.title}}">
                                 <div class="card-body">
                                     <p class="card-text jessica-text">{{blog.body|safe|truncatechars:200}}</p>
                                     <div class="d-flex justify-content-between align-items-center">
