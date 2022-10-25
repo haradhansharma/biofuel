@@ -93,7 +93,7 @@ def send_blog_mail():
     mail_to_lead = []    
     for pending in pendings: 
         try:
-            lead = Lead.objects.get(email_address = pending.to)       
+            lead = Lead.objects.filter(email_address = pending.to)[0]      
             message = render_to_string('emails/crm_blog_mail.html', {                        
                         'lead' : lead,                                                               
                         'domain': current_site.domain,   
