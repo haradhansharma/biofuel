@@ -40,7 +40,7 @@
                 {% for allreport in allreports %}
                 <tr>
                     <td class="text-gray-900" scope="row">#
-                        <a href="{% url 'evaluation:report'  allreport.g_report.report.slug %}" target="_blank">{{ allreport.g_report.report.id }}</a>
+                        <a href="{% url 'evaluation:nreport'  allreport.g_report.report.slug %}" target="_blank">{{ allreport.g_report.report.id }}</a>
                     </td>
                     <td class="fw-bolder text-gray-500">
                         {{ allreport.g_report.report.biofuel }}
