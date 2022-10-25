@@ -9,6 +9,7 @@ from django_cron import CronJobBase, Schedule
 from blog.models import *
 from concurrent.futures import ProcessPoolExecutor, as_completed, ThreadPoolExecutor
 import django
+from django.utils.safestring import mark_safe
 
 import logging
 log =  logging.getLogger('log')
@@ -28,6 +29,9 @@ def pending_queue_count():
         return MailQueue.objects.filter(processed = False).count()
     except:
         return 0   
+    
+    
+
 
 
 
@@ -46,13 +50,13 @@ def send_lead_mail():
     mail_to_lead = []    
     for pending in pendings:
         try:
-            lead = Lead.objects.get(email_address = pending.to)       
+            lead = Lead.objects.filter(email_address = pending.to)[0]     
             message = render_to_string('emails/crm_initial_mail.html', {
                         'confirm_code': lead.confirm_code,
                         'lead' : lead,                                                               
                         'domain': current_site.domain,            
                         }) 
-            mail_to_lead.append((subject, message, settings.DEFAULT_FROM_EMAIL, [pending.to]))                            
+            mail_to_lead.append((subject, mark_safe(message), settings.DEFAULT_FROM_EMAIL, [pending.to]))                            
             pending_to_this = queued.get(to = pending.to, processed = False)
             pending_to_this.tried += 1       
             pending_to_this.processed = True
@@ -99,7 +103,7 @@ def send_blog_mail():
                         'domain': current_site.domain,   
                         'blog': pending.blog       
                         }) 
-            mail_to_lead.append((subject, message, settings.DEFAULT_FROM_EMAIL, [pending.to]))                            
+            mail_to_lead.append((subject, mark_safe(message), settings.DEFAULT_FROM_EMAIL, [pending.to]))                            
             pending_to_this = queued.get(to = pending.to, processed = False)
             pending_to_this.tried += 1       
             pending_to_this.processed = True
