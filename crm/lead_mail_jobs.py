@@ -42,8 +42,8 @@ def send_lead_mail():
     # 3. It then loops through each email and sends an email to each one.
     # 4. If the email has been tried more than 2 times, it deletes it from the MailQueue table.
     # 5. if process time more then 90 days that record will be deleted
-    queued = MailQueue.objects.all()     
-    pendings = queued.filter(processed = False).order_by('-added_at')[:settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME] 
+    queued = MailQueue.objects.all().order_by('-added_at')   
+    pendings = queued.filter(processed = False)[:settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME] 
     batch = pendings.count()  
     current_site = Site.objects.get_current()   
     subject = current_site.domain + ' miss you!'       
@@ -57,7 +57,7 @@ def send_lead_mail():
                         'domain': current_site.domain,            
                         }) 
             mail_to_lead.append((subject, mark_safe(message), settings.DEFAULT_FROM_EMAIL, [pending.to]))                            
-            pending_to_this = queued.get(to = pending.to, processed = False)
+            pending_to_this = queued.filter(to = pending.to, processed = False)[0]
             pending_to_this.tried += 1       
             pending_to_this.processed = True
             pending_to_this.process_time = CURRENT
@@ -89,8 +89,8 @@ def send_blog_mail():
     # 3. It then loops through each email and sends an email to each one.
     # 4. If the email has been tried more than 2 times, it deletes it from the MailQueue table.
     # 5. if process time more then 90 days that record will be deleted
-    queued = BlogMailQueue.objects.all()
-    pendings = queued.filter(processed = False).order_by('-added_at')[:settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME] 
+    queued = BlogMailQueue.objects.all().order_by('-added_at')
+    pendings = queued.filter(processed = False)[:settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME] 
     batch = pendings.count()  
     current_site = Site.objects.get_current()   
     subject = 'New post published on "' + current_site.domain + '"!'       
@@ -104,7 +104,7 @@ def send_blog_mail():
                         'blog': pending.blog       
                         }) 
             mail_to_lead.append((subject, mark_safe(message), settings.DEFAULT_FROM_EMAIL, [pending.to]))                            
-            pending_to_this = queued.get(to = pending.to, processed = False)
+            pending_to_this = queued.filter(to = pending.to, processed = False)[0]
             pending_to_this.tried += 1       
             pending_to_this.processed = True
             pending_to_this.process_time = CURRENT
