@@ -24,7 +24,7 @@ Logo new development.png
 
 
 templates/home/index_bkup.html
-
+logs/*
 logs/error.log
 logs/gfvp_debug.log
 logs/info.log
