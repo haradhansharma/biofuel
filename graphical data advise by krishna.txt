@@ -7,4 +7,4 @@ mysqldump -u krishnahara -h krishnahara.mysql.pythonanywhere-services.com 'krish
 
 mysqldump -u krishnahara -h krishnahara.mysql.pythonanywhere-services.com 'krishnahara$biofuel'  > evaluation_standaredchart-backup.sql
 
-mysqldump -u krishnahara -h krishnahara.mysql.pythonanywhere-services.com --set-gtid-purged=OFF --no-tablespaces --column-statistics=0 'krishnahara$biofuel' evaluation_standaredchart > evaluation_standaredchart-backup.sql
+mysqldump -u krishnahara -h krishnahara.mysql.pythonanywhere-services.com --set-gtid-purged=OFF --no-tablespaces --column-statistics=0 'krishnahara$biofuel'> gfvp-backup.sql
