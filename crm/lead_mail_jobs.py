@@ -68,7 +68,7 @@ def send_lead_mail():
             
     total_sent = len(mail_to_lead)    
     #send bulk mail using only one conenction
-    log.info('Initializing CRM bulk mail sending operation for total {total_sent} mail !')
+    log.info(f'Initializing CRM bulk mail sending operation for total {total_sent} mail !')
     send_mass_mail((mail_to_lead), fail_silently=False)
     log.info(f'{total_sent} mail sent out of pending {batch} ')
     try:  
@@ -114,7 +114,7 @@ def send_blog_mail():
     
     total_sent = len(mail_to_lead)    
     #send bulk mail using only one conenction
-    log.info('Initializing CRM blog bulk mail sending operation for total {total_sent} mail!')
+    log.info(f'Initializing CRM blog bulk mail sending operation for total {total_sent} mail!')
     send_mass_mail((mail_to_lead), fail_silently=False)
     log.info(f'{total_sent} blog mail sent out of pending {batch} ')
     
