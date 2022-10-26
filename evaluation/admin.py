@@ -134,7 +134,7 @@ class EvaluatorAdmin(admin.ModelAdmin):
                 
                 # send mail to the creator with update information    
                 subject = f'Updated report #{copy_evaluator.id} with latest feedback based on #{i.id}' 
-                message = render_to_string('emails/feedback_update.html', {
+                message = render_to_string('emails/feedback_update.html', { 
                             'copy_evaluator': copy_evaluator,                                                                                        
                             'domain': current_site.domain,    
                             'evaluator' : i        

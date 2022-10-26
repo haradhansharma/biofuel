@@ -25,7 +25,7 @@ class ExSite(models.Model):
     twitter_link = models.URLField()
     linkedin_link = models.URLField()
     
-    #This is beeing used in the evaluation procedure.
+    
     qualified_ans_range = models.IntegerField(default=1)
     
     # It is implemented for future roadmap

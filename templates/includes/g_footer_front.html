@@ -9,9 +9,9 @@
         
         
         
-        <div class="d-flex justify-content-between align-items-center" >
+        <div class="d-flex justify-content-between align-items-center border-bottom border-light border-2 p-2" >
             <div class="d-flex text-start justify-content-center align-items-center" role="contentinfo">
-                <img class="mb-4" height="50px" src="{% static 'assets/shippinglab-logo.svg' %}" alt="Shipping lab" >
+                <img class="mb-0" height="50px" src="{% static 'assets/shippinglab-logo.svg' %}" alt="Shipping lab" >
             </div>
 
             <div class="d-flex justify-content-center align-items-center">           
@@ -22,10 +22,35 @@
             <div class="d-flex text-end justify-content-center align-items-center" role="contentinfo">
                 <a class="d-flex justify-content-center" target="_blank" href="{% url 'guide:guide_home' %}"
                     title="gf-vp guide">
-                    <img src="{% static 'guide/logo-02.png' %}" height="50px" class="mb-4" alt="gf-vp guide">
+                    <img src="{% static 'guide/logo-02.png' %}" height="50px" class="mb-0" alt="gf-vp guide">
                 </a>
             </div>
         </div>
+
+        <div class="d-flex text-center justify-content-center align-items-center border-bottom border-light border-2 p-2" role="contentinfo">
+            <div class="card p-2 bg-transparent border-0">
+
+                <div class="card-header pb-0 pt-0">{{site_info.name}}</div> 
+            <div class="card-title">
+                <div><b>Phone:</b> <a href="tel:{{site_info.phone}} ">{{site_info.phone}} </a> <b>Email:</b><a href="mailto:{{site_info.email}}">{{site_info.email}}</a></div>                 
+               <div><b>Address:</b><br> {{site_info.location}}</div> 
+            </div>
+            <div class="card-text">
+
+                <span class="badge bg-dark h4"><a href="{{site_info.facebook_link}}" target="_blank" rel="nofollow">Facebook</a></span>
+                <span class="badge bg-dark h4"><a href="{{site_info.twitter_link}}" target="_blank" rel="nofollow">Twitter</a></span>
+                <span class="badge bg-dark h4"><a href="{{site_info.linkedin_link}}" target="_blank" rel="nofollow">LinkedIn</a></span>
+                
+
+            </div>
+            
+
+            </div>
+           
+
+
+        </div>
+       
 
         
 
@@ -33,10 +58,10 @@
             <p class="fw-normal font-small">
                 <span class="text-white">&copy;</span>
                 <a class="link-white" href="{% url 'home:home' %}">
-                    www.gf-vp.com
+                    {{site_info.domain}}
                 </a>                    
                 <span class="text-light">-2022 || coded by </span>                    
-                <a target="_blank" class="link-white" href="https://www.hrdnsh.com">
+                <a target="_blank" class="link-white" href="https://hrdnsh.com">
                     Haradhan Sharma.
                 </a>
             </p>

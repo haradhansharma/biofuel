@@ -21,6 +21,19 @@ def get_common_status(value):
         raise ValidationError('A common status named "' + common_status.name +'" already exist! Only One common status allowed!')
     else:
         pass
+    
+    
+# The mail ques will be executed by crontab and will e created during saving BlogPost   
+# class ReportMailQueue(models.Model):
+#     to = models.CharField(max_length=256, null=True, blank=True)
+#     blog = models.ForeignKey(BlogPost, on_delete=models.CASCADE)    
+#     added_at = models.DateTimeField(auto_now_add=True)
+#     processed = models.BooleanField(default=False)
+#     process_time = models.DateTimeField(auto_now=True)
+#     tried=models.IntegerField(default=0)
+    
+#     def __str__(self):
+#         return self.to
 
 
 class DifinedLabel(models.Model):

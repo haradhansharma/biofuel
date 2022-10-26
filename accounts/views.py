@@ -266,9 +266,7 @@ def activate(request, uidb64, token):
 
 
 @login_required
-def userpage(request, username):     
-    
-    
+def userpage(request, username):  
     
     #This is essential where user loggedin
     null_session(request)   
