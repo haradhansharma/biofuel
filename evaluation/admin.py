@@ -25,12 +25,17 @@ class Options(admin.TabularInline):
     model = Option
     extra = 0 
     fk_name = "question"
+    
+class StandaredCharts(admin.TabularInline):
+    model = StandaredChart
+    extra = 0 
+    fk_name = "question"
 
 class QuestionAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ('sort_order', 'name', 'is_door',)
     list_filter = ('is_door','is_active',)
     ordering = ('sort_order',)
-    inlines = [Labels, Options]    
+    inlines = [Labels, Options, StandaredCharts]    
 admin.site.register(Question, QuestionAdmin) 
 
 
