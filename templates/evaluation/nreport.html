@@ -173,6 +173,7 @@
                                                     <!--std Chart-->  
                                                     <p class="mb-1">                               
                                                         <b>Typical std values : </b>
+                                                        <div class="table-responsive">
                                                         <table class="table align-middle">
                                                             <thead>
                                                               <tr>
@@ -193,6 +194,7 @@
                                                             {% endfor %}                                                               
                                                             </tbody>
                                                           </table>
+                                                        </div>
                                                         </p>                                                    
                                                 </td>
                                             </tr>
@@ -202,7 +204,8 @@
                                         <div>
                                         <h4 id="doa" class="mt-4  border-bottom border-2 border-primary">Details of activities:</h4>
                                         {% for e in next_activities %}
-                                        <table style="font-size: 14px;">
+                                        <div class="table-responsive">
+                                        <table  style="font-size: 14px;">
                                             <tr>
                                                 <th class="border-bottom border-bottom-2 border-success text-success">Activity : {{e.name_and_standared}}</th>
                                             </tr>
@@ -224,6 +227,7 @@
                                                 </td>
                                             </tr>
                                         </table>
+                                    </div>
                                         {% endfor %}
                                         </div>
                                     </div>   
