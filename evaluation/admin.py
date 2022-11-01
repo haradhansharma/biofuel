@@ -171,7 +171,7 @@ admin.site.register(Biofuel)
 
 
 class StandaredChartAdmin(admin.ModelAdmin):
-    list_display = ('oil_name', 'question', 'unit', 'value', 'link')
+    list_display = ('oil_name', 'question', 'option', 'unit', 'value', 'link')
     list_filter = ('oil_name','question',)
     ordering = ('question',)
     

@@ -258,6 +258,7 @@
                                                 <th scope="col">Unit</th>
                                                 <th scope="col">Value</th>
                                                 <th scope="col">Link</th>
+                                                <th scope="col">Option</th>
                                                 <th scope="col">Status</th>
                                             </tr>
                                         </thead>
@@ -268,6 +269,7 @@
                                                 <td>{{cd.unit }}</td>
                                                 <td>{{cd.value }}</td>
                                                 <td>{{cd.link }}</td>
+                                                <td>{{ cd.option.name }}</td>
                                                 <td {% if cd.option.yes_status %} class="table-success" {% elif not cd.option.yes_status %} class="table-danger" {% else %} class="table-dark" {% endif %}></td>
 
                                             </tr>
