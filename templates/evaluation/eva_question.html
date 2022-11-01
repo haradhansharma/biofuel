@@ -261,7 +261,7 @@
                                                 <td>{{cd.unit }}</td>
                                                 <td>{{cd.value }}</td>
                                                 <td>{{cd.link }}</td>
-                                                <td {% if cd.option.yes_status %} class="table-primary" {% elif not cd.option.yes_status %} class="table-danger" {% else %} class="table-secondary" {% endif %}></td>
+                                                <td {% if cd.option.yes_status %} class="table-success" {% elif not cd.option.yes_status %} class="table-danger" {% else %} class="table-dark" {% endif %}></td>
 
                                             </tr>
                                             {% endfor %}
@@ -269,7 +269,7 @@
                                     </table>
                                 </div>
                             </div>
-
+                            <!--
                             <div class="card text-center mb-4 mt-4">
                             <div class="row justify-content-center align-items-center">
                                 <h3 id="osc" >Oil's Standard Chart:</h3> 
@@ -285,6 +285,7 @@
                                 {% endfor %}
                                 </div>
                             </div>
+                        -->
 
 
 
