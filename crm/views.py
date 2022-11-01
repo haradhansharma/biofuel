@@ -3,6 +3,7 @@ from django.db import IntegrityError
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from doc.doc_processor import site_info
 from gfvp import null_session
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -24,6 +25,7 @@ import json
 from django_countries import countries
 from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
 
 import logging
 log =  logging.getLogger('log')
@@ -91,48 +93,54 @@ def subscription(request):
     city =  location_info.get('city') 
     country_code = location_info.get('country')
     country = country_code
-    domain = get_current_site(request).domain
+    current_site = site_info()
     
     if request.method == 'POST':
-        log.info('Subscription form submitted')        
+        # log.info('Subscription form submitted')        
         if 'new_subscriber' in request.POST:
-            log.info('Somebody want to subscribe to our newsletter!')
+            # log.info('Somebody want to subscribe to our newsletter!')
             subscription_form = SubscriberForm(request.POST)
             if subscription_form.is_valid():
-                log.info('Subscription Form Submitted successfully!')
+                # log.info('Subscription Form Submitted successfully!')
                 name = subscription_form.cleaned_data['name']                
                 email = subscription_form.cleaned_data['email']
                 confirm_url = request.build_absolute_uri(reverse('crm:subscrib', kwargs={'email': email}))                    
                 subject = 'Please confirm your subscription!'
-                message = f'Hi {name}, <br> Thank you for subscription request to our newsletter. <br> Please confirm your subscription by clicking the link below... <br> {confirm_url} <br> With Thanks <br><br> {domain} Team.'
+                message = render_to_string('emails/subscription_confirmation.html', {
+                        'confirm_url': confirm_url,
+                        'name' : name,
+                        'email' : email,                                                               
+                        'current_site': current_site,            
+                        }) 
+                # message = f'Hi {name}, <br> Thank you for subscription request to our newsletter. <br> Please confirm your subscription by clicking the link below... <br> {confirm_url} <br> With Thanks <br><br> {domain} Team.'
                 email_from = settings.DEFAULT_FROM_EMAIL
                 email_to = [email]
                 
                 try:
                     lead = Lead.objects.get(email_address = email)  
-                    log.info('Tried email for subscription already exists')                 
+                    # log.info('Tried email for subscription already exists')                 
                 except Exception as e:
-                    log.info('Going to record new subscription')
+                    # log.info('Going to record new subscription')
                     lead = None
                     
                 if lead is not None:
                     if lead.subscribed:
                         return HttpResponse(f' <span class="text-danger"> The {email} already subscribed! </span>')
                     else: 
-                        log.info('But the requested email is not confirmed! So that confirmation mail sending!')                       
-                        send_mail(subject, message, email_from, email_to )   
-                        log.info(f'Confirmation Email sent to the email {email} ')                     
+                        # log.info('But the requested email is not confirmed! So that confirmation mail sending!')                       
+                        send_mail(subject, message, email_from, email_to, html_message = message )   
+                        # log.info(f'Confirmation Email sent to the email {email} ')                     
                         return HttpResponse(f' <span class="text-danger"> An email for confirmation has been sent to {email} ! Please confirm! </span>')
                 else:
                     try:
-                        log.info(f'{email} saving as new lead! ')
+                        # log.info(f'{email} saving as new lead! ')
                         Lead.objects.create(lead = name, email_address=email,city=city,country=country,subscribed=False)
                         log.info(f'{email} created as new lead!')
                     except Exception as e:
                         log.warning(f'There was a problem to save {email} as new lead due to {e}')
                     
-                    log.info('Confirmation mail sending to new lead')    
-                    send_mail(subject, message, email_from, email_to ) 
+                    # log.info('Confirmation mail sending to new lead')    
+                    send_mail(subject, message, email_from, email_to, html_message = message ) 
                     log.info('Confirmation mail sent to new lead!')
                     return HttpResponse(f' <span class="text-danger"> An email for confirmation has been sent to {email} ! Please confirm! </span>')
             else:

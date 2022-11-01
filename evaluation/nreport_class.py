@@ -404,7 +404,7 @@ class ReportPDFData:
         ] 
         
         style = TableStyle([
-        ('GRID', (0,0), (4,4), 0.25, red), 
+        ('GRID', (0,0), (-1,-1), 0.25, red), 
         ('ALIGN', (0,0), (-1,-1), 'LEFT'),
         ('FONTNAME', (0,0), (-1,0), 'Times-Roman'),
         ('FONTSIZE', (0,0), (4,4), 9),
@@ -418,7 +418,7 @@ class ReportPDFData:
             data.append(self.ulineG100())
             data.append(Spacer(0.1*inch,0.1*inch))
             data.append(Paragraph(f'<b>Chosen Option :</b>{e.option.name}', self.stylesN))
-            data.append(Paragraph(f'<b>Suggested Quotations :</b>'))
+            data.append(Paragraph(f'<b>Suggested Quotations :</b>', self.stylesN))
             quotations = ''
             for quotation in e.question.get_quotations:
                 quotations += f'<font color = green><u><a href="{self.request.build_absolute_uri(quotation.get_absolute_url())}">Quotation#{quotation.id}::{quotation.price}</a></u></font> , '    
@@ -433,20 +433,21 @@ class ReportPDFData:
                 comments += f'<p>{qa.comments}</p>'
             data.append(Paragraph(f'<b>Self Comment :</b>{comments}', self.stylesN))
             data.append(Paragraph(f'<b>GFVP Feedback :</b> {e.option.statement}', self.stylesB))
-            data.append(Paragraph(f'<b>Typical std values : </b>'))
-            
-            
-            table_data = [        
-                ['Oil Name', 'Unit', 'Value', 'Link'],           
-            ] 
-            
-            for cd in e.question.stanchart.all():
-                table_data.append([cd.oil_name , cd.unit, cd.value, cd.link])     
-                   
-            table = Table(table_data, colWidths = (self.PW-self.M*2)/4 - self.M/2, cornerRadii=[5, 5, 5, 5])
-            table.setStyle(style)              
-            data.append(table) 
-            data.append(Spacer(0.15*inch,0.15*inch))  
+            if e.question.stanchart.all():
+                data.append(Paragraph(f'<b>Typical std values : </b>'))
+                
+                
+                table_data = [        
+                    ['Oil Name', 'Unit', 'Value', 'Link'],           
+                ] 
+                
+                for cd in e.question.stanchart.all():
+                    table_data.append([cd.oil_name , cd.unit, cd.value, cd.link])     
+                    
+                table = Table(table_data, colWidths = (self.PW-self.M*2)/4 - self.M/2, cornerRadii=[5, 5, 5, 5])
+                table.setStyle(style)              
+                data.append(table) 
+                data.append(Spacer(0.15*inch,0.15*inch))  
         
         return data
     

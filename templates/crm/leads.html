@@ -41,6 +41,36 @@
 
 
   </div>
+
+  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crmmailtem">
+  See Mail Body 
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="crmmailtem" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="crmmailtemLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="crmmailtemLabel">Mail Body</h5>        
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div>
+      <small class="bg-secondary" style="font-size: 8px;">To edit the mail body you need to edit the file located in "webroot/templates/emails/crm_initial_mail.html"</small>
+
+      </div>
+      <div class="modal-body">
+        {% include "emails/crm_initial_mail.html" %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
   <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
 
   <div class="d-flex justify-content-between w-100 flex-wrap mt-3">

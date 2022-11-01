@@ -111,8 +111,7 @@
 														<tr>
 															<td class="pad" style="padding-top:70px;text-align:center;width:100%;">
 																<h1 style="margin: 0; color: #023b5c; direction: ltr; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size: 30px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;">
-                                                                    <span class="tinyMce-placeholder">{{current_site.name|upper}}</span>
-                                                                </h1>
+                                                                    <span class="tinyMce-placeholder">{{current_site.name|upper}}</span></h1>
 															</td>
 														</tr>
 													</table>
@@ -132,39 +131,14 @@
 													<table class="heading_block block-4" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 														<tr>
 															<td class="pad" style="text-align:center;width:100%;">
-																<h1 style="margin: 0; color: #023b5c; direction: ltr; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size: 28px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;">
-                                                                    <span class="tinyMce-placeholder">Report {{pending.new_report.id}} Has Been Created<br></span></h1>
+																<h1 style="margin-bottom: 16px; color: #023b5c; direction: ltr; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size: 28px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;">
+                                                                    <span class="tinyMce-placeholder">Thank you for subscription!<br></span></h1>
 															</td>
 														</tr>
-													</table>
-													<table class="image_block block-6" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+													</table>												
+													<table class="divider_block block-3" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 														<tr>
-															<td class="pad" style="width:100%;padding-right:0px;padding-left:0px;padding-top:60px;">
-																<div class="alignment" align="center" style="line-height:10px">
-																	<img class="big" src="https://{{current_site.domain}}{% static report_mail_image.jpg %}" style="display: block; height: auto; border: 0; width: 580px; max-width: 100%;" width="580"></div>
-															</td>
-														</tr>
-													</table>
-													<table class="button_block block-7" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-														<tr>
-															<td class="pad" style="padding-bottom:30px;padding-left:10px;padding-right:10px;padding-top:30px;text-align:center;">
-																<div class="alignment" align="center">
-																	<!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="www.example.com" style="height:52px;width:283px;v-text-anchor:middle;" arcsize="8%" stroke="false" fillcolor="#023b5c"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#54e231; font-family:'Trebuchet MS', Tahoma, sans-serif; font-size:16px"><![endif]-->
-                                                                    <a href="https://{{current_site.domain}}/{{pending.from_report.get_absolute_url}}" 
-                                                                        target="_blank" 
-                                                                        style="text-decoration:none;display:inline-block;color:#54e231;background-color:#023b5c;border-radius:4px;width:auto;border-top:0px solid #8a3b8f;font-weight:400;border-right:0px solid #8a3b8f;border-bottom:0px solid #8a3b8f;border-left:0px solid #8a3b8f;padding-top:10px;padding-bottom:10px;font-family:'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;text-align:center;mso-border-alt:none;word-break:keep-all;">
-                                                                        <span style="padding-left:30px;padding-right:30px;font-size:16px;display:inline-block;letter-spacing:6px;">
-                                                                            <span dir="ltr" style="word-break: break-word; line-height: 32px;">VIEW OLD REPORT</span>
-                                                                        </span>
-                                                                    </a>
-																	<!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
-																</div>
-															</td>
-														</tr>
-													</table>
-													<table class="divider_block block-8" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-														<tr>
-															<td class="pad" style="padding-bottom:35px;padding-left:10px;padding-right:10px;">
+															<td class="pad" style="padding-bottom:20px;padding-left:10px;padding-right:10px;padding-top:20px;">
 																<div class="alignment" align="center">
 																	<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="20%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 																		<tr>
@@ -179,10 +153,9 @@
 														<tr>
 															<td class="pad" style="padding-bottom:30px;">
 																<div style="color:#023b5c;direction:ltr;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;font-size:28px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:left;mso-line-height-alt:33.6px;">
-																	<p style="margin: 0; margin-bottom: 16px;">Dear {{ pending.new_report.name }},</p>
-																	<p style="margin: 0; margin-bottom: 16px;">We have updated statement in our database. Based on your updated data we have created a new report #{{pending.new_report.id}} based on the previous report #{{pending.from_report.id}}. Please find the report #{{pending.new_report.id}} by clicking on the button below.</p>
-																	<p style="margin: 0;margin-bottom: 16px;">The report is accessible to you only. Please log in to the platform to view and download it.</p>
-																	<p style="margin: 0;">Thank you for using the <i> {{current_site.name}}</i>.</p>
+																	<p style="margin: 0; margin-bottom: 16px;">Dear {{name}},</p>
+																	<p style="margin: 0; margin-bottom: 16px;">Thank you for subscription request to our newsletter.</p>
+																	<p style="margin: 0; margin-bottom: 16px;">Please confirm your subscription by clicking the button below.</p>
 
 																</div>
 															</td>
@@ -193,15 +166,16 @@
 															<td class="pad" style="padding-bottom:30px;padding-left:10px;padding-right:10px;padding-top:30px;text-align:center;">
 																<div class="alignment" align="center">
 																	<!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="www.example.com" style="height:52px;width:283px;v-text-anchor:middle;" arcsize="8%" stroke="false" fillcolor="#023b5c"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#54e231; font-family:'Trebuchet MS', Tahoma, sans-serif; font-size:16px"><![endif]-->
-                                                                        <a href="https://{{current_site.domain}}/{{pending.new_report.get_absolute_url}}" 
+                                                                        <a href="{{confirm_url}}" 
                                                                         target="_blank" 
                                                                         style="text-decoration:none;display:inline-block;color:#54e231;background-color:#023b5c;border-radius:4px;width:auto;border-top:0px solid #8a3b8f;font-weight:400;border-right:0px solid #8a3b8f;border-bottom:0px solid #8a3b8f;border-left:0px solid #8a3b8f;padding-top:10px;padding-bottom:10px;font-family:'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;text-align:center;mso-border-alt:none;word-break:keep-all;">
-                                                                        <span style="padding-left:30px;padding-right:30px;font-size:16px;display:inline-block;letter-spacing:6px;">
-                                                                            <span dir="ltr" style="word-break: break-word; line-height: 32px;">VIEW NEW REPORT</span>
-                                                                        </span>
-                                                                    </a>
+                                                                        <span style="padding-left:30px;padding-right:30px;font-size:16px;display:inline-block;letter-spacing:6px;"><span dir="ltr" style="word-break: break-word; line-height: 32px;">CONFIRM SUBSCRIPTION</span></span></a>
 																	<!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
 																</div>
+																	<p style="margin: 0; margin-bottom: 16px;">Or you can copy the below link and browse it manually:</p>
+																	<p style="margin: 0;">{{ confirm_url }}</p>
+
+
 															</td>
 														</tr>
 													</table>
@@ -209,8 +183,7 @@
 														<tr>
 															<td class="pad" style="text-align:center;width:100%;padding-top:90px;">
 																<h1 style="margin: 0; color: #023b5c; direction: ltr; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; font-size: 28px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;">
-                                                                    <span class="tinyMce-placeholder">https://{{ current_site.domain }}</span>
-                                                                </h1>
+                                                                    <span class="tinyMce-placeholder">{{current_site.domain}}</span></h1>
 															</td>
 														</tr>
 													</table>
@@ -230,5 +203,4 @@
 </body>
 
 </html>
-
 {% endautoescape %}

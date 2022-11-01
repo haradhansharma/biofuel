@@ -20,6 +20,8 @@ from .helper import users_under_each_label, reports_under_each_biofuel, weeks_re
 from django.db.models import Count, Min
 from doc.doc_processor import site_info
 from blog.models import BlogPost
+from django.templatetags.static import static
+import requests
 import logging
 log =  logging.getLogger('log')
 
@@ -653,13 +655,18 @@ def quotation_report2(request, quotation_data):
                 p.drawOn(c,50,aH)
                 aH -= h # reduce the available height   
             continue
+    
+    attachmenturl = request.build_absolute_uri(static(quotation_data.quotation_format.url))
+    atta_res = requests.get(attachmenturl)
+    
+    
     data = [
         
         ('left_style_black' , f'-------------------------------------------------------------------------------------'),
         ('left_style_black' , f'-------------------------------------------------------------------------------------'),        
         ('left_style_blue' , f'___This report has been genarated using {site_info().get("domain")}'),         
         ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),        
-        ('left_style_red_head' , f'PLEASE CONSIDER BELOW PAGES UPLOADED BY THE QUOTATION PROVIDER!'),
+        ('left_style_red_head' , f'PLEASE CONSIDER BELOW PAGES UPLOADED BY THE QUOTATION PROVIDER!' if atta_res.status_code == 200 else ''),
     ]
     for style, values in data:        
         p = Paragraph(values, locals()[style])        
@@ -697,11 +704,14 @@ def quotation_report(request, question, quotation):
     
     merger = PdfFileMerger()    
 
-    quotation_file = quotation_data.quotation_format
     result2 = quotation_report2(request, quotation_data)  
     result = HttpResponse(content_type='application/pdf')
     merger.append(result2)
-    merger.append(quotation_file)    
+    attachmenturl = request.build_absolute_uri(static(quotation_data.quotation_format.url))
+    atta_res = requests.get(attachmenturl)
+    if atta_res.status_code == 200:
+        quotation_file = quotation_data.quotation_format          
+        merger.append(quotation_file)    
     merger.write(result)
    
     return result

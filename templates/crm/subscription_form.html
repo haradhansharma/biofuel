@@ -1,3 +1,16 @@
+
+<style>
+    .subscription-indicator{
+        display:none;
+      }
+      .htmx-request .subscription-indicator{
+        display:inline;
+      }
+      .htmx-request.subscription-indicator{
+        display:inline;
+      }
+      
+</style>
 <form class="row g-3 justify-content-center align-items-center">
 
     <h3 class="text-center">Subscribe to our newsletter</h3>
@@ -9,8 +22,16 @@
         {{subscription_form.email}}
     </div>
     <div class="col-auto">
-        <input type="submit" value="Subscribe" hx-vals='{"new_subscriber": "new_subscriber"}' hx-post="{% url 'crm:subscription' %}" hx-target="#subscription_response" hx-trigger="click" class="btn btn-secondary">
+        <input type="submit" value="Subscribe" hx-vals='{"new_subscriber": "new_subscriber"}' hx-post="{% url 'crm:subscription' %}" hx-target="#subscription_response" hx-trigger="click" hx-indicator="#subscriptionpinner" class="btn btn-secondary">
+    </div>
+
+    <div id="subscriptionpinner" class="col-auto subscription-indicator">                                                
+        <button class="btn btn-primary btn-block m-2" type="button" disabled>
+        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+        Working...
+        </button>
     </div>
     
-    <div id="subscription_response" class="text-center"></div>
+    
+    <div id="subscription_response" class="text-center"></div> 
 </form>

@@ -27,7 +27,20 @@
         </div>
 
 
-        
+        <div class="d-flex text-center justify-content-center align-items-center border-bottom border-light border-2 p-2" role="contentinfo">
+            <div class="card p-2 bg-transparent border-0">
+                <div class="card-header pb-0 pt-0">{{site_info.name}}</div> 
+            <div class="card-title">
+                <div><b>Phone:</b> <a href="tel:{{site_info.phone}} ">{{site_info.phone}} </a> <b>Email:</b><a href="mailto:{{site_info.email}}">{{site_info.email}}</a></div>                 
+               <div><b>Address:</b><br> {{site_info.location}}</div> 
+            </div>
+            <div class="card-text">
+                <span class="badge bg-dark h4"><a href="{{site_info.facebook_link}}" target="_blank" rel="nofollow">Facebook</a></span>
+                <span class="badge bg-dark h4"><a href="{{site_info.twitter_link}}" target="_blank" rel="nofollow">Twitter</a></span>
+                <span class="badge bg-dark h4"><a href="{{site_info.linkedin_link}}" target="_blank" rel="nofollow">LinkedIn</a></span>     
+            </div>    
+            </div>
+        </div>
 
         <div class="d-flex text-center justify-content-center align-items-center" role="contentinfo">
             <p class="fw-normal font-small">

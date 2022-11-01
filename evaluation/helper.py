@@ -29,11 +29,12 @@ def active_sessions():
             eva = None
         if eva:
             s_evs.add(s_data.get('evaluator'))
-    log.info(f"Collected active session's evaluator id set, which is {s_evs}")
+    # log.info(f"Collected active session's evaluator id set, which is {s_evs}")
     return list(s_evs)
 
 def clear_evaluator():
     '''
+    IT IS RUNNING BY CRON JOB
     we will remove all wastage report which just initialized but have no data and which is not qualified to show in the profile page.
     It returns total deleted report in a call.
     It is created to call by CRONJOB but can be called from anywhere.
@@ -56,22 +57,9 @@ def clear_evaluator():
         except Exception as e:
             log.warning(f'error {e} happend while deleteing incomplete report!')
             
-    log.info(f'{total_deleted} incomplete report has been deleted!')
+    # log.info(f'{total_deleted} incomplete report has been deleted!')
     return total_deleted
 
-# crontab codein linux
-# */5 * * * * source /home/ubuntu/.bashrc && source /home/ubuntu/env/bin/activate && python /home/ubuntu/project-root/manage.py runcrons > /home/ubuntu/project-root/cronjob.log   
-class DeleteIncompleteReports(CronJobBase):
-    log.info('Initializing CRONJOB to delete incomplete report!!')
-    RUN_EVERY_MINS = 60
-    RETRY_AFTER_FAILURE_MINS = 5
-    MIN_NUM_FAILURES = 2    
-    ALLOW_PARALLEL_RUNS = True
-    schedule = Schedule(run_every_mins=RUN_EVERY_MINS, retry_after_failure_mins=RETRY_AFTER_FAILURE_MINS)
-    code = 'evaluation.delete_incomplete_reports'   
-    
-    def do(self):    
-        clear_evaluator()
     
 
 
@@ -474,7 +462,7 @@ def nreport_context(request, slug):
             #if 0 we will consider not started becoz if it is touched any percentage can be set.          
             setattr(na, 'is_active', 'Not Started')                         
         else:
-            pass     
+            setattr(na, 'is_active', 'Unknown for this report')     
         
             
         # we will take which is not completed    

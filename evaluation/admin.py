@@ -56,6 +56,9 @@ class LogicalStringAdmin(admin.ModelAdmin):
     list_display = ('option_list', 'text', 'overall', 'positive', 'Label_value_one_to', )
     inlines = [LsLabels]
     list_filter = ('overall', 'positive' ,)
+    
+    
+        
 admin.site.register(LogicalString, LogicalStringAdmin)
 
 
@@ -77,76 +80,82 @@ class EvaluatorAdmin(admin.ModelAdmin):
         
         
         #parameter to be happend check and send mail
-        happen_time_restriction = 50
+        # happen_time_restriction = 50
         #count happening   
         done = 0   
         #we will check only which report is genarated
         selected = queryset.filter(report_genarated = True)      
-        if len(selected) > int(happen_time_restriction):  
-            # if count is greater then parameter the nothing happend will show a warning message                  
-            self.message_user(request, ngettext(  '%d Task can be done at a time to reduce overhelming.',  '%d Tasks can be done at a time to reduce overhelming.', happen_time_restriction, ) % happen_time_restriction, messages.WARNING)
-        else:
-            #do whatever want o do         
+        # if len(selected) > int(happen_time_restriction):  
+        #     # if count is greater then parameter the nothing happend will show a warning message                  
+        #     self.message_user(request, ngettext(  '%d Task can be done at a time to reduce overhelming.',  '%d Tasks can be done at a time to reduce overhelming.', happen_time_restriction, ) % happen_time_restriction, messages.WARNING)
+        # else:
+        #     #do whatever want o do         
             
-            mail_to_evaluator = []  
-            current_site = Site.objects.get_current()   
-            for i in selected:
-                #counting
-                
-                done += 1
-                
-                # We are marking as updated to change in both to original and copied
-                i.feedback_updated = True
-                i.save()
-                
-                #copy current evaluator                
-                copy_evaluator = Evaluator.objects.get(pk = i.pk)
-                copy_evaluator.pk = None
-                copy_evaluator.slug = uuid.uuid4()
-                copy_evaluator.save()
-                
-                #copy evalabel
-                evalabels = EvaLabel.objects.filter(evaluator = i)
-                for el in evalabels:
-                    el.pk = None
-                    el.evaluator = copy_evaluator
-                    el.save()
-                    
-                #copy eva comments
-                evacomments = EvaComments.objects.filter(evaluator = i)
-                for ec in evacomments:
-                    ec.pk = None
-                    ec.evaluator = copy_evaluator
-                    ec.save()
-                                
-                #copy evaluation
-                evaluations = Evaluation.objects.filter(evaluator = i)
-                for e in evaluations:
-                    e.pk = None
-                    e.evaluator = copy_evaluator
-                    e.save()
-                
-                #regenarate statement baed on options
-                evastatement_options = EvaLebelStatement.objects.filter(evaluator = i, option_id__isnull = False) 
-                for eo_id in list(set(eo.option_id for eo in evastatement_options)):  
-                    set_evastatment(request, Option.objects.get(id = int(eo_id)), copy_evaluator)
-                    set_evastatement_of_logical_string(request, Option.objects.get(id = int(eo_id)), copy_evaluator)
-                
-                # send mail to the creator with update information    
-                subject = f'Updated report #{copy_evaluator.id} with latest feedback based on #{i.id}' 
-                message = render_to_string('emails/feedback_update.html', { 
-                            'copy_evaluator': copy_evaluator,                                                                                        
-                            'domain': current_site.domain,    
-                            'evaluator' : i        
-                            }) 
-                mail_to_evaluator.append((subject, message, settings.DEFAULT_FROM_EMAIL, [i.email]))
-                
-                
-            #send all mail with one connection    
-            send_mass_mail((mail_to_evaluator), fail_silently=False)
+        # mail_to_evaluator = []  
+        # current_site = Site.objects.get_current()   
+        for i in selected:
+            #counting
             
-            #sucess message
-            self.message_user(request, ngettext( '%d Task has been done based on genarated report and mail sent.',  '%d Tasks has been done based on genarated report and mail sent.', done, ) % done, messages.SUCCESS)
+            done += 1
+            
+            # We are marking as updated to change in both to original and copied
+            i.feedback_updated = True
+            i.save()
+            
+            #copy current evaluator                
+            copy_evaluator = Evaluator.objects.get(pk = i.pk)
+            copy_evaluator.pk = None
+            copy_evaluator.slug = uuid.uuid4()
+            copy_evaluator.save()
+            
+            #copy evalabel
+            evalabels = EvaLabel.objects.filter(evaluator = i)
+            for el in evalabels:
+                el.pk = None
+                el.evaluator = copy_evaluator
+                el.save()
+                
+            #copy eva comments
+            evacomments = EvaComments.objects.filter(evaluator = i)
+            for ec in evacomments:
+                ec.pk = None
+                ec.evaluator = copy_evaluator
+                ec.save()
+                            
+            #copy evaluation
+            evaluations = Evaluation.objects.filter(evaluator = i)
+            for e in evaluations:
+                e.pk = None
+                e.evaluator = copy_evaluator
+                e.save()
+            
+            #regenarate statement baed on options
+            evastatement_options = EvaLebelStatement.objects.filter(evaluator = i, option_id__isnull = False) 
+            for eo_id in list(set(eo.option_id for eo in evastatement_options)):  
+                set_evastatment(request, Option.objects.get(id = int(eo_id)), copy_evaluator)
+                set_evastatement_of_logical_string(request, Option.objects.get(id = int(eo_id)), copy_evaluator)
+                
+            ReportMailQueue.objects.create(
+                to = i.email,
+                from_report = i,
+                new_report = copy_evaluator,
+            )
+            
+        #     # send mail to the creator with update information    
+        #     subject = f'Updated report #{copy_evaluator.id} with latest feedback based on #{i.id}' 
+        #     message = render_to_string('emails/feedback_update.html', { 
+        #                 'copy_evaluator': copy_evaluator,                                                                                        
+        #                 'domain': current_site.domain,    
+        #                 'evaluator' : i        
+        #                 }) 
+        #     mail_to_evaluator.append((subject, message, settings.DEFAULT_FROM_EMAIL, [i.email]))
+            
+            
+        # #send all mail with one connection    
+        # send_mass_mail((mail_to_evaluator), fail_silently=False)
+        
+        #sucess message
+        self.message_user(request, ngettext( f'{done} mail has been queued.'), messages.SUCCESS)
     actions = [check_and_notify]
      
     
@@ -155,6 +164,7 @@ class EvaluatorAdmin(admin.ModelAdmin):
 admin.site.register(Evaluator, EvaluatorAdmin)
 
 admin.site.register(DifinedLabel)
+admin.site.register(ReportMailQueue)
 admin.site.register(Biofuel)
 # admin.site.register(Option)
 
