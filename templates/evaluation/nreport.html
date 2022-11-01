@@ -141,6 +141,7 @@
                                         <h4 id="qsf" class="mt-4  border-bottom border-2 border-primary">Question Specific Feedback:</h4>
 
                                         {% for e in evaluation %}
+                                        <div class="table-responsive">
                                         <table class="bg-light my-3 p-2 d-block rounded ">
                                             <tr>
                                                 <th class="border-bottom border-bottom-2 border-success text-success"> Question : {{e.question.name}}</th>
@@ -173,7 +174,7 @@
                                                     <!--std Chart-->  
                                                     <p class="mb-1">                               
                                                         <b>Typical std values : </b>
-                                                        <div class="table-responsive">
+                                                        
                                                         <table class="table align-middle">
                                                             <thead>
                                                               <tr>
@@ -194,11 +195,12 @@
                                                             {% endfor %}                                                               
                                                             </tbody>
                                                           </table>
-                                                        </div>
+                                                        
                                                         </p>                                                    
                                                 </td>
                                             </tr>
                                         </table>
+                                    </div>
                                         {% endfor %}
                                         </div>
                                         <div>
