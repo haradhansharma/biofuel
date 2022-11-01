@@ -261,7 +261,7 @@
                                                 <td>{{cd.unit }}</td>
                                                 <td>{{cd.value }}</td>
                                                 <td>{{cd.link }}</td>
-                                                <td {% if cd.option.yes_status %} class="table-primary" {% elif cd.option.dont_know %} class="table-danger" {% else %} class="table-secondary" {% endif %}></td>
+                                                <td {% if cd.option.yes_status %} class="table-primary" {% elif not cd.option.yes_status %} class="table-danger" {% else %} class="table-secondary" {% endif %}></td>
 
                                             </tr>
                                             {% endfor %}
