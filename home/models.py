@@ -1,6 +1,7 @@
 # from accounts.models import User
 from django.db import models
 from django.urls import reverse
+from doc.doc_processor import site_info
 from evaluation.models import Question, NextActivities
 from django.core.validators import FileExtensionValidator
 from django.conf import settings
@@ -61,6 +62,51 @@ class Quotation(models.Model):
     @property
     def get_quot_url(self):
         return reverse('home:add_quatation', args=[str(self.test_for.slug)])
+    
+    @property
+    def get_business_name(self):
+        if self.display_site_address:
+            business_name = site_info().get('name')
+        else:
+            if self.show_alternate_business:
+                business_name = self.show_alternate_business
+            else:
+                if self.service_provider.orgonization:
+                    business_name = self.service_provider.orgonization
+                else:
+                    business_name = 'Business Unknown'
+        
+        return business_name
+    
+    @property
+    def get_phone(self):
+        if self.display_site_address:
+            phone = site_info().get('phone')
+        else:
+            if self.show_alternate_phone:
+                phone = self.show_alternate_phone
+            else:
+                if self.service_provider.phone:
+                    phone = self.service_provider.phone
+                else:
+                    phone = 'Phone Unknown'
+        
+        return phone
+    
+    @property
+    def get_email(self):
+        if self.display_site_address:
+            email = site_info().get('email')
+        else:
+            if self.show_alternate_email:
+                email = self.show_alternate_email
+            else:
+                if self.service_provider.email:
+                    email = self.service_provider.email
+                else:
+                    email = 'email Unknown'
+        
+        return email
     
     def get_absolute_url(self):        
         return reverse('home:quotation_report', kwargs={'question': str(self.test_for.slug), 'quotation': int(self.id) })      

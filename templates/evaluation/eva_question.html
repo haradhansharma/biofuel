@@ -195,13 +195,7 @@
                                                 target="_blank"
                                                 class="p-3 flex-fill card">
                                                 <h4>Provider: 
-                                                    {% if quotation.service_provider.orgonization %}
-                                                    {{quotation.service_provider.orgonization}} 
-                                                    {% else %} 
-                                                    Business name
-                                                    not
-                                                    found 
-                                                    {% endif %} 
+                                                    {{quotation.get_business_name}}
                                                 </h4>
                                                 <h5>Price: {{quotation.price}} {{quotation.price_unit}} </h5>
                                             </a>
@@ -212,10 +206,7 @@
                                             <a href="{{quotation.get_absolute_url}}" 
                                                 target="_blank"
                                                 class="p-3 flex-fill card">
-                                                <h4>Provider: {% if quotation.service_provider.orgonization %}
-                                                    {{quotation.service_provider.orgonization}} {% else %} Business name
-                                                    not
-                                                    found {% endif %} 
+                                                <h4>Provider: {{quotation.get_business_name}}
                                                 </h4>
                                                 <h5>Price: {{quotation.price}} {{quotation.price_unit}}</h5>
                                             </a>
@@ -260,6 +251,7 @@
                                                 <th scope="col">Unit</th>
                                                 <th scope="col">Value</th>
                                                 <th scope="col">Link</th>
+                                                <th scope="col">Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -269,6 +261,8 @@
                                                 <td>{{cd.unit }}</td>
                                                 <td>{{cd.value }}</td>
                                                 <td>{{cd.link }}</td>
+                                                <td {% if cd.option.yes_status %} class="table-primary" {% elif cd.option.dont_know %} class="table-danger" {% else %} class="table-secondary" {% endif %}></td>
+
                                             </tr>
                                             {% endfor %}
                                         </tbody>

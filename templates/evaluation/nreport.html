@@ -153,13 +153,13 @@
                                                         <b>Suggested Quotations :</b>                                                         
                                                             {% for quotation in e.question.get_quotations %}
                                                             <a href="{{quotation.get_absolute_url}}" target="_blank" class="badge bg-success"> 
-                                                                <span >Quotation#{{quotation.id}}: {% if quotation.service_provider.orgonization %} {{quotation.service_provider.orgonization}} {% else %} Business name unknown {% endif %} <span>Price: {{quotation.price}} {{quotation.price_unit}}</span> </span>                                                            
+                                                                <span >Quotation#{{quotation.id}}: {{quotation.get_business_name}} <span>Price: {{quotation.price}} {{quotation.price_unit}}</span> </span>                                                            
                                                             </a>                                      
                                                             {% endfor %}
                                         
                                                             {% for quotation in e.question.get_related_quotations %}
                                                             <a href="{{quotation.get_absolute_url}}" target="_blank" class="badge bg-success"> 
-                                                                <span>Quotation#{{quotation.id}}: {% if quotation.service_provider.orgonization %} {{quotation.service_provider.orgonization}} {% else %} Business name unknown {% endif %} <span>Price: {{quotation.price}} {{quotation.price_unit}}</span> </span>                                                             
+                                                                <span>Quotation#{{quotation.id}}: {{quotation.get_business_name}}  <span>Price: {{quotation.price}} {{quotation.price_unit}}</span> </span>                                                             
                                                             </a>                                 
                                                             {% endfor %}                                    
                                                         </p>  
@@ -206,7 +206,7 @@
                                         <div>
                                         <h4 id="doa" class="mt-4  border-bottom border-2 border-primary">Details of activities:</h4>
                                         {% for e in next_activities %}
-                                        <div class="table-responsive">
+                                      
                                         <table  style="font-size: 14px;">
                                             <tr>
                                                 <th class="border-bottom border-bottom-2 border-success text-success">Activity : {{e.name_and_standared}}</th>
@@ -229,7 +229,7 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                    </div>
+                                  
                                         {% endfor %}
                                         </div>
                                     </div>   

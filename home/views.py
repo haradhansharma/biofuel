@@ -563,47 +563,18 @@ def quotation_report2(request, quotation_data):
             continue 
         
     
-    if quotation_data.display_site_address:    
-        data = [
-            ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
-            ('left_style_black' , f'-------------------------------------------------------------------------------------'), 
-            ('left_style_blue' , f'<u>QUOTATION PROVIDED BY:</u>'),
-            ('left_style_blue' , f'___creator: {site_data["name"]}'),         
-            ('left_style_blue' , f'___email: {site_data["email"]}'),  
-            ('left_style_blue' , f'___phone: {site_data["phone"]}'),  
-            ('left_style_blue' , f'___orgonization: {site_data["meta_name"]}'),  
-            ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
-        ]
+      
         
-    else:
-        
-        if quotation_data.show_alternate_email:
-            email = quotation_data.show_alternate_email
-        else:
-            email = quotation_data.service_provider.email
-            
-        if quotation_data.show_alternate_business:
-            org = quotation_data.show_alternate_business
-        else:
-            org = quotation_data.service_provider.orgonization
-            
-        if quotation_data.show_alternate_phone:
-            phn = quotation_data.show_alternate_phone
-        else:
-            phn = quotation_data.service_provider.phone
-        
-        
-        
-        data = [
-            ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
-            ('left_style_black' , f'-------------------------------------------------------------------------------------'), 
-            ('left_style_blue' , f'<u>QUOTATION PROVIDED BY:</u>'),
-            ('left_style_blue' , f'___creator: {quotation_data.service_provider.get_full_name()}'),         
-            ('left_style_blue' , f'___email: {email}'),  
-            ('left_style_blue' , f'___phone: {phn}'),  
-            ('left_style_blue' , f'___orgonization: {org}'),  
-            ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
-        ]
+    data = [
+        ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
+        ('left_style_black' , f'-------------------------------------------------------------------------------------'), 
+        ('left_style_blue' , f'<u>QUOTATION PROVIDED BY:</u>'),
+        ('left_style_blue' , f'___creator: {quotation_data.service_provider.get_full_name()}'),         
+        ('left_style_blue' , f'___email: {quotation_data.get_email}'),  
+        ('left_style_blue' , f'___phone: {quotation_data.get_phone}'),  
+        ('left_style_blue' , f'___orgonization: {quotation_data.get_business_name}'),  
+        ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),
+    ]
         
         
     
