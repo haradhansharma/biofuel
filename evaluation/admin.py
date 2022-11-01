@@ -175,6 +175,10 @@ class StandaredChartAdmin(admin.ModelAdmin):
     list_filter = ('oil_name','question',)
     ordering = ('question',)
     
+    change_form_template = 'admin/oil_change_form.html'
+    
+        
+    
     # to exclude option field if no question selected
     def get_fields(self, request, obj=None):
         if obj is None:
@@ -215,6 +219,15 @@ class StandaredChartAdmin(admin.ModelAdmin):
         extra_context['show_save_and_continue'] = True # Here        
         extra_context['show_save_and_add_another'] = False # Here
         return super().add_view(request, form_url, extra_context)
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        # print(object_id)
+        oils = StandaredChart.objects.all()
+        key = oils.get(id = object_id).key
+        related_oils = oils.filter(key = key)
+        extra_context = extra_context or {}
+        extra_context['questions'] = [q.question for q in related_oils]
+        return super().change_view(request, object_id, form_url, extra_context=extra_context)
+        
 admin.site.register(StandaredChart, StandaredChartAdmin)
 
 class NextActivitiesAdmin(admin.ModelAdmin):  
