@@ -241,6 +241,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12">
+                            {% if chart_data %}
                             <div class="card mt-4 p-4">
                                 <h4>{{question.chart_title}}</h4>
                                 <div class="table-responsive">
@@ -269,6 +270,7 @@
                                     </table>
                                 </div>
                             </div>
+                            {% endif %}
                             <!--
                             <div class="card text-center mb-4 mt-4">
                             <div class="row justify-content-center align-items-center">
