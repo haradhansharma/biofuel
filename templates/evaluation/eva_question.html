@@ -181,6 +181,7 @@
                             </div>      
 
                             <div class="card mt-4">
+                                {% if question.get_quotations or question.get_related_quotations %}
                                 <div class="card-header">
                                     The validation quotes issued by our validation partners are listed below. To learn
                                     more
@@ -188,7 +189,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row mt-3 g-3">
-                                        {% if question.get_quotations or question.get_related_quotations %}
+                                        
                                         {% for quotation in question.get_quotations %}
                                         <div class="col-md-6 col-xl-4 d-flex">
                                             <a href="{{quotation.get_absolute_url}}" 
@@ -212,12 +213,15 @@
                                             </a>
                                         </div>
                                         {% endfor %}
-                                        {% else %}
-                                        <p>No Quotation Found!</p> 
-                                        {% endif %}
+                                        
                                     </div>
                                 </div>
+                                {% else %}
+                                <p>No Quotation Found!</p> 
+                                {% endif %}
                             </div>
+                            
+
                         </div>
                         <div class="col-md-6">
                             <div class="alert alert-success" role="alert">
