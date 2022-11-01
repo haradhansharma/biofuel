@@ -417,7 +417,7 @@ class ReportPDFData:
             data.append(ques)
             data.append(self.ulineG100())
             data.append(Spacer(0.1*inch,0.1*inch))           
-            # data.append(Paragraph(f'Chosen Option :{str(e.option.name)}', self.stylesN))
+            data.append(Paragraph(f'<b>Chosen Option :</b>{str(e.option.name)} >', self.stylesN))
             data.append(Paragraph(f'<b>Suggested Quotations :</b>', self.stylesN))
             quotations = ''
             for quotation in e.question.get_quotations:
