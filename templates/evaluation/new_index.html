@@ -1,7 +1,23 @@
 {% extends "layouts/base-fullscreen.html" %}
 
+
 {% block title %} {{text.signin}} {% endblock %}
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+
+<style>
+    .oilindicator {
+    display:none!important;
+    }
+    .htmx-request .oilindicator {
+    display:inline!important;
+    }
+    .htmx-request.oilindicator {
+    display:inline!important;
+    }
+          
+</style>
+
+{% endblock stylesheets %}
 {% load custom_tags %}
 {% block content %}
 {% block header %}
@@ -28,6 +44,17 @@
                                 <form method="POST">
                                     {% csrf_token %}
                                     {{form.as_p}}
+                                    <div class="oilindicator text-danger">Loading.....</div><br>
+                                    
+                                        <label>Related Biofuel</label>              
+
+                                        <select aria-label="stdoil" class="form-select mb-4" id="stdoil" name="stdoil" required>                                            
+                                            {% for sol in stdoil_list %}                                          
+                                            <option value="{{ sol.key }}">{{ sol.oil_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    
+                                   
 
                                     <div class="btn btn-success mt-3">Disclaimer: The green fuel validation platform
                                         and its partners cannot be held responsible for the veracity of the information

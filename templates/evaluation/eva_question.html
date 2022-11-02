@@ -71,6 +71,8 @@
                             {% endif %}
                         </div>
                     </div>
+
+                    
                     
                     <div class="row mb-5">
                         {% if messages and total_question <= qualified_rang %} 
@@ -89,20 +91,21 @@
                                 <div class="card-body">
                                     <h5>Options:</h5>
 
-                                    
+                                   
                                     
                                     <form id="op" method="POST" action="{% url 'evaluation:option_add2' %}#ques">
                                         {% csrf_token %}
-                                        {% for optn in optns %}
+                                        {% for optn in question.get_options %}
                                         <fieldset>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="option_id"  id="{{optn.id}}" value="{{optn.id}}" {% if optn.id == selected_option.id %} checked {% endif %} required>
-                                                <label class="form-check-label" for="{{optn.id}}">{{optn.name}}</label>
+                                                <label class="form-check-label" for="{{optn.id}}">{{optn.name}}{% if selected_option.robot_data and optn.id == selected_option.id %}<span class="text-success">{{selected_option.robot_data}}</span>{% else %}{% endif %}</label>
                                             </div>
                                             
                                         </fieldset>
                                         {% endfor %}
-                                        
+                                      
+                    
                                         <h5 class="mt-4">
                                             Please submit any further information you have about your fuel
                                             oil
@@ -247,7 +250,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12">
-                            {% if chart_data %}
+                            {% if question.get_stdoils %}
                             <div class="card mt-4 p-4">
                                 <h4>{{question.chart_title}}</h4>
                                 <div class="table-responsive">
@@ -263,7 +266,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for cd in chart_data %}
+                                            {% for cd in question.get_stdoils %}
                                             <tr>
                                                 <th scope="row">{{cd.oil_name }}</th>
                                                 <td>{{cd.unit }}</td>

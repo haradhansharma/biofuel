@@ -118,6 +118,15 @@ class Question(models.Model):
         quotations = Quotation.objects.filter(test_for = self)        
         return quotations
     
+    @property
+    def get_options(self):
+        return self.question.all()
+    
+    @property
+    def get_stdoils(self):
+        return self.stanchart.all()
+        
+    
  
 class Label(models.Model):
     '''
@@ -241,6 +250,7 @@ class Biofuel(models.Model):
     
 
 class Evaluator(models.Model):
+    # from . models import StandaredChart
     '''
     Do not edit or modyfy anything here from admin side.
     It has been genarated autometically during evaluation by user.
@@ -254,12 +264,18 @@ class Evaluator(models.Model):
     phone = models.CharField(max_length=16)
     orgonization = models.CharField(max_length=252)
     biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, blank=True)
+    stdoil_key = models.CharField(max_length=20, null=True, blank=True)
+    
+   
     create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     report_genarated = models.BooleanField(default=False)
     
     # it is been updated when statement and next_step of option has been changed and when genarate new report based on report 
     feedback_updated = models.BooleanField(default=False)
+    
+    
+        
     
     
     #Colored output of Pending to notify to the evaluator about feedback update of option
@@ -399,6 +415,7 @@ class StandaredChart(models.Model):
     '''
     from home.models import WeightUnit    
     oil_name = models.CharField(max_length=252)  
+    related_biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, related_name = 'related_biofuel')
     key = models.CharField(null=True, blank=True, editable=False, max_length=250)    
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="stanchart", limit_choices_to={'is_active': True})
     unit = models.ForeignKey(WeightUnit, on_delete=models.CASCADE, related_name= "chrartunit")
@@ -416,11 +433,6 @@ class StandaredChart(models.Model):
         self.key = key_sample
         super(StandaredChart, self).save(*args, **kwargs)
         
-       
-
-
-        
-    
     def __str__(self):
         return self.oil_name + ' for question ' + str(self.question.sort_order)
     

@@ -1,7 +1,7 @@
 import datetime
 from . nreport_class import ReportPDFData
 from pprint import pprint
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse, HttpResponseRedirect
 import requests
 from doc.models import ExSite
@@ -28,6 +28,7 @@ import io
 from django.http import FileResponse
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
 from reportlab.lib.units import inch
+from django.db.models import Avg, Count
 
 import logging
 log =  logging.getLogger('log')
@@ -506,7 +507,7 @@ def eva_question(request, evaluator, slug):
         request.session['evaluator'] = evaluator
         edit_evaluator = eva      
         edit_evaluator.report_genarated = False
-        log.info(f'As report is being edited so report_genarated set to false________________')
+        # log.info(f'As report is being edited so report_genarated set to false________________')
         edit_evaluator.save()    
     '''
     Below evaluator checking will ensure the correct report are editing.
@@ -549,7 +550,8 @@ def eva_question(request, evaluator, slug):
     otherwise will give message and will not allow to go to inside.    
     '''
     if question.is_door:
-        log.info(f'Parent Question Clicked________for report {evaluator_data}_______')        
+        # log.info(f'Parent Question Clicked________for report {evaluator_data}_______')      
+        pass  
     else:
         parent = question.parent_question
         evaluations = evaluation_data.filter(evaluator = evaluator_data).order_by('id')
@@ -559,11 +561,11 @@ def eva_question(request, evaluator, slug):
         try:
             get_option = evaluation_data.get(evaluator = evaluator_data, question = parent).option
             if parent not in questions_of_report or get_option.yes_status == False:
-                log.info(f'Parent question is not answered as "yes" to go inside of this quesion block_____so abroating to the parent question')
+                # log.info(f'Parent question is not answered as "yes" to go inside of this quesion block_____so abroating to the parent question')
                 messages.warning(request, 'To go inside this block, you must answer "Yes" to the specified question!')
                 return HttpResponseRedirect(reverse('evaluation:eva_question' ,  args=[int(evaluator),  str(parent.slug)]))  
         except:   
-            log.info(f'Parent question is not answered as "yes" to go inside of this quesion block_____so abroating to the parent question')                     
+            # log.info(f'Parent question is not answered as "yes" to go inside of this quesion block_____so abroating to the parent question')                     
             messages.warning(request, 'To go inside this block, you must answer "Yes" to the specified question!')
             return HttpResponseRedirect(reverse('evaluation:eva_question' ,  args=[int(evaluator), str(parent.slug)]))  
         
@@ -573,7 +575,7 @@ def eva_question(request, evaluator, slug):
     '''
     qualified_ans_rang = int(ExSite.on_site.get().qualified_ans_range)    
         
-    options = Option.objects.filter(question = question)
+    # options = Option.objects.filter(question = question)
     
     eva_lebels = EvaLabel.objects.filter(evaluator = evaluator_data).order_by('sort_order')
     
@@ -590,11 +592,21 @@ def eva_question(request, evaluator, slug):
     except:
         submitted_comment = None   
     
-      
+    '''
+    if previously answered in this report then the option will show as selected.
+    if not answered previously and there have a option in the standared oil of this question
+    then this option will be selected as default and there will set a attribute named 'robot_data' to show the message
+    ''' 
     try:
         selected_option = evaluation_data.get(evaluator =evaluator_data, question = question).option
     except:
-        selected_option = None  
+        oils = question.get_stdoils.filter(key = evaluator_data.stdoil_key)
+        if oils.exists():
+            selected_option = oils[0].option if oils[0].option else None
+            if selected_option is not None:
+                setattr(selected_option, 'robot_data', '(default estimate by reference)')  
+        else:
+            selected_option = None  
     
     
     # Create push url for HTMX     
@@ -609,10 +621,10 @@ def eva_question(request, evaluator, slug):
         request.session['push_url'] = ''
         
     # Get Chart Data of this question    
-    log.info(f'Geting standared oil data for the question {question.id}___for the report {evaluator_data}__________')
-    chart_data = StandaredChart.objects.filter(question = question)      
+    # log.info(f'Geting standared oil data for the question {question.id}___for the report {evaluator_data}__________')
+    # chart_data = question.get_stdoils 
     oil_graph_data = []
-    for oil in chart_data:            
+    for oil in question.get_stdoils:            
         try:             
             oil_data = OilComparision(oil).packed_labels()      
             item_label = oil_data.columns.values.tolist()
@@ -636,7 +648,7 @@ def eva_question(request, evaluator, slug):
         'slug' : slug,
         'question_dataset' : question_dataset(request) ,
         'question': question,
-        'optns': options,
+        # 'optns': options,
         'evaluator_data': evaluator_data,
         'eva_lebels': eva_lebels,
         'timing_text': timing_text,    
@@ -645,7 +657,7 @@ def eva_question(request, evaluator, slug):
         'evaluator':evaluator, 
         'selected_option' : selected_option,
         'submitted_comment' : submitted_comment,
-        'chart_data' : chart_data,
+        # 'chart_data' : chart_data,
         'vedio_urls' : vedio_urls(search_term),
         'search_term' : search_term,
         'oil_graph_data' : oil_graph_data
@@ -701,9 +713,16 @@ def eva_index2(request):
                 phone = form.cleaned_data['phone']
                 orgonization = form.cleaned_data['orgonization']
                 biofuel = form.cleaned_data['biofuel']
+                stdoil_key = request.POST.get('stdoil')
+                
+                if not stdoil_key or stdoil_key == '':
+                    messages.warning(request,'Select related Oil!')
+                    return redirect(request.path)
+                
+               
                 
                 #genarate report's initial data. It is a basement of a report or evaluation.
-                new_evaluator = Evaluator(creator = request.user, name = name, email = email, phone = phone, orgonization = orgonization, biofuel = biofuel )
+                new_evaluator = Evaluator(creator = request.user, name = name, email = email, phone = phone, orgonization = orgonization, biofuel = biofuel, stdoil_key = stdoil_key )
                 new_evaluator.save()
                 
                 #Catch user record from the evaluation form in not exists
@@ -742,7 +761,7 @@ def eva_index2(request):
                 first_report_name = first_reports.name
             except:
                 first_reports = None
-                first_biofuel = ''
+                first_biofuel = None
                 first_report_name = ''
             
             #rechecking user is authorized or not, although it is not necessary as only logedin user can enter to this page, but it is safe to avoid error if anyhow decorator are removed. There is no resource load.
@@ -774,6 +793,7 @@ def eva_index2(request):
         if an active incomplete report user will forwared to the recorde next question.
         Otherwise will go to the first question of evaluation decided by admin.        
         '''
+        
         new_report = request.session['evaluator']
         next_question = request.session['question']
         if 'question' in request.session:
@@ -788,10 +808,16 @@ def eva_index2(request):
     box_timing = f"Depending on how many answers you provide, the self assessment will take n\
     anywhere from {round(total_ques/10)} to {round(total_ques/3)} minutes. At the end of the n\
         assessment, a PDF report will be provided, which can be retrieved via the Dashboard at a later stage."
-   
+    
+    
+    stdoil_list = StandaredChart.objects.filter(related_biofuel = first_biofuel).values('oil_name', 'key').order_by('oil_name').distinct()
+    
+    
     context ={
         'form': form,
-        'box_timing': box_timing,        
+        'box_timing': box_timing, 
+        'stdoil_list' : stdoil_list  
+          
     }
     return render(request, 'evaluation/new_index.html', context = context)
 
@@ -1052,6 +1078,15 @@ def nreport_pdf(request, slug):
     doc.build(Story, onFirstPage=rpf.first_page, onLaterPages=rpf.later_page)
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=False, filename=title + '.pdf')
+
+def stdoils(request):
+    biofuel_id = request.GET.get('biofuel')    
+    stdoil_list = StandaredChart.objects.filter(related_biofuel__id = biofuel_id).values('oil_name', 'key').order_by('oil_name').distinct()
+    
+            
+            
+    
+    return render(request, 'evaluation/std_oils.html', {'stdoil_list' : stdoil_list})
     
 
 

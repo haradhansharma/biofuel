@@ -176,8 +176,8 @@ admin.site.register(Biofuel)
 
 
 class StandaredChartAdmin(admin.ModelAdmin):
-    list_display = ('oil_name', 'question', 'option', 'unit', 'value', 'link')
-    list_filter = ('oil_name','question',)
+    list_display = ('oil_name', 'related_biofuel', 'question', 'option', 'unit', 'value', 'link')
+    list_filter = ('oil_name', 'related_biofuel', 'question', )
     ordering = ('question',)
     
     change_form_template = 'admin/oil_change_form.html'
