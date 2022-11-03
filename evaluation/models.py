@@ -408,13 +408,21 @@ class EvaluatorActivities(models.Model):
     
     def __str__(self):
         return str(self.next_activity.name_and_standared)
+    
+class StdOils(models.Model):
+    name = models.CharField(max_length = 250)
+    
+    def __str__(self):
+        return self.name
 
 class StandaredChart(models.Model):
     '''
     Please check admin for this model if you changing anythig as here option is overwriting form admin to narrow down.
     '''
     from home.models import WeightUnit    
+    
     oil_name = models.CharField(max_length=252)  
+    # oil = models.ForeignKey(StdOils, on_delete=models.SET_NULL,  related_name = 'std_oil_of_chart')
     related_biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, related_name = 'related_biofuel')
     key = models.CharField(null=True, blank=True, editable=False, max_length=250)    
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="stanchart", limit_choices_to={'is_active': True})
@@ -434,7 +442,7 @@ class StandaredChart(models.Model):
         super(StandaredChart, self).save(*args, **kwargs)
         
     def __str__(self):
-        return self.oil_name + ' for question ' + str(self.question.sort_order)
+        return self.oil_name 
     
     
 #to reduce youtube API call we will save the dat in our databse

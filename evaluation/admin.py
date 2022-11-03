@@ -26,16 +26,13 @@ class Options(admin.TabularInline):
     extra = 0 
     fk_name = "question"
     
-class StandaredCharts(admin.TabularInline):
-    model = StandaredChart
-    extra = 0 
-    fk_name = "question"
+
 
 class QuestionAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ('sort_order', 'name', 'is_door',)
     list_filter = ('is_door','is_active',)
     ordering = ('sort_order',)
-    inlines = [Labels, Options, StandaredCharts]    
+    inlines = [Labels, Options]    
 admin.site.register(Question, QuestionAdmin) 
 
 
@@ -56,12 +53,24 @@ class LsLabels(admin.TabularInline):
     model = Lslabel
     extra = 0
     fk_name = "logical_string"
+    
+# class StandaredCharts(admin.TabularInline):
+#     model = StandaredChart
+#     extra = 0 
+#     fk_name = "related_biofuel"   
+    
+# class BiofuelAdmin(admin.ModelAdmin): 
+#     # list_display = ('option_list', 'text', 'overall', 'positive', 'Label_value_one_to', )
+#     inlines = [StandaredCharts]
+#     # list_filter = ('overall', 'positive' ,)     
+admin.site.register(Biofuel)
+admin.site.register(StdOils)
+
 
 class LogicalStringAdmin(admin.ModelAdmin):
     list_display = ('option_list', 'text', 'overall', 'positive', 'Label_value_one_to', )
     inlines = [LsLabels]
-    list_filter = ('overall', 'positive' ,)
-    
+    list_filter = ('overall', 'positive' ,)   
     
         
 admin.site.register(LogicalString, LogicalStringAdmin)
@@ -170,7 +179,7 @@ admin.site.register(Evaluator, EvaluatorAdmin)
 
 admin.site.register(DifinedLabel)
 admin.site.register(ReportMailQueue)
-admin.site.register(Biofuel)
+
 # admin.site.register(Option)
 
 
