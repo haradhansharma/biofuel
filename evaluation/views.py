@@ -818,10 +818,12 @@ def eva_index2(request):
     # print(ooo)    
     for o in ooo:
         name = o.oil_name
-        oil = StdOils.objects.get(name = name)
-        
-        o.oil = oil
-        o.save()
+        try:
+            oil = StdOils.objects.get(name = name)        
+            o.oil = oil
+            o.save()
+        except:
+            continue
     
     
     
