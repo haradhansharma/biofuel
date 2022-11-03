@@ -422,7 +422,7 @@ class StandaredChart(models.Model):
     from home.models import WeightUnit    
     
     oil_name = models.CharField(max_length=252)  
-    # oil = models.ForeignKey(StdOils, on_delete=models.SET_NULL,  related_name = 'std_oil_of_chart')
+    oil = models.ForeignKey(StdOils, on_delete=models.CASCADE,  related_name = 'std_oil_of_chart', default = 1)
     related_biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, related_name = 'related_biofuel')
     key = models.CharField(null=True, blank=True, editable=False, max_length=250)    
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="stanchart", limit_choices_to={'is_active': True})
