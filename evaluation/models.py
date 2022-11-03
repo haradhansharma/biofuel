@@ -411,6 +411,8 @@ class EvaluatorActivities(models.Model):
     
 class StdOils(models.Model):
     name = models.CharField(max_length = 250)
+    biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, editable=False)
+    
     
     def __str__(self):
         return self.name

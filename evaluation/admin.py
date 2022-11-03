@@ -54,15 +54,15 @@ class LsLabels(admin.TabularInline):
     extra = 0
     fk_name = "logical_string"
     
-# class StandaredCharts(admin.TabularInline):
-#     model = StandaredChart
-#     extra = 0 
-#     fk_name = "related_biofuel"   
+class StdOilsIn(admin.TabularInline):
+    model = StdOils
+    extra = 0 
+    fk_name = "related_biofuel"   
     
 # class BiofuelAdmin(admin.ModelAdmin): 
 #     # list_display = ('option_list', 'text', 'overall', 'positive', 'Label_value_one_to', )
-#     inlines = [StandaredCharts]
-#     # list_filter = ('overall', 'positive' ,)     
+#     inlines = [StdOilsIn]
+    # list_filter = ('overall', 'positive' ,)     
 admin.site.register(Biofuel)
 admin.site.register(StdOils)
 
