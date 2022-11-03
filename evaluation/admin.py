@@ -185,8 +185,8 @@ admin.site.register(ReportMailQueue)
 
 
 class StandaredChartAdmin(admin.ModelAdmin):
-    list_display = ('oil_name', 'related_biofuel', 'question', 'option', 'unit', 'value', 'link')
-    list_filter = ('oil_name', 'related_biofuel', 'question', )
+    list_display = ('oil_name', 'oil', 'question', 'option', 'unit', 'value', 'link')
+    list_filter = ('oil_name', 'oil', 'question', )
     ordering = ('question',)
     
     change_form_template = 'admin/oil_change_form.html'
