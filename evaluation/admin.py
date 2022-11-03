@@ -64,7 +64,7 @@ class BiofuelAdmin(admin.ModelAdmin):
     inlines = [StdOilsIn]
     # list_filter = ('overall', 'positive' ,)     
 admin.site.register(Biofuel, BiofuelAdmin)
-admin.site.register(StdOils)
+# admin.site.register(StdOils)
 
 
 class LogicalStringAdmin(admin.ModelAdmin):
