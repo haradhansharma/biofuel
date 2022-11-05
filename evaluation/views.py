@@ -600,7 +600,7 @@ def eva_question(request, evaluator, slug):
     try:
         selected_option = evaluation_data.get(evaluator =evaluator_data, question = question).option
     except:
-        oils = question.get_stdoils.filter(oil__selected_oil__key = evaluator_data.stdoil_key)
+        oils = question.get_stdoils.filter(oil__select_oil__key = evaluator_data.stdoil_key)
         if oils.exists():
             selected_option = oils[0].option if oils[0].option else None
             if selected_option is not None:
