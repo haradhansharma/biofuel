@@ -64,8 +64,12 @@ class BiofuelAdmin(admin.ModelAdmin):
     inlines = [StdOilsIn]
     # list_filter = ('overall', 'positive' ,)     
 admin.site.register(Biofuel, BiofuelAdmin)
+
 admin.site.register(OliList)
-admin.site.register(StdOils)
+
+class StdOilsAdmin(admin.ModelAdmin): 
+    list_display = ('select_oil', 'biofuel',)
+admin.site.register(StdOils, StdOilsAdmin)
 
 
 

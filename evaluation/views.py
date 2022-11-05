@@ -822,11 +822,15 @@ def eva_index2(request):
             ss.append(std.oil_name)     
             if not OliList.objects.filter(name = std.oil_name).exists():  
                 OliList.objects.create(name = std.oil_name)
+             
+            std.oil = StdOils.objects.filter(select_oil__name = aa)[0]
+            std.save()
                 
                 
     oil_list = OliList.objects.all()
     for ol in oil_list:
-        StdOils.objects.create(select_oil = ol)
+        if not StdOils.objects.filter(select_oil = ol).exists():
+            StdOils.objects.create(select_oil = ol)
         
         
         
