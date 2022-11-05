@@ -240,10 +240,10 @@ class StandaredChartAdmin(admin.ModelAdmin):
         return super().add_view(request, form_url, extra_context)
     def change_view(self, request, object_id, form_url='', extra_context=None):
         
-        exiting_oils = OliList.objects.all()
-        for eo in exiting_oils:           
-            eo.key = slugify(eo.name)    
-            eo.save()        
+        # exiting_oils = OliList.objects.all()
+        # for eo in exiting_oils:           
+        #     eo.key = slugify(eo.name)    
+        #     eo.save()        
         
         
         objects = StandaredChart.objects.all()
