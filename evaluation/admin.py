@@ -191,7 +191,7 @@ admin.site.register(ReportMailQueue)
 
 
 class StandaredChartAdmin(admin.ModelAdmin):
-    list_display = ( 'oil_name', 'value', 'link',)
+    list_display = ( 'oil_name', 'oil', 'option', 'value', 'link', 'question', )
     list_filter = ('oil', 'question', )
     ordering = ('question',)
     
