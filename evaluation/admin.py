@@ -238,13 +238,7 @@ class StandaredChartAdmin(admin.ModelAdmin):
         extra_context['show_save_and_continue'] = True # Here        
         extra_context['show_save_and_add_another'] = False # Here
         return super().add_view(request, form_url, extra_context)
-    def change_view(self, request, object_id, form_url='', extra_context=None):
-        
-        # exiting_oils = OliList.objects.all()
-        # for eo in exiting_oils:           
-        #     eo.key = slugify(eo.name)    
-        #     eo.save()        
-        
+    def change_view(self, request, object_id, form_url='', extra_context=None):   
         
         objects = StandaredChart.objects.all()
         object = objects.get(id = object_id)        

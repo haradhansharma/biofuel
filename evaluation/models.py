@@ -426,8 +426,7 @@ class OliList(models.Model):
     
     
     
-class StdOils(models.Model):
-    # name = models.CharField(max_length = 250)
+class StdOils(models.Model):    
     select_oil = models.ForeignKey(OliList, on_delete=models.SET_NULL, null=True)
     biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True)
     
@@ -439,11 +438,9 @@ class StandaredChart(models.Model):
     '''
     Please check admin for this model if you changing anythig as here option is overwriting form admin to narrow down.
     '''
-    from home.models import WeightUnit    
+    from home.models import WeightUnit      
     
-    # oil_name = models.CharField(max_length=252)  
-    oil = models.ForeignKey(StdOils, on_delete=models.CASCADE,  related_name = 'std_oil_of_chart', default = 1)
-    # related_biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, related_name = 'related_biofuel', editable=False)
+    oil = models.ForeignKey(StdOils, on_delete=models.CASCADE,  related_name = 'std_oil_of_chart', default = 1)    
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="stanchart", limit_choices_to={'is_active': True})
     unit = models.ForeignKey(WeightUnit, on_delete=models.CASCADE, related_name= "chrartunit")
     value = models.CharField(max_length=252)
