@@ -715,9 +715,9 @@ def eva_index2(request):
                 biofuel = form.cleaned_data['biofuel']
                 stdoil_key = request.POST.get('stdoil')
                 
-                if not stdoil_key or stdoil_key == '':
-                    messages.warning(request,'Select related Oil!')
-                    return redirect(request.path)
+                # if not stdoil_key or stdoil_key == '':
+                #     messages.warning(request,'Select related Oil!')
+                #     return redirect(request.path)
                 
                
                 
@@ -810,28 +810,11 @@ def eva_index2(request):
         assessment, a PDF report will be provided, which can be retrieved via the Dashboard at a later stage."
     
     
-    stdoil_list = StandaredChart.objects.filter(related_biofuel = first_biofuel).values('oil_name', 'key').order_by('oil_name').distinct()
+    # stdoil_list = StandaredChart.objects.filter(related_biofuel = first_biofuel).values('oil_name', 'key').order_by('oil_name').distinct()
     
-    # oil_list = OliList.objects.all()
-    # for ol in oil_list:
-    #     if not StdOils.objects.filter(select_oil = ol).exists():
-    #         print('oil created________________')
-    #         StdOils.objects.create(select_oil = ol)
+    stdoil_list = StdOils.objects.filter(biofuel = first_biofuel)
     
-    # stds = StandaredChart.objects.all()
-    # ss = []
-    # for std in stds:
-    #     aa = std.oil_name
-    #     if aa not in ss:
-    #         ss.append(std.oil_name)     
-    #         if not OliList.objects.filter(name = std.oil_name).exists():  
-    #             print('oillist created____________')
-    #             OliList.objects.create(name = std.oil_name)
-             
-    #     std.oil = StdOils.objects.filter(select_oil__name = aa)[0]        
-    #     std.save()
-    #     print('Oildata updated__________')
-                
+
                 
     
         
@@ -1110,7 +1093,9 @@ def nreport_pdf(request, slug):
 
 def stdoils(request):
     biofuel_id = request.GET.get('biofuel')    
-    stdoil_list = StandaredChart.objects.filter(related_biofuel__id = biofuel_id).values('oil_name', 'key').order_by('oil_name').distinct()
+    # stdoil_list = StandaredChart.objects.filter(related_biofuel__id = biofuel_id).values('oil_name', 'key').order_by('oil_name').distinct()
+    stdoil_list = StdOils.objects.filter(biofuel__id = biofuel_id)
+    
     
             
             

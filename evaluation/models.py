@@ -411,9 +411,16 @@ class EvaluatorActivities(models.Model):
     
 class OliList(models.Model):
     name = models.CharField(max_length = 250)
+    key = models.CharField(null=True, blank=True, editable=False, max_length=250)    
+    
     
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):  
+        key_sample = slugify(self.name)    
+        self.key = key_sample
+        super(OliList, self).save(*args, **kwargs)
     
     
     
@@ -434,10 +441,9 @@ class StandaredChart(models.Model):
     '''
     from home.models import WeightUnit    
     
-    oil_name = models.CharField(max_length=252)  
+    # oil_name = models.CharField(max_length=252)  
     oil = models.ForeignKey(StdOils, on_delete=models.CASCADE,  related_name = 'std_oil_of_chart', default = 1)
-    related_biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, related_name = 'related_biofuel', editable=False)
-    key = models.CharField(null=True, blank=True, editable=False, max_length=250)    
+    # related_biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, related_name = 'related_biofuel', editable=False)
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="stanchart", limit_choices_to={'is_active': True})
     unit = models.ForeignKey(WeightUnit, on_delete=models.CASCADE, related_name= "chrartunit")
     value = models.CharField(max_length=252)
@@ -446,13 +452,10 @@ class StandaredChart(models.Model):
     
     @property
     def oil_key(self):
-        return self.oil_name.lower() 
+        return self.oil.selected_oil.key.lower() 
     
     
-    def save(self, *args, **kwargs):        
-        key_sample = slugify(self.oil_name)    
-        self.key = key_sample
-        super(StandaredChart, self).save(*args, **kwargs)
+    
         
     def __str__(self):
         return self.oil.select_oil.name

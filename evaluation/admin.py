@@ -189,7 +189,7 @@ admin.site.register(ReportMailQueue)
 
 
 class StandaredChartAdmin(admin.ModelAdmin):
-    list_display = ( 'oil_name', 'oil', 'option', 'value', 'link', 'question', )
+    list_display = ('oil', 'option', 'value', 'link', 'question', )
     list_filter = ('oil', 'question', )
     ordering = ('question',)
     
@@ -203,7 +203,7 @@ class StandaredChartAdmin(admin.ModelAdmin):
             '''
             If creating new from admin interface then the option field we will keep hide
             '''
-            context = ('oil_name', 'oil', 'question', 'unit', 'value', 'link')
+            context = ('oil', 'question', 'unit', 'value', 'link')
         else:
             context = super().get_fields(request, obj)         
         return context
@@ -239,12 +239,19 @@ class StandaredChartAdmin(admin.ModelAdmin):
         extra_context['show_save_and_add_another'] = False # Here
         return super().add_view(request, form_url, extra_context)
     def change_view(self, request, object_id, form_url='', extra_context=None):
-        # print(object_id)
-        oils = StandaredChart.objects.all()
-        key = oils.get(id = object_id).key
-        related_oils = oils.filter(key = key)
+        
+        exiting_oils = OliList.objects.all()
+        for eo in exiting_oils:           
+            eo.key = slugify(eo.name)    
+            eo.save()        
+        
+        
+        objects = StandaredChart.objects.all()
+        object = objects.get(id = object_id)        
+        oil = object.oil
+        obj_having_this_question = objects.filter(oil = oil)        
         extra_context = extra_context or {}
-        extra_context['questions'] = [q.question for q in related_oils]
+        extra_context['questions'] = [q.question for q in obj_having_this_question]
         return super().change_view(request, object_id, form_url, extra_context=extra_context)
         
 admin.site.register(StandaredChart, StandaredChartAdmin)
