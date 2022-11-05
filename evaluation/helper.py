@@ -181,19 +181,16 @@ class OilComparision:
                 if int(oil.option.positive) == 0:
                     data.append(oil.option)      
             except:
-                continue
-        
+                continue        
                
         return round(len(data), 2)
     
     def overview_green(self):
-        data = (self.total_positive_options()/self.total_active_questions())*100
-        
+        data = (self.total_positive_options()/self.total_active_questions())*100        
         return round(data, 2)
     
     def overview_red(self):
-        data = (self.total_negative_options()/self.total_active_questions())*100
-        
+        data = (self.total_negative_options()/self.total_active_questions())*100        
         return round(data, 2)
     
     def overview_grey(self):
@@ -202,8 +199,7 @@ class OilComparision:
         As each question have no label and have multiple positive value or negative value so sum of labelwise questions result is diferent then actual total question.
         For this reason to get rid of the mismatched result we had to deduct from 100 to get matching report in the barchart.        
         '''
-        data = 100 - (self.overview_green() + self.overview_red())    
-        
+        data = 100 - (self.overview_green() + self.overview_red())           
         return round(data, 2)
     
     def total_result(self):
@@ -274,6 +270,13 @@ class LabelWiseData:
         self.active_questions = Question.objects.filter(is_active=True)
         # we will need the statment added from the selected options during answering for this report/evaluator, must be excluded assesments or logical strings
         self.eva_label_statement = EvaLebelStatement.objects.filter(evaluator = self.evaluator, question__isnull = False, assesment = False)  
+        
+    def get_stdoil(self):
+        try:
+            data = StandaredChart.objects.get(oil__select_oil__key = self.evaluator.stdoil_key)
+        except:
+            data = None            
+        return data
         
         
     def total_active_questions(self):

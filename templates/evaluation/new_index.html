@@ -48,7 +48,7 @@
                                     
                                         <label>Related Biofuel</label>              
 
-                                        <select aria-label="stdoil" class="form-select mb-4" id="stdoil" name="stdoil" required>                                            
+                                        <select aria-label="stdoil" class="form-select mb-4" id="stdoil" name="stdoil">                                            
                                             {% for sol in stdoil_list %}                                          
                                             <option value="{{ sol.id }}">{{ sol.select_oil.name }}</option>
                                             {% endfor %}
