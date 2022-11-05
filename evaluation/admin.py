@@ -64,7 +64,9 @@ class BiofuelAdmin(admin.ModelAdmin):
     inlines = [StdOilsIn]
     # list_filter = ('overall', 'positive' ,)     
 admin.site.register(Biofuel, BiofuelAdmin)
-# admin.site.register(StdOils)
+admin.site.register(OliList)
+admin.site.register(StdOils)
+
 
 
 class LogicalStringAdmin(admin.ModelAdmin):
@@ -185,8 +187,8 @@ admin.site.register(ReportMailQueue)
 
 
 class StandaredChartAdmin(admin.ModelAdmin):
-    list_display = ('oil_name', 'oil', 'question', 'option', 'unit', 'value', 'link')
-    list_filter = ('oil_name', 'oil', 'question', )
+    list_display = ( 'oil_name', 'value', 'link',)
+    list_filter = ('oil', 'question', )
     ordering = ('question',)
     
     change_form_template = 'admin/oil_change_form.html'
@@ -199,7 +201,7 @@ class StandaredChartAdmin(admin.ModelAdmin):
             '''
             If creating new from admin interface then the option field we will keep hide
             '''
-            context = ('oil_name', 'question', 'unit', 'value', 'link')
+            context = ('oil_name', 'oil', 'question', 'unit', 'value', 'link')
         else:
             context = super().get_fields(request, obj)         
         return context
@@ -228,6 +230,7 @@ class StandaredChartAdmin(admin.ModelAdmin):
         '''
         Show only sve and continue in admin inerface on addition form
         '''
+        
         extra_context = extra_context or {}
         extra_context['show_save'] = False # Here
         extra_context['show_save_and_continue'] = True # Here        

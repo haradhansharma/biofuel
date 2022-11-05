@@ -813,17 +813,23 @@ def eva_index2(request):
     stdoil_list = StandaredChart.objects.filter(related_biofuel = first_biofuel).values('oil_name', 'key').order_by('oil_name').distinct()
     
     
-    # ooo = StandaredChart.objects.all()
     
-    # # print(ooo)    
-    # for o in ooo:
-    #     name = o.oil_name
-    #     try:
-    #         oil = StdOils.objects.get(name = name)        
-    #         o.oil = oil
-    #         o.save()
-    #     except:
-            # continue
+    stds = StandaredChart.objects.all()
+    ss = []
+    for std in stds:
+        aa = std.oil_name
+        if aa not in ss:
+            ss.append(std.oil_name)     
+            if not OliList.objects.filter(name = std.oil_name).exists():  
+                OliList.objects.create(name = std.oil_name)
+                
+                
+    oil_list = OliList.objects.all()
+    for ol in oil_list:
+        StdOils.objects.create(select_oil = ol)
+        
+        
+        
     
     
     

@@ -409,15 +409,24 @@ class EvaluatorActivities(models.Model):
     def __str__(self):
         return str(self.next_activity.name_and_standared)
     
+class OliList(models.Model):
+    name = models.CharField(max_length = 250)
+    
+    def __str__(self):
+        return self.name
+    
+    
+    
     
     
 class StdOils(models.Model):
-    name = models.CharField(max_length = 250)
+    # name = models.CharField(max_length = 250)
+    select_oil = models.ForeignKey(OliList, on_delete=models.SET_NULL, null=True)
     biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True)
     
     
     def __str__(self):
-        return self.name
+        return self.select_oil.name
 
 class StandaredChart(models.Model):
     '''
