@@ -67,9 +67,9 @@ admin.site.register(Biofuel, BiofuelAdmin)
 
 admin.site.register(OliList)
 
-class StdOilsAdmin(admin.ModelAdmin): 
-    list_display = ('select_oil', 'biofuel',)
-admin.site.register(StdOils, StdOilsAdmin)
+# class StdOilsAdmin(admin.ModelAdmin): 
+#     list_display = ('select_oil', 'biofuel',)
+# admin.site.register(StdOils, StdOilsAdmin)
 
 
 
