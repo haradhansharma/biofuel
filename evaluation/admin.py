@@ -59,10 +59,8 @@ class StdOilsIn(admin.TabularInline):
     extra = 0 
     fk_name = "biofuel"   
     
-class BiofuelAdmin(admin.ModelAdmin): 
-    # list_display = ('option_list', 'text', 'overall', 'positive', 'Label_value_one_to', )
-    inlines = [StdOilsIn]
-    # list_filter = ('overall', 'positive' ,)     
+class BiofuelAdmin(admin.ModelAdmin):    
+    inlines = [StdOilsIn]     
 admin.site.register(Biofuel, BiofuelAdmin)
 
 admin.site.register(OliList)
