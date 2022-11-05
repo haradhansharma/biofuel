@@ -43,7 +43,7 @@ class OptionResource(resources.ModelResource):
         fields = ('name','question__name', 'next_question__name',)
 
 class OptionAdmin(ExportActionMixin, admin.ModelAdmin):    
-    list_display = ('name', 'question', 'next_question',)
+    list_display = ('name', 'yes_status', 'dont_know', 'question', 'next_question',)
     list_filter = ('yes_status','dont_know', 'overall','positive', 'question', 'next_question', )   
     ordering = ('question', 'name',)
     # resource_class = OptionResource

@@ -163,7 +163,7 @@
                                             
 
 
-                                            <input class="btn btn-success btn-block m-2" type="submit" hx-post="{% url 'evaluation:option_add2' %}#ques"
+                                            <input class="btn btn-success btn-block m-2" type="submit" hx-post="{% url 'evaluation:option_add2' %}{% if messages %}#msg{% else %}#ques{% endif %}"
                                             hx-push-url="{{request.session.push_url}}" value="Confirm" hx-indicator="#confirmspinner"
                                             hx-target="body" hx-swap="outerHTML" hx-vals='{"submit_and_auto": "submit_and_auto"}'
                                             hx-trigger="click">
@@ -268,13 +268,12 @@
                                         <tbody>
                                             {% for cd in question.get_stdoils %}
                                             <tr>
-                                                <th scope="row">{{cd.oil_name }}</th>
+                                                <th scope="row">{{cd.oil.select_oil.name }}</th>
                                                 <td>{{cd.unit }}</td>
                                                 <td>{{cd.value }}</td>
                                                 <td>{{cd.link }}</td>
                                                 <td>{{ cd.option.name }}</td>
-                                                <td {% if cd.option.yes_status %} class="table-success" {% elif not cd.option.yes_status %} class="table-danger" {% else %} class="table-dark" {% endif %}></td>
-
+                                                <td {% if cd.option.yes_status %} class="table-success" {% elif not cd.option.yes_status and not cd.option.dont_know %} class="table-danger" {% elif not cd.option.yes_status and cd.option.dont_know %} class="table-light" {% else %} {% endif %}></td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>

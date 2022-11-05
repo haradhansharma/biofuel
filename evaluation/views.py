@@ -244,7 +244,7 @@ def option_add2(request):
         #checking options from server side, if frontend skipped by anyhow.        
         if 'option_id' not in request.POST:
             log.info(f'Redirecting as no option selected by the user{request.user}')
-            messages.warning(request, 'To proceed, please select an option!')
+            messages.warning(request, 'To proceed, please select an option or please go with "submit" process first!')
             return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(request.session['evaluator']), str(question_slug)]))       
         
            
@@ -276,7 +276,7 @@ def option_add2(request):
             Evaluation.objects.get(evaluator = get_current_evaluator(request), question = question).option
         except:
             log.info(f'Optin not found_______________')
-            messages.warning(request, 'To proceed, please select an option!')
+            messages.warning(request, 'To proceed, please select an option or please go with "submit" process first!')
             return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(request.session['evaluator']), str(question_slug)]))          
         
         
