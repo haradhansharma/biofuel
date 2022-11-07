@@ -273,7 +273,7 @@
                                                 <td>{{cd.value }}</td>
                                                 <td>{{cd.link }}</td>
                                                 <td>{{ cd.option.name }}</td>
-                                                <td {% if cd.option.yes_status %} class="table-success" {% elif not cd.option.yes_status and not cd.option.dont_know %} class="table-danger" {% elif not cd.option.yes_status and cd.option.dont_know %} class="table-light" {% else %} {% endif %}></td>
+                                                <td {% if cd.option.positive == '1' %} class="table-success" {% elif cd.option.positive == '0' and not cd.option.dont_know %} class="table-danger" {% elif cd.option.positive == '0' and cd.option.dont_know %} class="table-light" {% else %} class="table-light" {% endif %}></td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
