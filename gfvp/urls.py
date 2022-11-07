@@ -33,6 +33,8 @@ urlpatterns = [
     path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
     path("gdpr-policy/", TemplateView.as_view(template_name="includes/gdpr.html"), name='gdpr'),
     path("terms/", TemplateView.as_view(template_name="includes/terms.html"), name='term'),
+    path('docs/', include('django_mkdocs.urls', namespace='documentation')),
+    
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

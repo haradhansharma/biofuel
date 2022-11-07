@@ -428,7 +428,7 @@ class OliList(models.Model):
     
 class StdOils(models.Model):    
     select_oil = models.ForeignKey(OliList, on_delete=models.SET_NULL, null=True)
-    biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True)
+    biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, editable=False,)
     
     
     def __str__(self):
@@ -440,16 +440,16 @@ class StandaredChart(models.Model):
     '''
     from home.models import WeightUnit      
     
-    oil = models.ForeignKey(StdOils, on_delete=models.CASCADE,  related_name = 'std_oil_of_chart', default = 1)    
+    oil = models.ForeignKey(StdOils, on_delete=models.CASCADE,  related_name = 'std_oil_of_chart',)    
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="stanchart", limit_choices_to={'is_active': True})
     unit = models.ForeignKey(WeightUnit, on_delete=models.CASCADE, related_name= "chrartunit")
     value = models.CharField(max_length=252)
     link = models.URLField()
     option = models.ForeignKey(Option, on_delete=models.SET_NULL, related_name='stoption', null=True, blank=True)
     
-    @property
-    def oil_key(self):
-        return self.oil.selected_oil.key.lower() 
+    # @property
+    # def oil_key(self):
+    #     return self.oil.selected_oil.key.lower() 
     
     
     

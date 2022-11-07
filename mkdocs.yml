@@ -1,0 +1,40 @@
+site_name: GFVP Docs
+site_description: Biofuel Evaluation Process
+site_author: Haradhan Sharma
+copyright: (c) gf-vp.com
+repo_url: https://github.com/haradhansharma/biofuel
+edit_uri: 'blob/main/docs/'
+nav:
+  - Home: index.md
+  - Accounts: accounts.md
+  - CRM: crm.md
+  - Blog: blog.md
+  - Evaluation: evaluation.md
+  - Guide: guide.md
+use_directory_urls: false
+docs_dir: gfvp_docs/docs
+site_dir: gfvp_docs/site
+
+markdown_extensions:
+    # - smarty
+    - toc:
+        permalink: True
+        # baselevel: 2
+        separator: "_"
+    # - sane_lists
+
+theme: 
+  name: mkdocs
+  locale: en
+  highlightjs: true
+  nav_style: success
+  hljs_languages:
+        - yaml
+        - rust
+        - python
+        
+
+
+
+extra:
+    version: 1.0
