@@ -439,17 +439,19 @@ class StandaredChart(models.Model):
     Please check admin for this model if you changing anythig as here option is overwriting form admin to narrow down.
     '''
     from home.models import WeightUnit      
-    
+    from smart_selects.db_fields import ChainedForeignKey
     oil = models.ForeignKey(StdOils, on_delete=models.CASCADE,  related_name = 'std_oil_of_chart',)    
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="stanchart", limit_choices_to={'is_active': True})
     unit = models.ForeignKey(WeightUnit, on_delete=models.CASCADE, related_name= "chrartunit")
     value = models.CharField(max_length=252)
     link = models.URLField()
-    option = models.ForeignKey(Option, on_delete=models.SET_NULL, related_name='stoption', null=True, blank=True)
+    # option = models.ForeignKey(Option, on_delete=models.SET_NULL, related_name='stoption', null=True, blank=True)
+    option = ChainedForeignKey(Option, chained_field="question", chained_model_field="question", show_all=False,auto_choose=True, sort=True, on_delete=models.SET_NULL, related_name='stoption', null=True, blank=True)
     
-    # @property
-    # def oil_key(self):
-    #     return self.oil.selected_oil.key.lower() 
+    
+    @property
+    def oil_key(self):
+        return self.oil.selected_oil.key.lower() 
     
     
     

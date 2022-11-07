@@ -207,6 +207,7 @@ admin.site.register(ReportMailQueue)
 
 class StandaredChartAdmin(admin.ModelAdmin):
     list_display = ('oil', 'option', 'value', 'link', 'question', )
+    list_editable = ('link', 'option', 'value',  )
     list_filter = ('oil', 'question', )
     ordering = ('question',)
     
@@ -225,25 +226,25 @@ class StandaredChartAdmin(admin.ModelAdmin):
             context = super().get_fields(request, obj)         
         return context
     
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        obj_id = request.resolver_match.kwargs.get('object_id')
-        try:
-            '''
-            As we are overwriting default behaviour then we will delete the option if no question is there, this is essential during editing
-            '''
-            obj = StandaredChart.objects.get(id = int(obj_id))            
-            if not obj.question:
-                obj.option = None
-                obj.save()
-        except:
-            obj = None
+    # def formfield_for_foreignkey(self, db_field, request, **kwargs):
+    #     obj_id = request.resolver_match.kwargs.get('object_id')
+    #     try:
+    #         '''
+    #         As we are overwriting default behaviour then we will delete the option if no question is there, this is essential during editing
+    #         '''
+    #         obj = StandaredChart.objects.get(id = int(obj_id))            
+    #         if not obj.question:
+    #             obj.option = None
+    #             obj.save()
+    #     except:
+    #         obj = None
         
-        if db_field.name == "option":
-            '''
-            Pverwriting option field to narrow down based on selected question.
-            '''
-            kwargs["queryset"] = Option.objects.filter(question = obj.question if obj else None)           
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    #     if db_field.name == "option":
+    #         '''
+    #         Pverwriting option field to narrow down based on selected question.
+    #         '''
+    #         kwargs["queryset"] = Option.objects.filter(question = obj.question if obj else None)           
+    #     return super().formfield_for_foreignkey(db_field, request, **kwargs)
     
     def add_view(self, request, form_url='', extra_context=None):
         '''
