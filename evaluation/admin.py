@@ -67,7 +67,7 @@ admin.site.register(OliList)
 
 class StandaredCharts(admin.TabularInline):
     model = StandaredChart
-    # extra = 0
+    extra = 0
     # fk_name = 'oil'
     raw_id_fields = ("oil",)
 
@@ -214,56 +214,56 @@ class StandaredChartAdmin(admin.ModelAdmin):
     
         
     
-    # # to exclude option field if no question selected
-    # def get_fields(self, request, obj=None):
-    #     if obj is None:
-    #         '''
-    #         If creating new from admin interface then the option field we will keep hide
-    #         '''
-    #         context = ('oil', 'question', 'unit', 'value', 'link')
-    #     else:
-    #         context = super().get_fields(request, obj)         
-    #     return context
+    # to exclude option field if no question selected
+    def get_fields(self, request, obj=None):
+        if obj is None:
+            '''
+            If creating new from admin interface then the option field we will keep hide
+            '''
+            context = ('oil', 'question', 'unit', 'value', 'link')
+        else:
+            context = super().get_fields(request, obj)         
+        return context
     
-    # def formfield_for_foreignkey(self, db_field, request, **kwargs):
-    #     obj_id = request.resolver_match.kwargs.get('object_id')
-    #     try:
-    #         '''
-    #         As we are overwriting default behaviour then we will delete the option if no question is there, this is essential during editing
-    #         '''
-    #         obj = StandaredChart.objects.get(id = int(obj_id))            
-    #         if not obj.question:
-    #             obj.option = None
-    #             obj.save()
-    #     except:
-    #         obj = None
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        obj_id = request.resolver_match.kwargs.get('object_id')
+        try:
+            '''
+            As we are overwriting default behaviour then we will delete the option if no question is there, this is essential during editing
+            '''
+            obj = StandaredChart.objects.get(id = int(obj_id))            
+            if not obj.question:
+                obj.option = None
+                obj.save()
+        except:
+            obj = None
         
-    #     if db_field.name == "option":
-    #         '''
-    #         Pverwriting option field to narrow down based on selected question.
-    #         '''
-    #         kwargs["queryset"] = Option.objects.filter(question = obj.question if obj else None)           
-    #     return super().formfield_for_foreignkey(db_field, request, **kwargs)
+        if db_field.name == "option":
+            '''
+            Pverwriting option field to narrow down based on selected question.
+            '''
+            kwargs["queryset"] = Option.objects.filter(question = obj.question if obj else None)           
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
     
-    # def add_view(self, request, form_url='', extra_context=None):
-    #     '''
-    #     Show only sve and continue in admin inerface on addition form
-    #     '''
+    def add_view(self, request, form_url='', extra_context=None):
+        '''
+        Show only sve and continue in admin inerface on addition form
+        '''
         
-    #     extra_context = extra_context or {}
-    #     extra_context['show_save'] = False # Here
-    #     extra_context['show_save_and_continue'] = True # Here        
-    #     extra_context['show_save_and_add_another'] = False # Here
-    #     return super().add_view(request, form_url, extra_context)
-    # def change_view(self, request, object_id, form_url='', extra_context=None):   
+        extra_context = extra_context or {}
+        extra_context['show_save'] = False # Here
+        extra_context['show_save_and_continue'] = True # Here        
+        extra_context['show_save_and_add_another'] = False # Here
+        return super().add_view(request, form_url, extra_context)
+    def change_view(self, request, object_id, form_url='', extra_context=None):   
         
-    #     objects = StandaredChart.objects.all()
-    #     object = objects.get(id = object_id)        
-    #     oil = object.oil
-    #     obj_having_this_question = objects.filter(oil = oil)        
-    #     extra_context = extra_context or {}
-    #     extra_context['questions'] = [q.question for q in obj_having_this_question]
-    #     return super().change_view(request, object_id, form_url, extra_context=extra_context)
+        objects = StandaredChart.objects.all()
+        object = objects.get(id = object_id)        
+        oil = object.oil
+        # obj_having_this_question = objects.filter(oil = oil)        
+        # extra_context = extra_context or {}
+        # extra_context['questions'] = [q.question for q in obj_having_this_question]
+        return super().change_view(request, object_id, form_url, extra_context=extra_context)
         
 admin.site.register(StandaredChart, StandaredChartAdmin)
 
