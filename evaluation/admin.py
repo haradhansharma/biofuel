@@ -64,7 +64,7 @@ class BiofuelAdmin(admin.ModelAdmin):
     inlines = [StdOilsIn]     
 admin.site.register(Biofuel, BiofuelAdmin)
 
-admin.site.register(OliList)
+# admin.site.register(OliList)
 
 class StandaredCharts(admin.TabularInline):
     model = StandaredChart
@@ -78,7 +78,14 @@ class StdOilsAdmin(admin.ModelAdmin):
     list_display = ('select_oil', 'biofuel',)
     inlines = (
         StandaredCharts,
-        )   
+        )  
+    
+    class Media:
+        css = {
+            'all': (
+                '/static/css/fancy.css',
+            )
+        } 
     # def get_inline_instances(self, request, obj=None):
     #     for inline in self.inlines:
     #         print(inline)
@@ -215,12 +222,12 @@ class StandaredChartAdmin(admin.ModelAdmin):
     list_per_page = 10
     
     
-    # class Media:
-    #     css = {
-    #         'all': (
-    #             '/css/fancy.css',
-    #         )
-    #     }
+    class Media:
+        css = {
+            'all': (
+                '/static/css/fancy.css',
+            )
+        }
     
     
     

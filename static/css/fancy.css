@@ -1,3 +1,14 @@
-.column-question {
-    width: 20px;
+.field-question {
+    max-width: 200px;
+    overflow: hidden;
+}
+
+.field-value {
+    max-width: 50px;
+    overflow: hidden;
+}
+
+.field-link {
+    max-width: 280px;
+    overflow: hidden;
 }
