@@ -523,7 +523,7 @@ def eva_question(request, evaluator, slug):
     '''
     creator can edit own report!
     '''    
-    if eva.creator.id == request.user.id:
+    if eva.creator.id == request.user.id or request.user.is_superuser:
         pass
     else:
         log.info(f'The report is being edited is not created you user {request.user}______abroating______')
