@@ -442,7 +442,7 @@ class ReportPDFData:
                 ] 
                 
                 for cd in e.question.stanchart.all():
-                    table_data.append([cd.oil_name , cd.unit, cd.value, cd.link])     
+                    table_data.append([cd.oil.select_oil.name , cd.unit, cd.value, cd.link])     
                     
                 table = Table(table_data, colWidths = (self.PW-self.M*2)/4 - self.M/2, cornerRadii=[5, 5, 5, 5])
                 table.setStyle(style)              
