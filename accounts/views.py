@@ -314,7 +314,10 @@ def userpage(request, username):
             return HttpResponseRedirect(reverse('evaluation:evaluation2'))  
         
         #increadable setattr to reduce time to make report editing url without touch of database 
-        reports = Evaluator.objects.filter(creator = user).order_by('-id')  
+        if request.user.is_superuser:
+            reports = Evaluator.objects.all().order_by('-id')  
+        else:        
+            reports = Evaluator.objects.filter(creator = request.user).order_by('-id')  
         for report in reports:            
             try:   
                 last_question = Evaluation.objects.filter(evaluator = report).order_by('id').last().question        
