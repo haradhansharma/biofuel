@@ -127,7 +127,7 @@
   .ct-chart-ranking .ct-series-a .ct-bar{
     stroke: green;
     stroke-linecap: square;
-    stroke-dasharray: 30px;
+    /* stroke-dasharray: 30px; */
     /* stroke-dashoffset: 30px; */
     /* z-index: 1; */
     /* stroke-linejoin: bevel; */
@@ -152,7 +152,7 @@
   .ct-chart-ranking .ct-series-c .ct-bar{
     stroke: Red;
     stroke-linecap: square;
-    stroke-dasharray: 30px;
+    /* stroke-dasharray: 30px; */
     /* stroke-dashoffset: 30px; */
     /* z-index: 1; */
     /* stroke-linejoin: bevel; */
