@@ -127,8 +127,8 @@
   .ct-chart-ranking .ct-series-a .ct-bar{
     stroke: green;
     stroke-linecap: square;
-    stroke-dasharray: 30px;
-    stroke-dashoffset: 30px;
+    /* stroke-dasharray: 30px; */
+    /* stroke-dashoffset: 30px; */
     /* z-index: 1; */
     /* stroke-linejoin: bevel; */
     /* display: block; */
@@ -140,7 +140,7 @@
   .ct-chart-ranking .ct-series-b .ct-bar{
     stroke: grey;
     stroke-linecap: square;
-    stroke-dasharray: 1px;
+    stroke-dasharray: 30px;
     /* z-index: -1; */
     stroke-dashoffset: 1px;
     /* stroke-linejoin: bevel; */
@@ -152,8 +152,8 @@
   .ct-chart-ranking .ct-series-c .ct-bar{
     stroke: Red;
     stroke-linecap: square;
-    stroke-dasharray: 30px;
-    stroke-dashoffset: 30px;
+    /* stroke-dasharray: 30px; */
+    /* stroke-dashoffset: 30px; */
     /* z-index: 1; */
     /* stroke-linejoin: bevel; */
     /* display: block; */
