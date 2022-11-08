@@ -224,7 +224,7 @@ dd.addEventListener("DOMContentLoaded", function(event) {
             // donut: true,
             stackBars: true,
             horizontalBars: true,
-            // seriesBarDistance: 0,
+            seriesBarDistance: 20,
             plugins: [
             //   Chartist.plugins.tooltip()
             ],
@@ -233,20 +233,20 @@ dd.addEventListener("DOMContentLoaded", function(event) {
                 // labelInterpolationFnc: function(value) {
                 //   return (value / 1000) + 'k';
                 // },
-                // offset: 100,
-                // showGrid: false,
+                // offset: -100,
+                showGrid: false,
                 showLabel: false,
               },
             axisY: {
                 offset: 100,
-                // showGrid: false,
+                showGrid: false,
             }            
-            });
+            }); 
           
           chart.on('draw', function(data) {
             if(data.type === 'bar') {
                 data.element.attr({
-                  style: 'stroke-width: 40px;stroke-linecap: square;'
+                //   style: 'stroke-width: 30px'
                 });
             }            
         });
