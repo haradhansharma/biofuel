@@ -187,7 +187,7 @@
                                                             <tbody>
                                                             {% for cd in e.question.stanchart.all %}                                                            
                                                               <tr>
-                                                                <th>{{cd.oil_name }}</th>
+                                                                <th>{{cd.oil.select_oil.name }}</th>
                                                                 <td>{{cd.unit }}</td>
                                                                 <td>{{cd.value }}</td> 
                                                                 <td>{{cd.link }}</td>
