@@ -446,9 +446,12 @@ def get_vedio_urls(search_term):
     search_results = r.json()
     vedio_urls = []
     for item in search_results.get('items'):
-        item_id = item['id']        
-        embed_url = 'https://www.youtube.com/embed/{}'.format(item_id['videoId'])
-        vedio_urls.append(embed_url)
+        try:
+            item_id = item['id']        
+            embed_url = 'https://www.youtube.com/embed/{}'.format(item_id['videoId'])
+            vedio_urls.append(embed_url)
+        except:
+            continue
     return vedio_urls
 
 def vedio_urls(search_term):
