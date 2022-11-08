@@ -226,7 +226,7 @@ dd.addEventListener("DOMContentLoaded", function(event) {
             horizontalBars: true,
             seriesBarDistance: 20,
             plugins: [
-            //   Chartist.plugins.tooltip()
+              Chartist.plugins.tooltip()
             ],
             
             axisX: {
