@@ -302,7 +302,7 @@
                                                             {% else %}
                                                             <span class="btn btn-outline-primary btn-sm m-2">Pend</span>
                                                             {% endif %}
-                                                            {% if report.creator.id == user.id %}
+                                                            {% if report.creator.id == user.id or user.is_superuser %}
                                                             <a class="btn btn-primary btn-sm m-2" href="{% url 'evaluation:eva_question' report.id report.last_slug %} " target="_blank"> Edit </a>
                                                             {% else %}
                                                             <span class="btn btn-outline-primary btn-sm m-2"> Creator Can Edit</span>
