@@ -325,7 +325,7 @@ def userpage(request, username):
             except:
                 setattr(report, 'last_slug', first_of_parent.slug )    
         
-        button = reverse('evaluation:report', args=[last_reports.slug])
+        button = reverse('evaluation:nreport', args=[last_reports.slug])
         context = {
             'gretings': gretings,
             'button': button,
