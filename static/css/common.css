@@ -142,7 +142,7 @@
     stroke-linecap: square;
     stroke-dasharray: 30px;
     /* z-index: -1; */
-    stroke-dashoffset: 1px;
+    stroke-dashoffset: 30px;
     /* stroke-linejoin: bevel; */
     /* display: block; */
     stroke-width: 30px;
