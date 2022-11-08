@@ -34,6 +34,13 @@ class QuestionAdmin(ExportActionMixin, admin.ModelAdmin):
     list_filter = ('is_door','is_active',)
     ordering = ('sort_order',)
     inlines = [Labels, Options]    
+    
+    class Media:
+        css = {
+            'all': (
+                '/static/css/fancy.css',
+            )
+        }
 admin.site.register(Question, QuestionAdmin) 
 
 
