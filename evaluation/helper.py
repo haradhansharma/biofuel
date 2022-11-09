@@ -405,6 +405,15 @@ class LabelWiseData:
         # print(record)
         return record
     
+    def label_wise_total(self, label):
+        evalebel = label.labels.all()  
+        # print(evalebel) 
+        data = self.eva_label_statement.filter(evalebel__in = evalebel).count()
+        # print(f'{data} for label {label}')
+        return data
+              
+        
+    
     def label_wise_positive_answered(self, label):  
         evalebel = label.labels.all()         
         data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(1)).count()
@@ -437,8 +446,15 @@ class LabelWiseData:
             negative = round(self.active_questions.filter(questions__name = label, questions__value = 0).count(), 2)
             negative_answered = self.label_wise_nagetive_answered(label)
             
-            green = round((positive_answered * 100)/positive, 2)
-            red = round((negative_answered* 100 )/negative, 2)  
+            
+            try:
+                green = round((positive_answered * 100)/self.label_wise_total(label), 2)
+            except:
+                green = 0
+            try:
+                red = round((negative_answered* 100 )/self.label_wise_total(label), 2)  
+            except:
+                red = 0
             
             
             
