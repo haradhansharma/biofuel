@@ -315,7 +315,7 @@ class LabelWiseData:
         
     
     def total_positive_answer(self):
-        data = self.eva_label_statement.filter(positive = str(1), dont_know = False).values('question').distinct().count()      
+        data = self.eva_label_statement.filter(positive = str(1)).values('question').distinct().count()      
         
         return round(data, 2)
         # return round(len(self.positive_answered()), 2)
@@ -333,10 +333,10 @@ class LabelWiseData:
         return round(data, 2)
         # return round(len(self.negative_answered()), 2)
         
-    '''IT IS NEW ADITION'''   
-    def total_dontknow_answer(self):
-        data = self.eva_label_statement.filter(positive = str(0), dont_know = True).values('question').distinct().count()
-        return round(data, 2)
+    # '''IT IS NEW ADITION'''   
+    # def total_dontknow_answer(self):
+    #     data = self.eva_label_statement.filter(positive = str(0), dont_know = False).values('question').distinct().count()
+    #     return round(data, 2)
         
     
     def overview_green(self):
@@ -382,12 +382,12 @@ class LabelWiseData:
     
     def label_wise_positive_answered(self, label):  
         evalebel = label.labels.all()         
-        data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(1), dont_know = False).count()
+        data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(1)).count()
         return round(data, 2)
     
     def label_wise_nagetive_answered(self, label): 
         evalebel = label.labels.all()    
-        data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = True).count()
+        data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = False).count()
         return round(data, 2)
     
     
