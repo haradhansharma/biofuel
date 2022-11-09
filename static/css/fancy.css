@@ -1,20 +1,20 @@
-.field-question {
+.results .field-question {
     max-width: 200px;
     overflow: hidden;
 }
 
-.field-value {
+.results .field-value {
     max-width: 50px;
     overflow: hidden;
 }
 
-.field-link {
+.results .field-link {
     max-width: 280px;
     overflow: hidden;
 }
 
 
-.field-next_question {
+.inline-related .field-next_question {
     max-width: 280px;
     overflow: hidden;
 }

@@ -122,9 +122,7 @@ def add_auestion_to_the_oil(sender, instance, created, **kwargs):
             try:
                 option = Option.objects.filter(question = question)[0]
             except:
-                option = None
-            
-                
+                option = None               
             StandaredChart.objects.create(oil = stdoil, question = question, option=option)
         
 
