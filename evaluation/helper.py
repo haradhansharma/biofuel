@@ -164,6 +164,8 @@ class OilComparision:
         data = self.active_questions.count()
         return round(data, 2)
     
+    
+    
     def total_positive_options(self):        
         '''
         to get positive question based on pisitive option of the oil
@@ -193,11 +195,11 @@ class OilComparision:
         return round(len(data), 2)
     
     def overview_green(self):
-        data = (self.total_positive_options()/self.total_active_questions())*100        
+        data = (self.total_positive_options() * 100) * self.total_active_questions()        
         return round(data, 2)
     
     def overview_red(self):
-        data = (self.total_negative_options()/self.total_active_questions())*100        
+        data = (self.total_negative_options() * 100) * self.total_active_questions()        
         return round(data, 2)
     
     def overview_grey(self):
@@ -220,27 +222,44 @@ class OilComparision:
             }
         return record
     
+    
+    def label_wise_total(self, label):            
+        data = self.oils.filter(question__questions__name = label).count()        
+        return data
+    
     def label_wise_positive_option(self, label):              
         data = self.oils.filter(question__questions__name = label, option__positive = str(1)).count()        
         return round(data, 2)
     
     def label_wise_negative_option(self, label):              
-        data = self.oils.filter(question__questions__name = label, option__positive = str(0)).count()       
+        data = self.oils.filter(question__questions__name = label, option__positive = str(0), option__dont_know = False).count()       
         return round(data, 2)
     
     def label_wise_result(self):       
         labels = DifinedLabel.objects.filter(common_status = False)        
         record_dict = {}
         for label in labels:             
-            positive = round(self.active_questions.filter(questions__name = label, questions__value = str(1)).count(), 2)       
+            # positive = round(self.active_questions.filter(questions__name = label, questions__value = str(1)).count(), 2)       
+            # #As labelwise record is more then total question due to multi label selected for each question
+            # #so we will make it based on the total positive       
+            # positive_options = round((self.label_wise_positive_option(label)/self.active_questions.count())*positive, 2)              
+            # negative = round(self.active_questions.filter(questions__name = label, questions__value = str(0)).count(), 2)
+            # # same as positive
+            # negative_options = round((self.label_wise_negative_option(label)/self.active_questions.count())*negative, 2)   
+            
+            
+            # positive = round(self.active_questions.filter(questions__name = label, questions__value = str(1)).count(), 2)       
             #As labelwise record is more then total question due to multi label selected for each question
             #so we will make it based on the total positive       
-            positive_options = round((self.label_wise_positive_option(label)/self.active_questions.count())*positive, 2)              
-            negative = round(self.active_questions.filter(questions__name = label, questions__value = str(0)).count(), 2)
+            positive_options = round((self.label_wise_positive_option(label)), 2)              
+            # negative = round(self.active_questions.filter(questions__name = label, questions__value = str(0)).count(), 2)
             # same as positive
-            negative_options = round((self.label_wise_negative_option(label)/self.active_questions.count())*negative, 2)       
-            green = round((positive_options/positive)*100, 2)
-            red = round((negative_options/negative)*100, 2)         
+            negative_options = round((self.label_wise_negative_option(label)), 2)   
+            
+            
+                
+            green = round((positive_options * 100)/self.label_wise_total(label), 2)
+            red = round((negative_options * 100)/self.label_wise_total(label), 2)         
             
             record = {
                 #Same as total total result
@@ -278,29 +297,31 @@ class LabelWiseData:
         # we will need the statment added from the selected options during answering for this report/evaluator, must be excluded assesments or logical strings
         self.eva_label_statement = EvaLebelStatement.objects.filter(evaluator = self.evaluator, question__isnull = False, assesment = False)  
         
-    def get_stdoil(self):        
-        try:
-            data = StdOils.objects.get(select_oil__key = self.evaluator.stdoil_key)
-        except Exception as e:           
-            data = None            
-        return data
+    # def get_stdoil(self):        
+    #     try:
+    #         data = StdOils.objects.get(select_oil__key = self.evaluator.stdoil_key)
+    #     except Exception as e:           
+    #         data = None            
+    #     return data
     
-    def get_nonanswered_questions(self):
-        answered_question = set()
-        for els in self.eva_label_statement:
-            answered_question.add(els.question.id)            
-        non_answered = [question.id for question in self.active_questions if question.id not in list(answered_question)]
-        return non_answered
+    # def get_nonanswered_questions(self):
+    #     answered_question = set()
+    #     for els in self.eva_label_statement:
+    #         answered_question.add(els.question.id)            
+    #     non_answered = [question.id for question in self.active_questions if question.id not in list(answered_question)]
+    #     return non_answered
     
-    def get_stdoil_result(self):
-        oil_result = OilComparision(self.get_stdoil(), self.get_nonanswered_questions())
-        data = oil_result.picked_labels_dict()   
-        return data
+    # def get_stdoil_result(self):
+    #     oil_result = OilComparision(self.get_stdoil(), self.get_nonanswered_questions())
+    #     data = oil_result.picked_labels_dict()   
+    #     return data
         
-        
-    def total_active_questions(self):        
-        data = self.active_questions.count()
-        return round(data, 2)
+    # '''
+    # useless as we are converting to 100 to make relevent to the labelwise
+    # '''   
+    # def total_active_questions(self):        
+    #     data = self.active_questions.count()
+    #     return round(data, 2)
     
     def total_answered(self):
         data = set(s.question.id for s in self.eva_label_statement)        

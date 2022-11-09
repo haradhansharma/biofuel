@@ -72,6 +72,8 @@ class BiofuelAdmin(admin.ModelAdmin):
 admin.site.register(Biofuel, BiofuelAdmin)
 
 admin.site.register(OliList)
+admin.site.register(LabelDataHistory)
+
 
 class StandaredCharts(admin.TabularInline):
     model = StandaredChart
