@@ -324,7 +324,8 @@ class LabelWiseData:
     #     return round(data, 2)
     
     def total_answered(self):
-        data = set(s.question.id for s in self.eva_label_statement)        
+        # data = set(s.question.id for s in self.eva_label_statement)  
+        data = self.active_questions.count()      
         return round(len(data), 2)
     
     def total_positive_answer(self):
@@ -382,8 +383,9 @@ class LabelWiseData:
         return record
     
     def label_wise_total(self, label):
-        evalebel = label.labels.all()          
-        data = self.eva_label_statement.filter(evalebel__in = evalebel).count()        
+        # evalebel = label.labels.all()          
+        # data = self.eva_label_statement.filter(evalebel__in = evalebel).count()    
+        data = self.total_answered() * 4 
         return data
               
         
