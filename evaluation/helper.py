@@ -316,16 +316,20 @@ class LabelWiseData:
     #     data = oil_result.picked_labels_dict()   
     #     return data
         
-    # '''
-    # useless as we are converting to 100 to make relevent to the labelwise
-    # '''   
-    # def total_active_questions(self):        
-    #     data = self.active_questions.count()
-    #     return round(data, 2)
+    '''
+    useless as we are converting to 100 to make relevent to the labelwise
+    '''   
+    def total_active_questions(self):        
+        data = self.active_questions.count()
+        return round(data, 2)
     
     def total_answered(self):
         data = set(s.question.id for s in self.eva_label_statement)        
         return round(len(data), 2)
+    
+    def less_percent(self):
+        data = 100 -((100/self.total_active_questions())*self.total_answered())
+        return round(data,2)
     
     def total_positive_answer(self):
         data = set(s.question.id for s in self.eva_label_statement if s.is_positive)   
@@ -340,14 +344,24 @@ class LabelWiseData:
     
     def overview_green(self):
         try:
-            data = (int(self.total_positive_answer())*100) / int(self.total_answered())
+            
+            result = (int(self.total_positive_answer())*100) / int(self.total_answered())
+            data = result - (result * (self.less_percent()/100))
+            
+            # data = (int(self.total_positive_answer())*100) / int(self.total_answered())
+            
+            # 40 - (40 * (80/100))
         except Exception as e:            
             data = 0            
         return round(data, 2)
     
     def overview_red(self):
         try:
-            data = (int(self.total_nagetive_answer())*100) / int(self.total_answered())     
+            result = (int(self.total_nagetive_answer())*100) / int(self.total_answered())  
+            # data = (int(self.total_nagetive_answer())*100) / int(self.total_answered())  
+            data = result - (result * (self.less_percent()/100))
+              
+             
         except:
             data = 0  
              
@@ -381,12 +395,19 @@ class LabelWiseData:
         # print(record)
         return record
     
+    def active_lavelwise(self):
+        data = self.total_active_questions() * 4
+        return data
+        
+    
     def label_wise_total(self, label):
         evalebel = label.labels.all()          
         data = self.eva_label_statement.filter(evalebel__in = evalebel).count()        
-        return data
-              
-        
+        return data    
+    
+    def less_percent_lavelwise(self):
+        data = 100 -((100/self.active_lavelwise())*self.label_wise_total())
+        return round(data,2)  
     
     def label_wise_positive_answered(self, label):  
         evalebel = label.labels.all()         
@@ -408,11 +429,17 @@ class LabelWiseData:
             negative_answered = self.label_wise_nagetive_answered(label)
             
             try:
-                green = round((positive_answered * 100)/self.label_wise_total(label), 2)
+                result = round((positive_answered * 100)/self.label_wise_total(label), 2)
+                # green = round((positive_answered * 100)/self.label_wise_total(label), 2)
+                green = result - (result * (self.less_percent_lavelwise()/100))
             except:
                 green = 0
             try:
-                red = round((negative_answered* 100 )/self.label_wise_total(label), 2)  
+                result = round((negative_answered* 100 )/self.label_wise_total(label), 2)  
+                # red = round((negative_answered* 100 )/self.label_wise_total(label), 2)  
+                red = result - (result * (self.less_percent_lavelwise()/100))
+                
+                
             except:
                 red = 0          
 
