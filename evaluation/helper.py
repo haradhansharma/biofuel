@@ -395,8 +395,7 @@ class LabelWiseData:
         # if self.get_stdoil() is not None:
         #     serialized_record[1:2] = [((i*self.overview_grey())/100) for i in self.get_stdoil_result().get('Overview')]
         # print(serialized_record)    
-        record = {
-            
+        record = {            
             'Overview' : serialized_record
             }
         # else:
@@ -441,9 +440,9 @@ class LabelWiseData:
             
             
             
-            positive = round(self.active_questions.filter(questions__name = label, questions__value = 1).count(), 2)
+            # positive = round(self.active_questions.filter(questions__name = label, questions__value = 1).count(), 2)
             positive_answered = self.label_wise_positive_answered(label)
-            negative = round(self.active_questions.filter(questions__name = label, questions__value = 0).count(), 2)
+            # negative = round(self.active_questions.filter(questions__name = label, questions__value = 0).count(), 2)
             negative_answered = self.label_wise_nagetive_answered(label)
             
             
