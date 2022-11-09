@@ -71,7 +71,7 @@ class BiofuelAdmin(admin.ModelAdmin):
     inlines = [StdOilsIn]     
 admin.site.register(Biofuel, BiofuelAdmin)
 
-# admin.site.register(OliList)
+admin.site.register(OliList)
 
 class StandaredCharts(admin.TabularInline):
     model = StandaredChart
