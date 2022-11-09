@@ -132,7 +132,7 @@
     /* z-index: 1; */
     /* stroke-linejoin: bevel; */
     /* display: block; */
-    stroke-width: 30px;
+    stroke-width: 50px;
 
     
   }
@@ -140,12 +140,12 @@
   .ct-chart-ranking .ct-series-b .ct-bar{
     stroke: grey;
     stroke-linecap: square;
-    stroke-dasharray: 3px;
+    stroke-dasharray: 3px 50px;
     /* z-index: -1; */
     stroke-dashoffset: 3px;
     /* stroke-linejoin: bevel; */
     /* display: block; */
-    stroke-width: 30px;
+    stroke-width: 50px;
 
   }
 
@@ -157,7 +157,7 @@
     /* z-index: 1; */
     /* stroke-linejoin: bevel; */
     /* display: block; */
-    stroke-width: 30px;
+    stroke-width: 50px;
   }
   .ct-chart-com .ct-series-a .ct-bar{
     stroke: green
