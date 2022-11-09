@@ -295,14 +295,10 @@ class LabelWiseData:
     def get_stdoil_result(self):
         oil_result = OilComparision(self.get_stdoil(), self.get_nonanswered_questions())
         data = oil_result.picked_labels_dict()   
-        # print('With non answered question________________')     
-        # print(data)
-       
         return data
         
         
-    def total_active_questions(self):
-        # self.get_stdoil_result()
+    def total_active_questions(self):        
         data = self.active_questions.count()
         return round(data, 2)
     
@@ -310,34 +306,9 @@ class LabelWiseData:
         data = set(s.question.id for s in self.eva_label_statement)        
         return round(len(data), 2)
     
-    # def positive_answered(self):
-    #     positive_of_answer = self.eva_label_statement.filter(positive = str(1), dont_know = False)        
-    #     unique_positive_question_ids = set()
-    #     for poa in positive_of_answer:
-    #         unique_positive_question_ids.add(poa.question.id)            
-    #     return list(unique_positive_question_ids)       
-        
-    
     def total_positive_answer(self):
         data = set(s.question.id for s in self.eva_label_statement if s.is_positive)   
-        return round(len(data), 2)
-        
-        
-        
-        
-        
-        # data = self.eva_label_statement.filter(positive = str(1)).values('question').distinct().count()      
-        
-        # return round(data, 2)
-        # return round(len(self.positive_answered()), 2)
-    
-    # def negative_answered(self):
-    #     negative_of_answer = self.eva_label_statement.filter(positive = str(0), dont_know = False)        
-    #     unique_negative_question_ids = set()
-    #     for poa in negative_of_answer:
-    #         unique_negative_question_ids.add(poa.question.id)            
-    #     return list(unique_negative_question_ids)  
-        
+        return round(len(data), 2)        
     
     def total_nagetive_answer(self):
         try:
@@ -345,31 +316,20 @@ class LabelWiseData:
         except:
             data = 0        
         return round(len(data), 2)
-        # data = self.eva_label_statement.filter(positive = str(0), dont_know = False).values('question').distinct().count()
-        # return round(data, 2)
-        # return round(len(self.negative_answered()), 2)
-        
-    # '''IT IS NEW ADITION'''   
-    # def total_dontknow_answer(self):
-    #     data = self.eva_label_statement.filter(positive = str(0), dont_know = False).values('question').distinct().count()
-    #     return round(data, 2)
-        
     
     def overview_green(self):
         try:
             data = (int(self.total_positive_answer())*100) / int(self.total_answered())
-        except Exception as e:
-            print(e)
-            data = 0
-        # data = (self.total_positive_answer()/self.total_active_questions())*100        
+        except Exception as e:            
+            data = 0            
         return round(data, 2)
     
     def overview_red(self):
         try:
             data = (int(self.total_nagetive_answer())*100) / int(self.total_answered())     
         except:
-            data = 0   
-        # data = (self.total_nagetive_answer()/self.total_active_questions())*100        
+            data = 0  
+             
         return round(data, 2)
     
     def overview_grey(self):
@@ -380,10 +340,6 @@ class LabelWiseData:
         # '''
         data = 100 - (self.overview_green() + self.overview_red())    
         return round(data, 2)
-        # negative_and_positive = self.positive_answered() + self.negative_answered()
-        # not_answered_or_donot_know = [question.id for question in self.active_questions if question.id not in negative_and_positive]
-        
-        # return round(len(not_answered_or_donot_know), 2)
     
     def total_result(self):
         '''
@@ -405,10 +361,8 @@ class LabelWiseData:
         return record
     
     def label_wise_total(self, label):
-        evalebel = label.labels.all()  
-        # print(evalebel) 
-        data = self.eva_label_statement.filter(evalebel__in = evalebel).count()
-        # print(f'{data} for label {label}')
+        evalebel = label.labels.all()          
+        data = self.eva_label_statement.filter(evalebel__in = evalebel).count()        
         return data
               
         
@@ -428,23 +382,9 @@ class LabelWiseData:
     def label_wise_result(self):       
         labels = DifinedLabel.objects.filter(common_status = False)
         record_dict = {}
-        for label in labels:             
-            # positive = round(self.active_questions.filter(questions__name = label, questions__value = str(1)).count(), 2)  
-            # #As labelwise record is more then total question due to multi label selected for each question
-            # #so we will make it based on the total positive    
-            # positive_answered = round((self.label_wise_positive_answered(label)/self.active_questions.count())*positive, 2)       
-            # negative = round(self.active_questions.filter(questions__name = label, questions__value = str(0)).count(), 2)
-            # #same as positive
-            # negative_answered = round((self.label_wise_nagetive_answered(label)/self.active_questions.count())*negative, 2)     
-            
-            
-            
-            
-            # positive = round(self.active_questions.filter(questions__name = label, questions__value = 1).count(), 2)
+        for label in labels:  
             positive_answered = self.label_wise_positive_answered(label)
-            # negative = round(self.active_questions.filter(questions__name = label, questions__value = 0).count(), 2)
             negative_answered = self.label_wise_nagetive_answered(label)
-            
             
             try:
                 green = round((positive_answered * 100)/self.label_wise_total(label), 2)
@@ -453,14 +393,8 @@ class LabelWiseData:
             try:
                 red = round((negative_answered* 100 )/self.label_wise_total(label), 2)  
             except:
-                red = 0
-            
-            
-            
-            
-            
-            # green = round((positive_answered/positive)*100, 2)
-            # red = round((negative_answered/negative)*100, 2)        
+                red = 0          
+
             
             serialized_record = [green , round(100-(green+red),2), red]
             # if self.get_stdoil() is not None:

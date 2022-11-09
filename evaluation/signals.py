@@ -82,31 +82,31 @@ def save_user_profile(sender, instance, **kwargs):
 sending mail to the staff and producer after update of question
 
 '''
-@receiver(post_save, sender=Question)
-def question_update_mail(sender, instance, **kwargs):
-    if instance.is_active:
-        producers = UserType.objects.get(is_producer = True)
-        current_site = Site.objects.get_current()
-        staffs = User.objects.filter(is_staff = True, is_superuser = True)
-        producers = User.objects.filter(type = producers)
-        subject = 'Question updated!'                  
+# @receiver(post_save, sender=Question)
+# def question_update_mail(sender, instance, **kwargs):
+#     if instance.is_active:
+#         producers = UserType.objects.get(is_producer = True)
+#         current_site = Site.objects.get_current()
+#         staffs = User.objects.filter(is_staff = True, is_superuser = True)
+#         producers = User.objects.filter(type = producers)
+#         subject = 'Question updated!'                  
                 
-        # load a template like get_template() 
-        # and calls its render() method immediately.
-        # pass the parameter to the template
-        message = render_to_string('emails/question_updated.html', {
-            'instance': instance,              
-            'domain': current_site.domain,            
-        }) 
+#         # load a template like get_template() 
+#         # and calls its render() method immediately.
+#         # pass the parameter to the template
+#         message = render_to_string('emails/question_updated.html', {
+#             'instance': instance,              
+#             'domain': current_site.domain,            
+#         }) 
         
-        site = ExSite.on_site.get()          
+#         site = ExSite.on_site.get()          
         
         
-        #Send multi mail with single conenction
-        mail_to_staff = [(subject, message, site.email, [staff]) for staff in staffs]
-        mail_to_producer = [(subject, message, site.email, [producer]) for producer in producers]  
-        send_mass_mail((mail_to_staff), fail_silently=False)
-        send_mass_mail((mail_to_producer), fail_silently=False)
+#         #Send multi mail with single conenction
+#         mail_to_staff = [(subject, message, site.email, [staff]) for staff in staffs]
+#         mail_to_producer = [(subject, message, site.email, [producer]) for producer in producers]  
+#         send_mass_mail((mail_to_staff), fail_silently=False)
+#         send_mass_mail((mail_to_producer), fail_silently=False)
         
 
         
