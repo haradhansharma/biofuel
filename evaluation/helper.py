@@ -315,10 +315,10 @@ class LabelWiseData:
         
     
     def total_positive_answer(self):
-        # data = self.eva_label_statement.filter(positive = str(1)).values('question').distinct().count()      
+        data = self.eva_label_statement.filter(positive = str(1)).values('question').distinct().count()      
         
-        # return round(data, 2)
-        return round(len(self.positive_answered()), 2)
+        return round(data, 2)
+        # return round(len(self.positive_answered()), 2)
     
     def negative_answered(self):
         negative_of_answer = self.eva_label_statement.filter(positive = str(0), dont_know = False)        
@@ -329,9 +329,9 @@ class LabelWiseData:
         
     
     def total_nagetive_answer(self):
-        # data = self.eva_label_statement.filter(positive = str(0)).values('question').distinct().count()
-        # return round(data, 2)
-        return round(len(self.negative_answered()), 2)
+        data = self.eva_label_statement.filter(positive = str(0)).values('question').distinct().count()
+        return round(data, 2)
+        # return round(len(self.negative_answered()), 2)
         
     
     def overview_green(self):
@@ -348,12 +348,12 @@ class LabelWiseData:
         # As each question have no label and have multiple positive value or negative value so sum of labelwise questions result is diferent then actual total question.
         # For this reason to get rid of the mismatched result we had to deduct from 100 to get matching report in the barchart.        
         # '''
-        # data = 100 - (self.overview_green() + self.overview_red())    
-        # return round(data, 2)
-        negative_and_positive = self.positive_answered() + self.negative_answered()
-        not_answered_or_donot_know = [question.id for question in self.active_questions if question.id not in negative_and_positive]
+        data = 100 - (self.overview_green() + self.overview_red())    
+        return round(data, 2)
+        # negative_and_positive = self.positive_answered() + self.negative_answered()
+        # not_answered_or_donot_know = [question.id for question in self.active_questions if question.id not in negative_and_positive]
         
-        return round(len(not_answered_or_donot_know), 2)
+        # return round(len(not_answered_or_donot_know), 2)
     
     def total_result(self):
         '''
