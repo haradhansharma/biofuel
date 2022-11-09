@@ -382,7 +382,7 @@ class LabelWiseData:
     
     def label_wise_nagetive_answered(self, label): 
         evalebel = label.labels.all()    
-        data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = False).count()
+        data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = True).count()
         return round(data, 2)
     
     def label_wise_result(self):       
