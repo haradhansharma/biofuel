@@ -306,30 +306,30 @@ class LabelWiseData:
         data = self.active_questions.count()
         return round(data, 2)
     
-    def positive_answered(self):
-        positive_of_answer = self.eva_label_statement.filter(positive = str(1), dont_know = False)        
-        unique_positive_question_ids = set()
-        for poa in positive_of_answer:
-            unique_positive_question_ids.add(poa.question.id)            
-        return list(unique_positive_question_ids)       
+    # def positive_answered(self):
+    #     positive_of_answer = self.eva_label_statement.filter(positive = str(1), dont_know = False)        
+    #     unique_positive_question_ids = set()
+    #     for poa in positive_of_answer:
+    #         unique_positive_question_ids.add(poa.question.id)            
+    #     return list(unique_positive_question_ids)       
         
     
     def total_positive_answer(self):
-        data = self.eva_label_statement.filter(positive = str(1)).values('question').distinct().count()      
+        data = self.eva_label_statement.filter(positive = str(1), dont_know = False).values('question').distinct().count()      
         
         return round(data, 2)
         # return round(len(self.positive_answered()), 2)
     
-    def negative_answered(self):
-        negative_of_answer = self.eva_label_statement.filter(positive = str(0), dont_know = False)        
-        unique_negative_question_ids = set()
-        for poa in negative_of_answer:
-            unique_negative_question_ids.add(poa.question.id)            
-        return list(unique_negative_question_ids)  
+    # def negative_answered(self):
+    #     negative_of_answer = self.eva_label_statement.filter(positive = str(0), dont_know = False)        
+    #     unique_negative_question_ids = set()
+    #     for poa in negative_of_answer:
+    #         unique_negative_question_ids.add(poa.question.id)            
+    #     return list(unique_negative_question_ids)  
         
     
     def total_nagetive_answer(self):
-        data = self.eva_label_statement.filter(positive = str(0)).values('question').distinct().count()
+        data = self.eva_label_statement.filter(positive = str(0), dont_know = False).values('question').distinct().count()
         return round(data, 2)
         # return round(len(self.negative_answered()), 2)
         
