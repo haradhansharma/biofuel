@@ -358,6 +358,23 @@ class EvaLebelStatement(models.Model):
 
     def __str__(self):
         return self.statement
+    @property
+    def is_positive(self):
+        if self.positive == str(1):
+            return True
+        return False
+    @property
+    def is_negative(self):
+        if self.positive == str(0) and self.dont_know == False:
+            return True
+        return False
+    
+    @property
+    def is_dontknow(self):
+        if self.positive == str(0) and self.dont_know == True:
+            return True
+        return False
+    
 
     
     

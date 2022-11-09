@@ -306,6 +306,10 @@ class LabelWiseData:
         data = self.active_questions.count()
         return round(data, 2)
     
+    def total_answered(self):
+        data = set(s.question.id for s in self.eva_label_statement)
+        round(len(data), 2)
+    
     # def positive_answered(self):
     #     positive_of_answer = self.eva_label_statement.filter(positive = str(1), dont_know = False)        
     #     unique_positive_question_ids = set()
@@ -315,9 +319,16 @@ class LabelWiseData:
         
     
     def total_positive_answer(self):
-        data = self.eva_label_statement.filter(positive = str(1)).values('question').distinct().count()      
+        data = set(s.question.id for s in self.eva_label_statement if s.is_positive)
+        return round(len(data), 2)
         
-        return round(data, 2)
+        
+        
+        
+        
+        # data = self.eva_label_statement.filter(positive = str(1)).values('question').distinct().count()      
+        
+        # return round(data, 2)
         # return round(len(self.positive_answered()), 2)
     
     # def negative_answered(self):
@@ -329,8 +340,10 @@ class LabelWiseData:
         
     
     def total_nagetive_answer(self):
-        data = self.eva_label_statement.filter(positive = str(0), dont_know = False).values('question').distinct().count()
-        return round(data, 2)
+        data = set(s.question.id for s in self.eva_label_statement if s.is_negative)
+        return round(len(data), 2)
+        # data = self.eva_label_statement.filter(positive = str(0), dont_know = False).values('question').distinct().count()
+        # return round(data, 2)
         # return round(len(self.negative_answered()), 2)
         
     # '''IT IS NEW ADITION'''   
@@ -340,11 +353,13 @@ class LabelWiseData:
         
     
     def overview_green(self):
-        data = (self.total_positive_answer()/self.total_active_questions())*100
+        data = (self.total_positive_answer()*100)/self.total_answered()
+        # data = (self.total_positive_answer()/self.total_active_questions())*100
         return round(data, 2)
     
     def overview_red(self):
-        data = (self.total_nagetive_answer()/self.total_active_questions())*100
+        data = (self.total_nagetive_answer()*100)/self.total_answered()        
+        # data = (self.total_nagetive_answer()/self.total_active_questions())*100
         return round(data, 2)
     
     def overview_grey(self):
