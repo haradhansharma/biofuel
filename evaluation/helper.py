@@ -364,14 +364,20 @@ class LabelWiseData:
         
     
     def overview_green(self):
-        data = (self.total_positive_answer()*100)/self.total_answered()
+        try:
+            data = (self.total_positive_answer()*100)/self.total_answered()
+        except:
+            data = 0
         # data = (self.total_positive_answer()/self.total_active_questions())*100
         print('green__________________')
         print(data)
         return round(data, 2)
     
     def overview_red(self):
-        data = (self.total_nagetive_answer()*100)/self.total_answered()        
+        try:
+            data = (self.total_nagetive_answer()*100)/self.total_answered()     
+        except:
+            data = 0   
         # data = (self.total_nagetive_answer()/self.total_active_questions())*100
         print('red__________________')
         print(data)
