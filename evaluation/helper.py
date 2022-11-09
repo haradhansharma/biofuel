@@ -389,21 +389,21 @@ class LabelWiseData:
         labels = DifinedLabel.objects.filter(common_status = False)
         record_dict = {}
         for label in labels:             
-            # positive = round(self.active_questions.filter(questions__name = label, questions__value = str(1)).count(), 2)  
-            # #As labelwise record is more then total question due to multi label selected for each question
-            # #so we will make it based on the total positive    
-            # positive_answered = round((self.label_wise_positive_answered(label)/self.active_questions.count())*positive, 2)       
-            # negative = round(self.active_questions.filter(questions__name = label, questions__value = str(0)).count(), 2)
-            # #same as positive
-            # negative_answered = round((self.label_wise_nagetive_answered(label)/self.active_questions.count())*negative, 2)     
+            positive = round(self.active_questions.filter(questions__name = label, questions__value = str(1)).count(), 2)  
+            #As labelwise record is more then total question due to multi label selected for each question
+            #so we will make it based on the total positive    
+            positive_answered = round((self.label_wise_positive_answered(label)/self.active_questions.count())*positive, 2)       
+            negative = round(self.active_questions.filter(questions__name = label, questions__value = str(0)).count(), 2)
+            #same as positive
+            negative_answered = round((self.label_wise_nagetive_answered(label)/self.active_questions.count())*negative, 2)     
             
             
             
             
-            positive = round(self.active_questions.filter(questions__name = label, questions__value = 1).count(), 2)
-            positive_answered = self.label_wise_positive_answered(label)
-            negative = round(self.active_questions.filter(questions__name = label, questions__value = 0).count(), 2)
-            negative_answered = self.label_wise_nagetive_answered(label)
+            # positive = round(self.active_questions.filter(questions__name = label, questions__value = 1).count(), 2)
+            # positive_answered = self.label_wise_positive_answered(label)
+            # negative = round(self.active_questions.filter(questions__name = label, questions__value = 0).count(), 2)
+            # negative_answered = self.label_wise_nagetive_answered(label)
             
             
             
