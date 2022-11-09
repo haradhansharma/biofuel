@@ -310,7 +310,7 @@ class LabelWiseData:
         data = set(s.question.id for s in self.eva_label_statement)
         print('total answered__________________________')
         print(len(data))
-        round(len(data), 2)
+        return round(len(data), 2)
     
     # def positive_answered(self):
     #     positive_of_answer = self.eva_label_statement.filter(positive = str(1), dont_know = False)        
@@ -365,8 +365,9 @@ class LabelWiseData:
     
     def overview_green(self):
         try:
-            data = (self.total_positive_answer()*100)/self.total_answered()
-        except:
+            data = (int(self.total_positive_answer())*100) / int(self.total_answered())
+        except Exception as e:
+            print(e)
             data = 0
         # data = (self.total_positive_answer()/self.total_active_questions())*100
         print('green__________________')
@@ -375,7 +376,7 @@ class LabelWiseData:
     
     def overview_red(self):
         try:
-            data = (self.total_nagetive_answer()*100)/self.total_answered()     
+            data = ((self.total_nagetive_answer())*100)/self.total_answered()     
         except:
             data = 0   
         # data = (self.total_nagetive_answer()/self.total_active_questions())*100
