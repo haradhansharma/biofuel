@@ -329,9 +329,14 @@ class LabelWiseData:
         
     
     def total_nagetive_answer(self):
-        data = self.eva_label_statement.filter(positive = str(0), dont_know = True).values('question').distinct().count()
+        data = self.eva_label_statement.filter(positive = str(0), dont_know = False).values('question').distinct().count()
         return round(data, 2)
         # return round(len(self.negative_answered()), 2)
+        
+    '''IT IS NEW ADITION'''   
+    def total_dontknow_answer(self):
+        data = self.eva_label_statement.filter(positive = str(0), dont_know = True).values('question').distinct().count()
+        return round(data, 2)
         
     
     def overview_green(self):
@@ -348,7 +353,7 @@ class LabelWiseData:
         # As each question have no label and have multiple positive value or negative value so sum of labelwise questions result is diferent then actual total question.
         # For this reason to get rid of the mismatched result we had to deduct from 100 to get matching report in the barchart.        
         # '''
-        data = 100 - (self.overview_green() + self.overview_red())    
+        data = 100 - (self.overview_green() + self.overview_red() + self.total_dontknow_answer())    
         return round(data, 2)
         # negative_and_positive = self.positive_answered() + self.negative_answered()
         # not_answered_or_donot_know = [question.id for question in self.active_questions if question.id not in negative_and_positive]
@@ -382,7 +387,7 @@ class LabelWiseData:
     
     def label_wise_nagetive_answered(self, label): 
         evalebel = label.labels.all()    
-        data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = True).count()
+        data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = False).count()
         return round(data, 2)
     
     def label_wise_result(self):       
