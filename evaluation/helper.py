@@ -329,7 +329,7 @@ class LabelWiseData:
         
     
     def total_nagetive_answer(self):
-        data = self.eva_label_statement.filter(positive = str(0), dont_know = False).values('question').distinct().count()
+        data = self.eva_label_statement.filter(positive = str(0), dont_know = True).values('question').distinct().count()
         return round(data, 2)
         # return round(len(self.negative_answered()), 2)
         
