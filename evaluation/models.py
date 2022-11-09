@@ -427,7 +427,7 @@ class EvaluatorActivities(models.Model):
         return str(self.next_activity.name_and_standared)
     
 class OliList(models.Model):
-    name = models.CharField(max_length = 250)
+    name = models.CharField(max_length = 250, unique=True)
     key = models.CharField(null=True, blank=True, editable=False, max_length=250)    
     
     

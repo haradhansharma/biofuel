@@ -107,6 +107,25 @@ sending mail to the staff and producer after update of question
 #         mail_to_producer = [(subject, message, site.email, [producer]) for producer in producers]  
 #         send_mass_mail((mail_to_staff), fail_silently=False)
 #         send_mass_mail((mail_to_producer), fail_silently=False)
+
+'''
+Assign all question to the oil during new oil create
+'''
+
+@receiver(post_save, sender=OliList)
+def add_auestion_to_the_oil(sender, instance, created, **kwargs):
+    if created:        
+        active_questions = Question.objects.filter(is_active = True)        
+        stdoil = StdOils.objects.create(select_oil = instance)
+        # oil = StdOils.objects.get(id = stdoil.id)
+        for question in active_questions:
+            try:
+                option = Option.objects.filter(question = question)[0]
+            except:
+                option = None
+            
+                
+            StandaredChart.objects.create(oil = stdoil, question = question, option=option)
         
 
         
