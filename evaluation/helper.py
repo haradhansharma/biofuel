@@ -296,7 +296,7 @@ class LabelWiseData:
         oil_result = OilComparision(self.get_stdoil(), self.get_nonanswered_questions())
         data = oil_result.picked_labels_dict()   
         # print('With non answered question________________')     
-        print(data)
+        # print(data)
        
         return data
         
@@ -306,13 +306,33 @@ class LabelWiseData:
         data = self.active_questions.count()
         return round(data, 2)
     
+    def positive_answered(self):
+        positive_of_answer = self.eva_label_statement.filter(positive = str(1), dont_know = False)        
+        unique_positive_question_ids = set()
+        for poa in positive_of_answer:
+            unique_positive_question_ids.add(poa.question.id)            
+        return list(unique_positive_question_ids)       
+        
+    
     def total_positive_answer(self):
-        data = self.eva_label_statement.filter(positive = str(1)).values('question').distinct().count()
-        return round(data, 2)
+        # data = self.eva_label_statement.filter(positive = str(1)).values('question').distinct().count()      
+        
+        # return round(data, 2)
+        return round(len(self.positive_answered()), 2)
+    
+    def negative_answered(self):
+        negative_of_answer = self.eva_label_statement.filter(positive = str(1), dont_know = False)        
+        unique_negative_question_ids = set()
+        for poa in negative_of_answer:
+            unique_negative_question_ids.add(poa.question.id)            
+        return list(unique_negative_question_ids)  
+        
     
     def total_nagetive_answer(self):
-        data = self.eva_label_statement.filter(positive = str(0)).values('question').distinct().count()
-        return round(data, 2)
+        # data = self.eva_label_statement.filter(positive = str(0)).values('question').distinct().count()
+        # return round(data, 2)
+        return round(len(self.negative_answered()), 2)
+        
     
     def overview_green(self):
         data = (self.total_positive_answer()/self.total_active_questions())*100
@@ -323,13 +343,17 @@ class LabelWiseData:
         return round(data, 2)
     
     def overview_grey(self):
-        '''
-        As overview green and overview red is in parcent so we will deduct from 100 the both to equalized dividation in barchart.
-        As each question have no label and have multiple positive value or negative value so sum of labelwise questions result is diferent then actual total question.
-        For this reason to get rid of the mismatched result we had to deduct from 100 to get matching report in the barchart.        
-        '''
-        data = 100 - (self.overview_green() + self.overview_red())    
-        return round(data, 2)
+        # '''
+        # As overview green and overview red is in parcent so we will deduct from 100 the both to equalized dividation in barchart.
+        # As each question have no label and have multiple positive value or negative value so sum of labelwise questions result is diferent then actual total question.
+        # For this reason to get rid of the mismatched result we had to deduct from 100 to get matching report in the barchart.        
+        # '''
+        # data = 100 - (self.overview_green() + self.overview_red())    
+        # return round(data, 2)
+        negative_and_positive = self.positive_answered() + self.negative_answered()
+        not_answered_or_donot_know = [question.id for question in self.active_questions if question.id not in negative_and_positive]
+        
+        return round(len(not_answered_or_donot_know), 2)
     
     def total_result(self):
         '''
@@ -353,12 +377,12 @@ class LabelWiseData:
     
     def label_wise_positive_answered(self, label):  
         evalebel = label.labels.all()         
-        data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(1)).count()
+        data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(1), dont_know = False).count()
         return round(data, 2)
     
     def label_wise_nagetive_answered(self, label): 
         evalebel = label.labels.all()    
-        data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0)).count()
+        data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = False).count()
         return round(data, 2)
     
     def label_wise_result(self):       
