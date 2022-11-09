@@ -307,9 +307,7 @@ class LabelWiseData:
         return round(data, 2)
     
     def total_answered(self):
-        data = set(s.question.id for s in self.eva_label_statement)
-        print('total answered__________________________')
-        print(len(data))
+        data = set(s.question.id for s in self.eva_label_statement)        
         return round(len(data), 2)
     
     # def positive_answered(self):
@@ -321,11 +319,7 @@ class LabelWiseData:
         
     
     def total_positive_answer(self):
-        data = set(s.question.id for s in self.eva_label_statement if s.is_positive)
-        
-        print('positive__________________________')
-        print(len(data))
-        
+        data = set(s.question.id for s in self.eva_label_statement if s.is_positive)   
         return round(len(data), 2)
         
         
@@ -349,9 +343,7 @@ class LabelWiseData:
         try:
             data = set(s.question.id for s in self.eva_label_statement if s.is_negative)
         except:
-            data = 0
-        print('negetive__________________________')
-        print(len(data))
+            data = 0        
         return round(len(data), 2)
         # data = self.eva_label_statement.filter(positive = str(0), dont_know = False).values('question').distinct().count()
         # return round(data, 2)
@@ -369,19 +361,15 @@ class LabelWiseData:
         except Exception as e:
             print(e)
             data = 0
-        # data = (self.total_positive_answer()/self.total_active_questions())*100
-        print('green__________________')
-        print(data)
+        # data = (self.total_positive_answer()/self.total_active_questions())*100        
         return round(data, 2)
     
     def overview_red(self):
         try:
-            data = ((self.total_nagetive_answer())*100)/self.total_answered()     
+            data = (int(self.total_nagetive_answer())*100) / int(self.total_answered())     
         except:
             data = 0   
-        # data = (self.total_nagetive_answer()/self.total_active_questions())*100
-        print('red__________________')
-        print(data)
+        # data = (self.total_nagetive_answer()/self.total_active_questions())*100        
         return round(data, 2)
     
     def overview_grey(self):
@@ -449,12 +437,15 @@ class LabelWiseData:
             negative = round(self.active_questions.filter(questions__name = label, questions__value = 0).count(), 2)
             negative_answered = self.label_wise_nagetive_answered(label)
             
+            green = round((positive_answered * 100)/positive, 2)
+            red = round((negative_answered* 100 )/negative, 2)  
             
             
             
             
-            green = round((positive_answered/positive)*100, 2)
-            red = round((negative_answered/negative)*100, 2)        
+            
+            # green = round((positive_answered/positive)*100, 2)
+            # red = round((negative_answered/negative)*100, 2)        
             
             serialized_record = [green , round(100-(green+red),2), red]
             # if self.get_stdoil() is not None:
