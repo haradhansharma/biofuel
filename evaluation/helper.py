@@ -321,7 +321,7 @@ class LabelWiseData:
         return round(len(self.positive_answered()), 2)
     
     def negative_answered(self):
-        negative_of_answer = self.eva_label_statement.filter(positive = str(1), dont_know = False)        
+        negative_of_answer = self.eva_label_statement.filter(positive = str(0), dont_know = False)        
         unique_negative_question_ids = set()
         for poa in negative_of_answer:
             unique_negative_question_ids.add(poa.question.id)            
