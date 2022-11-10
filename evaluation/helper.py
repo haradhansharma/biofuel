@@ -319,9 +319,9 @@ class LabelWiseData:
     # '''
     # useless as we are converting to 100 to make relevent to the labelwise
     # '''   
-    # def total_active_questions(self):        
-    #     data = self.active_questions.count()
-    #     return round(data, 2)
+    def total_active_questions(self):        
+        data = self.active_questions.count()
+        return round(data, 2)
     
     def total_answered(self):
         data = set(s.question.id for s in self.eva_label_statement)        
@@ -339,19 +339,21 @@ class LabelWiseData:
         return round(len(data), 2)
     
     def overview_green(self):
-        try:
-            data = (int(self.total_positive_answer())*100) / int(self.total_answered())
-        except Exception as e:            
-            data = 0            
-        return round(data, 2)
+        return self.total_positive_answer()
+        # try:
+        #     data = (int(self.total_positive_answer())*100) / int(self.total_answered())
+        # except Exception as e:            
+        #     data = 0            
+        # return round(data, 2)
     
     def overview_red(self):
-        try:
-            data = (int(self.total_nagetive_answer())*100) / int(self.total_answered())     
-        except:
-            data = 0  
+        return self.total_nagetive_answer()
+        # try:
+        #     data = (int(self.total_nagetive_answer())*100) / int(self.total_answered())     
+        # except:
+        #     data = 0  
              
-        return round(data, 2)
+        # return round(data, 2)
     
     def overview_grey(self):
         # '''
@@ -359,7 +361,7 @@ class LabelWiseData:
         # As each question have no label and have multiple positive value or negative value so sum of labelwise questions result is diferent then actual total question.
         # For this reason to get rid of the mismatched result we had to deduct from 100 to get matching report in the barchart.        
         # '''
-        data = 100 - (self.overview_green() + self.overview_red())    
+        data = self.total_active_questions() - (self.overview_green() + self.overview_red())    
         return round(data, 2)
     
     def total_result(self):
@@ -408,16 +410,16 @@ class LabelWiseData:
             negative_answered = self.label_wise_nagetive_answered(label)
             
             try:
-                green = round((positive_answered * 100)/self.label_wise_total(label), 2)
+                green = positive_answered
             except:
                 green = 0
             try:
-                red = round((negative_answered* 100 )/self.label_wise_total(label), 2)  
+                red = negative_answered
             except:
                 red = 0          
 
             
-            serialized_record = [green , round(100-(green+red),2), red]
+            serialized_record = [green , round(self.total_active_questions()-(green+red),2), red]
             # if self.get_stdoil() is not None:
             #     serialized_record[1:2] = [((i*round(100-(green+red),2))/100) for i in self.get_stdoil_result().get(label.name)]
             
