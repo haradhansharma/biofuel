@@ -285,18 +285,16 @@ def userpage(request, username):
             last_reports = None
 
 
+    label_data = LabelWiseData(last_reports)    
+    df = label_data.packed_labels()
     
-    df = LabelWiseData(last_reports).packed_labels()
-  
-    
-    
-
-        
+            
     if last_reports is not None: 
-        gretings = f'The summary of the report number {last_reports.id} genarated by {username}!'
-        ans_ques = EvaLebelStatement.objects.filter(evaluator = last_reports, question__isnull = False, assesment = False).values('question').distinct().count()
-        dont_know_ans = EvaLebelStatement.objects.filter(evaluator = last_reports, question__isnull = False, dont_know = 1, assesment = False).values('question').distinct().count()
-        pos_ans = EvaLebelStatement.objects.filter(evaluator = last_reports, question__isnull = False, positive = 1, assesment = False).values('question').distinct().count()
+        gretings = f'The summary of the report number {last_reports.id} genarated by {username}!'        
+        
+        ans_ques = label_data.eva_label_statement.count()
+        dont_know_ans = label_data.total_dont_know_answer()
+        pos_ans = label_data.total_positive_answer()
         positive_percent = (int(pos_ans) * 100)/int(ans_ques)
         dont_know_percent = (int(dont_know_ans) * 100)/int(ans_ques)
          

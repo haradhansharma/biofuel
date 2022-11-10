@@ -148,11 +148,13 @@
                             <div class="row g-3 p-3  justify-content-center">
                                 <div class="card-body p-2">                                    
                                     <div id="sss" class="ct-chart-ranking ct-golden-section ct-series-a">
+                                        <!--
                                         <div id="spi" class="text-center justify-content-center align-items-center h-100 my-auto">
                                             <div class="spinner-border" role="status">
                                               <span class="visually-hidden">Loading...</span>
                                             </div>
                                           </div>
+                                        -->
                                         </div>
                                 </div>
                             </div>
@@ -367,32 +369,29 @@
 
     {% block javascripts %}
     
+<script>
+    var ref, pa;
 
+    ref = "{{ refferer_path }}";   
+    pa = "{{ request.path }}";
 
-       
+    if (ref == pa) {        
+        console.log('not reloaded');
+    } else {
+        window.location.href = pa;              
+        console.log('reloaded');
+    }
+
+   
+
+</script>
+
 
 <script type="text/javascript">  
-    $(document).ready(function(){
 
-        //Check if the current URL contains '#' 
-        if(document.URL.indexOf("#")==-1)
-        {
-            // Set the URL to whatever it was plus "#".
-            url = document.URL+"#labeldata";
-            location = "#labeldata";
 
-            //Reload the page
-            location.reload(true);
-            $("#labeldata").animate({
-                scrollTop: 0
-              }, 1000);
-            
 
-        }else{
-            $('#spi').hide() ;
 
-        }
-    });
     
    
     let item_label, item_seris;    

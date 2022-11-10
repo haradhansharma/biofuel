@@ -1,4 +1,5 @@
 import datetime
+from urllib.parse import urlparse
 from . nreport_class import ReportPDFData
 from pprint import pprint
 from django.shortcuts import redirect, render
@@ -297,13 +298,13 @@ def option_add2(request):
         #     #control adding or editing
         #     executor.submit(set_evastatement_of_logical_string, question, selected_option, get_current_evaluator(request))
         #re-confirm to avoid oparation mistak. as an unnecessary function running from client recomendation
-        log.info(f'Setting evaluation for report {get_current_evaluator(request)}')
+        # log.info(f'Setting evaluation for report {get_current_evaluator(request)}')
         set_evaluation(question, selected_option, get_current_evaluator(request))
         #control adding or editing
-        log.info(f'Setting evastatement for report {get_current_evaluator(request)}')        
+        # log.info(f'Setting evastatement for report {get_current_evaluator(request)}')        
         set_evastatment(question, selected_option, get_current_evaluator(request))
         #control adding or editing
-        log.info(f'Setting logical string for report {get_current_evaluator(request)}')        
+        # log.info(f'Setting logical string for report {get_current_evaluator(request)}')        
         set_evastatement_of_logical_string(question, selected_option, get_current_evaluator(request))
             
             
@@ -865,7 +866,7 @@ def thanks(request):
     if request.session['evaluator'] == '':        
         return HttpResponseRedirect(reverse('accounts:user_link', args=[str(request.user.username)]))
     
-    evaluator =  get_current_evaluator(request)
+    # evaluator =  get_current_evaluator(request)
     #Calculation to display on the thankyou page.
     label_data = LabelWiseData(last_reports)
     ans_ques = label_data.eva_label_statement.count()
@@ -902,7 +903,7 @@ def thanks(request):
     item_seris = df.values.tolist()
     
     context = {
-        
+        'refferer_path' : urlparse(request.META.get('HTTP_REFERER')).path,
         'gretings': gretings,
         'button': button,
         'ans_ques': ans_ques,
