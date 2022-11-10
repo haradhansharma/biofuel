@@ -377,6 +377,8 @@
 
     if (ref == pa) {        
         console.log('not reloaded');
+    } else if(ref == ""){
+        console.log('not reloaded');
     } else {
         window.location.href = pa;              
         console.log('reloaded');
