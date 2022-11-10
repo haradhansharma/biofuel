@@ -319,35 +319,52 @@ class LabelWiseData:
     # '''
     # useless as we are converting to 100 to make relevent to the labelwise
     # '''   
-    # def total_active_questions(self):        
-    #     data = self.active_questions.count()
-    #     return round(data, 2)
+    def total_active_questions(self):        
+        data = self.active_questions.count()
+        return round(data, 2)
     
     def total_answered(self):
         data = set(s.question.id for s in self.eva_label_statement)        
         return round(len(data), 2)
     
     def total_positive_answer(self):
-        data = set(s.question.id for s in self.eva_label_statement if s.is_positive)   
-        return round(len(data), 2)        
+        
+        ans = set(s.question.id for s in self.eva_label_statement if s.is_positive)  
+        try: 
+            ans_on_active = (len(ans) * self.total_active_questions()) / self.total_answered()
+        except:
+            ans_on_active= 0
+        
+        return ans_on_active
+        
+        
+        # data = set(s.question.id for s in self.eva_label_statement if s.is_positive)   
+        # return round(len(data), 2)        
     
     def total_nagetive_answer(self):
+        ans = set(s.question.id for s in self.eva_label_statement if s.is_negative)   
         try:
-            data = set(s.question.id for s in self.eva_label_statement if s.is_negative)
+            ans_on_active = (len(ans) * self.total_active_questions()) / self.total_answered()
         except:
-            data = 0        
-        return round(len(data), 2)
+            ans_on_active = 0
+        
+        return ans_on_active
+        # try:
+        #     data = set(s.question.id for s in self.eva_label_statement if s.is_negative)
+        # except:
+        #     data = 0        
+        # return round(len(data), 2)
     
     def overview_green(self):
         try:
-            data = (int(self.total_positive_answer())*100) / int(self.total_answered())
+            data = (int(self.total_positive_answer())*100) / int(self.total_active_questions())
         except Exception as e:            
             data = 0            
         return round(data, 2)
     
     def overview_red(self):
         try:
-            data = (int(self.total_nagetive_answer())*100) / int(self.total_answered())     
+            data = (int(self.total_nagetive_answer())*100) / int(self.total_active_questions())     
         except:
             data = 0  
              
@@ -381,22 +398,47 @@ class LabelWiseData:
         # print(record)
         return record
     
-    def label_wise_total(self, label):
-        evalebel = label.labels.all()          
-        data = self.eva_label_statement.filter(evalebel__in = evalebel).count()        
+    def total_active_of_labels(self):
+        return self.total_active_questions() # 4 # as each question need to set 4 label
+    
+    def label_wise_total_ans(self, label):
+        evalebel = label.labels.all() 
+        try:         
+            data = self.eva_label_statement.filter(evalebel__in = evalebel).count()
+        except:
+            data = 0   
         return data
               
         
     
     def label_wise_positive_answered(self, label):  
         evalebel = label.labels.all()         
-        data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(1)).count()
-        return round(data, 2)
+        ans = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(1)).count()
+        try:
+            ans_on_active = (ans * self.total_active_of_labels()) / self.label_wise_total_ans(label)
+        except:
+            ans_on_active = 0
+            
+        
+        return ans_on_active
+        
+        
+        # data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(1)).count()
+        
+        # return round(data, 2)
     
     def label_wise_nagetive_answered(self, label): 
         evalebel = label.labels.all()    
-        data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = False).count()
-        return round(data, 2)
+        ans = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = False).count()
+        try:
+            ans_on_active = (ans * self.total_active_of_labels()) / self.label_wise_total_ans(label)
+        except:
+            ans_on_active = 0
+        
+        return ans_on_active
+        # data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = False).count()
+        
+        # return round(data, 2)
     
     
     
@@ -408,11 +450,11 @@ class LabelWiseData:
             negative_answered = self.label_wise_nagetive_answered(label)
             
             try:
-                green = round((positive_answered * 100)/self.label_wise_total(label), 2)
+                green = round((positive_answered * 100)/self.total_active_of_labels(), 2)
             except:
                 green = 0
             try:
-                red = round((negative_answered* 100 )/self.label_wise_total(label), 2)  
+                red = round((negative_answered* 100 )/self.total_active_of_labels(), 2)  
             except:
                 red = 0          
 
