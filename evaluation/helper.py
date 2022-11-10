@@ -337,6 +337,14 @@ class LabelWiseData:
             data = 0        
         return round(len(data), 2)
     
+    def total_dont_know_answer(self):
+        try:
+            data = set(s.question.id for s in self.eva_label_statement if s.is_dontknow)
+        except:
+            data = 0        
+        return round(len(data), 2)
+        
+    
     def overview_green(self):
         return self.total_positive_answer()
     
