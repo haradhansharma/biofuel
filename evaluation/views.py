@@ -902,7 +902,9 @@ def thanks(request):
     item_label = df.columns.values.tolist()
     item_seris = df.values.tolist()
     
+
     context = {
+        'donotshow' : 'yes',
         'refferer_path' : urlparse(request.META.get('HTTP_REFERER')).path,
         'gretings': gretings,
         'button': button,

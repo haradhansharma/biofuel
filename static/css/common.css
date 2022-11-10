@@ -7,7 +7,10 @@
 } */
 
 .bgjessica-primary{
-  background-color: #7c9c9c;
+  background-color: #7c9c9c!important;
+}
+.bgjessica-primary2{
+  background: #7c9c9c!important;
 }
 
 .bgjessica-light-primary{

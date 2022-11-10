@@ -325,6 +325,8 @@ def userpage(request, username):
         
         button = reverse('evaluation:nreport', args=[last_reports.slug])
         context = {
+            'donotshow' : 'no',
+            'refferer_path' : urlparse(request.META.get('HTTP_REFERER')).path,            
             'gretings': gretings,
             'button': button,
             'ans_ques': ans_ques,

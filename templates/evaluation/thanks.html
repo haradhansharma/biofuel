@@ -20,6 +20,7 @@
                         {% endfor %}
                     </div>
                     {% endif %}
+                    {% if donotshow == 'no' %}
                     <div class="col-12">
                         <div class="row g-3 mb-3">
                             <div class="col-12 col-lg-4 d-flex ">
@@ -101,8 +102,10 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
-
+                <!--About Me-->
+                {% if donotshow == 'no' %}
                 <div class="row justify-content-center">
                     <div class="col-12">
                         <div class="card text-center mb-3">
@@ -137,15 +140,146 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
+                <!--About Me-->
 
+
+
+                <!--Summary Boxes-->
+                <div id="ques" class="row justify-content-center mb-3">
+                    <div class="col-12">
+                        <div class="card text-center bg-gradient bg-success">
+                            <div class="card-header bg-dgreen">
+                                <h2 class="text-light">{{ gretings }}</h2> 
+                                <div class="text-warning">{{complete_warning}}</div> 
+                                {% if complete_report_button_text %}
+                                <div class="mt-3 mb-3">
+                                    <button class="btn btn-secondary" type="button">
+                                        <span class="spinner-grow spinner-grow-sm" role="status"
+                                            aria-hidden="true"></span>
+                                        <a href="{{ button }}">{{last_report_button_text}}{{complete_report_button_text}}</a>
+                                        <span class="spinner-grow spinner-grow-sm" role="status"
+                                            aria-hidden="true"></span>
+                                    </button>
+                                </div>  
+                                {% endif %}                             
+                            </div>
+                            <div class="card-body">
+                                <!--for last report -->
+                            {% if last_reports %}
+                            <div class="row g-3 p-3  justify-content-center">
+                                <div class="col-12 col-sm-6 col-xl-4 d-flex">
+                                    <div class="flex-fill card bgjessica-primary">
+                                        <div class="card-body">
+                                            <div class="row d-block  ">
+                                                <div class="col-12 ">
+                                                    <h3 class="h5 text-light">Number of questions responded</h3>
+                                                </div>
+                                                <div class="col-12 ">
+                                                    <h3 class="fw-extrabold mb-2 h5 p-3 rounded bg-primary text-light">{{ ans_ques }}</h3> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-xl-4 d-flex">
+                                    <div class="flex-fill card bgjessica-light-primary">
+                                        <div class="card-body">
+                                            <div class="row d-block ">
+                                                <div class="col-12 ">
+                                                    <h3 class="h5 text-light">Number of "Don't know" responses.</h3>
+                                                </div>
+                                                <div class="col-12 ">
+                                                    <h3 class="fw-extrabold mb-2 h5 p-3 rounded bg-dark text-light">{{ dont_know_ans }}</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-xl-4 d-flex">
+                                    <div class="flex-fill card bg-dgreen">
+                                        <div class="card-body">
+                                            <div class="row d-block ">
+                                                <div class="col-12 ">
+                                                    <h3 class="h5 text-light">Number of positive responses Received.</h3>
+                                                </div>
+                                                <div class="col-12 ">
+                                                    <h3 class="fw-extrabold mb-2 h5 p-3 rounded bg-bgreen text-light">{{ pos_ans }}</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-xl-4 d-flex">
+                                    <div class="flex-fill card bg-dgreen">
+                                        <div class="card-body">
+                                            <div class="row d-block  ">
+                                                <div class="col-12 ">
+                                                    <h3 class="h5 text-light">The Percentage of positive response.</h3>
+                                                </div>
+                                                <div class="col-12 ">
+                                                    <h3 class="fw-extrabold mb-2 h5 p-3 rounded bgjessica-primary text-light">{{ positive_percent }}</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-xl-4 d-flex">
+                                    <div class="flex-fill card bg-primary">
+                                        <div class="card-body">
+                                            <div class="row d-block  ">
+                                                <div class="col-12 ">
+                                                    <h3 class="h5 text-light">Percentage of "Don't know" response.</h3>
+                                                </div>
+                                                <div class="col-12 ">
+                                                    <h3 class="fw-extrabold mb-2  h5 p-3 rounded bg-dark text-light">{{ dont_know_percent }}</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                              
+                                <div class="col-12 col-sm-6 col-xl-4 d-flex">
+                                    <div class="flex-fill card bg-danger">
+                                        <div class="card-body">
+                                            <div class="row d-block ">
+                                                <div class="col-12 ">
+                                                    <h3 class="h5 text-light">The refference number of the Report:</h3>
+                                                </div>
+                                                <div class="col-12 ">
+                                                    <h3 class="fw-extrabold mb-2 h5 p-3 rounded bg-warning text-primary">{{ last_reports.id }}</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+
+
+                            </div>                            
+                            {% endif %}
+                            <!--for last report -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Summary Boxes-->
+                
+                <!--Traffic Light OVerview-->
                 <div id="labeldata" class="row justify-content-center mb-3">
                     <div class="col-12">
-                        <div class="card text-center">
-                            <div class="card-header">
-                                <h2>Traffic-light overview of Report #{{ last_reports.id }}</h2>                                
+                        <div class="card text-center bgjessica-light-primary">
+                            <div class="card-header bgjessica-primary2 text-primary">
+                                <h2 class="text-light">Traffic-light overview of Report #{{ last_reports.id }}</h2>                                
                             </div>
                             
-                            <div class="row g-3 p-3  justify-content-center">
+                            <div class="row g-3 p-3  justify-content-center ">
                                 <div class="card-body p-2">                                    
                                     <div id="sss" class="ct-chart-ranking ct-golden-section ct-series-a">
                                         <!--
@@ -161,118 +295,13 @@
                         </div>
                     </div>
                 </div>
-                <div id="ques" class="row justify-content-center">
+                <!--Traffic Light ovrview-->
+                <div class="row justify-content-center">
                     <div class="col-12">
-                        <div class="card text-center">
-                            <div class="card-header">
-                                <h2>{{ gretings }}</h2>
-                            </div>
+                        <div class="card text-center">                            
                             <!--for last report -->
                             {% if last_reports %}
                             <div class="row g-3 p-3  justify-content-center">
-                                <div class="col-12 col-sm-6 col-xl-4 d-flex">
-                                    <div class="flex-fill card">
-                                        <div class="card-body">
-                                            <div class="row d-block  ">
-                                                <div class="col-12 ">
-                                                    <h3 class="h5">The number of questions you responded</h3>
-                                                </div>
-                                                <div class="col-12 ">
-                                                    <h3 class="fw-extrabold mb-2">{{ ans_ques }}</h3> 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-sm-6 col-xl-4 d-flex">
-                                    <div class="flex-fill card">
-                                        <div class="card-body">
-                                            <div class="row d-block ">
-                                                <div class="col-12 ">
-                                                    <h3 class="h5">Total number of "Don't know" responses.</h3>
-                                                </div>
-                                                <div class="col-12 ">
-                                                    <h3 class="fw-extrabold mb-2">{{ dont_know_ans }}</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-sm-6 col-xl-4 d-flex">
-                                    <div class="flex-fill card">
-                                        <div class="card-body">
-                                            <div class="row d-block ">
-                                                <div class="col-12 ">
-                                                    <h3 class="h5">The total number of positive responses received.</h3>
-                                                </div>
-                                                <div class="col-12 ">
-                                                    <h3 class="fw-extrabold mb-2">{{ pos_ans }}</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-sm-6 col-xl-4 d-flex">
-                                    <div class="flex-fill card">
-                                        <div class="card-body">
-                                            <div class="row d-block  ">
-                                                <div class="col-12 ">
-                                                    <h3 class="h5">The Percentage of positive response.</h3>
-                                                </div>
-                                                <div class="col-12 ">
-                                                    <h3 class="fw-extrabold mb-2">{{ positive_percent }}</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-sm-6 col-xl-4 d-flex">
-                                    <div class="flex-fill card">
-                                        <div class="card-body">
-                                            <div class="row d-block  ">
-                                                <div class="col-12 ">
-                                                    <h3 class="h5">Percentage of "Don't know" response.</h3>
-                                                </div>
-                                                <div class="col-12 ">
-                                                    <h3 class="fw-extrabold mb-2">{{ dont_know_percent }}</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {% if last_reports %}
-                                <div class="col-12 col-sm-6 col-xl-4 d-flex">
-                                    <div class="flex-fill card">
-                                        <div class="card-body">
-                                            <div class="row d-block ">
-                                                <div class="col-12 ">
-                                                    <h3 class="h5">This is report no:</h3>
-                                                </div>
-                                                <div class="col-12 ">
-                                                    <h3 class="fw-extrabold mb-2">{{ last_reports.id }}</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endif %}
-
-                                <div class="mt-3 mb-3">
-                                    <button class="btn btn-secondary" type="button">
-                                        <span class="spinner-grow spinner-grow-sm" role="status"
-                                            aria-hidden="true"></span>
-                                        <a href="{{ button }}">{{last_report_button_text}}{{complete_report_button_text}}</a>
-                                        <span class="spinner-grow spinner-grow-sm" role="status"
-                                            aria-hidden="true"></span>
-                                    </button>
-                                </div>
-
-                                {% if complete_report_button_text %}<div class="text-danger">{{complete_warning}}</div> {% endif %}
                                 <div>
                                     <div class="card-footer">
                                         <div class="table-responsive">
@@ -316,11 +345,11 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
-                                    <!--for last report -->
-                                    {% endif %}
+                                    </div>                                    
                                 </div>
-                            </div>
+                            </div>                            
+                            {% endif %}
+                            <!--for last report -->
                         </div>
 
 
@@ -357,7 +386,10 @@
                             </a>
                         </div>
                         {% endif %}
-                    </div>                    
+                    </div>    
+                </div>  
+            </div>
+        </div>              
                                    
     </main>
    
