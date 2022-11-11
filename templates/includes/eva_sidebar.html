@@ -2,8 +2,7 @@
        
 <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
      <a class="navbar-brand me-lg-5" href="/">
-       <img src="{% static site_info.logo %}" class="card bg-bgreen"  height="50px" alt="{{ site_info.name }}">
-         
+       <img src="{% static site_info.logo %}" class="card bg-bgreen"  height="50px" alt="{{ site_info.name }}">         
      </a>
      <div class="d-flex align-items-center">
          <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,128 +13,32 @@
 
  
 
- <nav id="sidebarMenu" class="sidebar d-lg-block bg-light text-white collapse" data-simplebar>          
+ <nav id="sidebarMenu" class="sidebar d-lg-block bg-white collapse" data-simplebar>          
    <div class="sidebar-inner px-2 pt-3">
     <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
-        <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-          <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-          <span class="fs-5 fw-semibold">List group</span>
-        </a>
-        <div class="list-group list-group-flush border-bottom scrollarea">
-
-
-           
+              
+          <h2 class="fs-5 fw-semibold">To be answered questions</h2>
+            
+        <div class="list-group list-group-flush border-bottom scrollarea">           
                 {% for parent, child in question_dataset.items %}
                 <div class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
                     <div class="d-flex w-100 align-items-start justify-content-start">
-                        <a class="badge {% if slug == parent.slug %} bg-primary {% else %} {% if parent.stat == 'checked' %} bg-success {% elif parent.stat == 'skipped' %} bg-gray-100  {% else %} bg-outline-success {% endif %} {% endif %} mb-1 "
+                        <a class="badge {% if slug == parent.slug %} btn-primary {% else %} {% if parent.stat == 'checked' %} btn-success {% elif parent.stat == 'skipped' %} btn-gray-100  {% else %} btn-outline-success link-success border border-success {% endif %} {% endif %} mb-1 w-100"
                             data-bs-toggle="tooltip" data-bs-html="true" title="{{parent.name}}"
-                            href="{% url 'evaluation:eva_question' request.session.evaluator parent.slug %}">
-                            {% if parent.sort_order %}{{parent.id}}{% else %}{{parent.id}}{% endif %}
-                        </a>
-                        
+                            href="{% url 'evaluation:eva_question' request.session.evaluator parent.slug %}"> Chapter#
+                            {% if parent.sort_order %}{{parent.sort_order}}{% else %}{{parent.sort_order}}{% endif %}
+                        </a>                        
                     </div>
-                        <div class="col-10 mb-1 small">
-                            {% for item in child %}
-                            <a class="badge {% if slug == item.slug %} bg-primary {% else %} {% if item.stat == 'checked' %} bg-success {% elif item.stat == 'skipped' %} bg-gray-100  {% else %} bg-outline-success {% endif %} {% endif %} mb-1 col-12 "
-                                data-bs-toggle="tooltip" data-bs-html="true" title="{{item.name}}"  href="{% url 'evaluation:eva_question' request.session.evaluator item.slug %}">
-                                {{item.id}}
-                            </a>
-                            {% endfor %}
-                        </div>
-                    
+                    <div class="col-10 mb-1 small float-end">
+                        {% for item in child %}
+                        <a class="badge {% if slug == item.slug %} btn-primary {% else %} {% if item.stat == 'checked' %} btn-success {% elif item.stat == 'skipped' %} btn-gray-100  {% else %} btn-outline-success link-success border border-success {% endif %} {% endif %} mb-1 w-100 "
+                            data-bs-toggle="tooltip" data-bs-html="true" title="{{item.name}}"  href="{% url 'evaluation:eva_question' request.session.evaluator item.slug %}">
+                            Question#{{item.sort_order}}
+                        </a>
+                        {% endfor %}
+                    </div>                    
                 </div>
-                {% endfor %}
-           
-
-
-
-
-          <a href="#" class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-              <strong class="mb-1">List group item heading</strong>
-              <small>Wed</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-              <strong class="mb-1">List group item heading</strong>
-              <small class="text-muted">Tues</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-              <strong class="mb-1">List group item heading</strong>
-              <small class="text-muted">Mon</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-          </a>
-    
-          <a href="#" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-              <strong class="mb-1">List group item heading</strong>
-              <small class="text-muted">Wed</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-              <strong class="mb-1">List group item heading</strong>
-              <small class="text-muted">Tues</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-              <strong class="mb-1">List group item heading</strong>
-              <small class="text-muted">Mon</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-              <strong class="mb-1">List group item heading</strong>
-              <small class="text-muted">Wed</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-              <strong class="mb-1">List group item heading</strong>
-              <small class="text-muted">Tues</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-              <strong class="mb-1">List group item heading</strong>
-              <small class="text-muted">Mon</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-              <strong class="mb-1">List group item heading</strong>
-              <small class="text-muted">Wed</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-              <strong class="mb-1">List group item heading</strong>
-              <small class="text-muted">Tues</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-              <strong class="mb-1">List group item heading</strong>
-              <small class="text-muted">Mon</small>
-            </div>
-            <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-          </a>
+                {% endfor %}          
         </div>
       </div>
    </div>

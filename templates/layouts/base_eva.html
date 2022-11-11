@@ -58,14 +58,18 @@
 <link rel="mask-icon" href="{{site_info.mask_icon}}" color="#08793B">
 <meta name="msapplication-TileColor" content="#08793B">
 <meta name="theme-color" content="#08793B">
+
+
 <!-- <script src="https://unpkg.com/htmx.org@1.6.1" integrity="sha384-tvG/2mnCFmGQzYC1Oh3qxQ7CkQ9kMzYjWZSNtrRZygHPDDqottzEJsqS4oUVodhW" crossorigin="anonymous"></script>-->
 <script src="{% static 'assets/vendor/htmx/dist/htmx.min.js' %}"></script>
+<script src="{% static 'assets/vendor/font-awesome/js/all.min.js' %}"></script>
+<link type="text/css" href="{% static 'assets/vendor/font-awesome/css/all.min.css' %}" rel="stylesheet"> 
 
 
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
 <!-- Volt CSS -->
 <link type="text/css" href="{% static 'assets/css/volt.css' %}" rel="stylesheet"> 
+<link type="text/css" href="{% static 'css/common.css' %}" rel="stylesheet"> 
 
 <!-- Specific Page JS goes HERE  -->    
 {% block stylesheets %}{% endblock stylesheets %}
@@ -77,7 +81,16 @@
     
     <main class="content" id = "indi">
 
-      {% include 'includes/navigation.html' %}
+      <div class="card p-4 my-3 bg-primary">
+        <div class=" mb-3 " >
+         <a href="/"><img src="{% static 'long_logo.png' %}"  alt="{{site_info.name}}" style="max-width: 350px;" class="img-fluid" ></a>   
+        </div>
+        <div class="card-footer p-1 text-light">
+        {{ timing_text }}
+
+        </div>
+      </div>
+        
 
       {% block content %}{% endblock content %} 
 

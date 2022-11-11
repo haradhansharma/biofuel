@@ -377,7 +377,7 @@ def question_dataset(request):
         questions_of_report.append(evaluation.question)  
     
     
-    #set temporary status of questions    
+    #set temporary status of questions     
     for question in questions:
         if question in questions_of_report:
             setattr(question, 'stat', 'checked') 

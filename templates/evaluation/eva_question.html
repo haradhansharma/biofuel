@@ -1,64 +1,33 @@
-{% extends "layouts/base-fullscreen.html" %}
+{% extends "layouts/base_eva.html" %}
 
 {% block title %} {{text.signin}} {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
+
+ 
+
 {% load custom_tags %}
 {% block content %}
-{% block header %}
-{% include 'includes/g_header.html' %}
-{% endblock %}
+
 <main id="indi">
-    {% include "includes/hero_section.html" %}
+    <div class="card bg-light mb-3">
+    <div class="text-danger card-text p-2">
+        The title of the question in the sidebar can be
+        found by hovering your mouse over the round. The system will automatically send you to
+        the next question. If you wish, you can tweak it even more. The green circles indicate
+        that it has been answered, the grey circles indicate that it has been skipped or that it
+        is you do not know or answered as 'no', and the outline circles suggest that it has not yet been replied.
+        You won't be able to answer the child questions if you don't answered the parent
+        questions.
+    </div>
+</div>
     <div class="section pt-0">
-        <div class="container-fluid pt-6 mt-n10 mt-lg-n12 z-2">
+        <div class="container-fluid px-0">
             <div class="row justify-content-center">
                 <div class="col-12">
                     <button class="btn btn-warning btn-block mb-2" onclick="history.back()">Go Back</button>
-                    <div class="card text-center mb-4">
-                        <div class="card-header">
-                            <h3 class="text-success">To be answered questions</h3>
-                            <hr>
-                            <h5 class="text-danger" style="font-size: 14px;">
-                                The title of the question below can be
-                                found by hovering your mouse over the round. The system will automatically send you to
-                                the next question. If you wish, you can tweak it even more. The green circles indicate
-                                that it has been answered, the grey circles indicate that it has been skipped or that it
-                                is you do not know, and the outline circles suggest that it has not yet been replied.
-                                You won't be able to answer the child questions if you don't answered the parent
-                                questions.
-                            </h5>
-                        </div>
 
-                        <div class="row p-3 justify-content-center">
-                            {% for parent, child in question_dataset.items %}
-                            <div class="col-sm-4 col-md-3 col-lg-2 col-xl-1 mb-3 d-flex">
-                                <div style="min-height: 5rem;" class="card flex-fill">
-                                    <a style="padding: 0.05rem; font-size: 0.25rem;"
-                                        class="btn {% if slug == parent.slug %} btn-primary {% else %} {% if parent.stat == 'checked' %} btn-success {% elif parent.stat == 'skipped' %} btn-gray-100  {% else %} btn-outline-success {% endif %} {% endif %} mb-1  col-12 mx-auto "
-                                        data-bs-toggle="tooltip" data-bs-html="true" title="{{parent.name}}"
-                                        href="{% url 'evaluation:eva_question' request.session.evaluator parent.slug %}">
-                                        {% if parent.sort_order %}--{% else %}--{% endif %}
-                                    </a>
-
-                                    <div class="col-12 p-2">
-                                        {% for item in child %}
-                                        <a style="padding: 0.08rem; font-size: 0.25rem;"
-                                            class="btn {% if slug == item.slug %} btn-primary {% else %} {% if item.stat == 'checked' %} btn-success {% elif item.stat == 'skipped' %} btn-gray-100  {% else %} btn-outline-success {% endif %} {% endif %} mb-1 rounded-circle "
-                                            data-bs-toggle="tooltip" data-bs-html="true" title="{{item.name}}"
-                                            style="font-size: 4px;"
-                                            href="{% url 'evaluation:eva_question' request.session.evaluator item.slug %}">
-                                            --
-                                        </a>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                        <div class="card-header">
-                            {{ timing_text }}
-                        </div>
-                    </div>
                     <div id="ques" class="card text-center">
                         <div class="card-footer">
                             <h3>Question: {{question.name}}</h3>
@@ -74,18 +43,16 @@
 
                     
                     
-                    <div class="row mb-5">
-                        {% if messages and total_question <= qualified_rang %} 
-                        <div class="alert alert-secondary mt-5" role="alert">
-                            {% if messages and total_question <= qualified_rang %} 
+                    <div class="row mb-3">
+                        {% if messages %} 
+                        <div class="alert alert-secondary mt-5" role="alert">                            
                             {% for message in messages %} 
                                 <span class="alert-inner--text">{{ message }}</span>
-                            {% endfor %} 
-                            {% endif %}                           
+                            {% endfor %}                                                       
                         </div>
                         {% endif %}
                     </div>
-                    <div class="row mt-5 mb-5">
+                    <div class="row mt-3 mb-5">
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
@@ -326,7 +293,7 @@
         </div>
     </div>
 </main>
-{% include "includes/g_footer.html" %}
+
 {% endblock content %}
 
 
