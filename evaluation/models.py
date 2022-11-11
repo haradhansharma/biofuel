@@ -474,7 +474,7 @@ class StandaredChart(models.Model):
     
         
     def __str__(self):
-        return self.oil.select_oil.name
+        return self.oil
     
     
 #to reduce youtube API call we will save the dat in our databse
