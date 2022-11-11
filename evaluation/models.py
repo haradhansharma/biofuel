@@ -449,7 +449,7 @@ class StdOils(models.Model):
     
     
     def __str__(self):
-        return self.select_oil.name
+        return self.select_oil
 
 class StandaredChart(models.Model):
     '''
