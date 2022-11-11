@@ -586,8 +586,8 @@ def eva_question(request, evaluator, slug):
     
     request.session['total_question'] = evaluation_data.filter(evaluator = evaluator).count()  
     total_ques = all_questions.count() - request.session['total_question']
-    timing_text = f"Depending on how many answers you provide, the self assessment will take n\
-        anywhere from {round(total_ques/10)} to {round(total_ques/3)} minutes. At the end of the n\
+    timing_text = f"Depending on how many answers you provide, the self assessment will take \
+        anywhere from {round(total_ques/10)} to {round(total_ques/3)} minutes. At the end of the \
             assessment, a PDF report will be provided, which can be retrieved via the Dashboard at a later stage."
     
     
