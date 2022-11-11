@@ -226,7 +226,7 @@ class StandaredChartAdmin(admin.ModelAdmin):
     list_display = ('id','question','oil', 'option', 'value', 'link',  )
     list_editable = ('oil', 'link', 'option', 'value', 'question',)
     list_display_links = ('id',)
-    list_filter = ('oil', 'question', )
+    list_filter = ('question', )
     ordering = ('question',)
     list_per_page = 10
     

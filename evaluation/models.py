@@ -444,12 +444,12 @@ class OliList(models.Model):
     
     
 class StdOils(models.Model):    
-    select_oil = models.ForeignKey(OliList, on_delete=models.SET_NULL, null=True)
+    select_oil = models.ForeignKey(OliList, on_delete=models.CASCADE, default=1)
     biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, editable=False,)
     
     
     def __str__(self):
-        return self.select_oil
+        return self.select_oil.name
 
 class StandaredChart(models.Model):
     '''
@@ -474,7 +474,7 @@ class StandaredChart(models.Model):
     
         
     def __str__(self):
-        return self.oil
+        return self.oil.select_oil.name
     
     
 #to reduce youtube API call we will save the dat in our databse
