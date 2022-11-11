@@ -402,7 +402,7 @@ def question_dataset(request):
     #if dont know or no    
     for question in questions:
         try:
-            get_option = Evaluation.objects.get(evaluator = get_current_evaluator(request), question = question).option
+            get_option = evaluations.get(question = question).option
             if get_option.dont_know == True or  get_option.name == 'No':
                 setattr(question, 'stat', 'skipped')
             else:
@@ -416,7 +416,7 @@ def question_dataset(request):
             childs = [child for child in questions if child.parent_question == question]            
             for child in childs:
                 setattr(child, 'stat', 'skipped')
-                Evaluation.objects.filter(question = child, evaluator = get_current_evaluator(request)).delete()  
+                evaluations.filter(question = child).delete()  
                 
         
     parents = []
@@ -817,17 +817,6 @@ def eva_index2(request):
     # stdoil_list = StandaredChart.objects.filter(related_biofuel = first_biofuel).values('oil_name', 'key').order_by('oil_name').distinct()
     
     stdoil_list = StdOils.objects.filter(biofuel = first_biofuel)
-    
-
-                
-    
-        
-        
-        
-    
-    
-    
-    
     
     context ={
         'form': form,
