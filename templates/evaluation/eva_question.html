@@ -56,9 +56,7 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5>Options:</h5>
-
-                                   
+                                    <h5>Options:</h5>                                  
                                     
                                     <form id="op" method="POST" action="{% url 'evaluation:option_add2' %}#ques">
                                         {% csrf_token %}
@@ -148,50 +146,25 @@
                                     </form>
                                     
                                 </div>
-                            </div>      
+                            </div>  
+                            
+                            
 
-                            <div class="card mt-4">
-                                {% if question.get_quotations or question.get_related_quotations %}
-                                <div class="card-header">
-                                    The validation quotes issued by our validation partners are listed below. To learn
-                                    more
-                                    about a quote, simply click on it.
-                                </div>
-                                <div class="card-body">
-                                    <div class="row mt-3 g-3">
-                                        
-                                        {% for quotation in question.get_quotations %}
-                                        <div class="col-md-6 col-xl-4 d-flex">
-                                            <a href="{{quotation.get_absolute_url}}" 
-                                                target="_blank"
-                                                class="p-3 flex-fill card">
-                                                <h4>Provider: 
-                                                    {{quotation.get_business_name}}
-                                                </h4>
-                                                <h5>Price: {{quotation.price}} {{quotation.price_unit}} </h5>
-                                            </a>
-                                        </div>
-                                        {% endfor %}
-                                        {% for quotation in question.get_related_quotations %}
-                                        <div class="col-md-6 col-xl-4 d-flex">
-                                            <a href="{{quotation.get_absolute_url}}" 
-                                                target="_blank"
-                                                class="p-3 flex-fill card">
-                                                <h4>Provider: {{quotation.get_business_name}}
-                                                </h4>
-                                                <h5>Price: {{quotation.price}} {{quotation.price_unit}}</h5>
-                                            </a>
-                                        </div>
-                                        {% endfor %}
-                                        
+                            <div hx-get="{% url 'evaluation:quotation_block' slug %}" hx-trigger="load">
+                                <div class="card text-center mt-4">
+                                    
+                                    <div class="row p-3 justify-content-center">
+                                    Loading quotations...
                                     </div>
-                                </div>
-                                {% else %}
-                                <div class="card-body">
-                                    <div class="alert alert-primary" role="alert">No Quotation Found!</div> 
-                                </div>
-                                {% endif %}
+                                </div>    
                             </div>
+
+
+
+                           
+
+
+
                             
 
                         </div>
@@ -216,38 +189,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12">
-                            {% if question.get_stdoils %}
-                            <div class="card mt-4 p-4">
-                                <h4>{{question.chart_title}}</h4>
-                                <div class="table-responsive">
-                                    <table class="table align-middle">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Oil Name</th>
-                                                <th scope="col">Unit</th>
-                                                <th scope="col">Value</th>
-                                                <th scope="col">Link</th>
-                                                <th scope="col">Option</th>
-                                                <th scope="col">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for cd in question.get_stdoils %}
-                                            <tr>
-                                                <th scope="row">{{cd.oil.select_oil.name }}</th>
-                                                <td>{{cd.unit }}</td>
-                                                <td>{{cd.value }}</td>
-                                                <td>{{cd.link }}</td>
-                                                <td>{{ cd.option.name }}</td>
-                                                <td {% if cd.option.positive == '1' %} class="table-success" {% elif cd.option.positive == '0' and not cd.option.dont_know %} class="table-danger" {% elif cd.option.positive == '0' and cd.option.dont_know %} class="table-light" {% else %} class="table-light" {% endif %}></td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <div class="col-sm-12">                            
+
+                            <div hx-get="{% url 'evaluation:std_oils_block' slug %}" hx-trigger="load">
+                                <div class="card text-center mb-4 mt-4">                                    
+                                    <div class="row p-3 justify-content-center">
+                                    Loading OILS...
+                                    </div>
+                                </div>    
                             </div>
-                            {% endif %}
+                            
+                            
                             <!--
                             <div class="card text-center mb-4 mt-4">
                             <div class="row justify-content-center align-items-center">
@@ -267,7 +219,15 @@
                         -->
 
 
+                            <div hx-get="{% url 'evaluation:vedio_urls' search_term %}" hx-trigger="load">
+                            <div class="card text-center mb-4 mt-4">                                
+                                <div class="row p-3 justify-content-center">
+                                Loading related videos...
+                                </div>
+                            </div>    
+                            </div>
 
+                            <!--
                             <div class="card text-center mb-4 mt-4">
                                 <h4>Some relevant videos are listed below:</h4>
                                 <div class="row p-3 justify-content-center">
@@ -286,6 +246,7 @@
                                     {% endfor %}
                                 </div>
                             </div>
+                            -->
                         </div>
                     </div>
                 </div>

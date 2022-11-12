@@ -1,0 +1,37 @@
+
+<div class="card mt-4 p-4">
+    {% if question.get_stdoils %}
+    <h4>{{question.chart_title}}</h4>
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th scope="col">Oil Name</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Value</th>
+                    <th scope="col">Link</th>
+                    <th scope="col">Option</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cd in question.get_stdoils %}
+                <tr>
+                    <th scope="row">{{cd.oil.select_oil.name }}</th>
+                    <td>{{cd.unit }}</td>
+                    <td>{{cd.value }}</td>
+                    <td>{{cd.link }}</td>
+                    <td>{{ cd.option.name }}</td>
+                    <td {% if cd.option.positive == '1' %} class="table-success" {% elif cd.option.positive == '0' and not cd.option.dont_know %} class="table-danger" {% elif cd.option.positive == '0' and cd.option.dont_know %} class="table-light" {% else %} class="table-light" {% endif %}></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="card-body">
+        <div class="alert alert-primary" role="alert">No related oils found!</div> 
+    </div>
+    {% endif %}
+
+</div>

@@ -455,7 +455,23 @@ def get_vedio_urls(search_term):
             continue
     return vedio_urls
 
-def vedio_urls(search_term):
+# def vedio_urls(search_term):
+#     saved_urls = Youtube_data.objects.filter(term = search_term) 
+#     if saved_urls.exists():
+#         log.info(f'Found saved url for youtube video________')
+#         saved_url = saved_urls[0]
+#         vedio_urls = ast.literal_eval(saved_url.urls) #convert string list to list
+#         if (saved_url.update_date + timezone.timedelta(days=7))  < timezone.now():
+#             saved_url.urls = get_vedio_urls(search_term)
+#             saved_url.save()         
+#     else:
+#         log.info(f'Hiting api for youtube video as no saved video found_______')
+#         vedio_urls = get_vedio_urls(search_term)        
+#         Youtube_data.objects.create(term = search_term, urls = vedio_urls)  
+#     return vedio_urls  
+from asgiref.sync import sync_to_async
+@sync_to_async
+def vedio_urls(request, search_term):
     saved_urls = Youtube_data.objects.filter(term = search_term) 
     if saved_urls.exists():
         log.info(f'Found saved url for youtube video________')
@@ -468,12 +484,24 @@ def vedio_urls(search_term):
         log.info(f'Hiting api for youtube video as no saved video found_______')
         vedio_urls = get_vedio_urls(search_term)        
         Youtube_data.objects.create(term = search_term, urls = vedio_urls)  
-    return vedio_urls  
+    # return vedio_urls  
+    return render(request, 'evaluation/eva_youtube.html', context = {'vedio_urls' : vedio_urls})
+@sync_to_async
+def std_oils_block(request, slug):
+    question = Question.objects.get(slug = slug)
+    return render(request, 'evaluation/std_oils_block.html', context = {'question': question})
+
+@sync_to_async
+def quotation_block(request, slug):
+    question = Question.objects.get(slug = slug)
+    return render(request, 'evaluation/quotation_block.html', context = {'question': question})
+    
 '''
 ====
 Main interface during evaluation process.
 ====
 '''
+@sync_to_async
 @login_required
 @producer_required
 def eva_question(request, evaluator, slug):      
@@ -662,7 +690,7 @@ def eva_question(request, evaluator, slug):
         'selected_option' : selected_option,
         'submitted_comment' : submitted_comment,
         # 'chart_data' : chart_data,
-        'vedio_urls' : vedio_urls(search_term),
+        # 'vedio_urls' : vedio_urls(search_term),
         'search_term' : search_term,
         'oil_graph_data' : oil_graph_data
         

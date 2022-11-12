@@ -1,0 +1,44 @@
+<div class="card mt-4">
+    {% if question.get_quotations or question.get_related_quotations %}
+    <div class="card-header">
+        The validation quotes issued by our validation partners are listed below. To learn
+        more
+        about a quote, simply click on it.
+    </div>
+    <div class="card-body">
+        <div class="row g-3">
+            
+            {% for quotation in question.get_quotations %}
+            <div class="col-md-6 col-xl-4 d-flex">
+                <a href="{{quotation.get_absolute_url}}" 
+                    target="_blank"
+                    class="p-3 flex-fill card">
+                    <small class="text-primary">Provider: 
+                        {{quotation.get_business_name}}
+                    </small>
+                    <hr>
+                    <small  class="text-success"><b>Price:</b> {{quotation.price}} {{quotation.price_unit}} </small>
+                </a>
+            </div>
+            {% endfor %}
+            {% for quotation in question.get_related_quotations %}
+            <div class="col-md-6 col-xl-4 d-flex">
+                <a href="{{quotation.get_absolute_url}}" 
+                    target="_blank"
+                    class="p-3 flex-fill card">
+                    <small class="text-primary">Provider: {{quotation.get_business_name}}
+                    </small>
+                    <hr>
+                    <small class="text-success"><b>Price:</b> {{quotation.price}} {{quotation.price_unit}}</small>
+                </a>
+            </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+    {% else %}
+    <div class="card-body">
+        <div class="alert alert-primary" role="alert">No Quotation Found!</div> 
+    </div>
+    {% endif %}
+</div>

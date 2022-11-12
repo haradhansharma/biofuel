@@ -14,6 +14,11 @@ urlpatterns += [
     path('evaluation2/', views.eva_index2, name='evaluation2'), 
     path('evaluation2/option_add/', views.option_add2, name='option_add2'),  
     path('evaluation2/<int:evaluator>/<str:slug>', views.eva_question, name='eva_question'),   
-    path('evaluation/stdoils/', views.stdoils, name='stdoils')
+    path('evaluation/stdoils/', views.stdoils, name='stdoils'),
+    path('vedio_urls/<str:search_term>', views.vedio_urls, name="vedio_urls"),
+    path('std_oils_block/<str:slug>', views.std_oils_block, name="std_oils_block"),
+    path('quotation_block/<str:slug>', views.quotation_block, name="quotation_block"),
+    
+    
     
 ]
