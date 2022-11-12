@@ -30,6 +30,8 @@ from django.http import FileResponse
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
 from reportlab.lib.units import inch
 from django.db.models import Avg, Count
+import re
+
 
 import logging
 log =  logging.getLogger('log')
@@ -673,7 +675,6 @@ def eva_question(request, evaluator, slug):
     update data in each week   
      
     '''
-    import re
     # search_term = str(question.name) + ', ' +  str(evaluator_data.biofuel.name if evaluator_data.biofuel.name  else '')
     search_term = re.sub('[^A-Za-z0-9]+', ' ',  f'{question.name} {evaluator_data.biofuel.name}')
     
