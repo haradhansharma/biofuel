@@ -501,7 +501,7 @@ def quotation_block(request, slug):
 Main interface during evaluation process.
 ====
 '''
-@sync_to_async
+
 @login_required
 @producer_required
 def eva_question(request, evaluator, slug):      
@@ -673,8 +673,14 @@ def eva_question(request, evaluator, slug):
     update data in each week   
      
     '''
-    search_term = str(question.name) + ', ' +  str(evaluator_data.biofuel.name) 
-    log.info(f'Youtube search term {search_term}___________')     
+    import re
+    # search_term = str(question.name) + ', ' +  str(evaluator_data.biofuel.name if evaluator_data.biofuel.name  else '')
+    search_term = re.sub('[^A-Za-z0-9]+', ' ',  f'{question.name} {evaluator_data.biofuel.name}')
+    
+    # re.sub('[^A-Za-z0-9]+', '', search_term)
+    print(search_term)
+    
+    # log.info(f'Youtube search term {search_term}___________')     
         
     context ={
         'slug' : slug,
@@ -691,7 +697,7 @@ def eva_question(request, evaluator, slug):
         'submitted_comment' : submitted_comment,
         # 'chart_data' : chart_data,
         # 'vedio_urls' : vedio_urls(search_term),
-        'search_term' : search_term if search_term else 'None',
+        'search_term' : search_term,
         'oil_graph_data' : oil_graph_data
         
     }
