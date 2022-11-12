@@ -691,7 +691,7 @@ def eva_question(request, evaluator, slug):
         'submitted_comment' : submitted_comment,
         # 'chart_data' : chart_data,
         # 'vedio_urls' : vedio_urls(search_term),
-        'search_term' : search_term,
+        'search_term' : search_term if search_term else 'None',
         'oil_graph_data' : oil_graph_data
         
     }
