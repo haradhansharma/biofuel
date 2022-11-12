@@ -674,14 +674,8 @@ def eva_question(request, evaluator, slug):
     Geting data from youtube data api 
     update data in each week   
      
-    '''
-    # search_term = str(question.name) + ', ' +  str(evaluator_data.biofuel.name if evaluator_data.biofuel.name  else '')
-    search_term = re.sub('[^A-Za-z0-9]+', ' ',  f'{question.name} {evaluator_data.biofuel.name}')
-    
-    # re.sub('[^A-Za-z0-9]+', '', search_term)
-    print(search_term)
-    
-    # log.info(f'Youtube search term {search_term}___________')     
+    '''    
+    search_term = re.sub('[^A-Za-z0-9]+', ' ',  f'{question.name} {evaluator_data.biofuel.name}')   
         
     context ={
         'slug' : slug,
