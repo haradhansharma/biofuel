@@ -412,7 +412,7 @@ class LabelWiseData:
         #     serialized_record[1:2] = [((i*self.overview_grey())/100) for i in self.get_stdoil_result().get('Overview')]
         # print(serialized_record)    
         record = {            
-            'Overview' : serialized_record
+            f'Overview of active__green__grey__red = {self.total_active_questions()}, {self.total_positive_answer()}, {self.total_dont_know_answer()} {self.total_nagetive_answer()}' : serialized_record
             }
         # else:
         #     record = self.get_stdoil_result().get('Overview')
@@ -472,16 +472,21 @@ class LabelWiseData:
             total_dont_know_answer = len(grey_answered)
             
             try:
-                green = (total_positive_answered/total_active_questions_id)*100
+                green = round((total_positive_answered/total_active_questions_id)*100, 2)
             except:
                 green = 0
             try:
-                red = (total_negative_answered/total_active_questions_id)*100
+                red = round((total_negative_answered/total_active_questions_id)*100, 2)
             except:
-                red = 0          
+                red = 0       
+                
+            try:
+                grey = round(100-(green+red),2)
+            except:
+                grey = 0     
 
             
-            serialized_record = [green , round(100-(green+red),2), red]
+            serialized_record = [green , grey, red]
             # if self.get_stdoil() is not None:
             #     serialized_record[1:2] = [((i*round(100-(green+red),2))/100) for i in self.get_stdoil_result().get(label.name)]
             
@@ -489,7 +494,7 @@ class LabelWiseData:
             record = {
                 #Same as total total result
                 #green>>grey>>red
-                label.name : serialized_record
+                f'{label.name} of active__green__grey__red = {total_active_questions_id}, {total_positive_answered}, {total_negative_answered}, {total_dont_know_answer}' : serialized_record
             }        
             record_dict.update(record)         
         return record_dict

@@ -233,12 +233,12 @@ dd.addEventListener("DOMContentLoaded", function(event) {
                 // labelInterpolationFnc: function(value) {
                 //   return (value / 1000) + 'k';
                 // },
-                offset: 100,
+                // offset: 500,
                 showGrid: false,
                 showLabel: false,
               },
             axisY: {
-                offset: 100,
+                offset: 400,
                 showGrid: false,
             }            
             }); 
