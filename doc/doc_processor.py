@@ -26,7 +26,10 @@ def site_info():
         'location': site.location,
         'facebook_link': site.facebook_link,
         'twitter_link': site.twitter_link,
-        'linkedin_link': site.linkedin_link,       
+        'linkedin_link': site.linkedin_link, 
+        'topic' : 'Green Fuel',
+        'type' : 'Fuel Validation Platform',
+        'robots' : "index, follow"        
     }
     
     return site_info

@@ -278,8 +278,10 @@
                             <div class="card-header bgjessica-primary2 text-primary">
                                 <h2 class="text-light">Traffic-light overview of Report #{{ last_reports.id }}</h2>                                
                             </div>
+
                             
-                            <div class="row g-3 p-3  justify-content-center ">
+                            
+                            <div class="row g-3 p-3  justify-content-center " >
                                 <div class="card-body p-2">                                    
                                     <div id="sss" class="ct-chart-ranking ct-golden-section ct-series-a">
                                         <!--
@@ -288,10 +290,11 @@
                                               <span class="visually-hidden">Loading...</span>
                                             </div>
                                           </div>
-                                        -->
+                                        --> 
                                         </div>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -400,7 +403,7 @@
     
 
     {% block javascripts %}
-    
+
 <script>
     var ref, pa;
 
@@ -418,6 +421,12 @@
 
    
 
+</script>
+
+<script>
+    
+    //$("#reloadchart").load(location.href + " #reloadchart");
+    
 </script>
 
 

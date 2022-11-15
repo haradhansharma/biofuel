@@ -31,3 +31,13 @@ logs
 graphical_data_advise_by_krishna.txt
 
 templates/evaluation/bkup_eva.html
+static/admin
+static/ckeditor
+
+static/debug_toolbar
+
+static/django_extensions
+static/import_export
+static/jquery-autosuggest
+
+
