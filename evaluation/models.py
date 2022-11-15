@@ -371,7 +371,7 @@ class EvaLebelStatement(models.Model):
     
     @property
     def is_dontknow(self):
-        if self.positive == str(0) and self.dont_know == True:
+        if self.dont_know == True:
             return True
         return False
     
