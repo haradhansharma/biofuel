@@ -521,6 +521,7 @@ class LabelWiseData:
             
             label_result.update(a.result())
             label_result.update(b.result()) 
+            executor.shutdown() 
         return label_result
     
     def packed_labels(self):
