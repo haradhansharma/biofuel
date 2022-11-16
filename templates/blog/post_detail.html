@@ -72,7 +72,7 @@
                     {% for blog in similar_posts %}
                     <div class="col d-flex">
                         <div class="card bg-lgreen shadow-sm flex-fill overflow-hidden">
-                            <img src="{{blog.image.url}}" class="img-fluid" alt="{{blog.title}}">
+                            <img src="{% static blog.image.url %}" class="img-fluid" alt="{{blog.title}}">
                             <div class="card-title px-2 mb-0 border-bottom pb-2">
                                 {{blog.title|upper}}
                             </div>

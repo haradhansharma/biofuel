@@ -1,5 +1,7 @@
 {% extends "layouts/base-fullscreen.html" %}
 {% load i18n %}
+{% load static %}
+
 
 {% block title %} {{text.error403}} {% endblock %} 
 
@@ -15,7 +17,7 @@
                     <div class="col-12 text-center d-flex align-items-center justify-content-center">
                         <div>
                             <a href="/" class="d-flex justify-content-center">
-                                <img src="{{site_info.logo}}" height="100" class="mb-4" alt="{{site_info.name}}">
+                                <img src="{% static site_info.logo %}" height="100" class="mb-4" alt="{{site_info.name}}">
                             </a>
                             <h1 class="mt-5">
                                 {% translate "Access" %} <span class="fw-bolder text-primary">{% translate "denied" %}</span>

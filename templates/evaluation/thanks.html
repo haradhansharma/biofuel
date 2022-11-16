@@ -1,6 +1,6 @@
 {% extends "includes/g_base.html" %}
 
-
+{%load static %}
     
     {% block header %}
     {% include 'includes/g_header.html' %} 
@@ -28,7 +28,7 @@
                                     <div class="card-body">
                                         <div class="row d-block d-lg-flex align-items-center "
                                             style="min-height: 200px; overflow:hidden;">
-                                            <img src="{{ user.type.icon.url }}"
+                                            <img src="{% static user.type.icon.url %}"
                                                 class="rounded-circle mx-auto d-block  w-50 img-fluid " alt="">
                                         </div>
                                     </div>

@@ -14,7 +14,7 @@
                         <div class="d-block text-center justify-content-center mt-7 mb-6 mb-lg-5">
                             <div
                                 class="icon-user-type icon-shape-user-type bg-lgreen text-center shadow-lg rounded mb-4">
-                                <img src="{{ user_type.icon.url }}" alt="">
+                                <img src="{% static user_type.icon.url %}" alt="">
                             </div>
                             {% if request.user.is_authenticated %}
                             {% for title, url in enroll.items %} 
