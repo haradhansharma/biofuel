@@ -437,6 +437,12 @@ class LabelWiseData:
         data = set(s.question.id for s in self.eva_label_statement if s.question.id in self.active_questions_id_list and s.evalebel.label == label)
         return list(data)
     
+    def label_wise_active_question_list(self, label):
+        l_labels = Label.objects.filter(name = label)
+        active_questions_id_list = [l.question.id for l in l_labels if l.question.is_active == True and l.value == '1']
+        return active_questions_id_list
+        
+    
     def label_wise_green_answered_list(self, label):
         # Making positive answered list by duble checking in answered question as answered question checking in the active question
         question_that_answered_and_have_positive_1 = set(s.question.id for s in self.eva_label_statement if s.is_positive and s.question.id in self.answered_question_id_list and s.evalebel.label == label)        
@@ -453,14 +459,14 @@ class LabelWiseData:
     
     '''=========new========='''  
 
-    
+   
     
     def label_wise_result(self):       
         labels = DifinedLabel.objects.filter(common_status = False)
         record_dict = {}
         for label in labels:  
-            l_labels = Label.objects.filter(name = label)
-            active_questions_id_list = [l.question.id for l in l_labels if l.question.is_active == True and l.value == '1']
+            # l_labels = Label.objects.filter(name = label)
+            active_questions_id_list = self.label_wise_active_question_list(label)
             answered_question_id_list = self.label_wise_answered_question_id_list(label)
             green_answered_list = self.label_wise_green_answered_list(label)
             grey_answered = self.label_wise_grey_answered(label, active_questions_id_list, answered_question_id_list, green_answered_list)
