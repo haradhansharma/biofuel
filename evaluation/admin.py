@@ -73,6 +73,10 @@ admin.site.register(Biofuel, BiofuelAdmin)
 
 admin.site.register(OliList)
 admin.site.register(LabelDataHistory)
+admin.site.register(EvaLebelStatement)
+
+
+
 
 
 class StandaredCharts(admin.TabularInline):
