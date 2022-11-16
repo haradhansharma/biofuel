@@ -292,11 +292,11 @@ def userpage(request, username):
     if last_reports is not None: 
         gretings = f'The summary of the report number {last_reports.id} genarated by {username}!'        
         
-        ans_ques = label_data.eva_label_statement.count()
+        ans_ques = len(label_data.answered_question_id_list)
         dont_know_ans = label_data.total_dont_know_answer()
-        pos_ans = label_data.total_positive_answer()
-        positive_percent = (int(pos_ans) * 100)/int(ans_ques)
-        dont_know_percent = (int(dont_know_ans) * 100)/int(ans_ques)
+        pos_ans = len(label_data.green_answered_list)
+        positive_percent = label_data.overview_green()
+        dont_know_percent = label_data.overview_grey()
          
         
         '''

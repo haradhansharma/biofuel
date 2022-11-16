@@ -331,6 +331,7 @@ class LabelWiseData:
     def answered_question_id_list(self):
         # Making list of answered question by double checking in active question
         data = set(s.question.id for s in self.eva_label_statement if s.question.id in self.active_questions_id_list)
+        print(data)
         return list(data)
     
     @property
