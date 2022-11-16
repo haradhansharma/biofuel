@@ -460,7 +460,7 @@ class LabelWiseData:
         record_dict = {}
         for label in labels:  
             l_labels = Label.objects.filter(name = label)
-            active_questions_id_list = [l.question.id for l in l_labels if l.question.is_active == True]
+            active_questions_id_list = [l.question.id for l in l_labels if l.question.is_active == True and l.value == '1']
             answered_question_id_list = self.label_wise_answered_question_id_list(label)
             green_answered_list = self.label_wise_green_answered_list(label)
             grey_answered = self.label_wise_grey_answered(label, active_questions_id_list, answered_question_id_list, green_answered_list)
