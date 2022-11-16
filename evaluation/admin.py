@@ -73,7 +73,15 @@ admin.site.register(Biofuel, BiofuelAdmin)
 
 admin.site.register(OliList)
 admin.site.register(LabelDataHistory)
-admin.site.register(EvaLebelStatement)
+# admin.site.register(EvaLebelStatement)
+
+class EvaLebelStatementAdmin(admin.ModelAdmin):
+    list_display = ('evalebel', 'question', 'option_id', 'positive', 'dont_know', 'evaluator', 'assesment',)
+    list_filter = ('evalebel', 'evaluator', 'assesment' ,)   
+    
+    
+admin.site.register(EvaLebelStatement, EvaLebelStatementAdmin)
+    
 
 
 
