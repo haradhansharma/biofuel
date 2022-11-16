@@ -1,3 +1,6 @@
+from concurrent.futures import ThreadPoolExecutor
+
+import django
 from .models import *
 from django.utils import timezone
 from django_cron import CronJobBase, Schedule
@@ -7,6 +10,7 @@ from django.contrib import messages
 from doc.doc_processor import site_info
 from gfvp import null_session
 from django.contrib.sites.shortcuts import get_current_site
+from asgiref.sync import sync_to_async, async_to_sync
 
 import logging
 log =  logging.getLogger('log')
@@ -508,8 +512,15 @@ class LabelWiseData:
     
     def picked_labels_dict(self):
         label_result = {}    
-        label_result.update(self.label_wise_result())
-        label_result.update(self.total_result()) 
+        with ThreadPoolExecutor(max_workers=2, initializer=django.setup) as executor:
+            #re-confirm to avoid oparation mistak. as an unnecessary function running from client recomendation
+            a = executor.submit(self.label_wise_result)
+            #control adding or editing
+            b = executor.submit(self.total_result)
+            #control adding or editing
+            
+            label_result.update(a.result())
+            label_result.update(b.result()) 
         return label_result
     
     def packed_labels(self):
