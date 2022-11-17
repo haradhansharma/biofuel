@@ -353,11 +353,12 @@ class LabelWiseData:
     def grey_answered(self):
         # making list of question list which is don't know and not in green answered and which are in answered question list as answered question checking in the active question
         list_from_answered =  set(s.question.id for s in self.eva_label_statement if s.is_dontknow and s.question.id not in self.green_answered_list and s.question.id in self.answered_question_id_list)
+        log.info(f'Grey From answered {question_that_not_answered}')
         # making list of all question that are not in answered question list.
         # print(f'List from answered__________{list_from_answered}')
         question_that_not_answered = [aq for aq in self.active_questions_id_list if aq not in self.answered_question_id_list]
         #adding both list   
-        print(f'Question that not answered {question_that_not_answered}')     
+            
         log.info(f'Question that not answered {question_that_not_answered}')
         data_list = list(list_from_answered) + question_that_not_answered
         # print(f'Total data list__________{data_list}')
