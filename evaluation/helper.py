@@ -393,11 +393,11 @@ class LabelWiseData:
         except:
             data = 0      
             
-        positive_and_negative = list(set(s.question.id for s in self.eva_label_statement if s.is_positive))  + list(set(s.question.id for s in self.eva_label_statement if s.is_negative))
-        active_id_list = list(set(q.id for q in self.active_questions))
-        not_answered = [q for q in active_id_list if q not in positive_and_negative]
+        # positive_and_negative = list(set(s.question.id for s in self.eva_label_statement if s.is_positive))  + list(set(s.question.id for s in self.eva_label_statement if s.is_negative))
+        # active_id_list = list(set(q.id for q in self.active_questions))
+        # not_answered = [q for q in active_id_list if q not in positive_and_negative]
         
-        log.info(f'not_answered ======== {not_answered}')
+        # log.info(f'not_answered ======== {not_answered}')
         return round(len(data), 2)
     
     # @property
