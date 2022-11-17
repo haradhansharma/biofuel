@@ -222,31 +222,34 @@ dd.addEventListener("DOMContentLoaded", function(event) {
             // width: 800,
             // height: 150,
             // donut: true,
+            // donutWidth: 60,
+            // donutSolid: true,
             stackBars: true,
             horizontalBars: true,
-            seriesBarDistance: 20,
+            seriesBarDistance: 40,
             plugins: [
               Chartist.plugins.tooltip()
             ],
             
             axisX: {
-                // labelInterpolationFnc: function(value) {
-                //   return (value / 1000) + 'k';
-                // },
-                // offset: 500,
-                showGrid: false,
-                showLabel: false,
+                labelInterpolationFnc: function(value) {
+                  return Math.round(value, 0) + '%';
+                },
+                scaleMinSpace: 100,
+                // offset: 200,
+                showGrid: true,
+                showLabel: true,
               },
             axisY: {
-                offset: 400,
-                showGrid: false,
+                offset: 100,
+                showGrid: true,
             }            
             }); 
           
           chart.on('draw', function(data) {
             if(data.type === 'bar') {
                 data.element.attr({
-                //   style: 'stroke-width: 30px'
+                  style: 'stroke-width: 40px'
                 });
             }            
         });

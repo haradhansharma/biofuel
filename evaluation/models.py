@@ -125,6 +125,13 @@ class Question(models.Model):
     @property
     def get_stdoils(self):
         return self.stanchart.all()
+    
+    @property
+    def have_4labels(self):
+        labels = self.questions.filter(value = '1').count()
+        if labels > 0:
+            return True
+        return False
         
     
  
@@ -138,6 +145,8 @@ class Label(models.Model):
     name = models.ForeignKey(DifinedLabel, on_delete=models.PROTECT, related_name='dlabels', limit_choices_to={'common_status': False})
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='questions')
     value = models.CharField(max_length=1, default=0)
+    
+    
 
     def __str__(self):
         return self.name.name

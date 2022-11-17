@@ -299,7 +299,7 @@ class LabelWiseData:
         # The evaluator can be either from session or url which will be supplied
         self.evaluator = evaluator   
         # We will neeed total active questions in the site to use by filtering sing diferent parameter     
-        self.active_questions = Question.objects.filter(is_active=True)
+        self.active_questions = [q for q in Question.objects.filter(is_active=True) if q.have_4labels]
         # we will need the statment added from the selected options during answering for this report/evaluator, must be excluded assesments or logical strings
         self.eva_label_statement = EvaLebelStatement.objects.filter(evaluator = self.evaluator, question__isnull = False, assesment = False)  
         
@@ -325,95 +325,105 @@ class LabelWiseData:
     # '''
     # useless as we are converting to 100 to make relevent to the labelwise
     # '''  
-    '''=======new======='''
-    @property
-    def active_questions_id_list(self):
-        data = [q.id for q in self.active_questions]
-        return data
+    # '''=======new======='''
+    # @property
+    # def active_questions_id_list(self):
+    #     data = [q.id for q in self.active_questions]
+    #     return data
         
     @property
     def answered_question_id_list(self):
         # Making list of answered question by double checking in active question
-        data = set(s.question.id for s in self.eva_label_statement if s.question.id in self.active_questions_id_list)
+        data = set(s.question.id for s in self.eva_label_statement)
         
         return list(data)
     
-    @property
-    def green_answered_list(self):
-        # Making positive answered list by duble checking in answered question as answered question checking in the active question
-        question_that_answered_and_have_positive_1 = set(s.question.id for s in self.eva_label_statement if s.is_positive and s.question.id in self.answered_question_id_list)        
-        # question_that_answered_and_have_positive_0 = set(s.question.id for s in self.eva_label_statement if s.is_negative and s.question.id in self.answered_question_id_list)        
-        # print(f'question_that_answered_and_have_positive_1 {question_that_answered_and_have_positive_1}')
-        # print(" ----- ")
-        # print(f'question_that_answered_and_have_positive_0 {question_that_answered_and_have_positive_0}')
+    # @property
+    # def green_answered_list(self):
+    #     # Making positive answered list by duble checking in answered question as answered question checking in the active question
+    #     question_that_answered_and_have_positive_1 = set(s.question.id for s in self.eva_label_statement if s.is_positive and s.question.id in self.answered_question_id_list)        
+    #     # question_that_answered_and_have_positive_0 = set(s.question.id for s in self.eva_label_statement if s.is_negative and s.question.id in self.answered_question_id_list)        
+    #     # print(f'question_that_answered_and_have_positive_1 {question_that_answered_and_have_positive_1}')
+    #     # print(" ----- ")
+    #     # print(f'question_that_answered_and_have_positive_0 {question_that_answered_and_have_positive_0}')
         
-        return list(question_that_answered_and_have_positive_1)   
+    #     return list(question_that_answered_and_have_positive_1)   
      
-    @property
-    def grey_answered(self):
-        # making list of question list which is don't know and not in green answered and which are in answered question list as answered question checking in the active question
-        list_from_answered =  set(s.question.id for s in self.eva_label_statement if s.is_dontknow and s.question.id not in self.green_answered_list and s.question.id in self.answered_question_id_list)
-        log.info(f'Grey From answered {list_from_answered}')
-        # making list of all question that are not in answered question list.
-        # print(f'List from answered__________{list_from_answered}')
-        question_that_not_answered = [aq for aq in self.active_questions_id_list if aq not in self.answered_question_id_list]
-        #adding both list   
+    # @property
+    # def grey_answered(self):
+    #     # making list of question list which is don't know and not in green answered and which are in answered question list as answered question checking in the active question
+    #     list_from_answered =  set(s.question.id for s in self.eva_label_statement if s.is_dontknow and s.question.id not in self.green_answered_list and s.question.id in self.answered_question_id_list)
+    #     log.info(f'Grey From answered {list_from_answered}')
+    #     # making list of all question that are not in answered question list.
+    #     # print(f'List from answered__________{list_from_answered}')
+    #     question_that_not_answered = [aq for aq in self.active_questions_id_list if aq not in self.answered_question_id_list]
+    #     #adding both list   
             
-        log.info(f'Question that not answered {question_that_not_answered}')
-        data_list = list(list_from_answered) + question_that_not_answered
-        # print(f'Total data list__________{data_list}')
-        return data_list
+    #     log.info(f'Question that not answered {question_that_not_answered}')
+    #     data_list = list(list_from_answered) + question_that_not_answered
+    #     # print(f'Total data list__________{data_list}')
+    #     return data_list
+    
+    # @property
+    # def red_answered(self):
+    #     data_list = [ac for ac in self.active_questions_id_list if ac not in self.green_answered_list and ac not in self.grey_answered]
+    #     # data_list = self.active_questions_id_list - self.green_answered_list - self.grey_answered
+    #     return data_list
+        
+    # '''=======new======='''
+    
     
     @property
-    def red_answered(self):
-        data_list = [ac for ac in self.active_questions_id_list if ac not in self.green_answered_list and ac not in self.grey_answered]
-        # data_list = self.active_questions_id_list - self.green_answered_list - self.grey_answered
-        return data_list
-        
-    '''=======new======='''
-    
-    
-    
     def total_active_questions(self):        
-        # data = self.active_questions.count()
-        return round(len(self.active_questions_id_list), 2)      
+        data = len(self.active_questions)
+        # return round(len(self.active_questions_id_list), 2)  
+        return round(data, 2)      
+        
  
-    
+    @property
     def total_positive_answer(self):
-        # data = set(s.question.id for s in self.eva_label_statement if s.is_positive)   
-        return round(len(self.green_answered_list), 2)        
-    
+        data = set(s.question.id for s in self.eva_label_statement if s.is_positive)   
+        # return round(len(self.green_answered_list), 2)      
+        return round(len(data), 2)        
+      
+    @property
     def total_nagetive_answer(self):
-        # try:
-        #     data = set(s.question.id for s in self.eva_label_statement if s.is_negative)
-        # except:
-        #     data = 0        
-        return round(len(self.red_answered), 2)
+        try:
+            data = set(s.question.id for s in self.eva_label_statement if s.is_negative)
+        except:
+            data = 0        
+        # return round(len(self.red_answered), 2)
+        return round(len(data), 2)
     
-    def total_dont_know_answer(self):
-        # try:
-        #     data = set(s.question.id for s in self.eva_label_statement if s.is_dontknow)
-        # except:
-        #     data = 0        
-        return round(len(self.grey_answered), 2)
+    # @property
+    # def total_dont_know_answer(self):
+    #     try:
+    #         data = self.total_active_questions - self.total_positive_answer - self.total_nagetive_answer
+    #     except:
+    #         data = 0        
+    #     # return round(len(self.grey_answered), 2)
+    #     return round(len(data), 2)
+    
         
-    
+    @property
     def overview_green(self):
-        data = (self.total_positive_answer()/self.total_active_questions())*100
+        data = (self.total_positive_answer/self.total_active_questions)*100
+        # print(data)
+        return round(data, 2)
+    @property
+    def overview_red(self):
+        data = (self.total_nagetive_answer/self.total_active_questions)*100
+        # print(data)
         
         return round(data, 2)
-    
-    def overview_red(self):
-        data = (self.total_nagetive_answer()/self.total_active_questions())*100
-        return round(data, 2)
-    
+    @property
     def overview_grey(self):
         # '''
         # As overview green and overview red is in parcent so we will deduct from 100 the both to equalized dividation in barchart.
         # As each question have no label and have multiple positive value or negative value so sum of labelwise questions result is diferent then actual total question.
         # For this reason to get rid of the mismatched result we had to deduct from 100 to get matching report in the barchart.        
         # '''
-        data = 100 - self.overview_green() - self.overview_red()  
+        data = 100 - self.overview_green - self.overview_red 
         return round(data, 2)
     
     def total_result(self):
@@ -422,12 +432,12 @@ class LabelWiseData:
         we will placed the value in the list acordingly. We need to decide label name here so that it will be easy to impleted along with labels as each label has predifiened name.
         '''
         #green>>grey>>red
-        serialized_record = [self.overview_green(), self.overview_grey(), self.overview_red()]
+        serialized_record = [self.overview_green, self.overview_grey, self.overview_red]
         # if self.get_stdoil() is not None:
         #     serialized_record[1:2] = [((i*self.overview_grey())/100) for i in self.get_stdoil_result().get('Overview')]
         # print(serialized_record)    
         record = {            
-            f'Overview of active__green__grey__red = {self.total_active_questions()}, {self.total_positive_answer()}, {self.total_dont_know_answer()} {self.total_nagetive_answer()}' : serialized_record
+            'Overview' : serialized_record
             }
         # else:
         #     record = self.get_stdoil_result().get('Overview')
@@ -444,34 +454,34 @@ class LabelWiseData:
         evalebel = label.labels.all()    
         data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = False).count()
         return round(data, 2)  
-    '''=========new========='''  
+    # '''=========new========='''  
     
-    def label_wise_answered_question_id_list(self, label):
-        # Making list of answered question by double checking in active question
-        data = set(s.question.id for s in self.eva_label_statement if s.question.id in self.active_questions_id_list and s.evalebel.label == label)
-        return list(data)
+    # def label_wise_answered_question_id_list(self, label):
+    #     # Making list of answered question by double checking in active question
+    #     data = set(s.question.id for s in self.eva_label_statement if s.question.id in self.active_questions_id_list and s.evalebel.label == label)
+    #     return list(data)
     
-    def label_wise_active_question_list(self, label):
-        l_labels = Label.objects.filter(name = label)
-        active_questions_id_list = [l.question.id for l in l_labels if l.question.is_active == True and l.value == '1']
-        return active_questions_id_list
+    # def label_wise_active_question_list(self, label):
+    #     l_labels = Label.objects.filter(name = label)
+    #     active_questions_id_list = [l.question.id for l in l_labels if l.question.is_active == True and l.value == '1']
+    #     return active_questions_id_list
         
     
-    def label_wise_green_answered_list(self, label):
-        # Making positive answered list by duble checking in answered question as answered question checking in the active question
-        question_that_answered_and_have_positive_1 = set(s.question.id for s in self.eva_label_statement if s.is_positive and s.question.id in self.answered_question_id_list and s.evalebel.label == label)        
-        return list(question_that_answered_and_have_positive_1)  
+    # def label_wise_green_answered_list(self, label):
+    #     # Making positive answered list by duble checking in answered question as answered question checking in the active question
+    #     question_that_answered_and_have_positive_1 = set(s.question.id for s in self.eva_label_statement if s.is_positive and s.question.id in self.answered_question_id_list and s.evalebel.label == label)        
+    #     return list(question_that_answered_and_have_positive_1)  
     
-    def label_wise_grey_answered(self, label, active_list, answered_list, green_answered_list):
-        # making list of question list which is don't know and not in green answered and which are in answered question list as answered question checking in the active question
-        list_from_answered =  set(s.question.id for s in self.eva_label_statement if s.is_dontknow and s.question.id not in green_answered_list and s.question.id in answered_list and s.evalebel.label == label)
-        # making list of all question that are not in answered question list.
-        question_that_not_answered = [aq for aq in active_list if aq not in answered_list]
-        #adding both list
-        data_list = list(list_from_answered) + question_that_not_answered
-        return data_list 
+    # def label_wise_grey_answered(self, label, active_list, answered_list, green_answered_list):
+    #     # making list of question list which is don't know and not in green answered and which are in answered question list as answered question checking in the active question
+    #     list_from_answered =  set(s.question.id for s in self.eva_label_statement if s.is_dontknow and s.question.id not in green_answered_list and s.question.id in answered_list and s.evalebel.label == label)
+    #     # making list of all question that are not in answered question list.
+    #     question_that_not_answered = [aq for aq in active_list if aq not in answered_list]
+    #     #adding both list
+    #     data_list = list(list_from_answered) + question_that_not_answered
+    #     return data_list 
     
-    '''=========new========='''  
+    # '''=========new========='''  
 
    
     
@@ -480,24 +490,33 @@ class LabelWiseData:
         record_dict = {}
         for label in labels:  
             # l_labels = Label.objects.filter(name = label)
-            active_questions_id_list = self.label_wise_active_question_list(label)
-            answered_question_id_list = self.label_wise_answered_question_id_list(label)
-            green_answered_list = self.label_wise_green_answered_list(label)
-            grey_answered = self.label_wise_grey_answered(label, active_questions_id_list, answered_question_id_list, green_answered_list)
-            red_answered = [ac for ac in active_questions_id_list if ac not in green_answered_list and ac not in grey_answered]
+            # active_questions_id_list = self.label_wise_active_question_list(label)
+            # answered_question_id_list = self.label_wise_answered_question_id_list(label)
+            # green_answered_list = self.label_wise_green_answered_list(label)
+            # grey_answered = self.label_wise_grey_answered(label, active_questions_id_list, answered_question_id_list, green_answered_list)
+            # red_answered = [ac for ac in active_questions_id_list if ac not in green_answered_list and ac not in grey_answered]
             
             
-            total_active_questions_id = len(active_questions_id_list)
-            total_positive_answered = len(green_answered_list)
-            total_negative_answered = len(red_answered)
-            total_dont_know_answer = len(grey_answered)
+            # total_active_questions_id = len(active_questions_id_list)
+            # total_positive_answered = len(green_answered_list)
+            # total_negative_answered = len(red_answered)
+            # total_dont_know_answer = len(grey_answered)
+            
+            
+            l_labels = set(label.dlabels.all())
+            active_question = len([l.question for l in l_labels if l.question.is_active == True and l.question.have_4labels and l.value == '1'])
+            
+            
+            positive_answered = self.label_wise_positive_answered(label)
+            negative_answered = self.label_wise_nagetive_answered(label)
+            
             
             try:
-                green = round((total_positive_answered/total_active_questions_id)*100, 2)
+                green = round((positive_answered/active_question)*100, 2)
             except:
                 green = 0
             try:
-                red = round((total_negative_answered/total_active_questions_id)*100, 2)
+                red = round((negative_answered/active_question)*100, 2)
             except:
                 red = 0       
                 
@@ -515,7 +534,7 @@ class LabelWiseData:
             record = {
                 #Same as total total result
                 #green>>grey>>red
-                f'{label.name} of active__green__grey__red = {total_active_questions_id}, {total_positive_answered}, {total_negative_answered}, {total_dont_know_answer}' : serialized_record
+                label.name: serialized_record
             }        
             record_dict.update(record)         
         return record_dict
