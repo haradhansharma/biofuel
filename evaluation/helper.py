@@ -342,6 +342,11 @@ class LabelWiseData:
     def green_answered_list(self):
         # Making positive answered list by duble checking in answered question as answered question checking in the active question
         question_that_answered_and_have_positive_1 = set(s.question.id for s in self.eva_label_statement if s.is_positive and s.question.id in self.answered_question_id_list)        
+        # question_that_answered_and_have_positive_0 = set(s.question.id for s in self.eva_label_statement if s.is_negative and s.question.id in self.answered_question_id_list)        
+        # print(f'question_that_answered_and_have_positive_1 {question_that_answered_and_have_positive_1}')
+        # print(" ----- ")
+        # print(f'question_that_answered_and_have_positive_0 {question_that_answered_and_have_positive_0}')
+        
         return list(question_that_answered_and_have_positive_1)   
      
     @property
@@ -349,9 +354,13 @@ class LabelWiseData:
         # making list of question list which is don't know and not in green answered and which are in answered question list as answered question checking in the active question
         list_from_answered =  set(s.question.id for s in self.eva_label_statement if s.is_dontknow and s.question.id not in self.green_answered_list and s.question.id in self.answered_question_id_list)
         # making list of all question that are not in answered question list.
+        # print(f'List from answered__________{list_from_answered}')
         question_that_not_answered = [aq for aq in self.active_questions_id_list if aq not in self.answered_question_id_list]
-        #adding both list
+        #adding both list   
+        print(f'Question that not answered {question_that_not_answered}')     
+        log.info(f'Question that not answered {question_that_not_answered}')
         data_list = list(list_from_answered) + question_that_not_answered
+        # print(f'Total data list__________{data_list}')
         return data_list
     
     @property

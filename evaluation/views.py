@@ -657,18 +657,18 @@ def eva_question(request, evaluator, slug):
     # Get Chart Data of this question    
     # log.info(f'Geting standared oil data for the question {question.id}___for the report {evaluator_data}__________')
     # chart_data = question.get_stdoils 
-    oil_graph_data = []
-    for oil in question.get_stdoils:            
-        try:             
-            oil_data = OilComparision(oil).packed_labels()      
-            item_label = oil_data.columns.values.tolist()
-            item_seris = oil_data.values.tolist()
-            data_dict = {
-                oil.oil_name : [item_label, item_seris]
-            }
-            oil_graph_data.append(data_dict)
-        except Exception as e:
-            continue
+    # oil_graph_data = []
+    # for oil in question.get_stdoils:            
+    #     try:             
+    #         oil_data = OilComparision(oil).packed_labels()      
+    #         item_label = oil_data.columns.values.tolist()
+    #         item_seris = oil_data.values.tolist()
+    #         data_dict = {
+    #             oil.oil_name : [item_label, item_seris]
+    #         }
+    #         oil_graph_data.append(data_dict)
+    #     except Exception as e:
+    #         continue
     
     '''
     Geting data from youtube data api 
@@ -693,7 +693,7 @@ def eva_question(request, evaluator, slug):
         # 'chart_data' : chart_data,
         # 'vedio_urls' : vedio_urls(search_term),
         'search_term' : search_term,
-        'oil_graph_data' : oil_graph_data
+        # 'oil_graph_data' : oil_graph_data
         
     }
     return render(request, 'evaluation/eva_question.html', context = context)
