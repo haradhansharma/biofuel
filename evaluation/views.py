@@ -655,20 +655,20 @@ def eva_question(request, evaluator, slug):
         request.session['push_url'] = ''
         
     # Get Chart Data of this question    
-    # log.info(f'Geting standared oil data for the question {question.id}___for the report {evaluator_data}__________')
+    log.info(f'Geting standared oil data for the question {question.id}___for the report {evaluator_data}__________')
     # chart_data = question.get_stdoils 
-    # oil_graph_data = []
-    # for oil in question.get_stdoils:            
-    #     try:             
-    #         oil_data = OilComparision(oil).packed_labels()      
-    #         item_label = oil_data.columns.values.tolist()
-    #         item_seris = oil_data.values.tolist()
-    #         data_dict = {
-    #             oil.oil_name : [item_label, item_seris]
-    #         }
-    #         oil_graph_data.append(data_dict)
-    #     except Exception as e:
-    #         continue
+    oil_graph_data = []
+    for oil in question.get_stdoils:            
+        try:             
+            oil_data = OilComparision(oil).packed_labels()      
+            item_label = oil_data.columns.values.tolist()
+            item_seris = oil_data.values.tolist()
+            data_dict = {
+                oil.oil_name : [item_label, item_seris]
+            }
+            oil_graph_data.append(data_dict)
+        except Exception as e:
+            continue
     
     '''
     Geting data from youtube data api 
@@ -697,6 +697,8 @@ def eva_question(request, evaluator, slug):
         
     }
     return render(request, 'evaluation/eva_question.html', context = context)
+
+
 
 '''
 ====
@@ -886,8 +888,7 @@ def thanks(request):
     
     # evaluator =  get_current_evaluator(request)
     #Calculation to display on the thankyou page.
-    label_data = LabelWiseData(last_reports)
-    
+    label_data = LabelWiseData(last_reports)   
     
     ans_ques = len(label_data.answered_question_id_list)
     dont_know_ans = ans_ques - label_data.total_positive_answer - label_data.total_nagetive_answer
@@ -917,10 +918,7 @@ def thanks(request):
         except:
             setattr(report, 'last_slug', first_of_parent.slug )
             
-    df = label_data.packed_labels()  
-    
-    item_label = df.columns.values.tolist()
-    item_seris = df.values.tolist()
+   
     
 
     context = {
@@ -935,8 +933,8 @@ def thanks(request):
         'dont_know_percent': str("%.2f" % dont_know_percent) + '%',
         'reports': reports,
         'last_reports' : last_reports,
-        'item_label' : item_label,
-        'item_seris' : item_seris,
+        # 'item_label' : item_label,
+        # 'item_seris' : item_seris,
         'complete_report_button_text': 'Confirm and Generate',
         'complete_warning' : 'Please confirm that this session of self-evaluation has been completed by clicking here. n\
             It will generate a comprehensive report. Before any changes to other reports can be made, the confirmation is n\
@@ -944,6 +942,20 @@ def thanks(request):
     }
     
     return render(request, 'evaluation/thanks.html', context = context)
+
+
+def trafic_light_hori(request, last_reports):
+    report = Evaluator.objects.get(id = last_reports)
+    label_data = LabelWiseData(report)
+    df = label_data.packed_labels()      
+    item_label = df.columns.values.tolist()
+    item_seris = df.values.tolist()
+    context = {
+        'item_label' : item_label,
+        'item_seris' : item_seris,
+    }
+    return render(request, 'evaluation/tl_hori.html', context = context)
+    
 
 
 @login_required

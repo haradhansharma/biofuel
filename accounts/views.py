@@ -286,7 +286,7 @@ def userpage(request, username):
 
 
     label_data = LabelWiseData(last_reports)    
-    df = label_data.packed_labels()
+    # df = label_data.packed_labels()
     
             
     if last_reports is not None: 
@@ -339,8 +339,8 @@ def userpage(request, username):
             'last_reports' : last_reports,
             'last_report_button_text' : 'Get Last Report',
             'username' : username,
-            'item_label' : df.columns.values.tolist(),
-            'item_seris' : df.values.tolist()
+            # 'item_label' : df.columns.values.tolist(),
+            # 'item_seris' : df.values.tolist()
             
         }
     else:

@@ -213,47 +213,7 @@ dd.addEventListener("DOMContentLoaded", function(event) {
             }
         });
     }
-    if(document.querySelector('.ct-chart-ranking')) {
-        var chart = new Chartist.Bar('.ct-chart-ranking', {
-            labels: item_label,
-            
-            series: item_seris
-          }, {
-            // width: 800,
-            // height: 150,
-            // donut: true,
-            // donutWidth: 60,
-            // donutSolid: true,
-            stackBars: true,
-            horizontalBars: true,
-            seriesBarDistance: 40,
-            plugins: [
-              Chartist.plugins.tooltip()
-            ],
-            
-            axisX: {
-                labelInterpolationFnc: function(value) {
-                  return Math.round(value, 0) + '%';
-                },
-                scaleMinSpace: 100,
-                // offset: 200,
-                showGrid: true,
-                showLabel: true,
-              },
-            axisY: {
-                offset: 100,
-                showGrid: true,
-            }            
-            }); 
-          
-          chart.on('draw', function(data) {
-            if(data.type === 'bar') {
-                data.element.attr({
-                  style: 'stroke-width: 40px'
-                });
-            }            
-        });
-    }
+
     if(document.querySelector('.ct-chart-compjs')) {
     for (var df in dfh){
         var xxxx;

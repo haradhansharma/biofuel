@@ -282,17 +282,22 @@
                             
                             
                             <div class="row g-3 p-3  justify-content-center " >
+
+                                <div hx-get="{% url 'evaluation:traficlighthori' last_reports.id %}" hx-trigger="load">
+                                    <div class="card text-center mb-4 mt-4">                                
+                                        <div class="row p-3 justify-content-center">
+                                        Loading traffic light overview...
+                                        </div>
+                                    </div>    
+                                </div>
+
+                            <!--
                                 <div class="card-body p-2">                                    
                                     <div id="sss" class="ct-chart-ranking ct-golden-section ct-series-a">
-                                        <!--
-                                        <div id="spi" class="text-center justify-content-center align-items-center h-100 my-auto">
-                                            <div class="spinner-border" role="status">
-                                              <span class="visually-hidden">Loading...</span>
-                                            </div>
-                                          </div>
-                                        --> 
-                                        </div>
+                                        
+                                    </div>
                                 </div>
+                            -->
                             </div>
                             
                         </div>
@@ -404,44 +409,7 @@
 
     {% block javascripts %}
 
-<script>
-    var ref, pa;
 
-    ref = "{{ refferer_path }}";   
-    pa = "{{ request.path }}";
-
-    if (ref == pa) {        
-        console.log('not reloaded');
-    } else if(ref == ""){
-        console.log('not reloaded');
-    } else {
-        window.location.href = pa;              
-        console.log('reloaded');
-    }
-
-   
-
-</script>
-
-<script>
-    
-    //$("#reloadchart").load(location.href + " #reloadchart");
-    
-</script>
-
-
-<script type="text/javascript">  
-
-
-
-
-    
-   
-    let item_label, item_seris;    
-    item_label = {{ item_label | safe }};
-    item_seris = {{ item_seris | safe }}; 
-
-</script>
    
     {% endblock javascripts %}
 

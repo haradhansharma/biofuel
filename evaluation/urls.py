@@ -18,6 +18,8 @@ urlpatterns += [
     path('vedio_urls/<str:search_term>', views.vedio_urls, name="vedio_urls"),
     path('std_oils_block/<str:slug>', views.std_oils_block, name="std_oils_block"),
     path('quotation_block/<str:slug>', views.quotation_block, name="quotation_block"),
+    path('traficlighthori/<str:last_reports>', views.trafic_light_hori, name="traficlighthori"),
+    
     
     
     

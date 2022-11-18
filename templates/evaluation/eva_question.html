@@ -327,7 +327,7 @@
                                 Loading related videos...
                                 </div>
                             </div>    
-                            </div>
+                        </div>
 
 
 <!--
@@ -360,9 +360,11 @@
 {% include "includes/g_footer.html" %}
 {% endblock content %}
 
-
-<!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+
+<!-- Specific Page JS goes HERE  
+    {#
+
     <script>
         var oil_graph_data;    
         
@@ -408,5 +410,7 @@
             } 
         }     
     </script>
+    #}
+    -->
 
     {% endblock javascripts %}
