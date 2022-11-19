@@ -144,7 +144,7 @@ class Question(models.Model):
             option_ok = False
             
         status_marking = [o for o in options if (o.yes_status and o.positive == '0') or (o.dont_know and o.positive == '1') or (o.name.lower() == 'no' and o.positive == '1')]
-        if len(status_marking) >= 0:
+        if len(status_marking) > 0:
             status_ok = True
         else:
             status_ok = False
