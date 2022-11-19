@@ -132,6 +132,27 @@ class Question(models.Model):
         if labels > 0:
             return True
         return False
+    
+    @property
+    def problem_in_option(self):
+        options = self.question.all()
+        
+        total_option = options.count()
+        if total_option >= 3 :
+            option_ok = True
+        else:
+            option_ok = False
+            
+        status_marking = [o for o in options if (o.yes_status and o.positive == '0') or (o.dont_know and o.positive == '1') or (o.name.lower() == 'no' and o.positive == '1')]
+        if len(status_marking) >= 0:
+            status_ok = True
+        else:
+            status_ok = False
+            
+        if option_ok and status_ok:
+            return False        
+        return True
+            
         
     
  

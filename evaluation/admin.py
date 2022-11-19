@@ -30,7 +30,7 @@ class Options(admin.TabularInline):
 
 
 class QuestionAdmin(ExportActionMixin, admin.ModelAdmin):
-    list_display = ('id','sort_order', 'name', 'is_door',)
+    list_display = ('sort_order', 'name', 'is_door',)
     list_filter = ('is_door','is_active',)
     ordering = ('sort_order',)
     inlines = [Labels, Options]    
@@ -41,6 +41,21 @@ class QuestionAdmin(ExportActionMixin, admin.ModelAdmin):
                 '/static/css/fancy.css',
             )
         }
+    change_list_template = 'admin/question_list.html'
+
+    def changelist_view(self, request, extra_context=None):  
+        questions = Question.objects.filter(is_active = True)
+        label_pending_in_question = [q.sort_order for q in questions if not q.have_4labels]  
+        problem_in_options =   [q.sort_order for q in questions if not q.problem_in_option]  
+        
+    
+        
+        
+        extra_context = extra_context or {}
+        extra_context['label_pending_in_question'] = label_pending_in_question
+        extra_context['problem_in_options'] = problem_in_options
+        
+        return super().changelist_view(request, extra_context=extra_context)
 admin.site.register(Question, QuestionAdmin) 
 
 
