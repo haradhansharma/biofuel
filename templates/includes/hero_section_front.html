@@ -11,6 +11,8 @@
                     </div>                        
                 </div>
                 {% endif %} 
+
+                
             <div class="col-12 text-center">
                 <div class="bootstrap-big-icon d-none d-lg-block">
                     <svg xmlns="http://www.w3.org/2000/svg" width="700" height="622" class="d-block my-1"
@@ -109,6 +111,13 @@
                 </div>
                 <div class="col-12 "data-aos="zoom-in" >
                     <h2 class="text-start fs-2 mb-5">WELCOME TO</h2>
+                {% if request.session.devmsg  %}
+                <div class="col-12 text-center">
+                    <div class="alert alert-danger shadow-soft" role="alert">
+                        <span class="alert-inner--text">{{ request.session.devmsg }}</span>                                              
+                    </div>                        
+                </div>
+                {% endif %}
                 <img src="{% static 'new_logo.png' %}" alt="{{site_info.name}}" class="img-fluid mb-3" >
                 </div>
                 
