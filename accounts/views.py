@@ -37,12 +37,12 @@ class CustomLoginView(LoginView):
     
     #overwriting to set custom after login path
     next_page = ''
-    log.info(f'Login page accessed by_____________ {request.user}')
     #taking control over default of Django  
     def form_valid(self, form): 
         
         #set after login url 
         self.next_page = reverse_lazy('accounts:user_link', args=[str(form.get_user().username)])           
+        log.info(f'Login page validating by_____________ {self.request.user}')
         
         #rememberme section        
         remember_me = form.cleaned_data.get('remember_me')     
