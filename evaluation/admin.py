@@ -3,7 +3,6 @@
 '''
 
 from django.contrib import admin
-
 from home.models import WeightUnit
 from . models import *
 from django.contrib import messages
@@ -33,34 +32,28 @@ class QuestionAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ('sort_order', 'name', 'is_door',)
     list_filter = ('is_door','is_active',)
     ordering = ('sort_order',)
-    inlines = [Labels, Options]    
-    
+    inlines = [Labels, Options]        
     class Media:
         css = {
             'all': (
                 '/static/css/fancy.css',
             )
-        }
+        } 
+        
+    # to add error note in the admi about question configuration 
     change_list_template = 'admin/question_list.html'
-
-    def changelist_view(self, request, extra_context=None):  
+    def changelist_view(self, request, extra_context=None):        
         questions = Question.objects.filter(is_active = True)
         label_pending_in_question = [q.sort_order for q in questions if not q.have_4labels]  
-        problem_in_options =   [q.sort_order for q in questions if not q.problem_in_option]  
-        
-    
-        
-        
+        problem_in_options =   [q.sort_order for q in questions if not q.problem_in_option]       
         extra_context = extra_context or {}
         extra_context['label_pending_in_question'] = label_pending_in_question
-        extra_context['problem_in_options'] = problem_in_options
-        
-        return super().changelist_view(request, extra_context=extra_context)
+        extra_context['problem_in_options'] = problem_in_options        
+        return super().changelist_view(request, extra_context=extra_context)      
 admin.site.register(Question, QuestionAdmin) 
 
 
 class OptionResource(resources.ModelResource):
-
     class Meta:
         model = Option
         fields = ('name','question__name', 'next_question__name',)
@@ -96,11 +89,6 @@ class EvaLebelStatementAdmin(admin.ModelAdmin):
     
     
 admin.site.register(EvaLebelStatement, EvaLebelStatementAdmin)
-    
-
-
-
-
 
 class StandaredCharts(admin.TabularInline):
     model = StandaredChart
@@ -122,12 +110,7 @@ class StdOilsAdmin(admin.ModelAdmin):
                 '/static/css/fancy.css',
             )
         } 
-    # def get_inline_instances(self, request, obj=None):
-    #     for inline in self.inlines:
-    #         print(inline)
-    #         print(inline(self.model, self.admin_site))
-    #     return [inline(self.model, self.admin_site) for inline in self.inlines] 
-    
+
 admin.site.register(StdOils, StdOilsAdmin)
 
 
@@ -218,21 +201,7 @@ class EvaluatorAdmin(admin.ModelAdmin):
                 to = i.email,
                 from_report = i,
                 new_report = copy_evaluator,
-            )
-            
-        #     # send mail to the creator with update information    
-        #     subject = f'Updated report #{copy_evaluator.id} with latest feedback based on #{i.id}' 
-        #     message = render_to_string('emails/feedback_update.html', { 
-        #                 'copy_evaluator': copy_evaluator,                                                                                        
-        #                 'domain': current_site.domain,    
-        #                 'evaluator' : i        
-        #                 }) 
-        #     mail_to_evaluator.append((subject, message, settings.DEFAULT_FROM_EMAIL, [i.email]))
-            
-            
-        # #send all mail with one connection    
-        # send_mass_mail((mail_to_evaluator), fail_silently=False)
-        
+            )    
         #sucess message
         self.message_user(request, ngettext( f'{done} mail has been queued.'), messages.SUCCESS)
     actions = [check_and_notify]

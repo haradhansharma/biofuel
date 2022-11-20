@@ -33,7 +33,7 @@ def home(request):
     null_session(request)  
     # pass user type  
     
-    
+    log.info(f'Home page accessed by_____________ {request.user}')
     
     user_types = UserType.objects.all().order_by('sort_order') 
     latest_blogs = BlogPost.published.filter(status = 'published').order_by('-publish')[:3]
@@ -55,6 +55,7 @@ def user_types(request, slug):
     
     #skipp error
     null_session(request)    
+    log.info(f'User type page accessed by_____________ {request.user}')
     
     #role player
     request.session['interested_in'] = slug      
@@ -123,7 +124,7 @@ def dashboard(request):
     #skipping session error essential for signup process
     null_session(request)  
     
-    
+    log.info(f'Dashboard accessed by_____________ {request.user}')
     
     #dashboard summary
     
@@ -145,6 +146,7 @@ def dashboard(request):
 @login_required
 def user_setting(request):   
     null_session(request) 
+    log.info(f'User setting page accessed by_____________ {request.user}')
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = ProfileForm(request.POST, instance=request.user.profile)
@@ -174,6 +176,7 @@ def user_setting(request):
 @login_required
 def password_change(request):   
     null_session(request) 
+    log.info(f'Passowrd changed page accessed by_____________ {request.user}')
     if request.method == "POST":        
         password_form = PasswordChangeForm(user=request.user, data=request.POST)        
         if password_form.is_valid():            
@@ -234,6 +237,7 @@ def quotations(request):
     
     # This is essential where login_required
     null_session(request)
+    log.info(f'Quotations page accessed by_____________ {request.user}')
         
     # we need permitted question based on expertise type
     questions = get_question_of_label(request)
@@ -280,7 +284,7 @@ def questions(request):
     
     # This is essential where login_required
     null_session(request)
-        
+    log.info(f'Questions page accessed by_____________ {request.user}')  
     # we need permitted question based on expertise type
     questions = get_question_of_label(request)
     
@@ -326,7 +330,7 @@ def add_quatation(request, slug):
     able to see quotation refered by other user.    
     '''  
     
-    
+    log.info(f'Quotation adding by_____________ {request.user}')
     
     # if the page is referering from other page we will delete the next_activities session.. it is neccesary to show saved data in the question if coming from another page.
     # and to ensure to active session when clicking on the go button.
@@ -451,6 +455,7 @@ def quotation_report2(request, quotation_data):
     '''
     genarate pdf based on quotation data
     '''
+    log.info(f'Quotation report accessed by_____________ {request.user}')
     import io    
     from reportlab.pdfgen import canvas    
     
@@ -691,7 +696,7 @@ def quotation_report(request, question, quotation):
 @marine_required
 def questions_details(request, slug):
     null_session(request)
-    
+    log.info(f'Question detail accessed by_____________ {request.user}')
     #controling front end from session
     if 'extra' not in request.session:
         request.session['extra'] = 0
@@ -756,6 +761,7 @@ def questions_details(request, slug):
 @marine_required
 def new_questions(request):
     null_session(request)
+    log.info(f'New question beeing added by_____________ {request.user}')
     if 'extra' not in request.session:
         request.session['extra'] = 0
     OptionFormSet = inlineformset_factory(Question, Option, fk_name='question', form = OptionForm, extra= 3, can_delete=False)
@@ -801,7 +807,7 @@ def new_questions(request):
 def allreports(request):  
     null_session(request)
     
-    
+    log.info(f'All report accessed by_____________ {request.user}')
     context = {
         'allreports' : all_reports(request),        
     }

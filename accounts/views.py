@@ -37,7 +37,7 @@ class CustomLoginView(LoginView):
     
     #overwriting to set custom after login path
     next_page = ''
-    
+    log.info(f'Login page accessed by_____________ {request.user}')
     #taking control over default of Django  
     def form_valid(self, form): 
         
@@ -58,7 +58,7 @@ class CustomLoginView(LoginView):
 
 
 def signup(request):  
-    
+    log.info(f'USignUp page accessed by_____________ {request.user}')
     
     '''
     
@@ -267,7 +267,7 @@ def activate(request, uidb64, token):
 
 @login_required
 def userpage(request, username):  
-    
+    log.info(f'Userpage accessed by_____________ {request.user}')
     #This is essential where user loggedin
     null_session(request)   
     user = User.objects.get(username=username)

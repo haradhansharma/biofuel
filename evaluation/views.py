@@ -227,7 +227,7 @@ def set_evastatement_of_logical_string(request, selected_option, evaluator):
         
 @login_required
 def option_add2(request):    
-    
+    log.info(f'Option adding by_____________ {request.user}')
     #as report session can not be started without authenticated user
     try:
         Evaluator.objects.get(id = request.session['evaluator'])
@@ -507,7 +507,7 @@ Main interface during evaluation process.
 @login_required
 @producer_required
 def eva_question(request, evaluator, slug):      
-    
+    log.info(f'Another question going to be answered by_____________ {request.user}')
     #This is essential where user loggedin
     null_session(request)     
     
@@ -718,6 +718,7 @@ def eva_index2(request):
     
     #essential part where login_required
     null_session(request)
+    log.info(f'Evaluation going to be started by_____________ {request.user}')
     
     
     #Preparing guard to check whether system should take initial data or need to forwared to next_question of selected question previously.
@@ -870,6 +871,7 @@ def thanks(request):
     
     #essential part where login_required
     null_session(request)  
+    log.info(f'Thank you page accessed by_____________ {request.user}')
     '''
     Deletion of incomplete report are not necessary , if need can uncomments below code. need to check if raising any error.As an incomplete report may not have evalauation or statment both.
     '''  

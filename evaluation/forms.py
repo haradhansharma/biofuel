@@ -1,7 +1,8 @@
 from django import forms
 from .models import *
 from django.utils.translation import gettext as _
-#Standalone form for evaluation index page
+
+
 class EvaluatorForm(forms.ModelForm):
  
     class Meta:
@@ -12,10 +13,8 @@ class EvaluatorForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'placeholder': 'your email', 'class':'form-control', 'aria-label':'email' }),
             'orgonization': forms.TextInput(attrs={'placeholder': 'Organization', 'class':'form-control', 'aria-label':'orgonization', }), 
             'phone': forms.TextInput(attrs={'placeholder': 'your phone', 'class':'form-control', 'aria-label':'phone'}),
-            'biofuel': forms.Select(attrs={'class':'form-select', 'aria-label':'biofuel', 'hx-get':'/evaluation/stdoils/', 'hx-target': '#stdoil',  'hx-indicator':".oilindicator" }),
-                      
-        }
-        
+            'biofuel': forms.Select(attrs={'class':'form-select', 'aria-label':'biofuel', 'hx-get':'/evaluation/stdoils/', 'hx-target': '#stdoil',  'hx-indicator':".oilindicator" }),                      
+        }        
         
         labels = {  
             'name': _('Name'),

@@ -1,10 +1,41 @@
+# Welcome to GFVP Technical Docs
 
 
-# Welcome to MkDocs
+## About Project Technologies
+
+* It is a `Python-Djang`'s project.
+* Using `Bootstrap5` based `Volt` template partially.
+* `HTMX` JS library implemented for interactivity.
+* `MySql` as database.
+* Project running on the VPS.
+* `requirements.txt` explaining the package requirements to run the project.
+
+## Business Logic and Developper
+
+* Business logic and design idea provided by Krishna Hara Chakrabarti
+* Sole developer [Haradhan Sharma](https://hrdnsh.com)
+
+## Remarkable Library that used
+
+* `Reportlab` to create Dynamic PDF and PDF merging.
+* `chartist.js` to create chart.
+* `aos.js` for animation. using form CDN.
+* `pandas` to create series.
+* `ckeditor` for text editing.
+* `xhtmlToPDF` to create PDF initially.
+* `requests` to call `youtube API`.
+* `django-cron2` to manage schedule task.
+* `Custom Python Algorithm`.
+* `ThreadPool` used somewhere to speedup.
+
+## Necessary Information
+
+
+
 
 For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
-## Commands
+## Commands 
 
 * `mkdocs new [dir-name]` - Create a new project.
 * `mkdocs serve` - Start the live-reloading docs server.

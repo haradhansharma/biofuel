@@ -92,12 +92,126 @@
     
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#welcome_to_the_evaluation_docs" class="nav-link">Welcome to The evaluation DOCS</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#apps_layout" class="nav-link">Apps layout</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#custom_template_tags" class="nav-link">Custom template Tags</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#evaluation_admin" class="nav-link">Evaluation Admin</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#app" class="nav-link">APP</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#form" class="nav-link">Form</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-</div>
+<h1 id="welcome_to_the_evaluation_docs">Welcome to The evaluation DOCS<a class="headerlink" href="#welcome_to_the_evaluation_docs" title="Permanent link">&para;</a></h1>
+<h2 id="apps_layout">Apps layout<a class="headerlink" href="#apps_layout" title="Permanent link">&para;</a></h2>
+<pre><code>Web Root        # The main folder of the web project.
+    evaluation/
+        templatestags #Written django's custom template tag to serve in the template
+        admin.py
+        apps.py
+        forms.py
+        helper.py  
+        middleware # Custom Django's midleware  
+        models.py
+        nreport_class.py # Custom algorthm to build traffic-light overview
+        signals.py
+        tests.py
+        urls.py
+        views.py
+        ...
+</code></pre>
+<h2 id="custom_template_tags">Custom template Tags<a class="headerlink" href="#custom_template_tags" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>{% load custom_tags %}</code> - To load Custom template tags in the HTML file</li>
+<li><code>{{ question.sort_order | brek_after_two}}</code> - To break line after first two word of the questions's sort order. It is not used now.</li>
+<li><code>get_verbose_name(instance, field_name)</code> - It is using to build quotation report in function base view. It takes model instance and field name as parameter and return the verbose name of the field. It can be used in the template as well acroding tot he django's document.</li>
+<li><code>in_quot(quote, user)</code> - This tag returns the quotations created by the user as service provider. Example use case: <code>{% if child.get_quotations|in_quot:user %}</code> to get all quotation of the user.</li>
+</ul>
+<h2 id="evaluation_admin">Evaluation Admin<a class="headerlink" href="#evaluation_admin" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Every class and features in the <code>admin.py</code> based on django's regular facility. Some exceptional in our case are mentoning here:</p>
+</blockquote>
+<pre><code>class Media:
+    css = {
+        'all': (
+            '/static/css/fancy.css',
+        )
+    }
+</code></pre>
+<blockquote>
+<p>Adding custom css using above code in admin class </p>
+</blockquote>
+<pre><code>change_list_template = 'admin/question_list.html'
+def changelist_view(self, request, extra_context=None):        
+    questions = Question.objects.filter(is_active = True)
+    label_pending_in_question = [q.sort_order for q in questions if not q.have_4labels]  
+    problem_in_options =   [q.sort_order for q in questions if not q.problem_in_option]       
+    extra_context = extra_context or {}
+    extra_context['label_pending_in_question'] = label_pending_in_question
+    extra_context['problem_in_options'] = problem_in_options        
+    return super().changelist_view(request, extra_context=extra_context)
+</code></pre>
+<blockquote>
+<p>Adding error note using above by oerriding instance and method in the admin class of question.</p>
+</blockquote>
+<pre><code>@admin.action(description='Genarate updated report and notify to the creator')
+def check_and_notify(self, request, queryset):
+    from .views import set_evastatment, set_evastatement_of_logical_string
+    ........
+    .........
+    ReportMailQueue.objects.create(
+            to = i.email,
+            from_report = i,
+            new_report = copy_evaluator,
+        )
+</code></pre>
+<blockquote>
+<p>Above method are adding action in Evaluator(Evaluator is the alternative coding name of human readable Report). The action should be called by admin on "Pening" marked report. Pending mark also a custom adition in admin interface which is described in the <code>models.py</code> in this documentation.</p>
+<p>Each call in above method create mail queue to send mail on next cronjob execution.</p>
+</blockquote>
+<pre><code>class NextActivitiesAdmin(admin.ModelAdmin):  
+    @admin.action(description='Duplicate Selected Activities')
+    def duplicate_event(modeladmin, request, queryset):
+        for object in queryset:
+            ..........         
+    actions = [duplicate_event]
+admin.site.register(NextActivities, NextActivitiesAdmin)
+</code></pre>
+<blockquote>
+<p>Above aditional method in class creating a additional action to clone the selected objects in the <code>NextActivities</code> model in the admin side.</p>
+</blockquote>
+<h2 id="app">APP<a class="headerlink" href="#app" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>App is a configuration file of evaluation app provided by Django. Here <code>signals.py</code> has been registered using below code. </p>
+</blockquote>
+<pre><code>def ready(self):
+    import evaluation.signals
+</code></pre>
+<blockquote>
+<p>Do not change anything in this file.</p>
+</blockquote>
+<h2 id="form">Form<a class="headerlink" href="#form" title="Permanent link">&para;</a></h2>
+<p><code>forms.py</code> inheriting the default django's form class for evaluation initialization based on our CSS library. We are using <code>bootstrap 5</code>.</p></div>
             </div>
         </div>
 

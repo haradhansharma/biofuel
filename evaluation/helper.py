@@ -224,12 +224,8 @@ class OilComparision:
             #green>>grey>>red
             'Overview' : [self.overview_green, self.overview_grey, self.overview_red]
             }
-        return record
-    
-    
-    # def label_wise_total(self, label):            
-    #     data = self.oils.filter(question__questions__name = label).count()        
-    #     return data
+        return record   
+
     
     def label_wise_positive_option(self, label):              
         data = self.oils.filter(question__questions__name = label, option__positive = str(1)).count()        
@@ -244,21 +240,10 @@ class OilComparision:
         record_dict = {}
         for label in labels:    
             l_labels = set(label.dlabels.all())
-            active_question = len([l.question for l in l_labels if l.question.is_active == True and l.question.have_4labels and l.value == '1'])             
-            # positive = round(self.active_questions.filter(questions__name = label, questions__value = str(1)).count(), 2)       
-            # #As labelwise record is more then total question due to multi label selected for each question
-            # #so we will make it based on the total positive       
-            # positive_options = round((self.label_wise_positive_option(label)/self.active_questions.count())*positive, 2)              
-            # negative = round(self.active_questions.filter(questions__name = label, questions__value = str(0)).count(), 2)
-            # # same as positive
-            # negative_options = round((self.label_wise_negative_option(label)/self.active_questions.count())*negative, 2)   
-            
-            
-            # positive = round(self.active_questions.filter(questions__name = label, questions__value = str(1)).count(), 2)       
-            #As labelwise record is more then total question due to multi label selected for each question
-            #so we will make it based on the total positive       
+            active_question = len([l.question for l in l_labels if l.question.is_active == True and l.question.have_4labels and l.value == '1'])            
+               
             positive_options = round((self.label_wise_positive_option(label)), 2)              
-            # negative = round(self.active_questions.filter(questions__name = label, questions__value = str(0)).count(), 2)
+            
             # same as positive
             negative_options = round((self.label_wise_negative_option(label)), 2)      
             
