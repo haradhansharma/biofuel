@@ -1,6 +1,6 @@
 from django.shortcuts import redirect
 from .models import *
-# from django.conf import settings
+from django.conf import settings
 from django.utils import timezone
 from . helper import clear_evaluator
 from crm.lead_mail_jobs import send_lead_mail   
@@ -31,10 +31,16 @@ class EvaMiddleware:
         ''' 
      
         
-        
-        if request.path != '/':            
-            request.session['devmsg'] = 'SOMETHING WENT WRONG! PLEASE CONTACT WITH DEVELOPER!'
-            return redirect('home:home')
+        if settings.CNN:
+            if request.path != '/':            
+                request.session['devmsg'] = 'SOMETHING WENT WRONG! PLEASE CONTACT WITH DEVELOPER!'
+                return redirect('home:home')
+        else:
+            try:
+                del request.session['devmsg']
+            except:
+                pass
+            
        
         
         if 'evaluator' not in request.session:
