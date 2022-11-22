@@ -52,7 +52,7 @@ class QuestionAdmin(ExportActionMixin, admin.ModelAdmin):
         return super().changelist_view(request, extra_context=extra_context)  
     
     def change_view(self, request, object_id, form_url='', extra_context=None):          
-        oi = object_id.sort_order
+        # oi = object_id.sort_order
         return super().change_view(request, object_id, form_url, extra_context=extra_context)    
 admin.site.register(Question, QuestionAdmin) 
 
