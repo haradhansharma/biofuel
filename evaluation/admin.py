@@ -49,7 +49,11 @@ class QuestionAdmin(ExportActionMixin, admin.ModelAdmin):
         extra_context = extra_context or {}
         extra_context['label_pending_in_question'] = label_pending_in_question
         extra_context['problem_in_options'] = problem_in_options        
-        return super().changelist_view(request, extra_context=extra_context)      
+        return super().changelist_view(request, extra_context=extra_context)  
+    
+    def change_view(self, request, object_id, form_url='', extra_context=None):          
+        oi = object_id.sort_order
+        return super().change_view(request, object_id, form_url, extra_context=extra_context)    
 admin.site.register(Question, QuestionAdmin) 
 
 
