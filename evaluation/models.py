@@ -152,6 +152,13 @@ class Question(models.Model):
         if option_ok and status_ok:
             return False        
         return True
+    
+    @property
+    def not_is_door_nor_have_parent(self):        
+        if self.is_door == False and not self.parent_question and self.is_active:
+            return True
+        return False
+    
             
         
     
