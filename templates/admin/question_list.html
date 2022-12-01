@@ -14,6 +14,14 @@
     </div>
     {% endif %}
 
+
+    {% if not_door_but_no_parent %}
+    <div class="errornote">
+        <h4><u>Questions is not 1 and question is not 'is_door' and question have 'no parent'. if question not is_door and 1 should have parent:</u> </h4>
+            {{not_door_but_no_parent}}
+    </div>
+    {% endif %}
+
 {{ block.super }} 
 
 

@@ -45,10 +45,14 @@ class QuestionAdmin(ExportActionMixin, admin.ModelAdmin):
     def changelist_view(self, request, extra_context=None):        
         questions = Question.objects.filter(is_active = True)
         label_pending_in_question = [q.sort_order for q in questions if not q.have_4labels]  
-        problem_in_options =   [q.sort_order for q in questions if not q.problem_in_option]       
+        problem_in_options =   [q.sort_order for q in questions if not q.problem_in_option]    
+        not_door_but_no_parent =   [q.sort_order for q in questions if q.sort_order != '1' and q.is_door == False and not q.parent_question ]       
+           
         extra_context = extra_context or {}
         extra_context['label_pending_in_question'] = label_pending_in_question
-        extra_context['problem_in_options'] = problem_in_options        
+        extra_context['problem_in_options'] = problem_in_options      
+        extra_context['not_door_but_no_parent'] = not_door_but_no_parent        
+          
         return super().changelist_view(request, extra_context=extra_context)  
     
     def change_view(self, request, object_id, form_url='', extra_context=None):          

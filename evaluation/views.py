@@ -677,7 +677,7 @@ def eva_question(request, evaluator, slug):
     '''    
     search_term = re.sub('[^A-Za-z0-9]+', ' ',  f'{question.name} {evaluator_data.biofuel.name}')   
     
-    print(Question.objects.filter(is_active=True).count())
+    log.info(f'total questions________________{Question.objects.filter(is_active=True).count()}')
     context ={
         'slug' : slug,
         'question_dataset' : question_dataset(request) ,
