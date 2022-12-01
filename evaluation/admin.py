@@ -46,7 +46,7 @@ class QuestionAdmin(ExportActionMixin, admin.ModelAdmin):
         questions = Question.objects.filter(is_active = True)
         label_pending_in_question = [q.sort_order for q in questions if not q.have_4labels]  
         problem_in_options =   [q.sort_order for q in questions if not q.problem_in_option]    
-        not_door_but_no_parent =   [q.sort_order for q in questions if q.sort_order != 1 or (q.is_door == False and q.parent_question == None)]       
+        not_door_but_no_parent =   [q.sort_order for q in questions if q.sort_order != 1 and (q.is_door == False and q.parent_question == None)]       
            
         extra_context = extra_context or {}
         extra_context['label_pending_in_question'] = label_pending_in_question
