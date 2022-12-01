@@ -291,8 +291,8 @@ class Evaluator(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='user')    
     name = models.CharField(max_length=252)
     email = models.EmailField()
-    phone = models.CharField(max_length=16)
-    orgonization = models.CharField(max_length=252)
+    phone = models.CharField(max_length=16, null=True, blank=True)
+    orgonization = models.CharField(max_length=252, null=True, blank=True)
     biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, blank=True)
     stdoil_key = models.CharField(max_length=20, null=True, blank=True)
     
