@@ -420,7 +420,7 @@ def question_dataset(request):
                 setattr(child, 'stat', 'skipped')
                 evaluations.filter(question = child).delete()  
                 
-        
+    print(len(questions))
     parents = []
     for question in questions:        
         if question.is_door == True:
@@ -676,7 +676,8 @@ def eva_question(request, evaluator, slug):
      
     '''    
     search_term = re.sub('[^A-Za-z0-9]+', ' ',  f'{question.name} {evaluator_data.biofuel.name}')   
-        
+    
+    print(Question.objects.filter(is_active=True).count())
     context ={
         'slug' : slug,
         'question_dataset' : question_dataset(request) ,

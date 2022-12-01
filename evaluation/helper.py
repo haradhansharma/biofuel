@@ -294,7 +294,7 @@ class LabelWiseData:
         # The evaluator can be either from session or url which will be supplied
         self.evaluator = evaluator   
         # We will neeed total active questions in the site to use by filtering sing diferent parameter     
-        self.active_questions = [q for q in Question.objects.filter(is_active=True) if q.have_4labels]
+        self.active_questions = [q for q in Question.objects.filter(is_active=True)]
         # we will need the statment added from the selected options during answering for this report/evaluator, must be excluded assesments or logical strings
         self.eva_label_statement = EvaLebelStatement.objects.filter(evaluator = self.evaluator, question__isnull = False, assesment = False)    
 
@@ -306,21 +306,28 @@ class LabelWiseData:
     
     @property
     def total_active_questions(self):        
-        data = len(self.active_questions)        
+        data = len(self.active_questions)   
+        log.info(f'Active question in report ____________________________{data}')     
         return round(data, 2)       
  
     @property
     def total_positive_answer(self):
         data = set(s.question.id for s in self.eva_label_statement if s.is_positive)   
         # return round(len(self.green_answered_list), 2)      
+        log.info(f'Totoal Positive in report ____________________________{len(data)}')     
+        
         return round(len(data), 2)        
       
     @property
     def total_nagetive_answer(self):
+        
         try:
             data = set(s.question.id for s in self.eva_label_statement if s.is_negative)
         except:
             data = 0          
+            
+        log.info(f'Totoal Negative in report ____________________________{len(data)}')     
+        
 
         return round(len(data), 2)
     
@@ -370,10 +377,15 @@ class LabelWiseData:
         for label in labels:             
             
             l_labels = set(label.dlabels.all())
-            active_question = len([l.question for l in l_labels if l.question.is_active == True and l.question.have_4labels and l.value == '1'])            
-            
+            active_question = len([l.question for l in l_labels if l.question.is_active == True])            
+            log.info(f'Active question for label {label}____________{active_question}')
             positive_answered = self.label_wise_positive_answered(label)
-            negative_answered = self.label_wise_nagetive_answered(label)            
+            log.info(f'Positive answer for label {label}____________{positive_answered}')
+            
+            negative_answered = self.label_wise_nagetive_answered(label)     
+            
+            log.info(f'Positive answer for label {label}____________{negative_answered}')
+                   
             
             try:
                 green = round((positive_answered/active_question)*100, 2)
