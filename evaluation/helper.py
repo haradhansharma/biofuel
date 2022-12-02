@@ -156,9 +156,9 @@ class OilComparision:
         self.oil = oil       
         
         if non_answered is not None:            
-            self.active_questions = [q for q in Question.objects.filter(id__in = non_answered, is_active=True) if not q.not_is_door_nor_have_parent]   
+            self.active_questions = [q for q in Question.objects.filter(id__in = non_answered, is_active=True) if q.have_4labels]   
         else:
-            self.active_questions = [q for q in Question.objects.filter(is_active=True) if not q.not_is_door_nor_have_parent]  
+            self.active_questions = [q for q in Question.objects.filter(is_active=True) if q.have_4labels]  
                  
         self.oils = StandaredChart.objects.filter(oil = self.oil)
        
@@ -240,7 +240,7 @@ class OilComparision:
         record_dict = {}
         for label in labels:    
             l_labels = set(label.dlabels.all())
-            active_question = len([l.question for l in l_labels if not l.question.not_is_door_nor_have_parent])            
+            active_question = len([l.question for l in l_labels if l.question.have_4labels])            
                
             positive_options = round((self.label_wise_positive_option(label)), 2)              
             
@@ -294,7 +294,7 @@ class LabelWiseData:
         # The evaluator can be either from session or url which will be supplied
         self.evaluator = evaluator   
         # We will neeed total active questions in the site to use by filtering sing diferent parameter     
-        self.active_questions = [q for q in Question.objects.filter(is_active=True) if not q.not_is_door_nor_have_parent]
+        self.active_questions = [q for q in Question.objects.filter(is_active=True) if q.have_4labels]
         # we will need the statment added from the selected options during answering for this report/evaluator, must be excluded assesments or logical strings
         self.eva_label_statement = EvaLebelStatement.objects.filter(evaluator = self.evaluator, question__isnull = False, assesment = False)    
 
@@ -306,16 +306,12 @@ class LabelWiseData:
     
     @property
     def total_active_questions(self):        
-        data = len(self.active_questions)   
-        log.info(f'Active question in report ____________________________{data}')     
+        data = len(self.active_questions) 
         return round(data, 2)       
  
     @property
     def total_positive_answer(self):
-        data = set(s.question.id for s in self.eva_label_statement if s.is_positive)   
-        # return round(len(self.green_answered_list), 2)      
-        log.info(f'Totoal Positive in report ____________________________{len(data)}')     
-        
+        data = set(s.question.id for s in self.eva_label_statement if s.is_positive)  
         return round(len(data), 2)        
       
     @property
@@ -324,15 +320,10 @@ class LabelWiseData:
         try:
             data = set(s.question.id for s in self.eva_label_statement if s.is_negative)
         except:
-            data = 0          
-            
-        log.info(f'Totoal Negative in report ____________________________{len(data)}')     
-        
+            data = 0   
 
         return round(len(data), 2)
     
-
-        
     @property
     def overview_green(self):
         data = (self.total_positive_answer/self.total_active_questions)*100       
@@ -342,7 +333,8 @@ class LabelWiseData:
         data = (self.total_nagetive_answer/self.total_active_questions)*100      
         return round(data, 2)
     @property
-    def overview_grey(self):       
+    def overview_grey(self):     
+          
         data = 100 - self.overview_green - self.overview_red 
         return round(data, 2)
     
@@ -377,14 +369,14 @@ class LabelWiseData:
         for label in labels:             
             
             l_labels = set(label.dlabels.all())
-            active_question = len([l.question for l in l_labels if l.question.is_active == True and not l.question.not_is_door_nor_have_parent])            
-            log.info(f'Active question for label {label}____________{active_question}')
+            active_question = len([l.question for l in l_labels if l.question.is_active == True and l.question.have_4labels])            
+            # log.info(f'Active question for label {label}____________{active_question}')
             positive_answered = self.label_wise_positive_answered(label)
-            log.info(f'Positive answer for label {label}____________{positive_answered}')
+            # log.info(f'Positive answer for label {label}____________{positive_answered}')
             
             negative_answered = self.label_wise_nagetive_answered(label)     
             
-            log.info(f'Positive answer for label {label}____________{negative_answered}')
+            # log.info(f'Positive answer for label {label}____________{negative_answered}')
                    
             
             try:

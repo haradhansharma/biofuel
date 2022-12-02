@@ -29,7 +29,7 @@ class Options(admin.TabularInline):
 
 
 class QuestionAdmin(ExportActionMixin, admin.ModelAdmin):
-    list_display = ('sort_order', 'name', 'is_door',)
+    list_display = ('id','sort_order', 'name', 'is_door',)
     list_filter = ('is_door','is_active',)
     ordering = ('sort_order',)
     inlines = [Labels, Options]        

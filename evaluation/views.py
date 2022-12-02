@@ -86,28 +86,68 @@ def set_evastatment(request, selected_option, evaluator):
     set_labels = Label.objects.filter(question =  question, value = 1)
     log.info(f'{set_labels.count()} set labels found in the question {question.id} !')
     
+    
+    # '''
+    # NEW ADDITION TO CATCH NON LABELED ANS
+    # '''
+    
+    # if not set_labels.exists():
+    #     new_evalebel_statement = EvaLebelStatement(
+    #         evalebel = None, //it can not be null, if i am making null acceptable then i do not know where it can be efect as our first intention was to record answer labelwise. and based on that intension somewhere can be effected, i can not guise
+    #         option_id = selected_option.id, 
+    #         statement = selected_option.statement, 
+    #         next_step = selected_option.next_step, 
+    #         dont_know = selected_option.dont_know, 
+    #         question = selected_option.question, 
+    #         positive = selected_option.positive, 
+    #         evaluator =  evaluator)
+    #     new_evalebel_statement.save()
+    #     log.info(f'non labeled saved________________________________!')
+        
+    
     for set_label in set_labels:
         # defined_label = DifinedLabel.objects.get(name = set_label.name)
         eva_label = EvaLabel.objects.get(label__name = set_label.name, evaluator = evaluator)
-        new_evalebel_statement = EvaLebelStatement(evalebel = eva_label, option_id = selected_option.id, statement = selected_option.statement, next_step = selected_option.next_step, dont_know = selected_option.dont_know, question = selected_option.question, positive = selected_option.positive, evaluator =  evaluator)
+        new_evalebel_statement = EvaLebelStatement(
+            evalebel = eva_label, 
+            option_id = selected_option.id, 
+            statement = selected_option.statement, 
+            next_step = selected_option.next_step, 
+            dont_know = selected_option.dont_know, 
+            question = selected_option.question, 
+            positive = selected_option.positive, 
+            evaluator =  evaluator)
         new_evalebel_statement.save()
         log.info(f'non assesment evlabelstatment saved for the label {eva_label} for evaluator {evaluator} !')
         try:
             #delete previous record of this label
             log.info(f'Deleting previous evalabelstatment which was saved by assesment for evaluator {evaluator}!')
-            EvaLebelStatement.objects.filter(evalebel = eva_label, evaluator = evaluator, assesment = True).delete()     
+            EvaLebelStatement.objects.filter(
+                evalebel = eva_label, 
+                evaluator = evaluator, 
+                assesment = True).delete()     
             log.info(f'Deleted evalebelstatment which was saved by assesment for evaluator {evaluator} !')       
         except Exception as e:
             # pass is essential to execute rest of the code
             log.info('No assesmented evalabelstatent found to delete! ')
         
         #This is a calculated assesment based on the answere. Called function gives the idea.    
-        summery_statement_do_not_know = EvaLebelStatement(evalebel = eva_label, statement = label_assesment_for_donot_know(request, eva_label, evaluator),  evaluator =  evaluator, question = question,  assesment = True)
+        summery_statement_do_not_know = EvaLebelStatement(
+            evalebel = eva_label, 
+            statement = label_assesment_for_donot_know(request, eva_label, evaluator),  
+            evaluator =  evaluator, 
+            question = question,  
+            assesment = True)
         summery_statement_do_not_know.save()
         log.info(f'Saved new evalebelstatement for do_not_know answer for the label {eva_label}')
 
         #This is a calculated assesment based on the answere. Called function gives the idea.    
-        summery_statement_positive = EvaLebelStatement(evalebel = eva_label, statement = label_assesment_for_positive(request, eva_label, evaluator),  evaluator = evaluator, question = question,  assesment = True)
+        summery_statement_positive = EvaLebelStatement(
+            evalebel = eva_label, 
+            statement = label_assesment_for_positive(request, eva_label, evaluator),  
+            evaluator = evaluator, 
+            question = question,  
+            assesment = True)
         summery_statement_positive.save()
         log.info(f'Saved new evalebelstatement for positive answer for the label {eva_label}')
     log.info(f'set_evalabelstatement completed for the question {question.id} ! ')
@@ -155,12 +195,20 @@ def set_evastatement_of_logical_string(request, selected_option, evaluator):
     
     #This is a calculated assesment based on the answere. Called function gives the idea.    
     log.info(f'Recording donot_know_assesment for common label based on answer for report {evaluator} !')
-    summery_statement_do_not_know = EvaLebelStatement(evalebel = eva_label_common, statement = overall_assesment_for_donot_know(request, eva_label_common, evaluator),  evaluator =  evaluator, assesment = True)
+    summery_statement_do_not_know = EvaLebelStatement(
+        evalebel = eva_label_common, 
+        statement = overall_assesment_for_donot_know(request, eva_label_common, evaluator),  
+        evaluator =  evaluator, 
+        assesment = True)
     summery_statement_do_not_know.save()
     
     #This is a calculated assesment based on the answere. Called function gives the idea.    
     log.info(f'Recording positive_assement for common label based on answer for report {evaluator}!')
-    summery_statement_positive = EvaLebelStatement(evalebel = eva_label_common, statement = overall_assesment_for_positive(request, eva_label_common, evaluator),  evaluator =  evaluator, assesment = True)
+    summery_statement_positive = EvaLebelStatement(
+        evalebel = eva_label_common, 
+        statement = overall_assesment_for_positive(request, eva_label_common, evaluator),  
+        evaluator =  evaluator, 
+        assesment = True)
     summery_statement_positive.save()
     
     #get statements of this evaluator
@@ -180,11 +228,18 @@ def set_evastatement_of_logical_string(request, selected_option, evaluator):
         if (str(eoi) in logical_options) and (logical_statement.overall == str(1)):
             try:
                 log.info(f'Deleting previous logical string record in the common label!')
-                EvaLebelStatement.objects.filter(evalebel = eva_label_common, evaluator =  evaluator, positive = logical_statement.positive).delete()                
+                EvaLebelStatement.objects.filter(
+                    evalebel = eva_label_common, 
+                    evaluator =  evaluator, 
+                    positive = logical_statement.positive).delete()                
             except Exception as e:
                 log.info(f'No logical string record found in common label for the eoi!')
             log.info(f'Saving logical statement to the common label based on the eoi to the report {evaluator} ')
-            new_evalebel_statement_common = EvaLebelStatement(evalebel = eva_label_common, statement = logical_statement.text, evaluator =  evaluator, positive = logical_statement.positive)
+            new_evalebel_statement_common = EvaLebelStatement(
+                evalebel = eva_label_common, 
+                statement = logical_statement.text, 
+                evaluator =  evaluator, 
+                positive = logical_statement.positive)
             new_evalebel_statement_common.save()
             
             
@@ -204,7 +259,11 @@ def set_evastatement_of_logical_string(request, selected_option, evaluator):
                 except Exception as e:
                     log.info(f'Not able to delete previous record for the {e} ')   
                 log.info(f'Saving new logical string record for the label {ls_label} ') 
-                new_evalebel_statement_g = EvaLebelStatement(evalebel = ls_eva_label, statement = logical_statement.text, evaluator =  evaluator, positive = logical_statement.positive)
+                new_evalebel_statement_g = EvaLebelStatement(
+                    evalebel = ls_eva_label, 
+                    statement = logical_statement.text, 
+                    evaluator =  evaluator, 
+                    positive = logical_statement.positive)
                 new_evalebel_statement_g.save()  
         else:
             log.info(f'eoi not found in the logical options')          
@@ -220,7 +279,11 @@ def set_evastatement_of_logical_string(request, selected_option, evaluator):
         except Exception as e:
             log.info(f'There was a problem in deleting previous rrecord due to {e} ')
         log.info(f'Saving record to the common label for the selected option1')
-        new_evalebel_statement_common = EvaLebelStatement(evalebel = eva_label_common, option_id = selected_option.id, statement = selected_option.statement, evaluator =  evaluator)
+        new_evalebel_statement_common = EvaLebelStatement(
+            evalebel = eva_label_common, 
+            option_id = selected_option.id, 
+            statement = selected_option.statement, 
+            evaluator =  evaluator)
         new_evalebel_statement_common.save()    
     
         
@@ -363,6 +426,7 @@ def question_dataset(request):
     '''
     log.info(f'BNuilding question dataset to show in the evaluation question form')
     #sort_order is most important here    
+    
     stored_questions = Question.objects.filter(is_active = True).order_by('sort_order')   
     
     #build parentwise shorted question    
@@ -420,7 +484,7 @@ def question_dataset(request):
                 setattr(child, 'stat', 'skipped')
                 evaluations.filter(question = child).delete()  
                 
-    print(len(questions))
+    # print(len(questions))
     parents = []
     for question in questions:        
         if question.is_door == True:
@@ -557,7 +621,7 @@ def eva_question(request, evaluator, slug):
     '''
     creator can edit own report!
     '''    
-    if eva.creator.id == request.user.id or request.user.is_superuser:
+    if eva.creator.id == request.user.id or request.user.is_superuser or request.user.is_staff:
         pass
     else:
         log.info(f'The report is being edited is not created you user {request.user}______abroating______')
@@ -719,9 +783,7 @@ def eva_index2(request):
     '''
     
     #essential part where login_required
-    null_session(request)
-    log.info(f'Evaluation going to be started by_____________ {request.user}')
-    
+    null_session(request) 
     
     
     #rechecking user is authorized or not, although it is not necessary as only logedin user can enter to this page, but it is safe to avoid error if anyhow decorator are removed. 
@@ -740,7 +802,7 @@ def eva_index2(request):
     
     
     #Preparing guard to check whether system should take initial data or need to forwared to next_question of selected question previously.
-    log.info(f'Checking new creating or adding or editing_______')
+    # log.info(f'Checking new creating or adding or editing_______')
     try:
         session_evaluator = Evaluator.objects.get(id = request.session['evaluator'])      
     except Exception as e:        
@@ -748,16 +810,17 @@ def eva_index2(request):
         
         
     #get first question of evaluation process based on short_order. If no first question set by admin will redirect to homepage with warning message.
-    log.info(f'Check first question is set or not by admin______________')
+    # log.info(f'Check first question is set or not by admin______________')
     try:
         first_of_parent = Question.objects.filter(is_door = True).order_by('sort_order').first()        
     except:
-        log.info(f'First question has not been set by the admin____________________')
+        # log.info(f'First question has not been set by the admin____________________')
         messages.warning(request,'There is something wrong in procedure setting by site admin, Please try again latter!')
         return HttpResponseRedirect(reverse('evaluation:evaluation2'))   
     
     #Scaning by guard
     if (session_evaluator is False) or ('question' not in request.session):
+        log.info(f'Evaluation going to be started by_____________ {request.user}')
         if request.method == "POST": 
             form = EvaluatorForm(request.POST)
             if form.is_valid():            
