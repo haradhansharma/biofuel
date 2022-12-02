@@ -675,6 +675,7 @@ def eva_question(request, evaluator, slug):
     update data in each week   
      
     '''    
+    
     search_term = re.sub('[^A-Za-z0-9]+', ' ',  f'{question.name} {evaluator_data.biofuel.name}')   
     
     log.info(f'total questions________________{Question.objects.filter(is_active=True).count()}')
@@ -720,6 +721,22 @@ def eva_index2(request):
     #essential part where login_required
     null_session(request)
     log.info(f'Evaluation going to be started by_____________ {request.user}')
+    
+    
+    
+    #rechecking user is authorized or not, although it is not necessary as only logedin user can enter to this page, but it is safe to avoid error if anyhow decorator are removed. 
+    if request.user.is_authenticated:
+        type = UserType.objects.get(slug = request.user.type.slug )
+        name = request.user.get_full_name if request.user.get_full_name else first_report_name
+        email = request.user.email
+        phone = request.user.phone
+        orgonization = request.user.orgonization
+    else:
+        type = UserType.objects.get(slug = request.session['interested_in'] )
+        name = ''
+        email = ''
+        phone = ''
+        orgonization = ''
     
     
     #Preparing guard to check whether system should take initial data or need to forwared to next_question of selected question previously.
@@ -785,10 +802,13 @@ def eva_index2(request):
                     new_evalabel = EvaLabel(label = dl, evaluator = get_current_evaluator(request), sort_order=dl.sort_order)
                     new_evalabel.save()            
                 return HttpResponseRedirect(reverse('evaluation:eva_question' ,  args=[int(request.session['evaluator']), str(first_of_parent.slug)]))
+            else:
+                messages.warning(request,'Error in form submission')
+                messages.error(request, form.errors)   
+                return HttpResponseRedirect(reverse('evaluation:evaluation2'))   
             
         
-        else: 
-            
+        else:           
             '''
             standalone initial page of evaluation.
             '''           
@@ -799,23 +819,10 @@ def eva_index2(request):
             except:
                 first_reports = None
                 first_biofuel = None
-                first_report_name = ''
-            
-            #rechecking user is authorized or not, although it is not necessary as only logedin user can enter to this page, but it is safe to avoid error if anyhow decorator are removed. There is no resource load.
-            if request.user.is_authenticated:
-                type = UserType.objects.get(slug = request.user.type.slug )
-                name = request.user.get_full_name if request.user.get_full_name else first_report_name
-                email = request.user.email
-                phone = request.user.phone
-                orgonization = request.user.orgonization
-            else:
-                type = UserType.objects.get(slug = request.session['interested_in'] )
-                name = ''
-                email = ''
-                phone = ''
-                orgonization = ''
+                first_report_name = ''   
                 
-                
+                    
+                    
             initial_dict = {
             "type" : type,
             "email" : email,

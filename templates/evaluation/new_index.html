@@ -43,17 +43,57 @@
 
                                 <form method="POST">
                                     {% csrf_token %}
-                                    {{form.as_p}}
-                                    <div class="oilindicator text-danger">Loading.....</div><br>
-                                    
-                                        <label>Related Fuel Grade</label>               
+                              
+                                    <div class="form-floating mb-3">
+                                        {{ form.name }}
+                                        <label class="text-primary" for="{{ form.name.id_for_label }}">{{ form.name.label }} <span class="text-danger">{% if form.name.field.required %}*{% endif %}</span> </label>
+                                        <span class="text-start text-danger">{{ form.name.errors }}</span>
+                                    </div>
 
+                                    <div class="form-floating mb-3">
+                                        {{ form.email }}
+                                        <label class="text-primary" for="{{ form.email.id_for_label }}">{{ form.email.label }}<span class="text-danger">{% if form.email.field.required %}*{% endif %}</span> </label>
+                                        <span class="text-start text-danger">{{ form.email.errors }}</span>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        {{ form.orgonization }}
+                                        <label class="text-primary" for="{{ form.orgonization.id_for_label }}">{{ form.orgonization.label }}<span class="text-danger">{% if form.orgonization.field.required %}*{% endif %}</span> </label>
+                                        <span class="text-start text-danger">{{ form.orgonization.errors }}</span>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        {{ form.phone }}
+                                        <label class="text-primary" for="{{ form.phone.id_for_label }}">{{ form.phone.label }}<span class="text-danger">{% if form.phone.field.required %}*{% endif %}</span> </label>
+                                        <span class="text-start text-danger">{{ form.phone.errors }}</span>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        {{ form.biofuel }}
+                                        <label class="text-primary" for="{{ form.biofuel.id_for_label }}">{{ form.biofuel.label }}<span class="text-danger">*</span> </label>
+                                        <span class="text-start text-danger">{{ form.biofuel.errors }}</span>
+                                    </div>
+
+                               
+
+
+
+                                    <div class="oilindicator text-danger">Loading.....</div><br>
+
+                                    <div class="form-floating mb-3">
                                         <select aria-label="stdoil" class="form-select mb-4" id="stdoil" name="stdoil">                                            
                                             {% for sol in stdoil_list %}                                          
                                             <option value="{{ sol.id }}">{{ sol.select_oil.name }}</option>
                                             {% endfor %}
                                         </select>
+                                        <label class="text-primary" for="stdoil">Related Fuel Grade<span class="text-danger">*</span></label>
+                                        
+                                    </div>
                                     
+                                                   
+
+                                        
+                                     
                                    
 
                                     <div class="btn btn-success mt-3">Disclaimer: The green fuel validation platform
