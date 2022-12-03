@@ -1,8 +1,133 @@
+
+
 <div class="card-body p-2">                                    
     <div id="sss" class="ct-chart-ranking ct-golden-section ct-series-a">
         
     </div>
 </div>
+
+
+{% if report.stdoil_key %}
+<style>
+  .ct-chart-ranking .ct-label{
+    display: block;
+
+  }
+  .ct-chart-ranking .ct-series-a .ct-bar{
+    stroke: green;
+    stroke-linecap: butt;
+    /* stroke-dasharray: 2px;
+    stroke-dashoffset: 2px; */
+    /* z-index: 1; */
+    /* stroke-linejoin: bevel; */
+    /* display: block; */
+    /* stroke-width: 50px; */
+
+    
+  }
+  .ct-chart-ranking .ct-series-b .ct-bar{
+    stroke: rgb(4, 250, 4);
+    stroke-linecap: butt;
+    /* stroke-dasharray: 2px;
+    stroke-dashoffset: 2px; */
+    /* z-index: 1; */
+    /* stroke-linejoin: bevel; */
+    /* display: block; */
+    /* stroke-width: 50px; */
+
+    
+  }
+  .ct-chart-ranking .ct-series-c .ct-bar{
+    stroke: rgb(250, 250, 250);
+    stroke-linecap: butt;
+    /* stroke-dasharray: 2px;
+    stroke-dashoffset: 2px; */
+    /* z-index: 1; */
+    /* stroke-linejoin: bevel; */
+    /* display: block; */
+    /* stroke-width: 50px; */
+
+    
+  }
+  .ct-chart-ranking .ct-series-d .ct-bar{
+    stroke: rgb(252, 142, 142);
+    stroke-linecap: butt;
+    /* stroke-dasharray: 2px;
+    stroke-dashoffset: 2px; */
+    /* z-index: 1; */
+    /* stroke-linejoin: bevel; */
+    /* display: block; */
+    /* stroke-width: 50px; */
+
+    
+  }
+
+  .ct-chart-ranking .ct-series-e .ct-bar{
+    stroke: grey;
+    stroke-linecap: butt;
+    /* stroke-dasharray: 2px 50px; */
+    /* z-index: -1; */
+    /* stroke-dashoffset: 2px; */
+    /* stroke-linejoin: bevel; */
+    /* display: block; */
+    /* stroke-width: 50px; */
+
+  }
+
+  .ct-chart-ranking .ct-series-f .ct-bar{
+    stroke: Red;
+    stroke-linecap: butt;
+    /* stroke-dasharray: 2px; */
+    /* stroke-dashoffset: 2px; */
+    /* z-index: 1; */
+    /* stroke-linejoin: bevel; */
+    /* display: block; */
+    /* stroke-width: 50px; */
+  }
+</style>
+{% else %}
+<style>
+  .ct-chart-ranking .ct-label{
+    display: block;
+
+  }
+  .ct-chart-ranking .ct-series-a .ct-bar{
+    stroke: green;
+    stroke-linecap: butt;
+    /* stroke-dasharray: 2px;
+    stroke-dashoffset: 2px; */
+    /* z-index: 1; */
+    /* stroke-linejoin: bevel; */
+    /* display: block; */
+    /* stroke-width: 50px; */
+
+    
+  }
+
+  .ct-chart-ranking .ct-series-b .ct-bar{
+    stroke: grey;
+    stroke-linecap: butt;
+    /* stroke-dasharray: 2px 50px; */
+    /* z-index: -1; */
+    /* stroke-dashoffset: 2px; */
+    /* stroke-linejoin: bevel; */
+    /* display: block; */
+    /* stroke-width: 50px; */
+
+  }
+
+  .ct-chart-ranking .ct-series-c .ct-bar{
+    stroke: Red;
+    stroke-linecap: butt;
+    /* stroke-dasharray: 2px; */
+    /* stroke-dashoffset: 2px; */
+    /* z-index: 1; */
+    /* stroke-linejoin: bevel; */
+    /* display: block; */
+    /* stroke-width: 50px; */
+  }
+</style>
+{% endif %}
 
 <script type="text/javascript">
     let item_label, item_seris;    

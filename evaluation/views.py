@@ -1029,6 +1029,7 @@ def trafic_light_hori(request, last_reports):
     context = {
         'item_label' : item_label,
         'item_seris' : item_seris,
+        'report' : report
     }
     return render(request, 'evaluation/tl_hori.html', context = context)
     
