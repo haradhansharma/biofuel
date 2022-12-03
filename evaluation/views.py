@@ -136,7 +136,7 @@ def set_evastatment(request, selected_option, evaluator):
             evalebel = eva_label, 
             statement = label_assesment_for_donot_know(request, eva_label, evaluator),  
             evaluator =  evaluator, 
-            question = question,  
+            # question = question,  
             assesment = True)
         summery_statement_do_not_know.save()
         log.info(f'Saved new evalebelstatement for do_not_know answer for the label {eva_label}')
@@ -146,7 +146,7 @@ def set_evastatment(request, selected_option, evaluator):
             evalebel = eva_label, 
             statement = label_assesment_for_positive(request, eva_label, evaluator),  
             evaluator = evaluator, 
-            question = question,  
+            # question = question,  
             assesment = True)
         summery_statement_positive.save()
         log.info(f'Saved new evalebelstatement for positive answer for the label {eva_label}')
@@ -188,7 +188,10 @@ def set_evastatement_of_logical_string(request, selected_option, evaluator):
     #delete any prevous record for this current report of common label
     try:
         log.info(f'deleting assesment of common label if any.......')
-        EvaLebelStatement.objects.filter(evalebel = eva_label_common, evaluator =  evaluator, assesment = True).delete()    
+        EvaLebelStatement.objects.filter(
+            evalebel = eva_label_common, 
+            evaluator =  evaluator, 
+            assesment = True).delete()    
     except Exception as e:
         log.info(f'Assement deleting was not possible due to {e} !')
     

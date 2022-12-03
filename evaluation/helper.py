@@ -383,6 +383,9 @@ class LabelWiseData:
         positive_data = [q.id for q in self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(1))]
         negative_data = [q.id for q in self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = False)]
         
+        
+        print(f'Positive for ')
+        
         p = positive_data
         p.extend(negative_data)
         
@@ -394,7 +397,7 @@ class LabelWiseData:
         record_dict = {}
         for label in labels:             
             
-            l_labels = set(label.dlabels.all())
+            l_labels = set(label.dlabels.filter(value = 1))
             active_question = len([l.question for l in l_labels if l.question.is_active and l.question.have_4labels])            
             log.info(f'Active question for label {label}____________{active_question}')
             positive_answered = self.label_wise_positive_answered(label)
