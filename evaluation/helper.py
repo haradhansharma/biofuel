@@ -327,7 +327,9 @@ class LabelWiseData:
             
         positive_data = list(set(s.question.id for s in self.eva_label_statement if s.is_positive))
         negatie_data = list(set(s.question.id for s in self.eva_label_statement if s.is_negative))
-        
+        log.info(f'Positive found_______________{positive_data}')
+        log.info(f'Negative found_______________{negatie_data}')
+
         p = positive_data
         p.extend(negatie_data)
         positive_negative = p
@@ -385,7 +387,7 @@ class LabelWiseData:
             
             l_labels = set(label.dlabels.all())
             active_question = len([l.question for l in l_labels if l.question.is_active and l.question.have_4labels])            
-            # log.info(f'Active question for label {label}____________{active_question}')
+            log.info(f'Active question for label {label}____________{active_question}')
             positive_answered = self.label_wise_positive_answered(label)
             # log.info(f'Positive answer for label {label}____________{positive_answered}')
             
