@@ -33,21 +33,21 @@
                             {% for parent, child in question_dataset.items %}
                             <div class="col-sm-4 col-md-3 col-lg-2 col-xl-1 mb-3 d-flex">
                                 <div style="min-height: 5rem;" class="card flex-fill">
-                                    <a style="padding: 0.05rem; font-size: 1.25rem;"
+                                    <a style="padding: 0.05rem; font-size: 0.25rem;"
                                         class="btn {% if slug == parent.slug %} btn-primary {% else %} {% if parent.stat == 'checked' %} btn-success {% elif parent.stat == 'skipped' %} btn-gray-100  {% else %} btn-outline-success {% endif %} {% endif %} mb-1  col-12 mx-auto "
                                         data-bs-toggle="tooltip" data-bs-html="true" title="{{parent.name}}"
                                         href="{% url 'evaluation:eva_question' request.session.evaluator parent.slug %}">
-                                        {% if parent.sort_order %}{{parent.id}}{% else %}--{% endif %}
+                                        {% if parent.sort_order %}--{% else %}--{% endif %}
                                     </a>
 
                                     <div class="col-12 p-2">
                                         {% for item in child %}
-                                        <a style="padding: 0.08rem; font-size: 1.25rem;"
+                                        <a style="padding: 0.08rem; font-size: 0.25rem;"
                                             class="btn {% if slug == item.slug %} btn-primary {% else %} {% if item.stat == 'checked' %} btn-success {% elif item.stat == 'skipped' %} btn-gray-100  {% else %} btn-outline-success {% endif %} {% endif %} mb-1 rounded-circle "
                                             data-bs-toggle="tooltip" data-bs-html="true" title="{{item.name}}"
                                             style="font-size: 4px;"
                                             href="{% url 'evaluation:eva_question' request.session.evaluator item.slug %}">
-                                            {{item.id}}
+                                            --
                                         </a>
                                         {% endfor %}
                                     </div>

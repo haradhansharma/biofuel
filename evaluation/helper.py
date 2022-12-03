@@ -297,7 +297,7 @@ class LabelWiseData:
         self.active_questions = [q for q in Question.objects.filter(is_active=True) if q.have_4labels]
         # we will need the statment added from the selected options during answering for this report/evaluator, must be excluded assesments or logical strings
         self.eva_label_statement = EvaLebelStatement.objects.filter(evaluator = self.evaluator, question__isnull = False, assesment = False)   
-        self.poitive_negative = [] 
+      
 
         
     @property
@@ -322,24 +322,7 @@ class LabelWiseData:
         try:
             data = set(s.question.id for s in self.eva_label_statement if s.is_negative)
         except:
-            data = 0   
-            
-            
-            
-        # positive_data = list(set(s.question.id for s in self.eva_label_statement if s.is_positive))
-        # negatie_data = list(set(s.question.id for s in self.eva_label_statement if s.is_negative))
-        # log.info(f'Positive found_______________{positive_data}')
-        # log.info(f'Negative found_______________{negatie_data}')
-
-        # p = positive_data
-        # p.extend(negatie_data)
-        # positive_negative = p
-        # print(positive_negative)
-        # grey = [q.id for q in self.active_questions if q.id not in positive_negative ]
-        
-        # log.info(f'GREY question found_______________{grey}')
-        
-
+            data = 0     
         return round(len(data), 2)
     
     @property
@@ -378,18 +361,8 @@ class LabelWiseData:
     
     def label_wise_nagetive_answered(self, label): 
         evalebel = label.labels.all()    
-        data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = False).count()
-        
-        positive_data = [q.id for q in self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(1))]
-        negative_data = [q.id for q in self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = False)]
-        
-        
-        print(f'Positive for ')
-        
-        p = positive_data
-        p.extend(negative_data)
-        
-        self.poitive_negative.extend(p)        
+        data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = False).count()      
+            
         return round(data, 2)     
     
     def label_wise_result(self):       
@@ -399,19 +372,10 @@ class LabelWiseData:
             
             l_labels = set(label.dlabels.filter(value = 1))
             active_question = len([l.question for l in l_labels if l.question.is_active and l.question.have_4labels])            
-            log.info(f'Active question for label {label}____________{active_question}')
-            positive_answered = self.label_wise_positive_answered(label)
-            # log.info(f'Positive answer for label {label}____________{positive_answered}')
+            
+            positive_answered = self.label_wise_positive_answered(label)          
             
             negative_answered = self.label_wise_nagetive_answered(label)     
-            
-            # log.info(f'Positive answer for label {label}____________{negative_answered}')
-            
-            active_data = [l.question.id for l in l_labels if l.question.is_active and l.question.have_4labels]
-            grey = [q for q in active_data if q not in self.poitive_negative]
-            
-            log.info(f'grey found for  {label}____________{grey}')
-
             
             try:
                 green = round((positive_answered/active_question)*100, 2)
