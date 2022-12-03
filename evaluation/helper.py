@@ -354,7 +354,6 @@ class LabelWiseData:
             aa = [(a * (self.overview_grey/2))/100 for a in aaaa]
             serialized_record[1:1] = aa
             
-            
         except:
             serialized_record = [self.overview_green, self.overview_grey, self.overview_red]
             
@@ -405,24 +404,21 @@ class LabelWiseData:
                 grey = 0   
             # serialized_record = [green , grey, red]  
             
-            # try:
-            std_oil = StdOils.objects.get(select_oil__key = self.evaluator.stdoil_key)
-            oc = OilComparision(std_oil)
-            serialized_record = [green , grey/2 , red]  
-            # d = [ v for k, v in oc.label_wise_result() if k == label.name]
-            # # print(serialized_record)
-            # print(oc.label_wise_result())
-            aaaa = [ v for k, v in oc.label_wise_result().items() if k == label.name]
-            # # # print(list(oc.total_result().values())[0])
-           
-            aa = [(a * (grey/2))/100 for a in aaaa[0]]
-            
-            serialized_record[1:1] = aa
+            try:
+                std_oil = StdOils.objects.get(select_oil__key = self.evaluator.stdoil_key)
+                oc = OilComparision(std_oil)
+                serialized_record = [green , grey/2 , red]  
+                # d = [ v for k, v in oc.label_wise_result() if k == label.name]
+                # # print(serialized_record)
+                # print(oc.label_wise_result())
+                aaaa = [ v for k, v in oc.label_wise_result().items() if k == label.name]
+                # # # print(list(oc.total_result().values())[0])            
+                aa = [(a * (grey/2))/100 for a in aaaa[0]]
                 
+                serialized_record[1:1] = aa                
                 
-            # except Exception as e:
-                
-            #     serialized_record = [green , grey, red]  
+            except Exception as e:                
+                serialized_record = [green , grey, red]  
             record = {                
                 #green>>grey>>red
                 label.name: serialized_record
