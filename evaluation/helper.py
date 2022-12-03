@@ -164,7 +164,7 @@ class OilComparision:
        
     @property   
     def total_active_questions(self):
-        data = self.active_questions.count()
+        data = len(self.active_questions)
         return round(data, 2)    
     
     @property
@@ -239,7 +239,7 @@ class OilComparision:
         labels = DifinedLabel.objects.filter(common_status = False)        
         record_dict = {}
         for label in labels:    
-            l_labels = set(label.dlabels.all())
+            l_labels = set(label.dlabels.filter(value = 1))
             active_question = len([l.question for l in l_labels if l.question.have_4labels])            
                
             positive_options = round((self.label_wise_positive_option(label)), 2)              
@@ -317,8 +317,7 @@ class LabelWiseData:
         return round(len(data), 2)        
       
     @property
-    def total_nagetive_answer(self):
-        
+    def total_nagetive_answer(self):        
         try:
             data = set(s.question.id for s in self.eva_label_statement if s.is_negative)
         except:
@@ -344,14 +343,28 @@ class LabelWiseData:
         As per writen CSS our fist stacked bar will be green, second bar will be grey and third bar will be red so 
         we will placed the value in the list acordingly. We need to decide label name here so that it will be easy to impleted along with labels as each label has predifiened name.
         '''
-        #green>>grey>>red
-        serialized_record = [self.overview_green, self.overview_grey, self.overview_red]
+        try:
+            std_oil = StdOils.objects.get(select_oil__key = self.evaluator.stdoil_key)
+            oc = OilComparision(std_oil)
+            serialized_record = [self.overview_green, self.overview_grey/2, self.overview_red]
+            
+            # # print(serialized_record)
+            aaaa = list(oc.total_result().values())[0]
+            # # # print(list(oc.total_result().values())[0])
+            aa = [(a * (self.overview_grey/2))/100 for a in aaaa]
+            serialized_record[1:1] = aa
+            
+            
+        except:
+            serialized_record = [self.overview_green, self.overview_grey, self.overview_red]
+            
+            
+        
         
         record = {            
             'Overview' : serialized_record
             }        
-        return record
-    
+        return record    
 
     
     def label_wise_positive_answered(self, label):  
@@ -390,14 +403,35 @@ class LabelWiseData:
                 grey = round(100-(green+red),2)
             except:
                 grey = 0   
-            serialized_record = [green , grey, red]          
+            # serialized_record = [green , grey, red]  
             
+            # try:
+            std_oil = StdOils.objects.get(select_oil__key = self.evaluator.stdoil_key)
+            oc = OilComparision(std_oil)
+            serialized_record = [green , grey/2 , red]  
+            # d = [ v for k, v in oc.label_wise_result() if k == label.name]
+            # # print(serialized_record)
+            # print(oc.label_wise_result())
+            aaaa = [ v for k, v in oc.label_wise_result().items() if k == label.name]
+            # # # print(list(oc.total_result().values())[0])
+           
+            aa = [(a * (grey/2))/100 for a in aaaa[0]]
             
+            serialized_record[1:1] = aa
+                
+                
+            # except Exception as e:
+                
+            #     serialized_record = [green , grey, red]  
             record = {                
                 #green>>grey>>red
                 label.name: serialized_record
             }        
-            record_dict.update(record)         
+            record_dict.update(record)  
+            
+              
+            
+               
         return record_dict
     
     def picked_labels_dict(self):
@@ -411,6 +445,7 @@ class LabelWiseData:
             label_result.update(a.result())
             label_result.update(b.result()) 
             executor.shutdown() 
+        log.info(label_result)
         return label_result
     
     def packed_labels(self):
