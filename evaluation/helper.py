@@ -307,6 +307,7 @@ class LabelWiseData:
     @property
     def total_active_questions(self):        
         data = len(self.active_questions) 
+        log.info(f'Active question found___________ {data}')
         return round(data, 2)       
  
     @property
@@ -321,6 +322,20 @@ class LabelWiseData:
             data = set(s.question.id for s in self.eva_label_statement if s.is_negative)
         except:
             data = 0   
+            
+            
+            
+        positive_data = list(set(s.question.id for s in self.eva_label_statement if s.is_positive))
+        negatie_data = list(set(s.question.id for s in self.eva_label_statement if s.is_negative))
+        
+        p = positive_data
+        p.extend(negatie_data)
+        positive_negative = p
+        print(positive_negative)
+        grey = [q.id for q in self.active_questions if q.id not in positive_negative ]
+        
+        log.info(f'GREY question found_______________{grey}')
+        
 
         return round(len(data), 2)
     
@@ -369,7 +384,7 @@ class LabelWiseData:
         for label in labels:             
             
             l_labels = set(label.dlabels.all())
-            active_question = len([l.question for l in l_labels if l.question.is_active == True and l.question.have_4labels])            
+            active_question = len([l.question for l in l_labels if l.question.is_active and l.question.have_4labels])            
             # log.info(f'Active question for label {label}____________{active_question}')
             positive_answered = self.label_wise_positive_answered(label)
             # log.info(f'Positive answer for label {label}____________{positive_answered}')

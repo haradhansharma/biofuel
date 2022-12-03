@@ -38,22 +38,22 @@ log =  logging.getLogger('log')
 
 #helper function should be called into the @login_required and @producer_required
 def set_evaluation(question, selected_option, evaluator):
-    log.info(f'initilizing set_evaluation for the question {question.id} of the evaluator {evaluator} !')
+    # log.info(f'initilizing set_evaluation for the question {question.id} of the evaluator {evaluator} !')
     #delete prevous record if have to ensure reentry.
     try:
         log.info('Deleteing previous Evaluation Entry...........')   
         Evaluation.objects.filter(evaluator = evaluator, question = question).delete()    
-        log.info(f'Deleted previous Evaluation entry for the question {question.id} of the evaluator {evaluator}!')
+        # log.info(f'Deleted previous Evaluation entry for the question {question.id} of the evaluator {evaluator}!')
     except:
         log.info(f'No Previous Evaluation entry found for the question {question.id} of the evaluator {evaluator} to delete!')
     new_evaluation = Evaluation(evaluator = evaluator, option = selected_option, question = question ) 
     new_evaluation.save()
-    log.info(f'{new_evaluation} has been saved for the question number {question.id} of the evaluatior {evaluator}! selected option was {selected_option}')
+    # log.info(f'{new_evaluation} has been saved for the question number {question.id} of the evaluatior {evaluator}! selected option was {selected_option}')
         
     
 #helper function should be called into the @login_required and @producer_required
 def set_eva_comments(question, comment, evaluator):    
-    log.info(f'Initializing set_eva_cooments for the question {question.id} of the evaluator {evaluator} !')
+    # log.info(f'Initializing set_eva_cooments for the question {question.id} of the evaluator {evaluator} !')
     #check editing or fresh entry
     evacomments = EvaComments.objects.filter(evaluator = evaluator, question = question)
     if evacomments.exists():        
@@ -62,7 +62,7 @@ def set_eva_comments(question, comment, evaluator):
             com = evacomments[0]
             com.comments = comment
             com.save() 
-            log.info('Previous comments found so updated previous comments!')       
+            # log.info('Previous comments found so updated previous comments!')       
     else:
         log.info('No previous comments found!')
         new_eva_comment = EvaComments(evaluator = evaluator, question = question, comments = comment)
@@ -72,19 +72,19 @@ def set_eva_comments(question, comment, evaluator):
 #helper function should be called into the @login_required and @producer_required    
 def set_evastatment(request, selected_option, evaluator):    
     question = selected_option.question  
-    log.info(f'{question.id} detected to set_evastatment for the evaluator {evaluator} ! selected option {selected_option} found! ')  
+    # log.info(f'{question.id} detected to set_evastatment for the evaluator {evaluator} ! selected option {selected_option} found! ')  
     #delete previous record of this option
     try:
-        log.info(f'Deleteing previous EvalebelStatement which is not assesment............')
+        # log.info(f'Deleteing previous EvalebelStatement which is not assesment............')
         EvaLebelStatement.objects.filter(question = question, evaluator = evaluator, assesment = False).delete()   
-        log.info(f'Deleted previous evalabelstatement for the option {selected_option} under the question {question.id} for the evaluator {evaluator} which is not assesment !')
+        # log.info(f'Deleted previous evalabelstatement for the option {selected_option} under the question {question.id} for the evaluator {evaluator} which is not assesment !')
     except:
         log.info(f'No previous EvalebelStatement found to delete for the option {selected_option} under question {question.id} of evaluator {evaluator} !')
         
     #assined labels to the questions
-    log.info(f'Collecting labels for the question {question.id} where value set to "1" ')
+    # log.info(f'Collecting labels for the question {question.id} where value set to "1" ')
     set_labels = Label.objects.filter(question =  question, value = 1)
-    log.info(f'{set_labels.count()} set labels found in the question {question.id} !')
+    # log.info(f'{set_labels.count()} set labels found in the question {question.id} !')
     
     
     # '''
@@ -118,10 +118,10 @@ def set_evastatment(request, selected_option, evaluator):
             positive = selected_option.positive, 
             evaluator =  evaluator)
         new_evalebel_statement.save()
-        log.info(f'non assesment evlabelstatment saved for the label {eva_label} for evaluator {evaluator} !')
+        # log.info(f'non assesment evlabelstatment saved for the label {eva_label} for evaluator {evaluator} !')
         try:
             #delete previous record of this label
-            log.info(f'Deleting previous evalabelstatment which was saved by assesment for evaluator {evaluator}!')
+            # log.info(f'Deleting previous evalabelstatment which was saved by assesment for evaluator {evaluator}!')
             EvaLebelStatement.objects.filter(
                 evalebel = eva_label, 
                 evaluator = evaluator, 
