@@ -9,7 +9,7 @@
     {% block main %}
     <main class="flex-shrink-0">
         {% include "includes/blog_hero_section.html" %}
-        <div class="section bg-lgreen">
+        <div class="section bgjessica-light">
             <div class="container mt-n8 mt-lg-n12 z-2">
                 <article>
                     <div class="col-12 d-flex">
@@ -71,7 +71,7 @@
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                     {% for blog in similar_posts %}
                     <div class="col d-flex">
-                        <div class="card bg-lgreen shadow-sm flex-fill overflow-hidden">
+                        <div class="card bgjessica-light shadow-sm flex-fill overflow-hidden">
                             <img src="{% static blog.image.url %}" class="img-fluid" alt="{{blog.title}}">
                             <div class="card-title px-2 mb-0 border-bottom pb-2">
                                 {{blog.title|upper}}

@@ -9,7 +9,7 @@
 
 
 
-<div class="card card-body border-0 shadow table-wrapper table-responsive bg-bgreen">
+<div class="card card-body border-0 shadow table-wrapper table-responsive bgjessica-primary">
     <div class="card-header">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
             <div class="d-block mb-4 mb-md-0">
@@ -28,7 +28,7 @@
         <div class="accordion" id="accordionPricing">
             {% for question in questions %}
             {% for parent, childs in question.items %}
-            <div class="accordion-item border-danger bg-lgreen">
+            <div class="accordion-item border-danger bgjessica-light-primary">
               <h2 class="accordion-header" id="heading{{doc.id}}">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{parent.id}}" aria-expanded="false" aria-controls="collapse{{parent.id}}">
                     {{parent.chapter_name}}({{parent.sort_order}})                    

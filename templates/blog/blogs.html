@@ -9,14 +9,14 @@
     {% block main %}
     <main class="flex-shrink-0">
         {% include "includes/blog_hero_section.html" %}
-        <div class="section bg-dgreen">
+        <div class="section bgjessica-primary">
             <div class="container mt-n8 mt-lg-n12 z-2">
                 {% if tag %}
                 <h2 class="mb-3 text-secondary text-center border-bottom border-top p-2 border-danger">Posts tagged with
                     "{{ tag.name }}"</h2>
                 {% endif %}
                 {% for post in posts %}
-                <div class="card bg-lgreen mb-3">
+                <div class="card bgjessica-light mb-3">
                     <div class="card-body">
                         <div class="row g-0">
                             <div class="col-12">
