@@ -748,7 +748,7 @@ def eva_question(request, evaluator, slug):
     
     search_term = re.sub('[^A-Za-z0-9]+', ' ',  f'{question.name} {evaluator_data.biofuel.name}')   
     
-    log.info(f'total questions________________{Question.objects.filter(is_active=True).count()}')
+    # log.info(f'total questions________________{Question.objects.filter(is_active=True).count()}')
     context ={
         'slug' : slug,
         'question_dataset' : question_dataset(request) ,
@@ -766,7 +766,7 @@ def eva_question(request, evaluator, slug):
         # 'vedio_urls' : vedio_urls(search_term),
         'search_term' : search_term,
         # 'oil_graph_data' : oil_graph_data,
-        answered_percent : answered_percent
+        'answered_percent' : answered_percent
         
     }
     return render(request, 'evaluation/eva_question.html', context = context)
