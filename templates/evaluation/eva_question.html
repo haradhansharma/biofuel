@@ -1,66 +1,54 @@
-{% extends "layouts/base-fullscreen.html" %}
+
+
+
+
+
+
+    
+
+
+
+    {% extends "layouts/base_eva.html" %}
 
 {% block title %} {{text.signin}} {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
+
+ 
+
 {% load custom_tags %}
 {% block content %}
-{% block header %}
-{% include 'includes/g_header.html' %}
-{% endblock %}
+
 <main id="indi">
-    {% include "includes/hero_section.html" %}
+
+    <div class="py-2">
+        <div class="progress" style="height: 30px;">
+            <div class="progress-bar progress-bar-striped bgjessica-primary" role="progressbar" aria-label="answered_percent" style="width: {{answered_percent}}%;" aria-valuenow="{{answered_percent}}" aria-valuemin="0" aria-valuemax="100">{{answered_percent}}%</div>
+        </div>
+    </div>
+
+
+    <div class="card bg-light mb-3">
+    <div class="text-danger card-text p-2">
+        The title of the question in the sidebar can be
+        found by hovering your mouse over the round. The system will automatically send you to
+        the next question. If you wish, you can tweak it even more. The green circles indicate
+        that it has been answered, the grey circles indicate that it has been skipped or that it
+        is you do not know or answered as 'no', and the outline circles suggest that it has not yet been replied.
+        You won't be able to answer the child questions if you don't answered the parent
+        questions.
+    </div>
+</div>
     <div class="section pt-0">
-        <div class="container-fluid pt-6 mt-n10 mt-lg-n12 z-2">
+        <div class="container-fluid px-0">
             <div class="row justify-content-center">
                 <div class="col-12">
                     <button class="btn btn-warning btn-block mb-2" onclick="history.back()">Go Back</button>
-                    <div class="card text-center mb-4">
-                        <div class="card-header">
-                            <h3 class="text-success">To be answered questions</h3>
-                            <hr>
-                            <h5 class="text-danger" style="font-size: 14px;">
-                                The title of the question below can be
-                                found by hovering your mouse over the round. The system will automatically send you to
-                                the next question. If you wish, you can tweak it even more. The green circles indicate
-                                that it has been answered, the grey circles indicate that it has been skipped or that it
-                                is you do not know, and the outline circles suggest that it has not yet been replied.
-                                You won't be able to answer the child questions if you don't answered the parent
-                                questions.
-                            </h5>
-                        </div>
 
-                        <div class="row p-3 justify-content-center">
-                            {% for parent, child in question_dataset.items %}
-                            <div class="col-sm-4 col-md-3 col-lg-2 col-xl-1 mb-3 d-flex">
-                                <div style="min-height: 5rem;" class="card flex-fill">
-                                    <a style="padding: 0.05rem; font-size: 0.75rem;"
-                                        class=" btn {% if slug == parent.slug %} btn-primary {% else %} {% if parent.stat == 'checked' %} btn-success {% elif parent.stat == 'skipped' %} btn-gray-100  {% else %} btn-outline-success {% endif %} {% endif %} mb-1  col-12 mx-auto "
-                                        data-bs-toggle="tooltip" data-bs-html="true" title="{{parent.name}}"
-                                        href="{% url 'evaluation:eva_question' request.session.evaluator parent.slug %}">
-                                        {% if parent.sort_order %}{{parent.sort_order}}{% else %}--{% endif %}
-                                    </a>
-
-                                    <div class="col-12 p-2">
-                                        {% for item in child %}
-                                        <a style="padding: 0.1rem; font-size: 0.55rem;"
-                                            class="rounded-circle btn {% if slug == item.slug %} btn-primary {% else %} {% if item.stat == 'checked' %} btn-success {% elif item.stat == 'skipped' %} btn-gray-100  {% else %} btn-outline-success {% endif %} {% endif %} mb-1 rounded-circle "
-                                            data-bs-toggle="tooltip" data-bs-html="true" title="{{item.name}}"
-                                            href="{% url 'evaluation:eva_question' request.session.evaluator item.slug %}">
-                                            {{item.sort_order}}
-                                        </a>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                        <div class="card-header">
-                            {{ timing_text }}
-                        </div>
-                    </div>
                     <div id="ques" class="card text-center">
                         <div class="card-footer">
-                            <h3>Question: {{question.name}}</h3>
+                            <h3>Question({{question.sort_order}}): {{question.name}}</h3>
                         </div>
                         <div class="card-footer">
                             {% if question.description %}
@@ -73,24 +61,20 @@
 
                     
                     
-                    <div class="row mb-5">
-                        {% if messages and total_question <= qualified_rang %} 
-                        <div class="alert alert-secondary mt-5" role="alert">
-                            {% if messages and total_question <= qualified_rang %} 
+                    <div class="row mb-3">
+                        {% if messages %} 
+                        <div class="alert alert-secondary mt-5" role="alert">                            
                             {% for message in messages %} 
                                 <span class="alert-inner--text">{{ message }}</span>
-                            {% endfor %} 
-                            {% endif %}                           
+                            {% endfor %}                                                       
                         </div>
-                        {% endif %}
+                        {% endif %} 
                     </div>
-                    <div class="row mt-5 mb-5">
+                    <div class="row mt-3 mb-5">
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5>Options:</h5>
-
-                                   
+                                    <h5>Options:</h5>                                  
                                     
                                     <form id="op" method="POST" action="{% url 'evaluation:option_add2' %}#ques">
                                         {% csrf_token %}
@@ -180,7 +164,9 @@
                                     </form>
                                     
                                 </div>
-                            </div>    
+                            </div>  
+                            
+                            
 
                             <div hx-get="{% url 'evaluation:quotation_block' slug %}" hx-trigger="load">
                                 <div class="card text-center mt-4">
@@ -189,51 +175,14 @@
                                     Loading quotations...
                                     </div>
                                 </div>    
-                            </div> 
-<!--
-                            <div class="card mt-4">
-                                {% if question.get_quotations or question.get_related_quotations %}
-                                <div class="card-header">
-                                    The validation quotes issued by our validation partners are listed below. To learn
-                                    more
-                                    about a quote, simply click on it.
-                                </div>
-                                <div class="card-body">
-                                    <div class="row mt-3 g-3">
-                                        
-                                        {% for quotation in question.get_quotations %}
-                                        <div class="col-md-6 col-xl-4 d-flex">
-                                            <a href="{{quotation.get_absolute_url}}" 
-                                                target="_blank"
-                                                class="p-3 flex-fill card">
-                                                <h4>Provider: 
-                                                    {{quotation.get_business_name}}
-                                                </h4>
-                                                <h5>Price: {{quotation.price}} {{quotation.price_unit}} </h5>
-                                            </a>
-                                        </div>
-                                        {% endfor %}
-                                        {% for quotation in question.get_related_quotations %}
-                                        <div class="col-md-6 col-xl-4 d-flex">
-                                            <a href="{{quotation.get_absolute_url}}" 
-                                                target="_blank"
-                                                class="p-3 flex-fill card">
-                                                <h4>Provider: {{quotation.get_business_name}}
-                                                </h4>
-                                                <h5>Price: {{quotation.price}} {{quotation.price_unit}}</h5>
-                                            </a>
-                                        </div>
-                                        {% endfor %}
-                                        
-                                    </div>
-                                </div>
-                                {% else %}
-                                <div class="card-body">
-                                    <div class="alert alert-primary" role="alert">No Quotation Found!</div> 
-                                </div>
-                                {% endif %}
                             </div>
-                        -->
+
+
+
+                           
+
+
+
                             
 
                         </div>
@@ -258,8 +207,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12">
-
+                        <div class="col-sm-12">                            
 
                             <div hx-get="{% url 'evaluation:std_oils_block' slug %}" hx-trigger="load">
                                 <div class="card text-center mb-4 mt-4">                                    
@@ -268,40 +216,8 @@
                                     </div>
                                 </div>    
                             </div>
-
-<!--
-                            {% if question.get_stdoils %}
-                            <div class="card mt-4 p-4">
-                                <h4>{{question.chart_title}}</h4>
-                                <div class="table-responsive">
-                                    <table class="table align-middle">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Oil Name</th>
-                                                <th scope="col">Unit</th>
-                                                <th scope="col">Value</th>
-                                                <th scope="col">Link</th>
-                                                <th scope="col">Option</th>
-                                                <th scope="col">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for cd in question.get_stdoils %}
-                                            <tr>
-                                                <th scope="row">{{cd.oil.select_oil.name }}</th>
-                                                <td>{{cd.unit }}</td>
-                                                <td>{{cd.value }}</td>
-                                                <td>{{cd.link }}</td>
-                                                <td>{{ cd.option.name }}</td>
-                                                <td {% if cd.option.positive == '1' %} class="table-success" {% elif cd.option.positive == '0' and not cd.option.dont_know %} class="table-danger" {% elif cd.option.positive == '0' and cd.option.dont_know %} class="table-light" {% else %} class="table-light" {% endif %}></td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            {% endif %}
-                        -->
+                            
+                            
                             <!--
                             <div class="card text-center mb-4 mt-4">
                             <div class="row justify-content-center align-items-center">
@@ -321,17 +237,16 @@
                         -->
                         <!--
 
-                        <div hx-get="{% url 'evaluation:vedio_urls' search_term %}" hx-trigger="load">
+                            <div hx-get="{% url 'evaluation:vedio_urls' search_term %}" hx-trigger="load">
                             <div class="card text-center mb-4 mt-4">                                
                                 <div class="row p-3 justify-content-center">
                                 Loading related videos...
                                 </div>
                             </div>    
-                        </div>
-                          -->
+                            </div>
+                            -->
 
-
-<!--
+                            <!--
                             <div class="card text-center mb-4 mt-4">
                                 <h4>Some relevant videos are listed below:</h4>
                                 <div class="row p-3 justify-content-center">
@@ -350,7 +265,7 @@
                                     {% endfor %}
                                 </div>
                             </div>
-                        -->
+                            -->
                         </div>
                     </div>
                 </div>
@@ -358,14 +273,12 @@
         </div>
     </div>
 </main>
-{% include "includes/g_footer.html" %}
+
 {% endblock content %}
 
+
+<!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-
-<!-- Specific Page JS goes HERE  
-    {#
-
     <script>
         var oil_graph_data;    
         
@@ -411,7 +324,5 @@
             } 
         }     
     </script>
-    #}
-    -->
 
     {% endblock javascripts %}

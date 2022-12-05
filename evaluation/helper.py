@@ -297,8 +297,6 @@ class LabelWiseData:
         self.active_questions = [q for q in Question.objects.filter(is_active=True) if q.have_4labels]
         # we will need the statment added from the selected options during answering for this report/evaluator, must be excluded assesments or logical strings
         self.eva_label_statement = EvaLebelStatement.objects.filter(evaluator = self.evaluator, question__isnull = False, assesment = False)   
-      
-
         
     @property
     def answered_question_id_list(self):      
@@ -309,7 +307,12 @@ class LabelWiseData:
     def total_active_questions(self):        
         data = len(self.active_questions) 
         # log.info(f'Active question found___________ {data}')
-        return round(data, 2)       
+        return round(data, 2)   
+    
+    @property
+    def answered_percent(self):
+        data = (len(self.answered_question_id_list) / self.total_active_questions * 100)   
+        return round(data, 0) 
  
     @property
     def total_positive_answer(self):
