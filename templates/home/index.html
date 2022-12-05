@@ -9,9 +9,9 @@
     {% endblock %}
     {% block main %}
     <main class="flex-shrink-0">
-        {% include "includes/hero_section_front.html" %}
-        <div class="section bgjessica-light">
-
+        
+        <div class="section bgjessica-light" style="min-height: 100vh;">
+            {% include "includes/hero_section_front.html" %}
             <div class="container">
                 <div class="row ring-big-icon" >
                     <svg id="44c2246f-7158-4e1b-b750-061a9c552f63" data-name="Rings"
@@ -29,8 +29,16 @@
                             transform="translate(608.48 491.6)" style="fill:#ed1c24" />
                     </svg>
                 </div>
-                <div class="row justify-content-center section">
-                    <div class="col-lg-7"  data-aos="fade-right">
+                <div class="row d-flex justify-content-center align-items-end">
+                    <div class="col-lg-5 text-start"  data-aos="fade-left ">
+                        <div class="text-center">
+                            <p class="w-100 text-start mb-2 fs-5 jessica-text">Part of</p>
+                            <img class="img-fluid w-75 text-end mb-lg-4"
+                                src="{% static 'assets/shippinglab-logo.svg' %}" alt="Shipping lab">
+                            <p class="text-start fs-5 jessica-text">Financed through Danish Maritime Fund</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 text-end"  data-aos="fade-right">
                         {% if user.is_authenticated %} 
                         <div class="w-100">
                             <a class="btn btnjessica-primary animate-hover px-4 py-3 mb-4 w-50"
@@ -49,14 +57,7 @@
                         </div>
                         {% endif %}
                     </div>
-                    <div class="col-lg-5"  data-aos="fade-left">
-                        <div class="text-center">
-                            <p class="w-100 text-start mb-2 fs-5 jessica-text">Part of</p>
-                            <img class="img-fluid w-75 text-end mb-lg-4"
-                                src="{% static 'assets/shippinglab-logo.svg' %}" alt="Shipping lab">
-                            <p class="text-start fs-5 jessica-text">Financed through Danish Maritime Fund</p>
-                        </div>
-                    </div>
+                    
                 </div>
                 
             </div>

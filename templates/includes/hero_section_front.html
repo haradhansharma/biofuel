@@ -1,5 +1,5 @@
 {% load static %}
-<section class="section-header overflow-hidden pt-7 pb-4 bgjessica-light-primary text-primary"> 
+<section class="section-header overflow-hidden pt-5 pb-4 text-primary"> 
     <div class="container">
         <div class="row">
             {% if messages %}   
@@ -109,8 +109,11 @@
                             fill="#ffffff"></path>
                     </svg>
                 </div>
-                <div class="col-12 "data-aos="zoom-in" >
+                <div class="col-12  "data-aos="zoom-in"  style="min-height: 50vh;">
                     <h2 class="text-start fs-2 mb-5">WELCOME TO</h2>
+                    <div class="d-flex align-items-baseline justify-centent-center">                        
+                        <img src="{% static 'new_logo.png' %}" alt="{{site_info.name}}" class="img-fluid mb-5" >
+                    </div>
                 {% if request.session.devmsg  %}
                 <div class="col-12 text-center">
                     <div class="alert alert-danger shadow-soft" role="alert">
@@ -118,7 +121,7 @@
                     </div>                        
                 </div>
                 {% endif %}
-                <img src="{% static 'new_logo.png' %}" alt="{{site_info.name}}" class="img-fluid mb-3" >
+                
                 </div>
                 
 
