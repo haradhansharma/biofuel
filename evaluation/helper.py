@@ -312,7 +312,7 @@ class LabelWiseData:
     @property
     def answered_percent(self):
         data = (len(self.answered_question_id_list) / self.total_active_questions * 100)   
-        return round(data, 0) 
+        return round(data, 2) 
  
     @property
     def total_positive_answer(self):
