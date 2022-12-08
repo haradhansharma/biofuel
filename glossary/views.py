@@ -1,0 +1,37 @@
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic.list import ListView
+from .models import *
+from blog.models import BlogPost
+from . forms import *
+from django.contrib import messages
+from django.db.models.query import QuerySet
+
+
+# Create your views here.
+class Glist(ListView):
+    model = Glossary
+    paginate_by = 100  # if pagination is desired    
+   
+   
+    def get_context_data(self, **kwargs):        
+        context = super().get_context_data(**kwargs)
+        latest_blogs = BlogPost.published.all().order_by('-updated')
+        context['latest_blogs'] = latest_blogs[:10]
+        request_form = GRequestForms()
+        context['request_form'] = request_form
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        
+        request_form = GRequestForms(request.POST)
+        if request_form.is_valid():
+            request_form.save()        
+            messages.success(request, 'Request Submitted!')
+        else:
+            messages.error(request, 'Invalid form submission.')
+            messages.error(request, request_form.errors)   
+            return HttpResponseRedirect(reverse_lazy('glossary:g_list'))   
+        
+        return super(Glist, self).get(request, *args, **kwargs)

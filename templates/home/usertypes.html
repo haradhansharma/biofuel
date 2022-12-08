@@ -7,25 +7,25 @@
     {% block main %}
     <main>
         {% include "includes/hero_section.html" %}
-        <div class="section pt-0 pb-0 bg-primary">
+        <div class="section pt-0 pb-0  bgjessica-light-primary">
             <div class="container mt-n8 mt-lg-n12 z-2">
                 <div class="row justify-content-center">
                     <div class="col-12">
                         <div class="d-block text-center justify-content-center mt-7 mb-6 mb-lg-5">
                             <div
-                                class="icon-user-type icon-shape-user-type bg-lgreen text-center shadow-lg rounded mb-4">
+                                class="icon-user-type icon-shape-user-type  bgjessica-light text-center shadow-lg rounded mb-4">
                                 <img src="{% static user_type.icon.url %}" alt="">
                             </div>
                             {% if request.user.is_authenticated %}
                             {% for title, url in enroll.items %} 
                             <h3 class="h5"><a href="{{ url }}"
-                                    class="btn btn-outline-secondary d-inline-flex align-items-center text-secondary me-md-3"> {{title}}
+                                    class="btn btn-outline-primary d-inline-flex align-items-center text-primary me-md-3"> {{title}}
                                 </a></h3>
                             {% endfor %}
                             {% else %}
                             <h3 class="h5">
                                 <a href="{% url 'accounts:signup' %}"
-                                    class="btn btn-outline-secondary d-inline-flex align-items-center  me-md-3">Join as {{ user_type.name }} 
+                                    class="btn btn-outline-primary d-inline-flex align-items-center  me-md-3">Join as {{ user_type.name }} 
                                 </a>
                             </h3>
                             {% endif %}
@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <section class="section section-lg bg-bgreen pt-0">
+        <section class="section section-lg  bgjessica-light pt-0">
             <div class="container">
             </div>
         </section>

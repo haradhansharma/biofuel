@@ -41,7 +41,10 @@
                     {% endif %}
                     <li class="nav-item">
                         <a href="{% url 'blog:post_list' %}" class="link-white btn p-1">Blogs</a>
-                    </li>                    
+                    </li>   
+                    <li class="nav-item">
+                        <a href="{% url 'glossary:g_list' %}" class="link-white btn p-1">Glossary</a>
+                    </li>                  
                 </ul>
                 <div class="nav-link dropdown">
                     {% if user.is_authenticated %}

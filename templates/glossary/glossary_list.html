@@ -1,0 +1,189 @@
+{% extends "layouts/base-fullscreen.html" %}
+{% load static %}
+
+{% block title %} {{text.signin}} {% endblock %}
+{% block stylesheets %}
+
+<style type="text/css">
+	.fixed-top {
+	    top: -40px;
+	    transform: translateY(40px);
+	    transition: transform .3s;
+	}
+
+</style>
+
+{% endblock stylesheets %}
+{% block js %}
+
+
+<script>
+    
+    document.addEventListener("DOMContentLoaded", function(){
+        window.addEventListener('scroll', function() {
+            ele = document.getElementById('grosary-nav')
+           
+
+            if (window.scrollY > 200) {
+                document.getElementById('he').classList.add('d-none');
+                document.getElementById('nin').classList.remove('d-none');
+
+                ele.classList.add('fixed-top', 'bgjessica-light-primary', 'justify-content-start', 'align-items-start', 'px-5', 'shadow-sm', 'navbar', 'flex-column');
+                
+
+              
+
+              // add padding top to show content behind navbar
+              navbar_height = document.querySelector('.navbar').offsetHeight;
+              
+              document.body.style.paddingTop = navbar_height + 'px';
+            } else {
+               
+                
+              ele.classList.remove('fixed-top', 'bgjessica-light-primary', 'justify-content-start', 'align-items-start', 'px-5', 'shadow-sm', 'navbar', 'flex-column');
+              
+
+
+              document.getElementById('he').classList.remove('d-none');
+              document.getElementById('nin').classList.add('d-none');
+
+               // remove padding top from body
+              document.body.style.paddingTop = '0';
+            } 
+        });
+      }); 
+      // DOMContentLoaded  end
+    </script>
+
+{% endblock js %}
+{% load custom_tags %}
+
+
+{% block content %}
+{% block header %}
+<div id="he" class="">
+{% include 'includes/g_header.html' %}
+</div>
+{% endblock %}
+<main id="indi">
+
+
+
+
+
+    
+{% include "includes/hero_section_glossary.html" %}
+
+    <div class="section pt-6 bgjessica-light">
+        <div class="container-fluid mt-n10 mt-lg-n12 z-2">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    
+                    <div class="row d-flex justify-content-center ">
+                        <div class="col-md-8 align-items-start jsutify-content-start">
+                            <div class="card p-3">
+
+                                {% regroup object_list by anchor as objects %}
+                                
+                                <div id="grosary-nav" class="card-header navbar-expand-lg navbar-dark ">
+                                    <div id="nin" class="d-none">GLOSSARY OF GREEN FUEL VALIDATION PLATFORM AND DEFINITIONS</div>
+                                    <div id="jto" class="display-5 text-muted">Jump To__</div>
+                                    <div id="li" class="">
+                                    {% for glossary in objects %}
+                                    <a class="btn btn-outline-primary" href="#{{glossary.grouper|lower}}">{{ glossary.grouper }}</a> 
+                                    {% endfor %}
+                                    </div>
+                                    </div>
+
+                                {% for glossary in objects %}
+                                <div id="{{glossary.grouper|lower}}">
+                                    <div class="display-2 py-4">{{ glossary.grouper }}</div>
+                                {% for item in glossary.list %}
+                                <div class="card border-bottom border-2 mb-3">
+
+                                    <div class="card-header h4">
+                                        {{item.title}}
+                                    </div>
+
+
+                                    <div class="card-body">
+                                        
+                                        {{item.description}}
+                                    </div>
+
+                                    <div class="card-footer">
+                                        {% for link in item.relatedlinks.all %}
+                                          <a class="badge bg-secondary" target="_blank" href="{{link.link}}">{{link.title}}</a> 
+                                        {% endfor %}
+                                    </div>
+                                    
+                                    
+                                </div>
+                                {% endfor %}
+                                </div> 
+                                {% endfor %}
+
+                                <form method="post" action="" class="p-3 card bg-warning">
+                                    {% csrf_token %}
+                              
+                                    <div class="form-floating mb-3">
+                                        {{ request_form.title }}
+                                        <label class="text-primary" for="{{ request_form.title.id_for_label }}">{{ request_form.title.label }} <span class="text-danger">{% if request_form.title.field.required %}*{% endif %}</span> </label>
+                                        <span class="text-start text-danger">{{ form.title.errors }}</span>
+                                    </div>
+                                    {{ request_form.captcha }}
+                                    <span class="text-start text-danger">{{ form.captcha.errors }}</span>
+                                    <button type="submit" id="btn_ini" class="btn btn-success btn-block">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-4 align-items-start jsutify-content-start" >
+                            <div class="card p-2 justify-content-center align-items-center" style="min-height: 10vh;">
+                                Total {{object_list.count}} items has been added!
+                                <!--
+                            <div class="display-5 p-2 border-bottom">Latest Updated Blogs</div>
+
+                                {% for blog in latest_blogs %}
+                                
+
+
+                              
+                                    <div class="row g-0 overflow-hidden flex-md-row p-2 position-relative align-items-center border-bottom">
+
+                                        <div class="col-md-3">
+                                        <img src="{% static blog.image.url %}" alt="{{blog.title}}" class="img-fluid">
+                                            
+                                          </div>
+                                      <div class="col-md-9 p-2 d-flex flex-column position-static">
+                                       
+                                    
+                                        <p class="card-text mb-auto h6">{{blog.title|safe|truncatechars:150|upper}}</p>
+                                        <a href="{{blog.get_absolute_url}}" class="stretched-link">Continue reading</a>
+                                      </div>
+                                      
+                                    </div>
+                             
+
+
+
+                                {% endfor %}
+                                -->
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </div>    
+            </div>
+        </div>
+    </div>
+
+
+</main>
+{% include "includes/g_footer.html" %}
+{% endblock content %}
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+
