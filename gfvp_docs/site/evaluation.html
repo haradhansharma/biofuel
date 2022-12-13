@@ -115,6 +115,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#helper" class="nav-link">Helper</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -211,7 +215,38 @@ admin.site.register(NextActivities, NextActivitiesAdmin)
 <p>Do not change anything in this file.</p>
 </blockquote>
 <h2 id="form">Form<a class="headerlink" href="#form" title="Permanent link">&para;</a></h2>
-<p><code>forms.py</code> inheriting the default django's form class for evaluation initialization based on our CSS library. We are using <code>bootstrap 5</code>.</p></div>
+<p><code>forms.py</code> inheriting the default django's <code>ModelForm</code> class for evaluation initialization based on our CSS library. We are using <code>bootstrap 5</code>. Implemented <code>HTMX</code> to find out fuel grade based on selected biofuel.</p>
+<h2 id="helper">Helper<a class="headerlink" href="#helper" title="Permanent link">&para;</a></h2>
+<p>Helper playing a vast role in the evaluation application</p>
+<pre><code>    def active_sessions():
+        '''
+        we will collect all active session's evaluator id of before past 24 hours
+        it returns list
+        '''
+
+        return list(s_evs)
+</code></pre>
+<p>The above <code>active_session</code> function collect all active sessions before 24 hours and it is calling through <code>cronjob</code> inside below function.</p>
+<pre><code>    def clear_evaluator():
+        '''
+        IT IS RUNNING BY CRON JOB
+        we will remove all wastage report which just initialized but have no data and which is not qualified to show in the profile page.
+        It returns total deleted report in a call.
+        It is created to call by CRONJOB but can be called from anywhere.
+
+        '''
+
+        return total_deleted
+</code></pre>
+<p>The <code>clear_evaluator</code> works as per <code>code cooments</code> mentioned inside the function.</p>
+<p><code>from evaluation.helper import get_current_evaluator</code> provide the current evaluator objects to use in anywhere. It taks one parameter is <code>request</code>. needless to say that evaluator is <strong>result</strong> of evaluation process, which can be called as <strong>report</strong> as well. It is a bit confusing. But after developing basement and database here some diferent types of advise so that I had to adjust. In this planform have some manymore like that. But will be explained.</p>
+<blockquote>
+<p><code>label_assesment_for_donot_know</code>, <code>label_assesment_for_positive</code>, <code>overall_assesment_for_donot_know</code>, <code>overall_assesment_for_positive</code> These methods commit some assesments indivisually for answere type in the <strong>evalautor</strong> as statement. All these like manual assesment and never using anywhere other then report genaration so that no DRF thingking were here.</p>
+<p>The functions can be wrapped into the class and can be optimized as well, but as we are under development stage and many more to develop yet so it will be later. Some of method called inside these methods can be called from <code>LabelWiseData</code> class below as well.</p>
+</blockquote>
+<p><code>from evaluation.helper import OilComparision</code>'s <code>packed_labels</code> returns  <code>pandas</code> dataframe of Related Fuel grade. <code>picked_labels_dict</code> return the dictionery of labels. Here have many other methods to use. The class takes compulsary parameter named <code>oil</code>. The dataframe currently using in the <code>chartistjs</code> to show in the evaluation form and t use in further advise.</p>
+<p><code>from evaluation.helper import LabelWiseData</code>'s <code>packed_labels</code> return <code>pandas</code> dataframe of biofuel and <code>label_data_history</code> returns the dataframe of the history of biofuel reports in various stage. <code>picked_labels_dict</code> return the dictionery of labels. Here have many more methods to use. The class takes compulsary parameter named <code>evaluator</code>. </p>
+<p><code>nreport_context</code> function of helper is returning the context for HTML evaluation report. It takes <code>request</code> and <code>slug</code> parameter as compulsary. The function directly call from the <code>view</code> function of the HTML report.</p></div>
             </div>
         </div>
 

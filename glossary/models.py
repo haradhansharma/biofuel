@@ -1,10 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 
-# Create your models here.
-
-
-
 class Glossary(models.Model):
     created     = models.DateTimeField(auto_now_add=True, editable=False)
     modified    = models.DateTimeField(auto_now=True, editable=False)
@@ -23,13 +19,8 @@ class Glossary(models.Model):
         self.anchor = anchor.upper()
         super(Glossary, self).save(*args, **kwargs)
 
-    # def get_absolute_url(self):
-    #     return reverse('django_glossary:term-detail', kwargs={'slug': self.slug})
-
     class Meta:
         ordering = ['title', '-modified']
-
-
     
 class RelatedLinks(models.Model):
     title = models.CharField(max_length=250)
@@ -38,9 +29,6 @@ class RelatedLinks(models.Model):
 
     def __str__(self):
         return f"{self.title} (link for {self.glossary.title})"
-
-    # def get_absolute_url(self):
-    #     return reverse('django_glossary:term-detail', kwargs={'slug': self.term.slug})
     
 class GRequests(models.Model):
     

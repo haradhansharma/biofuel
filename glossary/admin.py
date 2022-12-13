@@ -22,29 +22,13 @@ class GlossaryAdmin(admin.ModelAdmin):
     model = Glossary
     
     list_display = ('title',)
-    search_fields = ('title', 'description')
-    # list_display = [ 'id', 'user', 'service', 'service_option', 'order_amount', 'paid_amount', 'payment_method']
-    # readonly_fields = [
-    #     'user', 
-    #     'service', 
-    #     'service_option', 
-    #     'order_amount', 
-    #     'paid_amount', 
-    #     'payment_method', 
-    #     'tentative_delivery_date', 
-    #     'full_payment_date', 
-    #     'shipping_address', 
-    #     'payment_address',
-    #     'last_status',
-    #     ]
+    search_fields = ('title', 'description')   
     inlines= [RelatedLinksInline, ]
     
  
 
 
 admin.site.register(Glossary, GlossaryAdmin)
-
-
 class GRequestsAdmin(admin.ModelAdmin):
     form = GRequestsChangeForm
     model = GRequests

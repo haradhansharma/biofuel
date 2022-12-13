@@ -8,14 +8,18 @@ from . forms import *
 from django.contrib import messages
 from django.db.models.query import QuerySet
 
+import logging
+log =  logging.getLogger('log')
+
 
 # Create your views here.
 class Glist(ListView):
     model = Glossary
-    paginate_by = 100  # if pagination is desired    
+    # paginate_by = 100  # if pagination is desired    
    
    
-    def get_context_data(self, **kwargs):        
+    def get_context_data(self, **kwargs):  
+        log.info(f'Glossary accessed by {self.request.user}')      
         context = super().get_context_data(**kwargs)
         latest_blogs = BlogPost.published.all().order_by('-updated')
         context['latest_blogs'] = latest_blogs[:10]
@@ -25,9 +29,11 @@ class Glist(ListView):
     
     def post(self, request, *args, **kwargs):
         
+        
         request_form = GRequestForms(request.POST)
         if request_form.is_valid():
-            request_form.save()        
+            request_form.save()     
+            log.info(f'Glossary request posted by {request.user}')         
             messages.success(request, 'Request Submitted!')
         else:
             messages.error(request, 'Invalid form submission.')

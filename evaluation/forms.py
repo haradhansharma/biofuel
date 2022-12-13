@@ -4,9 +4,6 @@ from django.utils.translation import gettext as _
 
 
 class EvaluatorForm(forms.ModelForm):
-    
-   
-    
     class Meta:
         model = Evaluator
         fields = ('name', 'email', 'phone', 'orgonization', 'biofuel')
@@ -29,8 +26,7 @@ class EvaluatorForm(forms.ModelForm):
         }
         
     def clean(self, *args, **kwargs):
-        biofuel = self.cleaned_data.get('biofuel')        
-       
+        biofuel = self.cleaned_data.get('biofuel')           
         
         if not biofuel:
             raise forms.ValidationError(f'Fuel selction is mandatory!')

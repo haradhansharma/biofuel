@@ -30,8 +30,7 @@ class GRequestForms(forms.ModelForm):
         }
         
         labels = {  
-            'title': 'Looking for a definition that is not here? Submit your own search term.',
-           
+            'title': 'Looking for a definition that is not here? Submit your own search term.',       
             
         }
         

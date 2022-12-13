@@ -476,7 +476,7 @@ class LabelWiseData:
         
         return date_wise_df_list
     
-def nreport_context(request, slug): 
+def nreport_context(request, slug):  
     #essential part where login_required
     
     null_session(request) 

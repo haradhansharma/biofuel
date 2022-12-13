@@ -6,9 +6,9 @@ User-Agent: Googlebot-Image
 User-agent: TruliaBot
 User-agent: Mediapartners-Google
 User-agent: googlebot-news
+User-agent: AhrefsBot
 Disallow: /
 Disallow: /static/
-
 Disallow: /private/
 Disallow: /junk/
 Disallow: /admin/

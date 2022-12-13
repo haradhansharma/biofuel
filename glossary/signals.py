@@ -5,7 +5,8 @@ from .models import *
 from django import forms
 
 
-
+import logging
+log =  logging.getLogger('log')
 
         
 
@@ -13,8 +14,7 @@ from django import forms
 def make_glossary(sender, instance, created, *args, **kwargs):
     if created:
         pass   
-    else:        
-         
-        
+    else: 
+        log.info('Glossary created from request________________')   
         Glossary.objects.create(title = instance.title, description = instance.description)
         instance.delete()     

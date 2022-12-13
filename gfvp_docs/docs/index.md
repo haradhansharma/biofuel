@@ -50,7 +50,7 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
         ...       # Other markdown pages, images and other files.
 
 
-# Heading level 1
+# Heading level 1 
 ## Heading level 1
 ### Heading level 1
 #### Heading level 1
