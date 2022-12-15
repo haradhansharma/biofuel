@@ -105,6 +105,7 @@ class LsLabels(admin.TabularInline):
     model = Lslabel
     extra = 0
     fk_name = "logical_string"
+    formset = LabelCheckFormset
     
 class StdOilsIn(admin.TabularInline):
     model = StdOils
