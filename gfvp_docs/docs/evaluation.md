@@ -129,3 +129,6 @@ The `clear_evaluator` works as per `code cooments` mentioned inside the function
 `from evaluation.helper import LabelWiseData`'s `packed_labels` return `pandas` dataframe of biofuel and `label_data_history` returns the dataframe of the history of biofuel reports in various stage. `picked_labels_dict` return the dictionery of labels. Here have many more methods to use. The class takes compulsary parameter named `evaluator`. 
 
 `nreport_context` function of helper is returning the context for HTML evaluation report. It takes `request` and `slug` parameter as compulsary. The function directly call from the `view` function of the HTML report.
+
+
+## Model

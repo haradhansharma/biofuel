@@ -15,10 +15,38 @@ from import_export.admin import ExportActionMixin
 from import_export import resources
 from django import forms
 
+
+from django.forms.models import BaseInlineFormSet
+from django.core.exceptions import ValidationError
+
+
+
+
+class LabelCheckFormset(BaseInlineFormSet):
+    '''
+    Ensuring all labels and atleast one label have value 1
+    '''
+    def clean(self):
+        super().clean()
+        data = self.cleaned_data        
+        if len(data) <  4:
+            raise ValidationError("Please assign 4 labels")
+        one_found = 0
+        for d in data:
+            value = d['value']
+            if value == '1':
+                one_found += 1
+        if one_found == 0:
+            raise ValidationError("Atleast one label should have value 1")
+
+        
+
+
 class Labels(admin.TabularInline):
     model = Label
     extra = 0
     fk_name = "question"
+    formset = LabelCheckFormset
     
 
 class Options(admin.TabularInline):
@@ -127,6 +155,17 @@ class LogicalStringAdmin(admin.ModelAdmin):
     list_display = ('option_list', 'text', 'overall', 'positive', 'Label_value_one_to', )
     inlines = [LsLabels]
     list_filter = ('overall', 'positive' ,)   
+    
+    # to add error note in the admi about question configuration 
+    change_list_template = 'admin/logical_string_list.html'
+    def changelist_view(self, request, extra_context=None):        
+        strings = LogicalString.objects.all()
+        label_pending_in_logical_string = [ls.option_list for ls in strings if not ls.have_4labels]     
+        extra_context = extra_context or {}
+        extra_context['label_pending_in_logical_string'] = label_pending_in_logical_string
+    
+          
+        return super().changelist_view(request, extra_context=extra_context)  
     
         
 admin.site.register(LogicalString, LogicalStringAdmin)

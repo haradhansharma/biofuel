@@ -30,6 +30,7 @@ class DifinedLabel(models.Model):
     '''
     # database connector for label to use in sidewide
     # We need to define labe to work in report and each question settings in admin.
+    # common status can be only one
     
     ''' 
     
@@ -159,6 +160,9 @@ class Question(models.Model):
             return True
         return False
     
+    
+    
+    
             
         
     
@@ -230,8 +234,15 @@ class LogicalString(models.Model):
     
     @property
     def Label_value_one_to(self):
-        assigned = [label.name for label in self.logical_strings.filter(value=1) ]
+        assigned = [label.name for label in self.logical_strings.filter(value = '1') ]
         return assigned
+    
+    @property
+    def have_4labels(self):
+        labels = self.logical_strings.filter(value = '1').count()
+        if labels > 0:
+            return True
+        return False
             
 
     def __str__(self):

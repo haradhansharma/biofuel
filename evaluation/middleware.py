@@ -25,13 +25,10 @@ class EvaMiddleware:
         
         
         
-        
-        '''
-        delete evaluator without evaluationa after each 1 hrs
-        ''' 
+  
      
         
-        if settings.CNN:
+        if settings.CNN and not request.user.is_superuser:
             if request.path != '/':            
                 request.session['devmsg'] = 'SOMETHING WENT WRONG! PLEASE CONTACT WITH DEVELOPER!'
                 return redirect('home:home')
@@ -45,20 +42,6 @@ class EvaMiddleware:
         
         if 'evaluator' not in request.session:
             request.session['evaluator'] = ''    
-        
-            
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         
         
