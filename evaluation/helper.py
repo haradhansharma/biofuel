@@ -121,7 +121,7 @@ def ans_ques(evaluator):
 def overall_assesment_for_donot_know(request, evalebel, evaluator):
     # ans_ques = EvaLebelStatement.objects.filter(evaluator = evaluator, question__isnull = False, assesment = False).values('question').distinct().count()
     dont_know_ans = EvaLebelStatement.objects.filter(evaluator = evaluator, question__isnull = False, dont_know = 1, assesment = False).values('question').distinct().count()
-    dont_know_percent = (int(dont_know_ans) * 100)/int(ans_ques(evaluator))
+    dont_know_percent = (int(dont_know_ans) * 100)/int(ans_ques(evaluator)) if ans_ques(evaluator) != 0 else 100
 
     if dont_know_percent < 20:
         statement = 'Overall' + ' assessment of your biofuel shows that you have very detailed knowledge.'
@@ -138,7 +138,7 @@ def overall_assesment_for_positive(request, evalebel, evaluator):
     # ans_ques = EvaLebelStatement.objects.filter(evaluator = evaluator, question__isnull = False, assesment = False).values('question').distinct().count()
     pos_ans = EvaLebelStatement.objects.filter(evaluator = evaluator, question__isnull = False, positive = 1, assesment = False).values('question').distinct().count()   
     
-    positive_percent = (int(pos_ans) * 100)/int(ans_ques(evaluator))
+    positive_percent = (int(pos_ans) * 100)/int(ans_ques(evaluator)) if ans_ques(evaluator) != 0 else 100
     
     if positive_percent < 50:
         statement = 'Based on the response to the enquiry, the ' + 'overall' + ' evaluation of your oil contains multiple serious shortcomings.'
@@ -444,7 +444,7 @@ class LabelWiseData:
             label_result.update(a.result())
             label_result.update(b.result()) 
             executor.shutdown() 
-        log.info(label_result)
+        # log.info(label_result)
         return label_result
     
     def packed_labels(self):

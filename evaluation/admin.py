@@ -26,18 +26,23 @@ class LabelCheckFormset(BaseInlineFormSet):
     '''
     Ensuring all labels and atleast one label have value 1
     '''
+    question = None
     def clean(self):
         super().clean()
-        data = self.cleaned_data        
+        data = self.cleaned_data     
+        print(data)   
         if len(data) <  4:
             raise ValidationError("Please assign 4 labels")
         one_found = 0
+        
         for d in data:
             value = d['value']
+            self.question = d['question']
             if value == '1':
                 one_found += 1
-        if one_found == 0:
-            raise ValidationError("Atleast one label should have value 1")
+        if self.question.sort_order != 1:
+            if one_found == 0:
+                raise ValidationError("Atleast one label should have value 1")
 
         
 

@@ -397,7 +397,7 @@ def option_add2(request):
             log.info(f'Creating history of the report {evaluator}')
             dfd = LabelWiseData(evaluator).picked_labels_dict()             
             ldf =  LabelDataHistory.objects.filter(evaluator = evaluator)             
-            today = timezone.localtime(timezone.now()).date()            
+            today = timezone.now()       
             ldf.filter(created__gte = today).delete()
             LabelDataHistory.objects.create(evaluator = evaluator, items = dfd)
             
@@ -578,6 +578,11 @@ def eva_question(request, evaluator, slug):
     #This is essential where user loggedin
     null_session(request)     
     
+    
+    
+    
+    
+    
     '''
     ========
     Part of report Editing
@@ -739,7 +744,7 @@ def eva_question(request, evaluator, slug):
     
     label_data = LabelWiseData(evaluator)
     answered_percent = label_data.answered_percent
-    print(answered_percent)
+    # print(answered_percent)
     '''
     Geting data from youtube data api 
     update data in each week   
@@ -805,7 +810,7 @@ def eva_index2(request):
         name = ''
         email = ''
         phone = ''
-        orgonization = ''
+        orgonization = '' 
     
     
     #Preparing guard to check whether system should take initial data or need to forwared to next_question of selected question previously.
@@ -913,8 +918,7 @@ def eva_index2(request):
         if 'question' in request.session:
             log.info(f' Going to the next question {next_question} of the report {new_report}_________')
             return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(new_report), str(next_question)]))
-        else:
-            
+        else:            
             log.info(f'Report {new_report} being started with the first qestion {first_of_parent}______________')
             return HttpResponseRedirect(reverse('evaluation:eva_question' ,  args=[int(new_report), str(first_of_parent.slug)]))
             
