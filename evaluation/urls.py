@@ -7,6 +7,8 @@ urlpatterns = [
     path('evaluation/report/<str:slug>', views.report, name='report'),  
     path('evaluation/nreport/<str:slug>', views.nreport, name='nreport'),  
     path('evaluation/nreport_pdf/<str:slug>', views.nreport_pdf, name='nreport_pdf'),   
+    path('get-glossary/', views.get_glossary, name='get_glossary'),   
+    
       
 ]
 

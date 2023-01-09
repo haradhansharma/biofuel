@@ -14,7 +14,7 @@ log =  logging.getLogger('log')
 
 # Create your views here.
 class Glist(ListView):
-    model = Glossary
+    model = Glossary 
     # paginate_by = 100  # if pagination is desired    
    
    

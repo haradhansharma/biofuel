@@ -304,6 +304,16 @@ def leads(request):
     
     docs = Acordion.objects.filter(apps = 'crm')
     
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Leads'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f'This is a simple CRM for Green Fuel Validation Platform.'
+    meta_data['tag'] = 'crm'
+    meta_data['robots'] = 'noindex, nofollow'
+    # meta_data['og_image'] = user_type.icon.url
+    
     context = {        
         'leads': leads,
         'upload_csv_form': upload_csv_form,
@@ -311,7 +321,8 @@ def leads(request):
         'EXECUT_MAIL_IN_MIN': SendQueueMail.RUN_EVERY_MINS,
         'RETRY_AFTER_FAILURE_MINS': SendQueueMail.RETRY_AFTER_FAILURE_MINS,
         'LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME' : settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME,
-        'pending_queue_count' : pending_queue_count()
+        'pending_queue_count' : pending_queue_count(),
+        'site_info' : meta_data  
         
     }
     return render(request, 'crm/leads.html', context = context)

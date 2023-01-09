@@ -1,0 +1,44 @@
+<div class="card p-3">
+    {% regroup object_list by anchor as objects %}
+    <div id="grosary-nav" class="card-header navbar-expand-lg navbar-dark ">
+        <div id="nin" class="d-none">GLOSSARY OF GREEN FUEL VALIDATION PLATFORM AND
+            DEFINITIONS
+        </div>
+        <div id="jto" class="display-5 text-muted">Jump To__</div>
+        <div id="li" class="">
+            {% for glossary in objects %}
+            <a class="btn btn-outline-primary" href="#{{glossary.grouper|lower}}">
+                {{ glossary.grouper }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% for glossary in objects %}
+    <div id="{{glossary.grouper|lower}}">
+        <div class="display-2 py-4">{{ glossary.grouper }}</div>
+        {% for item in glossary.list %}
+        <div class="card border-bottom border-2 mb-3">
+            <div class="card-header h4">
+                {{item.title}}
+            </div>
+            <div class="card-body">
+                {{item.description}}
+            </div>
+
+            <div class="card-footer">
+                {% for link in item.relatedlinks.all %}
+                <a class="badge bg-secondary" target="_blank"
+                    href="{{link.link}}">{{link.title}}</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+
+
+
+
+    
+</div>

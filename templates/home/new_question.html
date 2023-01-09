@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} New Question {% endblock %} 
+{% block title %}{{site_info.title}}{% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -9,7 +9,7 @@
 
 <div class="card border-0 shadow table-wrapper table-responsive">
     <div class="card-header">
-        <h2 class="h4">Create new Question</h2>
+        <h1 class="h4">Create new Question here. Marine Expert allowed to add new question</h1>
         <p>This is the designated area for an expert. Here you can create questions, which may be available for
             answering in the evaluation process, if the question is approved by the site admin.</p>
         <p>Enter the name of the question in the space provided. You have to provide minimum three options under a

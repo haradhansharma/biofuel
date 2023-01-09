@@ -1,7 +1,13 @@
 {% load static %}
 <div class="card p-4 my-3 bg-grey-200">
 <div class="col-lg-8 " >
- <a href="/"><img src="{% static 'new_logo.png' %}"  alt="{{site_info.name}}" style="max-width: 250px;" class="img-fluid" ></a>   
+ <a href="/"><img src="{% static 'new_logo.png' %}" loading="lazy" title="{{site_info.name}}" alt="{{site_info.name}}" width="auto" height="auto" style="max-width: 250px;" class="img-fluid" ></a>   
 </div>
+
+
+</div>
+
+<div class="card p-3 mb-3">
+    {{site_info.description}}
 </div>
 

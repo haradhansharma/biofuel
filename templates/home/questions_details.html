@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Question {% endblock %}
+{% block title %}{{site_info.title}}{% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -12,6 +12,7 @@
     <div class="card-header">
         <div class="d-flex justify-content-between align-items-center flex-wrap flex-md-nowrap">
             <div class="d-block">
+                <h1 class="h4">Question in edit mode</h1>
                 <span class="text-danger">Edit Question: </span> <span class="text-primary">{{ question.name }}</span>
             </div>
             <div class="d-block">

@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Quatation Addition {% endblock %}
+{% block title %}{{site_info.title}}{% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -9,13 +9,11 @@
 {% load static %}
 
 {% if messages %}
-
 <div class="alert alert-secondary mt-5" role="alert">
     {% for message in messages %}
     <span class="alert-inner--text">{{ message }}</span>
     {% endfor %}
 </div>
-
 {% endif %}
 
 
@@ -23,7 +21,8 @@
     <div class="card-header">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
             <div class="">
-               <span class="h4 text-danger">{% if not quatation %}Add Quotation to the question:{% endif %} </span> <span class="h4 text-primary">{{ question.name }}</span> 
+               <h1 class="h4 text-danger">{% if not quatation %}Add Quotation to the question:{% else %}Edit Quotation for question:{% endif %} </h1> 
+               <div class="h4 text-primary">{{ question.name }}</div> 
             </div>
             <!--form start-->
             <form id="quotation_form" class="" method="post" action="">
@@ -40,8 +39,7 @@
                 {% endif %}
             </div>
         </div>
-    </div>
-    
+    </div>   
  
     <div class="card-body" hx-target="this" hx-swap="outerHTML">
         <form id="quotation_form" method="post" enctype="multipart/form-data"

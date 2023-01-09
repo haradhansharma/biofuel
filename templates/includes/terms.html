@@ -1,29 +1,24 @@
-{% extends "includes/g_base.html" %}
+{% extends "includes/g_base.html" %} 
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<body class="d-flex flex-column h-100">
-    {% block header %}
-    {% include 'includes/g_header.html' %}
-    {% endblock %}
-    {% block main %}
-    <main class="flex-shrink-0">
-        {% include "includes/hero_section.html" %}
+<body class="d-flex flex-column h-100"> 
+    {% block header %} 
+    {% include 'includes/g_header.html' %} 
+    {% endblock %} 
+    {% block main %} 
+    <main class="flex-shrink-0"> 
+        {% include "includes/hero_section.html" %} 
         <div class="section bg-lgreen">
-            <div class="container card mt-n8 mt-lg-n12 z-2">
-                
-                {% include "includes/terms_text.html" %}
-                
-                
+            <div class="container card mt-n8 mt-lg-n12 z-2"> 
+                {% include "includes/terms_text.html" %} 
             </div>
         </div>
-    </main>
-    {% endblock %}
-    {% block footer %}
-    {% include 'includes/g_footer.html' %}
-    {% endblock %}
-    {% block javascripts %}
-   
-    {% endblock javascripts %}
+    </main> 
+    {% endblock %} 
+    {% block footer %} 
+    {% include 'includes/g_footer.html' %} 
+    {% endblock %} 
+    {% block javascripts %} {% endblock javascripts %} 
 </body>
 </html>

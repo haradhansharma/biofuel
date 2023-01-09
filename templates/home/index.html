@@ -1,15 +1,11 @@
 {% extends "includes/g_base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-
-<body class="d-flex flex-column h-100">
-    {% block header %}
-    {% include 'includes/g_header_front.html' %}
-    {% endblock %}
-    {% block main %}
-    <main class="flex-shrink-0">
-        
+{% block title %}{{site_info.title}}{% endblock %}
+{% block header %}
+{% include 'includes/g_header_front.html' %}
+{% endblock %}
+{% block main %}
+    <main class="flex-shrink-0 mh-100">        
         <div class="section bgjessica-light" style="min-height: 100vh;">
             {% include "includes/hero_section_front.html" %}
             <div class="container">
@@ -166,8 +162,6 @@
                 </div>
             </div>
         </div>
-     
-
 
         <div class="section py-5 bgjessica-light pb-0">
             <div class="col-12 card-header">
@@ -176,7 +170,6 @@
                 </div>
 
                 <div class="container">
-
                     <div class="text-center pb-4 pt-4">
                         <p class="lead px-lg-8 jessica-text">Here is a list of the last three blogs. To view all blogs, click the
                             button
@@ -193,15 +186,14 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <a class="btn btn-sm btn-outline-primary"
-                                                href="{{blog.get_absolute_url}}">Read
-                                                More</a>
+                                                href="{{blog.get_absolute_url}}">Read More
+                                            </a>
                                         </div>
                                         <div class="btn-group">
                                             <div class="btn btn-sm btn-warning">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="#ffffff" class="bi bi-folder2" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5v-9zM2.5 3a.5.5 0 0 0-.5.5V6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5zM14 7H2v5.5a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5V7z" />
+                                                    <path  d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5v-9zM2.5 3a.5.5 0 0 0-.5.5V6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5zM14 7H2v5.5a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5V7z" />
                                                 </svg>
                                             </div>
                                             {% for tag in blog.tags.all %}
@@ -221,10 +213,9 @@
             </div>
         </div>
     </main>
-    {% endblock %}
-    {% block footer %}
-    {% include 'includes/g_footer_front.html' %}
-    {% endblock %}
-</body>
+{% endblock %}
+{% block footer %}
+{% include 'includes/g_footer_front.html' %}
+{% endblock %}
 
-</html>
+

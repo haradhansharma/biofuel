@@ -1,7 +1,6 @@
 {% extends "layouts/base.html" %}
 {% load static %}
-
-{% block title %} Tables {% endblock %}
+{% block title %}{{site_info.title}}{% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -13,8 +12,8 @@
   </nav>
   <div class="d-flex justify-content-between w-100 flex-wrap">
     <div class="mb-3 mb-lg-0">
-      <h1 class="border-bottom">LEADS</h1>
-      <h2>All Leads are listed Here</h2>
+      
+      <h1 class="h3">All Leads are listed Here</h1>
       <p>
         If we click on the 'send mail' button after selecting the lead or leads from the below table the selected lead/leads will be added to the mail queue. 
         As our mail batch is current set to {{ LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME }} by parameter LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME in setttings, so in each call of cron will sent that amount of mail in backend.

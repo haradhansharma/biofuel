@@ -1,27 +1,11 @@
-<!--
 
-=========================================================
-* Volt Free - Bootstrap 5 Dashboard
-=========================================================
-
-* Product Page: https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard
-* Copyright 2021 Themesberg (https://www.themesberg.com)
-
-* Designed and coded by https://themesberg.com
-
-========================================================= 
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. Please contact us to request a removal. Contact us if you want to remove it.
-
--->
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 {% block head %}
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  
-  <!-- Primary Meta Tags -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+
   <title>
     {{site_info.meta_name}}-{% block title %}{% endblock %}
   </title>
@@ -29,21 +13,18 @@
   {% include "includes/meta.html" %}
 
   <script src="https://unpkg.com/htmx.org@1.6.1"
-    integrity="sha384-tvG/2mnCFmGQzYC1Oh3qxQ7CkQ9kMzYjWZSNtrRZygHPDDqottzEJsqS4oUVodhW"
-    crossorigin="anonymous" type="text/javascript"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <!-- Volt CSS -->
+    integrity="sha384-tvG/2mnCFmGQzYC1Oh3qxQ7CkQ9kMzYjWZSNtrRZygHPDDqottzEJsqS4oUVodhW" 
+    crossorigin="anonymous" 
+    type="text/javascript">
+  </script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link type="text/css" href="{% static 'assets/css/volt.css' %}" rel="stylesheet">
   <link type="text/css" href="{% static 'css/common.css' %}" rel="stylesheet">
 
-  <!-- Specific Page JS goes HERE  -->
   {% block stylesheets %}{% endblock stylesheets %}
-
-  <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
 </head>
 {% endblock %}
 <body>
-
 {% block header %}
 {% endblock %}
 
@@ -52,11 +33,11 @@
 
 {% block footer %}
 {% endblock %}
+
 {% include 'includes/scripts.html' %}
+
 {% block javascripts %}
-
 {% endblock javascripts %}
-
 
 </body>
 </html>

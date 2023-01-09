@@ -1,10 +1,10 @@
 {% load static %}
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="title" content="{{site_info.meta_name}}">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+<meta name="title" content="{{site_info.meta_name}} - {{site_info.title}}">
 <meta name="author" content="{{site_info.meta_name}}">
 <meta name="description" content="{{site_info.description}}">
 <meta name="keywords" content="{{site_info.tag}}" />
-<link rel="canonical" href="{{site_info.domain}}">
+<link rel="canonical" href="{{site_info.url}}">
 
 <meta name="publisher" content="{{site_info.name}}">
 <meta name="copyright" content="{{site_info.name}}"> 
@@ -15,17 +15,17 @@
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="{{site_info.domain}}">
-<meta property="og:title" content="{{site_info.meta_name}}">
+<meta property="og:url" content="{{site_info.url}}">
+<meta property="og:title" content="{{site_info.meta_name}} - {{site_info.title}}">
 <meta property="og:description" content="{{site_info.description}}">
 <meta property="og:image" content="{% static site_info.og_image %}">
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="{{site_info.domain}}">
-<meta property="twitter:title" content="{{site_info.meta_name}}"> 
+<meta property="twitter:url" content="{{site_info.url}}">
+<meta property="twitter:title" content="{{site_info.meta_name}} - {{site_info.title}}"> 
 <meta property="twitter:description" content="{{site_info.description}}">
-<meta property="twitter:image" content="{% static site_info.logo %}">
+<meta property="twitter:image" content="{% static site_info.og_image %}">
 
 <!-- Favicon -->
 <link rel="apple-touch-icon" sizes="120x120" href="{% static site_info.logo %}">

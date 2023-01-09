@@ -1224,6 +1224,11 @@ def stdoils(request):
             
     
     return render(request, 'evaluation/std_oils.html', {'stdoil_list' : stdoil_list})
+
+
+def get_glossary(request):
+    from glossary.models import Glossary
+    return render(request, 'glossary/glossary_template.html', {'object_list' : Glossary.objects.all()})
     
 
 

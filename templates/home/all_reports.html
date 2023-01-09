@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} All reports {% endblock %}
+{% block title %}{{site_info.title}}{% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -13,8 +13,7 @@
             <div class="d-block mb-4 mb-md-0">
                 <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
                 </nav>
-                <h2 class="h4">All Reports</h2>
-                <p class="mb-0">Genarated by biofuel producers.</p>
+                <h1 class="h4">All Reports Created by the Biofuel Producer</h1>              
             </div>
             <div class="btn-toolbar mb-2 mb-md-0">
             </div>

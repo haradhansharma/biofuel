@@ -1,21 +1,18 @@
 {% extends "layouts/base.html" %}
 {% load custom_tags %}
 
-{% block title %} Questions {% endblock %}
+{% block title %}{{site_info.title}}{% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 {% block content %}
-
-
-
 <div class="card card-body border-0 shadow table-wrapper table-responsive bgjessica-primary">
     <div class="card-header">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
             <div class="d-block mb-4 mb-md-0">
                 <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
                 </nav>
-                <h2 class="h4">All Questions And Quotations</h2>
+                <h1 class="h4">All Questions And Quotations</h1>
                 <p class="mb-0">Click on the Parent questions to findout all child questions with action button. If you are in small screen then scroll to write.</p>
             </div>
             <div class="btn-toolbar mb-2 mb-md-0">

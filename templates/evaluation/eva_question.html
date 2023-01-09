@@ -44,7 +44,45 @@
         <div class="container-fluid px-0">
             <div class="row justify-content-center">
                 <div class="col-12">
-                    <button class="btn btn-warning btn-block mb-2" onclick="history.back()">Go Back</button>
+                    <div class="justify-content-left d-flex">                    
+                        <button class="btn btn-warning btn-block mb-2" onclick="history.back()">Go Back</button>
+                        <button type="button" 
+                        class="btn btn-block btn-primary mb-2 ms-2" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#modal-glossary" 
+                        hx-get="{% url 'evaluation:get_glossary' %}"                    
+                        hx-target="#glo">
+                        Glossary
+                        </button>
+                    </div>
+
+
+                    <div class="modal fade" id="modal-glossary" tabindex="-1" role="dialog" aria-labelledby="modal-glossary" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="h6 modal-title">Glossary</h2>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                    <div class="row" id="glo">
+                                    </div>
+                                    </div>
+                                   
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-secondary" href="#jto">Go To Top</a>
+                                    <a target="_blank" href="{% url 'glossary:g_list' %}#rform" class="btn btn-link text-gray ms-auto">Submite Glossary Request</a>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
 
                     <div id="ques" class="card text-center">
                         <div class="card-footer">

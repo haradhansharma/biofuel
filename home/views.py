@@ -28,6 +28,7 @@ log =  logging.getLogger('log')
 
 
 
+
 def home(request):
     #skip session error
     null_session(request)  
@@ -37,10 +38,22 @@ def home(request):
     
     user_types = UserType.objects.all().order_by('sort_order') 
     latest_blogs = BlogPost.published.filter(status = 'published').order_by('-publish')[:3]
+    
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Home'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = 'New international platform will help increase supply for sustainable fuels for the marine market!'
+    meta_data['tag'] = 'green, fuel, validation, marine, biofuel, alfa, laval, MASH, MAN, ENERGY'
+    meta_data['robots'] = 'index, follow'
+    meta_data['og_image'] = site_info().get('og_image')
+    
+    
     context = {
-        'user_types': user_types ,
-        
-        'latest_blogs' : latest_blogs       
+        'user_types': user_types ,        
+        'latest_blogs' : latest_blogs,
+        'site_info' : meta_data     
     }
     return render(request, 'home/index.html', context = context)
 
@@ -97,11 +110,6 @@ def user_types(request, slug):
     else:
         enroll = {}
     
-    
-        
-        
-    
-    
     # pass user type data    
     try:
         user_type = UserType.objects.get(slug = slug)
@@ -109,11 +117,23 @@ def user_types(request, slug):
     except:
         user_type = None
         users = None
+        
+        
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = user_type.name if user_type is not None else 'Page for Biofuel User Type'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f'This is the page for {user_type.name if user_type is not None else "user type registered in our platform"}. This is not a indivisual page for a registered user!!'
+    meta_data['tag'] = 'biofuel, usertype, consumer, producer, experts, marine'
+    meta_data['robots'] = 'index, follow'
+    meta_data['og_image'] = user_type.icon.url
     
     context = {
         'user_type': user_type,
         'users': users,
-        'enroll': enroll    
+        'enroll': enroll,
+        'site_info' : meta_data         
     }
     return render(request, 'home/usertypes.html', context = context) 
     
@@ -131,6 +151,17 @@ def dashboard(request):
     day_of_week = [key.split(': ') for key, value in weeks_results(request).items()]    
     total_of_day = [value for key, value in weeks_results(request).items()]   
     
+    
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Dashboard'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f'The Dashboard displays the consolidated reports and allows approved user types to perform some limited administrative operations.'
+    meta_data['tag'] = 'biofuel, dashboard, operation'
+    meta_data['robots'] = 'noindex, nofollow'
+    # meta_data['og_image'] = user_type.icon.url
+    
     context = {
         'user_of_labels' : users_under_each_label(request),
         'biofuel_records' : reports_under_each_biofuel(request),
@@ -138,7 +169,8 @@ def dashboard(request):
         'total_of_day': total_of_day,  
         'total_reports': total_reports(request),      
         'allreports' : all_reports(request),
-        'typewise_user' : typewise_user(request)        
+        'typewise_user' : typewise_user(request),
+        'site_info' : meta_data      
     }   
     
     return render(request, 'home/dashboard.html', context = context)
@@ -164,12 +196,23 @@ def user_setting(request):
         
         return HttpResponseRedirect(reverse('home:user_settings'))
     user_form = UserForm(instance=request.user)
-    profile_form = ProfileForm(instance=request.user.profile)    
+    profile_form = ProfileForm(instance=request.user.profile)  
+    
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'User Settings'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f'This page is designated to setup user account and user profile.'
+    meta_data['tag'] = 'settings, user profile'
+    meta_data['robots'] = 'noindex, nofollow'
+    # meta_data['og_image'] = user_type.icon.url  
     
     context = {
         "user":request.user,
         "user_form":user_form,
-        "profile_form":profile_form,        
+        "profile_form":profile_form, 
+        'site_info' : meta_data          
     }
     return render(request, 'home/settings.html', context = context)
 
@@ -190,9 +233,20 @@ def password_change(request):
         return HttpResponseRedirect(reverse('home:change_pass'))    
     password_form = PasswordChangeForm(request.user)  
     
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Change Password'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f'Password is the key to protect account. Here user can manage self password.'
+    meta_data['tag'] = 'user, password, change'
+    meta_data['robots'] = 'noindex, nofollow'
+    # meta_data['og_image'] = user_type.icon.url
+    
     context = {
         "user":request.user,        
-        "password_form":password_form
+        "password_form":password_form,
+        'site_info' : meta_data   
     }
     return render(request, 'home/change_pass.html', context = context)
 
@@ -266,9 +320,21 @@ def quotations(request):
         results = paginator.page(1)
     except EmptyPage:
         results = paginator.page(paginator.num_pages)
+        
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Quotations'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f'Every question is allowed to include one or more quotations.  It is created by the biofuel experts.'
+    meta_data['tag'] = 'quotation, quotations'
+    meta_data['robots'] = 'noindex, nofollow'
+    # meta_data['og_image'] = user_type.icon.url
     
     context = {
-        'questions': results        
+        'questions': results,
+        'site_info' : meta_data   
+                
     }
     
     return render(request, 'home/quotations.html', context = context)
@@ -279,21 +345,18 @@ def quotations(request):
 @login_required
 @marine_required
 def questions(request):  
-    '''get questions related to the current user'''
-    
+    '''get questions related to the current user'''    
     
     # This is essential where login_required
     null_session(request)
     log.info(f'Questions page accessed by_____________ {request.user}')  
     # we need permitted question based on expertise type
-    questions = get_question_of_label(request)
-    
+    questions = get_question_of_label(request)    
     # build parent         
     parents = []
     for question in questions:        
         if question.is_door == True:
-            parents.append(question)
-            
+            parents.append(question)            
             
     #build results of chaptariged questions       
     results = []    
@@ -312,9 +375,20 @@ def questions(request):
         results = paginator.page(1)
     except EmptyPage:
         results = paginator.page(paginator.num_pages)
+        
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Questions'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f'Here is a collection of specialized questions. The questions and their contents are editable by authorized users.'
+    meta_data['tag'] = 'question, chapter'
+    meta_data['robots'] = 'noindex, nofollow'
+    # meta_data['og_image'] = user_type.icon.url
     
     context = {
-        'questions': results        
+        'questions': results,
+        'site_info' : meta_data    
     }
     
     return render(request, 'home/questions.html', context = context)
@@ -432,12 +506,23 @@ def add_quatation(request, slug):
             else:
                 messages.warning(request, f'Change in "Tests for question" is not allowed! It should be "{question}"! Changes was not effected.')
                 return HttpResponseRedirect(reverse('home:add_quatation', args=[str(slug)]))
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Add/edit Quotation'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f'The place to add or edit quotation under specific question by the marine expert.'
+    meta_data['tag'] = 'quotation'
+    meta_data['robots'] = 'noindex, nofollow'
+    # meta_data['og_image'] = user_type.icon.url
+    
     context = {
         'question': question,
         'form' : form,
         'na_form' : na_form,
         'quatation' : check_quotation.first(), 
-        'report_link' : report_link
+        'report_link' : report_link,
+        'site_info' : meta_data    
     }
     return render(request, 'home/add_quatation.html', context = context)
 
@@ -746,6 +831,16 @@ def questions_details(request, slug):
     else:
         question_form = QuestionForm(prefix='questions', instance=question)
         option_formset = OptionFormSet(prefix='options', instance=question)
+        
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Question in edit mode'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f'This is the place to view indivisual question in edit mode.'
+    meta_data['tag'] = 'Question'
+    meta_data['robots'] = 'noindex, nofollow'
+    # meta_data['og_image'] = user_type.icon.url
     
     
     
@@ -753,6 +848,7 @@ def questions_details(request, slug):
         'question': question,
         'question_form': question_form,
         'option_formset': option_formset,
+        'site_info' : meta_data   
         
     }
     return render(request, 'home/questions_details.html', context = context)
@@ -791,6 +887,16 @@ def new_questions(request):
     else:
         question_form = QuestionForm(prefix='questions')
         option_formset = OptionFormSet(prefix='options')
+        
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Add New Question'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f'Here new question can be added by the marine expert. The added question will be justified and reformated by the Admin.'
+    meta_data['tag'] = 'Question'
+    meta_data['robots'] = 'noindex, nofollow'
+    # meta_data['og_image'] = user_type.icon.url
     
     
     
@@ -798,6 +904,7 @@ def new_questions(request):
         
         'question_form': question_form,
         'option_formset': option_formset,
+        'site_info' : meta_data    
         
     }
     return render(request, 'home/new_question.html', context = context)
@@ -808,8 +915,21 @@ def allreports(request):
     null_session(request)
     
     log.info(f'All report accessed by_____________ {request.user}')
+    
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Evaluation reports of Biofuels.'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f'Report genareted by the biofuel producer are listed here. Admin can see all reports and reports created by the producer can see self reports.'
+    meta_data['tag'] = 'biofuel, evaluation, reports'
+    meta_data['robots'] = 'noindex, nofollow'
+    # meta_data['og_image'] = user_type.icon.url
+    
+    
     context = {
-        'allreports' : all_reports(request),        
+        'allreports' : all_reports(request), 
+        'site_info' : meta_data         
     }
     
     return render(request, 'home/all_reports.html', context = context)
@@ -837,37 +957,37 @@ def sub_extra(request, pk):
 
 
 def webmanifest(request):
-    site = ExSite.on_site.get()    
+    site = site_info() 
     icons = []    
     ic192 = {
-        "src": site.og_image.url,
+        "src": static(site.get('og_image')),
         "sizes": "192x192",
         "type": "image/png"        
     }
     
     icons.append(ic192)   
     ic512 = {
-        "src": site.og_image.url,
+        "src": static(site.get('og_image')),
         "sizes": "512x512",
         "type": "image/png"        
     }
     icons.append(ic512)    
     
-    site_info = {
-        'name' : site.site.name,
-        'short_name' : site.site.name,
+    site_data = {
+        'name' : site.get('name'),
+        'short_name' : site.get('name'),
         'icons' : icons,  
         'start_url' : '/', 
         "scope": "/",
         'lang' : 'en',
-        'screenshots' : [site.og_image.url, site.site_logo.url],     
-        'description': site.site_description,  
+        'screenshots' : [static(site.get('og_image')), static(site.get('site_logo'))],     
+        'description': site.get('site_description'),  
         "theme_color": "#08793B",
         "background_color": "#08793B",
         "display": "standalone"        
     }
     
-    return JsonResponse(site_info, safe=False)
+    return JsonResponse(site_data, safe=False)
 
 
 

@@ -56,67 +56,25 @@
                 <div class="col-12">
                     <div class="row d-flex justify-content-center ">
                         <div class="col-md-8 align-items-start jsutify-content-start">
-                            <div class="card p-3">
-                                {% regroup object_list by anchor as objects %}
-                                <div id="grosary-nav" class="card-header navbar-expand-lg navbar-dark ">
-                                    <div id="nin" class="d-none">GLOSSARY OF GREEN FUEL VALIDATION PLATFORM AND
-                                        DEFINITIONS
-                                    </div>
-                                    <div id="jto" class="display-5 text-muted">Jump To__</div>
-                                    <div id="li" class="">
-                                        {% for glossary in objects %}
-                                        <a class="btn btn-outline-primary" href="#{{glossary.grouper|lower}}">
-                                            {{ glossary.grouper }}
-                                        </a>
-                                        {% endfor %}
-                                    </div>
+                            {% include "glossary/glossary_template.html" %}
+                            <form id="rform" method="post" action="" class="p-3 card bg-warning mt-3">
+                                {% csrf_token %}
+                                <div class="form-floating mb-3">
+                                    {{ request_form.title }}
+                                    <label class="text-primary" for="{{ request_form.title.id_for_label }}">
+                                        {{ request_form.title.label }} 
+                                        <span class="text-danger">
+                                            {% if request_form.title.field.required %}*{% endif %}
+                                        </span> 
+                                    </label>
+                                    <span class="text-start text-danger">
+                                        {{ form.title.errors }}
+                                    </span>
                                 </div>
-                                {% for glossary in objects %}
-                                <div id="{{glossary.grouper|lower}}">
-                                    <div class="display-2 py-4">{{ glossary.grouper }}</div>
-                                    {% for item in glossary.list %}
-                                    <div class="card border-bottom border-2 mb-3">
-                                        <div class="card-header h4">
-                                            {{item.title}}
-                                        </div>
-                                        <div class="card-body">
-                                            {{item.description}}
-                                        </div>
-
-                                        <div class="card-footer">
-                                            {% for link in item.relatedlinks.all %}
-                                            <a class="badge bg-secondary" target="_blank"
-                                                href="{{link.link}}">{{link.title}}</a>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                                {% endfor %}
-
-
-
-
-
-                                <form method="post" action="" class="p-3 card bg-warning">
-                                    {% csrf_token %}
-                                    <div class="form-floating mb-3">
-                                        {{ request_form.title }}
-                                        <label class="text-primary" for="{{ request_form.title.id_for_label }}">
-                                            {{ request_form.title.label }} 
-                                            <span class="text-danger">
-                                                {% if request_form.title.field.required %}*{% endif %}
-                                            </span> 
-                                        </label>
-                                        <span class="text-start text-danger">
-                                            {{ form.title.errors }}
-                                        </span>
-                                    </div>
-                                    {{ request_form.captcha }}
-                                    <span class="text-start text-danger">{{ form.captcha.errors }}</span>
-                                    <button type="submit" id="btn_ini" class="btn btn-success btn-block">Submit</button>
-                                </form>
-                            </div>
+                                {{ request_form.captcha }}
+                                <span class="text-start text-danger">{{ form.captcha.errors }}</span>
+                                <button type="submit" id="btn_ini" class="btn btn-success btn-block">Submit</button>
+                            </form>
                         </div>
                         <div class="col-md-4 align-items-start jsutify-content-start">
                             <div class="card p-2 justify-content-center align-items-center" style="min-height: 10vh;">
