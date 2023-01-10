@@ -32,6 +32,10 @@ class RelatedLinks(models.Model):
     
 class GRequests(models.Model):
     
+    class Meta:
+        verbose_name = 'G Request'
+        verbose_name_plural = 'G Requests'   
+    
     created     = models.DateTimeField(auto_now_add=True, editable=False)
     modified    = models.DateTimeField(auto_now=True, editable=False)
     title       = models.CharField(max_length=250)

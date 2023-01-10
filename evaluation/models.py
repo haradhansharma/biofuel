@@ -34,6 +34,10 @@ class DifinedLabel(models.Model):
     
     ''' 
     
+    class Meta:
+        verbose_name = 'Defined Label'
+        verbose_name_plural = 'Defined Labels'
+    
     
     name = models.CharField(max_length=252) 
     
@@ -387,6 +391,9 @@ class EvaLabel(models.Model):
         return self.label.name
 
 class EvaLebelStatement(models.Model):
+    class Meta:
+        verbose_name = 'Eva Label Statement'
+        verbose_name_plural = 'Eva Label Statements'
     '''    
     It has been genarated autometically during evaluation by user.
     so that it is not displayed in admin side.    
@@ -427,6 +434,11 @@ class EvaLebelStatement(models.Model):
     
     
 class NextActivities(models.Model):
+    
+    class Meta:
+        verbose_name = 'Next Activity'
+        verbose_name_plural = 'Next Activities'    
+        
     '''
     Main parameter to be set here for next activities.
     '''
@@ -475,6 +487,11 @@ class EvaluatorActivities(models.Model):
         return str(self.next_activity.name_and_standared)
     
 class OliList(models.Model):
+    
+    class Meta:
+        verbose_name = 'Oil List'
+        verbose_name_plural = 'Oil Lists'   
+        
     name = models.CharField(max_length = 250, unique=True)
     key = models.CharField(null=True, blank=True, editable=False, max_length=250)    
     
@@ -492,6 +509,11 @@ class OliList(models.Model):
     
     
 class StdOils(models.Model):    
+    
+    class Meta:
+        verbose_name = 'Std Oil'
+        verbose_name_plural = 'Std Oils'  
+        
     select_oil = models.ForeignKey(OliList, on_delete=models.CASCADE, default=1)
     biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, editable=False,)
     
@@ -500,6 +522,9 @@ class StdOils(models.Model):
         return self.select_oil.name
 
 class StandaredChart(models.Model):
+    class Meta:
+        verbose_name = 'Standard Chart'
+        verbose_name_plural = 'Standard Charts'   
     '''
     Please check admin for this model if you changing anythig as here option is overwriting form admin to narrow down.
     '''
@@ -536,6 +561,13 @@ class Youtube_data(models.Model):
         return self.term
     
 class LabelDataHistory(models.Model):
+    
+    
+    class Meta:
+        verbose_name = 'Label Data History'
+        verbose_name_plural = 'Label Data Histories'    
+    
+    
     evaluator = models.ForeignKey(Evaluator, on_delete=models.CASCADE)
     # label = models.TextField(max_length=250)
     items= models.TextField(max_length=250)
