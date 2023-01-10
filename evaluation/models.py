@@ -339,7 +339,7 @@ class Evaluator(models.Model):
     
 
     def __str__(self):
-        return self.name + str(self.id)
+        return str(self.name) + str(self.id)
     
     def get_absolute_url(self):
         return reverse('evaluation:nreport', args=[str(self.slug)])    

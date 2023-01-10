@@ -46,7 +46,7 @@ def clear_evaluator():
     '''
     evaluator = Evaluator.objects.filter(report_genarated = False) 
     total_deleted = 0
-    if evaluator.exists():
+    if evaluator.exists(): 
         try:
             for e in evaluator:                
                 if e.id not in active_sessions(): # to avoid deleting running session's evaluator

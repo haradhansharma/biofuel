@@ -64,8 +64,8 @@ def all_reports(request):
                 answered_questiones = EvaLebelStatement.objects.filter(evaluator = evaluator).exclude(question = None).values('question').distinct().count()
                 positive_ans = EvaLebelStatement.objects.filter(evaluator = evaluator, positive=str(1)).exclude(question = None).values('question').distinct().annotate(positive = Count('positive')).count()
                 dont_know_ans = EvaLebelStatement.objects.filter(evaluator = evaluator, dont_know=True).exclude(question = None).values('question').distinct().annotate(positive = Count('dont_know')).count() 
-                dont_know_percent = (int(dont_know_ans) * 100)/int(answered_questiones)
-                positive_percent = (int(positive_ans) * 100)/int(answered_questiones)        
+                dont_know_percent = (int(dont_know_ans) * 100)/int(answered_questiones) if answered_questiones != 0 else 100
+                positive_percent = (int(positive_ans) * 100)/int(answered_questiones) if answered_questiones != 0 else 100     
                 
                 g_report = {
                     'report': evaluator,
@@ -97,7 +97,8 @@ def all_reports(request):
             return reports_set
         else:
             return None    
-    except:
+    except Exception as e:
+        print(e)
         raise Http404
 
 def typewise_user(request):    
