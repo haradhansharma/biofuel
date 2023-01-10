@@ -79,15 +79,13 @@
 
 
                                     <div class="oilindicator text-danger">Loading.....</div><br>
-
                                     <div class="form-floating mb-3">
                                         <select aria-label="stdoil" class="form-select mb-4" id="stdoil" name="stdoil">                                            
                                             {% for sol in stdoil_list %}                                          
                                             <option value="{{ sol.id }}">{{ sol.select_oil.name }}</option>
                                             {% endfor %}
                                         </select>
-                                        <label class="text-primary" for="stdoil">Related Fuel Grade<span class="text-danger">*</span></label>
-                                        
+                                        <label class="text-primary" for="stdoil">Related Fuel Grade</label>                                        
                                     </div>
                                     
                                                    
