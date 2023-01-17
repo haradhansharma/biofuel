@@ -1,12 +1,4 @@
-User-agent: AdsBot-Google
-User-Agent: Googlebot
-User-Agent: Bingbot
-User-Agent: Slurp
-User-Agent: Googlebot-Image
-User-agent: TruliaBot
-User-agent: Mediapartners-Google
-User-agent: googlebot-news
-User-agent: AhrefsBot
+User-agent: *
 Disallow: /
 Disallow: /static/
 Disallow: /private/
@@ -15,3 +7,6 @@ Disallow: /admin/
 Disallow: /accounts/
 
 Crawl-delay: 10
+
+
+Sitemap: https://gf-vp.com/su/sitemap.xml
