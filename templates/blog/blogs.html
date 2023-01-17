@@ -1,7 +1,9 @@
 {% extends "includes/g_base.html" %}
-{% load static %}
+{% load static %} 
 <!DOCTYPE html>
 <html lang="en">
+{% block title %} {{site_info.title}} {% endblock %}
+
 <body class="d-flex flex-column h-100">
     {% block header %}
     {% include 'includes/g_header.html' %}
@@ -21,7 +23,7 @@
                         <div class="row g-0">
                             <div class="col-12">
                                 <div class="ratio ratio-16x9">                                    
-                                    <img src="{% static post.image.url %}" class="rounded featured-image-list" alt="{{post.title}}">
+                                    <img src="{% static post.image.url %}" class="rounded featured-image-list" alt="{{post.title}}" title ="{{post.title}}" height="auto" width="auto">
                                 </div>
                             </div>
                             <div class="col-12">

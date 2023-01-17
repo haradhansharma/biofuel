@@ -10,7 +10,7 @@
         
         <div class="d-flex justify-content-between align-items-center" >
             <div class="d-flex text-start justify-content-center align-items-center" role="contentinfo">
-                <img class="mb-4" height="50px" src="{% static 'assets/shippinglab-logo.svg' %}" alt="Shipping lab" style="mix-blend-mode:screen;">
+                <img class="mb-4" height="50px" src="{% static 'assets/shippinglab-logo.svg' %}" alt="Shipping lab" title="Shipping Lab" width="auto" style="mix-blend-mode:screen;">
             </div>
 
             <div class="d-flex justify-content-center align-items-center">           
@@ -21,7 +21,11 @@
             <div class="d-flex text-end justify-content-center align-items-center" role="contentinfo">
                 <a class="d-flex justify-content-center" target="_blank" href="{% url 'guide:guide_home' %}"
                     title="gf-vp guide">
-                    <img src="{% static 'guide/logo-02.png' %}" height="50px" class="mb-4" alt="gf-vp guide">
+                    <img src="{% static 'guide/logo-02.png' %}" height="50px" class="mb-4" alt="gf-vp guide" title="gf-vp guide" width="auto">
+                </a>
+                <a class="d-flex justify-content-center" target="_blank" href="{% url 'mkdocs:mkdocs' docs %}"
+                    title="gf-vp guide">
+                    Technical Docs
                 </a>
             </div>
         </div>

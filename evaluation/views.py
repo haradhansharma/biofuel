@@ -32,6 +32,8 @@ from reportlab.lib.units import inch
 from django.db.models import Avg, Count
 import re
 
+from doc.doc_processor import site_info
+
 
 import logging
 log =  logging.getLogger('log')
@@ -187,13 +189,13 @@ def set_evastatement_of_logical_string(request, selected_option, evaluator):
     
     #delete any prevous record for this current report of common label
     try:
-        log.info(f'deleting assesment of common label if any.......')
+        # log.info(f'deleting assesment of common label if any.......')
         EvaLebelStatement.objects.filter(
             evalebel = eva_label_common, 
             evaluator =  evaluator, 
             assesment = True).delete()    
     except Exception as e:
-        log.info(f'Assement deleting was not possible due to {e} !')
+        log.warning(f'Assement deleting was not possible due to {e} !')
     
     
     #This is a calculated assesment based on the answere. Called function gives the idea.    
@@ -223,21 +225,21 @@ def set_evastatement_of_logical_string(request, selected_option, evaluator):
 
     try:
         
-        log.info(f'Recording logical statment based on eoi to put into the each label of the report {evaluator} ')          
+        # log.info(f'Recording logical statment based on eoi to put into the each label of the report {evaluator} ')          
         logical_statement = OptionSet.objects.get(option_list = eoi)
         
         # Check and set to the summary.
-        log.info(f'Setting logical statement to the common label based on answered question to the report {evaluator} !')
+        # log.info(f'Setting logical statement to the common label based on answered question to the report {evaluator} !')
         if (str(eoi) in logical_options) and (logical_statement.overall == str(1)):
             try:
-                log.info(f'Deleting previous logical string record in the common label!')
+                # log.info(f'Deleting previous logical string record in the common label!')
                 EvaLebelStatement.objects.filter(
                     evalebel = eva_label_common, 
                     evaluator =  evaluator, 
                     positive = logical_statement.positive).delete()                
             except Exception as e:
                 log.info(f'No logical string record found in common label for the eoi!')
-            log.info(f'Saving logical statement to the common label based on the eoi to the report {evaluator} ')
+            # log.info(f'Saving logical statement to the common label based on the eoi to the report {evaluator} ')
             new_evalebel_statement_common = EvaLebelStatement(
                 evalebel = eva_label_common, 
                 statement = logical_statement.text, 
@@ -247,21 +249,21 @@ def set_evastatement_of_logical_string(request, selected_option, evaluator):
             
             
         # Check and set to the specific label.  
-        log.info(f'setting logical stement to the each label for the report {evaluator} !')  
+        # log.info(f'setting logical stement to the each label for the report {evaluator} !')  
         if (str(eoi) in logical_options) and (logical_statement.overall == str(0)):
             log.info(f'eoi found in the logical options')
             ls_id = logical_statement.ls_id
                     
             ls_labels = Lslabel.objects.filter(logical_string__id = ls_id, value = 1)            
-            log.info(f'total {ls_labels.count()} Label found to add logical string for the eoi in the report {evaluator} ')
+            # log.info(f'total {ls_labels.count()} Label found to add logical string for the eoi in the report {evaluator} ')
             for ls_label in ls_labels:                          
                 ls_eva_label = EvaLabel.objects.get(label__name = ls_label.name, evaluator = evaluator)                
                 try: 
-                    log.info(f'Deleting previous record for this eoi label. ')                    
+                    # log.info(f'Deleting previous record for this eoi label. ')                    
                     EvaLebelStatement.objects.filter(evalebel = ls_eva_label, evaluator =  evaluator, positive = logical_statement.positive,).delete()                    
                 except Exception as e:
                     log.info(f'Not able to delete previous record for the {e} ')   
-                log.info(f'Saving new logical string record for the label {ls_label} ') 
+                # log.info(f'Saving new logical string record for the label {ls_label} ') 
                 new_evalebel_statement_g = EvaLebelStatement(
                     evalebel = ls_eva_label, 
                     statement = logical_statement.text, 
@@ -274,10 +276,10 @@ def set_evastatement_of_logical_string(request, selected_option, evaluator):
         log.info(f'There was problem in recording logical string due to {e} ............................')
     
     #Statement of the option will be aded to the summary if overall is set to 1    
-    log.info(f'Recording statement of the selected option to the common label. ')
+    # log.info(f'Recording statement of the selected option to the common label. ')
     if selected_option.overall == str(1):
         try:
-            log.info(f'deleting previous statement form the common label for this selected option')
+            # log.info(f'deleting previous statement form the common label for this selected option')
             EvaLebelStatement.objects.filter(evalebel = eva_label_common, evaluator =  evaluator, assesment = False).delete()
         except Exception as e:
             log.info(f'There was a problem in deleting previous rrecord due to {e} ')
@@ -774,6 +776,22 @@ def eva_question(request, evaluator, slug):
         'answered_percent' : answered_percent
         
     }
+    
+    
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = question.name
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f"Depending on how many answers you provide, the self assessment will take anywhere from 10 to 33 minutes. At the end of the assessment, a PDF report will be provided."
+    meta_data['tag'] = 'biofuel, evaluation'
+    meta_data['robots'] = 'noindex, nofollow'
+    # meta_data['og_image'] = request.user.type.icon.url 
+    
+    context.update({
+        'site_info' : meta_data, 
+    })
+    
     return render(request, 'evaluation/eva_question.html', context = context)
 
 
@@ -932,12 +950,26 @@ def eva_index2(request):
     
     stdoil_list = StdOils.objects.filter(biofuel = first_biofuel)
     
+    
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Evaluation Index, starting point of evaluation process!'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f"This is the starting point of biofuel evaluation process at green fuel validation platform. Here producer need to give authority information to start validation process!"
+    meta_data['tag'] = 'biofuel, evaluation'
+    meta_data['robots'] = 'noindex, nofollow'
+    # meta_data['og_image'] = request.user.type.icon.url 
+    
     context ={
         'form': form,
         'box_timing': box_timing, 
-        'stdoil_list' : stdoil_list  
-          
+        'stdoil_list' : stdoil_list,
+        'site_info' : meta_data,          
     }
+    
+    
+    
     return render(request, 'evaluation/new_index.html', context = context)
 
 
@@ -1003,10 +1035,19 @@ def thanks(request):
             setattr(report, 'last_slug', first_of_parent.slug )
             
    
-    
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Thank you'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f"This is the thank you page afte evaluation process completed. Here, registerd user can view his information and created reports. Also Can go to the profiel setting page."
+    meta_data['tag'] = 'thank you, gf-vp.com'
+    meta_data['robots'] = 'noindex, nofollow'
+    meta_data['og_image'] = request.user.type.icon.url 
 
     context = {
         'donotshow' : 'yes',
+        'site_info' : meta_data,
         'refferer_path' : urlparse(request.META.get('HTTP_REFERER')).path,
         'gretings': gretings,
         'button': button,
@@ -1169,6 +1210,22 @@ def report(request, slug):
 @report_creator_required
 def nreport(request, slug): 
     context = nreport_context(request, slug)
+    report = context['current_evaluator']
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = f'Analysis Report #{report.id}'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f"Green fuel validation platform-Analysis Report."
+    meta_data['tag'] = 'Analysis Report, gf-vp.com'
+    meta_data['robots'] = 'noindex, nofollow'
+    meta_data['og_image'] = request.user.type.icon.url 
+    
+    
+    context.update({
+        'site_info' : meta_data,
+    })
+    
     return render(request, 'evaluation/nreport.html', context = context)   
 
         
@@ -1220,13 +1277,8 @@ def nreport_pdf(request, slug):
 
 def stdoils(request):
     biofuel_id = request.GET.get('biofuel')    
-    # stdoil_list = StandaredChart.objects.filter(related_biofuel__id = biofuel_id).values('oil_name', 'key').order_by('oil_name').distinct()
-    stdoil_list = StdOils.objects.filter(biofuel__id = biofuel_id)
-    
-    
-            
-            
-    
+
+    stdoil_list = StdOils.objects.filter(biofuel__id = biofuel_id)     
     return render(request, 'evaluation/std_oils.html', {'stdoil_list' : stdoil_list})
 
 

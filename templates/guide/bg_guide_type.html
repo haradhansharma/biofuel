@@ -1,12 +1,16 @@
 {% extends "guide/bg_base.html" %}
 {% load static %}
-{% block header %}
+{% block title %} {{site_info.title}} {% endblock %}
+{% block header %} 
+
+
 {% include "guide/bg_header.html" %}
 {% endblock %}
 {% block main %}
 <div class="container-fluid">
-  <div class="row">
-    <main class="col-12 mx-auto px-4">
+  <div class="row" >
+    <main class="col-12 mx-auto px-4" style="min-height: 100vh;">
+      <h1>This section describs {{site_info.title}}</h1>
       <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
       </div>

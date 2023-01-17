@@ -1,7 +1,8 @@
 {% extends "layouts/base-fullscreen.html" %}
 {% load static %}
 
-{% block title %} {{text.signin}} {% endblock %}
+{% block title %} {{site_info.title}} {% endblock %}
+
 {% block stylesheets %}
 
 <style type="text/css">
@@ -37,6 +38,7 @@
     });
       // DOMContentLoaded  end
 </script>
+
 
 {% endblock js %}
 {% load custom_tags %}

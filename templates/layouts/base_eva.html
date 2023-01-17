@@ -1,20 +1,4 @@
-<!--
 
-=========================================================
-* Volt Free - Bootstrap 5 Dashboard
-=========================================================
-
-* Product Page: https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard
-* Copyright 2021 Themesberg (https://www.themesberg.com)
-* License (https://themesberg.com/licensing)
-
-* Designed and coded by https://themesberg.com
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. Please contact us to request a removal.
-
--->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -29,16 +13,16 @@
 {% include "includes/meta.html" %}
 
 
-<!-- <script src="https://unpkg.com/htmx.org@1.6.1" integrity="sha384-tvG/2mnCFmGQzYC1Oh3qxQ7CkQ9kMzYjWZSNtrRZygHPDDqottzEJsqS4oUVodhW" crossorigin="anonymous"></script>-->
+
 <script src="{% static 'assets/vendor/htmx/dist/htmx.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'assets/vendor/font-awesome/js/all.min.js' %}" type="text/javascript"></script>
 <link type="text/css" href="{% static 'assets/vendor/font-awesome/css/all.min.css' %}" rel="stylesheet" type="text/css"> 
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" type="text/css">
-<!-- Volt CSS -->
+
 <link type="text/css" href="{% static 'assets/css/volt.css' %}" rel="stylesheet" type="text/css"> 
 <link type="text/css" href="{% static 'css/common.css' %}" rel="stylesheet" type="text/css"> 
 
-<!-- Specific Page JS goes HERE  -->    
+
 {% block stylesheets %}{% endblock stylesheets %}
 
 </head>
@@ -50,7 +34,7 @@
 
       <div class="card p-4 my-3 bgjessica-light-primary"> 
         <div class=" mb-3 " >
-         <a href="/"><img src="{% static 'new_logo.png' %}"  alt="{{site_info.name}}" style="max-width: 350px;" class="img-fluid" ></a>   
+         <a href="/"><img src="{% static 'new_logo.png' %}"  alt="{{site_info.name}}" title="{{site_info.name}}" width="auto" height="auto" style="max-width: 350px;" class="img-fluid" ></a>   
         </div>
         <div class="card-footer p-1 text-light">
         {{ timing_text }}

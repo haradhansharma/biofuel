@@ -1,8 +1,9 @@
 {% extends "includes/g_base.html" %}
 
-{%load static %}
+{%load static %} 
     
     {% block header %}
+    {% block title %}{{site_info.title}}{% endblock %}
     {% include 'includes/g_header.html' %} 
     {% endblock %}
     {% block main %}
@@ -13,6 +14,7 @@
         <div class="section pt-7 bgjessica-light">
             <div class="container mt-n10 mt-lg-n12 z-2">
                 <div class="row justify-content-center">
+                    <h1 class="d-none">User Profile or thank you page</h1>
                     {% if messages %}
                     <div class="alert alert-secondary mt-5" role="alert">
                         {% for message in messages %}
@@ -29,7 +31,7 @@
                                         <div class="row d-block d-lg-flex align-items-center "
                                             style="min-height: 200px; overflow:hidden;">
                                             <img src="{% static user.type.icon.url %}"
-                                                class="rounded-circle mx-auto d-block  w-50 img-fluid " alt="">
+                                                class="rounded-circle mx-auto d-block  w-50 img-fluid " alt="{{user.username}}" title="{{user.username}}" width="auto" height="auto">
                                         </div>
                                     </div>
                                 </div>

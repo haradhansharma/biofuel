@@ -1,6 +1,6 @@
 {% extends "includes/g_base_print.html" %}
 
-
+{% block title %} {{site_info.title}} {% endblock %}
     {% block main %}
     <main>
 
@@ -10,7 +10,7 @@
                     <div class=" col-12">
                         <div class="col-report card text-center">
                             <div class="card-header">
-                                <p class="text-start">Green fuel validation platform-Analysis Report</p>
+                                <h1 class="text-start">Green fuel validation platform-Analysis Report</h1>
                             </div>
                             <div class="row g-3 p-3  justify-content-center">
                                 <div class="card-body p-2">

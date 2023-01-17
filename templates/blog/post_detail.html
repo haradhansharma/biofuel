@@ -2,6 +2,8 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+{% block title %} {{site_info.title}} {% endblock %}
+
 <body class="d-flex flex-column h-100">
     {% block header %}
     {% include 'includes/g_header.html' %}
@@ -13,7 +15,7 @@
             <div class="container mt-n8 mt-lg-n12 z-2">
                 <article>
                     <div class="col-12 d-flex">
-                        <img src="{% static post.image.url %}" class="img-fluid flex-fill" alt="{{post.title}}">
+                        <img src="{% static post.image.url %}" class="img-fluid flex-fill" alt="{{post.title}}" title="{{post.title}}" width="auto" height="auto">
                     </div>
                     <div
                         class="d-block d-sm-flex justify-content-between border-top border-bottom border-2 border-danger pt-2 px-0">
@@ -72,7 +74,7 @@
                     {% for blog in similar_posts %}
                     <div class="col d-flex">
                         <div class="card bgjessica-light shadow-sm flex-fill overflow-hidden">
-                            <img src="{% static blog.image.url %}" class="img-fluid" alt="{{blog.title}}">
+                            <img src="{% static blog.image.url %}" class="img-fluid" alt="{{blog.title}}" title="{{blog.title}}" width="auto" height="auto">
                             <div class="card-title px-2 mb-0 border-bottom pb-2">
                                 {{blog.title|upper}}
                             </div>

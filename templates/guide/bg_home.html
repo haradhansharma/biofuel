@@ -1,13 +1,16 @@
 {% extends "guide/bg_base.html" %}
 {% load static %}
-{% block header %}
+{% block title %} {{site_info.title}} {% endblock %}
+
+
+{% block header %} 
 {% include "guide/bg_header.html" %}
 {% endblock %}
 {% block main %}
 <div class="container-fluid bg-primary">
     <div class="row">
         <main class="col mx-auto  px-4">
-            
+            <h1 class="d-none">Starting pointofguide || {{site_info.title}}</h1>
             <div class="container pt-3 ">
                 <div class="row p-3 justify-content-center g-5">
                     {% for gt in guide_type %}
@@ -19,7 +22,7 @@
                                         <div class="text-center">
                                             <div class="rounded p-0">
                                                 <img class="img-fluid" src="{% static gt.icon_image.url %}"
-                                                    alt="{{gt.title}}">
+                                                    alt="{{gt.title}}" title="{{gt.title}}" width="auto" height="auto">
                                             </div>
                                         </div>
                                     </div>

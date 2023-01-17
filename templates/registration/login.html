@@ -1,18 +1,20 @@
 {% extends "layouts/base-fullscreen.html" %}
 {% load static %}
-{% block title %} {{text.signin}} {% endblock %} 
+{% block title %}{{site_info.title}}{% endblock %} 
 {% block stylesheets %}{% endblock stylesheets %}
 {% block content %}
     <main>
         <section class="mt-5 d-flex align-items-center">
             <div class="container">               
                 <div class="row justify-content-center" >                   
-                    <a href="/" class="text-center mb-4"><img src="{% static site_info.logo %}" class="mx-auto card bgjessica-primary" alt="{{site_info.name}}" style="max-width: 120px;"></a>
+                    <a href="/" class="text-center mb-4">
+                        <img src="{% static site_info.logo %}" class="mx-auto card bgjessica-primary" alt="{{site_info.name}}" width="auto" height="auto" style="max-width: 120px;">
+                    </a>
                     <div class="col-12 d-flex align-items-center justify-content-center">
                         <div class="bg-white shadow border-0 rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                             <div class="text-center text-md-center mb-4 mt-md-0">
                                 <h1 class="mb-0 h3">
-                                    {{text.signin}}
+                                    The Log In page of the {{site_info.name}}
                                 </h1>
                                 <br />
                                 <div class="mb-4">

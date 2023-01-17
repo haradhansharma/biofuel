@@ -1,13 +1,31 @@
 from django.urls import path
 from . import views
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import *
+
+
 
 app_name = 'evaluation'
+
+
+sitemaps = {
+    'static': GfvpSitemap,
+    'active_users': UserSitemap,   
+    'user_types' : UserTypeSitemap,
+    'blog_list' : BlogSitemap,
+    'HtmlReportitemap' : HtmlReportitemap,
+    
+}
+
+
 urlpatterns = [   
     path('evaluation/thanks/', views.thanks, name='thanks'),      
     path('evaluation/report/<str:slug>', views.report, name='report'),  
     path('evaluation/nreport/<str:slug>', views.nreport, name='nreport'),  
     path('evaluation/nreport_pdf/<str:slug>', views.nreport_pdf, name='nreport_pdf'),   
     path('get-glossary/', views.get_glossary, name='get_glossary'),   
+    path('sitemap.xml/', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),   
+
     
       
 ]

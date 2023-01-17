@@ -9,6 +9,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from taggit.models import Tag
 from django.db.models import Count, Q 
 from .forms import *
+from doc.doc_processor import site_info
+from django.utils.text import Truncator
+
 import logging
 log =  logging.getLogger('log')
 
@@ -61,7 +64,33 @@ def post_list(request, tag_slug=None):
     context['posts'] = posts
     context['pages'] = page    
     context['tag'] = tag      
+    
+
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = f'PUBLISHED BLOG POSTS '
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f"This blog list provides an up-to-date selection of the latest and greatest posts. Get insights on the most current trends, tips, and advice covering a variety of topics."
+    meta_data['tag'] = 'blog, gf-vp'
+    meta_data['robots'] = 'index, follow'
+    meta_data['og_image'] = request.user.type.icon.url 
+    
+    context['site_info'] = meta_data      
+    
+    
+    
+    
     return render(request, 'blog/blogs.html', context)
+import html
+import re
+
+def html_to_txt(html_text):
+    txt = html.unescape(html_text)
+    tags = re.findall("<[^>]+>",txt)    
+    for tag in tags:
+        txt=txt.replace(tag,'')
+    return txt
 
 def post_detail(request, post): 
     #Below will ensure there is no search term in the searc box if no body searching using search box. 
@@ -83,6 +112,19 @@ def post_detail(request, post):
     context = {
         'post':post,
         'similar_posts':similar_posts        
-    }             
+    }  
+    
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = post.title
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = html_to_txt(Truncator(post.body).chars(170)) 
+    meta_data['tag'] = 'blog, gf-vp'
+    meta_data['robots'] = 'index, follow'
+    meta_data['og_image'] = post.image.url 
+    
+    context['site_info'] = meta_data                
     
     return render(request, 'blog/post_detail.html', context = context)
+

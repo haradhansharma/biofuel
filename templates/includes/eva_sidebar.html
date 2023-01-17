@@ -2,7 +2,7 @@
        
 <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
      <a class="navbar-brand me-lg-5" href="/">
-       <img src="{% static site_info.logo %}" class="card bg-bgreen"  height="50px" alt="{{ site_info.name }}">         
+       <img src="{% static site_info.logo %}" class="card bg-bgreen"  height="50px" width="auto" title="{{ site_info.name }}" alt="{{ site_info.name }}">         
      </a>
      <div class="d-flex align-items-center">
          <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,10 +15,8 @@
 
  <nav id="sidebarMenu" class="sidebar d-lg-block bg-white collapse" data-simplebar>          
    <div class="sidebar-inner px-2 pt-3">
-    <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
-              
-          <h2 class="fs-5 fw-semibold">To be answered questions</h2>
-            
+    <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">              
+          <h1 class="fs-5 h2 fw-semibold">To be answered questions</h1>            
         <div class="list-group list-group-flush border-bottom scrollarea">           
                 {% for parent, child in question_dataset.items %}
                 <div class="list-group-item list-group-item-action py-1 lh-tight" aria-current="true">
@@ -37,7 +35,7 @@
                         {% for item in child %}
                         <a class="badge {% if slug == item.slug %} btn-primary {% else %} {% if item.stat == 'checked' %} btn-success {% elif item.stat == 'skipped' %} btn-gray-100  {% else %} btn-outline-success link-success border border-success {% endif %} {% endif %} mb-1 w-100 "
                             data-bs-toggle="tooltip" data-bs-html="true" title="{{item.name}}"  href="{% url 'evaluation:eva_question' request.session.evaluator item.slug %}">
-                            Question - {{forloop.parentloop.counter}} . {{forloop.counter}}
+                            Question - {{forloop.parentloop.counter}}.{{forloop.counter}}
                         </a>
                         {% endfor %}
                     </div>                    

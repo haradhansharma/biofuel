@@ -21,6 +21,7 @@ from django.contrib.auth.views import LoginView
 from crm.models import *
 from crm.views import get_location_info
 from evaluation.helper import LabelWiseData
+from doc.doc_processor import site_info
 import logging
 log =  logging.getLogger('log')
 
@@ -54,6 +55,26 @@ class CustomLoginView(LoginView):
         # self.request.session.set_test_cookie()
         # else browser session will be as long as the session cookie time "SESSION_COOKIE_AGE" defined in settings.py
         return super(CustomLoginView, self).form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        #meta
+        meta_data = site_info()    
+        meta_data['title'] = 'User Login'
+        # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+        meta_data['url'] = self.request.build_absolute_uri(self.request.path)
+        meta_data['description'] = f"The Log In page of the gf-vp.com is designed to provide secure access to the user's account. Users can easily log in to their account with their email and password."
+        meta_data['tag'] = 'login, gf-vp.com'
+        meta_data['robots'] = 'noindex, nofollow'
+        # meta_data['og_image'] = user_type.icon.url
+        
+        context.update({
+            'site_info' : meta_data    
+            
+        })
+        return context
+
 
 
 
@@ -176,12 +197,24 @@ def signup(request):
         }     
         
         form = UserCreationFormFront(initial = initial_dict)
+        
+        
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Sign Up'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f"The Sign Up page of the gf-vp.com provides users with the ability to create a new account. This page allows users to enter their email address, username, and password."
+    meta_data['tag'] = 'signup, gf-vp.com'
+    meta_data['robots'] = 'noindex, nofollow'
+    # meta_data['og_image'] = user_type.icon.url
     
     
         
     context = {
         'form': form,
-        'type': type       
+        'type': type,
+        'site_info' : meta_data           
     }
     return render(request, 'registration/signup.html', context = context)
 
@@ -358,6 +391,25 @@ def userpage(request, username):
             'change_pass' : 'Change Password',
             'homepage' : 'Home Page'           
         }
+        
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = username
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f"This is the personalized user profile page for {username}. Here, registerd user can view his information and created reports. Also Can go to the profiel setting page."
+    meta_data['tag'] = 'user profile, gf-vp.com'
+    meta_data['robots'] = 'noindex, nofollow'
+    meta_data['og_image'] = user.type.icon.url 
+    
+   
+    
+    
+    context.update(
+        {
+            'site_info' : meta_data  
+        }
+    )
         
     return render(request, 'registration/userpage.html', context = context)
 

@@ -1,18 +1,8 @@
+{% extends "layouts/base_eva.html" %}
+
+{% block title %} {{site_info.title}} {% endblock %}
 
 
-
-
-
-
-    
-
-
-
-    {% extends "layouts/base_eva.html" %}
-
-{% block title %} {{text.signin}} {% endblock %}
-
-<!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
  
@@ -21,10 +11,12 @@
 {% block content %}
 
 <main id="indi">
-
+     <!--Progress Bar-->
     <div class="py-2">
         <div class="progress" style="height: 30px;">
-            <div class="progress-bar progress-bar-striped bgjessica-primary" role="progressbar" aria-label="answered_percent" style="width: {{answered_percent}}%;" aria-valuenow="{{answered_percent}}" aria-valuemin="0" aria-valuemax="100">{{answered_percent}}%</div>
+            <div class="progress-bar progress-bar-striped bgjessica-primary" 
+            role="progressbar" aria-label="answered_percent" 
+            style="width: {{answered_percent}}%;" aria-valuenow="{{answered_percent}}" aria-valuemin="0" aria-valuemax="100">{{answered_percent}}%</div>
         </div>
     </div>
 
@@ -315,9 +307,10 @@
 {% endblock content %}
 
 
-<!-- Specific Page JS goes HERE  -->
+<!-- Specific Page JS goes HERE  
 {% block javascripts %}
     <script>
+        /*
         var oil_graph_data;    
         
         oil_graph_data = {{ oil_graph_data | safe }};   
@@ -360,7 +353,9 @@
                     });
                 }
             } 
-        }     
+        }    
+        */ 
     </script>
+    -->
 
     {% endblock javascripts %}

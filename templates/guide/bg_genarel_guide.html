@@ -1,5 +1,7 @@
 {% extends "guide/bg_base.html" %}
 {% load static %}
+{% block title %} {{site_info.title}} {% endblock %}
+
 {% block header %}
 {% include "guide/bg_header.html" %}
 {% endblock %}
@@ -8,6 +10,8 @@
     <div class="row">
         {% include "guide/bg_sidebar.html" %}
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+         <h1>This section describs {{site_info.title}}</h1>
+
             <div
                 class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-5 pb-2 mb-5 border-bottom">
             </div>
