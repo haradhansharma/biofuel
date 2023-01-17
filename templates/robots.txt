@@ -1,10 +1,9 @@
 User-agent: *
-Disallow: /
 Disallow: /static/
 Disallow: /private/
 Disallow: /junk/
 Disallow: /admin/
-Disallow: /accounts/
+
 
 Crawl-delay: 10
 
