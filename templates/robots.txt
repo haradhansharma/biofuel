@@ -8,4 +8,4 @@ Disallow: /admin/
 Crawl-delay: 10
 
 
-Sitemap: https://gf-vp.com/sitemap.xml
+Sitemap: https://www.gf-vp.com/sitemap.xml
