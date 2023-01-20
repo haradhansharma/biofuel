@@ -36,7 +36,7 @@ class Glist(ListView):
         meta_data['description'] = f"Glossaries of green fuel validation platform and definitions."
         meta_data['tag'] = 'glossary, glosaries, gf-vp'
         meta_data['robots'] = 'index, follow'
-        meta_data['og_image'] = self.request.user.type.icon.url 
+        # meta_data['og_image'] = self.request.user.type.icon.url 
         
         context['site_info'] = meta_data      
     

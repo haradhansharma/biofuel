@@ -23,12 +23,7 @@ class EvaMiddleware:
         
         """
         
-        
-        
-  
-     
-        
-        if settings.CNN and not request.user.is_superuser:
+        if settings.CNN == True:
             if request.path != '/':            
                 request.session['devmsg'] = 'SOMETHING WENT WRONG! PLEASE CONTACT WITH DEVELOPER!'
                 return redirect('home:home')
@@ -36,14 +31,10 @@ class EvaMiddleware:
             try:
                 del request.session['devmsg']
             except:
-                pass
-            
-       
+                pass      
         
         if 'evaluator' not in request.session:
-            request.session['evaluator'] = ''    
-        
-        
+            request.session['evaluator'] = ''     
         
         '''
         do not delete below line. write anything before to call before view call

@@ -74,7 +74,7 @@ def post_list(request, tag_slug=None):
     meta_data['description'] = f"This blog list provides an up-to-date selection of the latest and greatest posts. Get insights on the most current trends, tips, and advice covering a variety of topics."
     meta_data['tag'] = 'blog, gf-vp'
     meta_data['robots'] = 'index, follow'
-    meta_data['og_image'] = request.user.type.icon.url 
+    # meta_data['og_image'] = request.user.type.icon.url 
     
     context['site_info'] = meta_data      
     
