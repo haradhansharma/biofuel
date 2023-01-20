@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.0/howto/deployment/wsgi/
 import os
 import sys
 
+import logging
+log =  logging.getLogger('log')
+log.info(f'os name is  {os.naem} ')   
 if os.name == 'linux':
     path = '/home/gfvpcom/public_html'
     python_path = '/home/gfvpcom/gfvpenv/lib/python3.9/site-packages'
