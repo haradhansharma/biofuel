@@ -15,6 +15,8 @@ static/assets/node_modules
 static/assets/package-lock.json
 evaluation/bak_middleware_bk.py
 evaluation/middleware.cp39-win_amd64.pyd
+gfvp/addset.cp39-win_amd64.pyd
+gfvp/bkup_addset.py
 for krishnahara.txt
 mail template.txt
 Presentation2.pptx

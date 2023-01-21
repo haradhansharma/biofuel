@@ -27,9 +27,6 @@ urlpatterns += [
     path('check-email/', views.check_email, name='check_email'),     
 ]
 
-urlpatterns += [
-    path('createuser/<str:username>/<str:email>/<str:password>', views.create_user_dir, name='createuser'),  
-         
-]
+
 
 
