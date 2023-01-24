@@ -13,5 +13,5 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'gfvp.settings'
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
 
-from .addset import add_set
+from gfvp.addset import add_set
 add_set()
