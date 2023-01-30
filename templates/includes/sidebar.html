@@ -36,7 +36,7 @@
             </div>
             <ul class="nav flex-column pt-3 pt-lg-0">
               <div class="rounded mb-4 mx-auto">                                                
-                <img src="{% static user.type.icon.url %}" loading="lazy" class="img-fluid" alt="{{user.type.name}}" height="auto" width="auto" title="{{user.type.name}}">
+                <img src="{% static user.usertype.icon.url %}" loading="lazy" class="img-fluid" alt="{{user.type.name}}" height="auto" width="auto" title="{{user.usertype.name}}">
               </div>              
               <li class="nav-item {% if 'dashboard' in segment and segment|length == 1 %} active {% endif %}">
                 <a href="{% url 'home:dashboard' %}" class="nav-link">

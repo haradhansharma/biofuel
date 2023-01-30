@@ -24,31 +24,31 @@ def guide_home(request):
     return render(request, 'guide/bg_home.html', context = context)
 
 def guide_type(request, key):    
-    guide_general_menu = GuideMenu.objects.filter(type = GuideType.objects.get(key=key)).order_by('position')      
-    type = GuideType.objects.filter(key=key).order_by('position')   
+    guide_general_menu = GuideMenu.objects.filter(guidetype = GuideType.objects.get(key=key)).order_by('position')      
+    guidetype = GuideType.objects.filter(key=key).order_by('position')   
     
     context = {
-        "type": type,
+        "guidetype": guidetype,
         'guide_general_menu' : guide_general_menu
     }
     #meta
     meta_data = site_info()    
-    meta_data['title'] = type.get(key=key).title
+    meta_data['title'] = guidetype.get(key=key).title
     # meta_data['meta_name'] = 'Green Fuel Validation Platform'
     meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = 'This is the landing page for user guide build for Green fuel validation platform'
     meta_data['tag'] = 'guide type, gf-vp'
     meta_data['robots'] = 'index, follow'
-    meta_data['og_image'] = type.get(key=key).icon_image.url
+    meta_data['og_image'] = guidetype.get(key=key).icon_image.url
     
     context['site_info'] = meta_data  
     return render(request, 'guide/bg_guide_type.html', context = context)
 
 
     
-def genarel_guide(request, slug, type):
-    guide_type = GuideType.objects.get(key=type)
-    guide_general_menu = GuideMenu.objects.filter(type =  guide_type).order_by('position')      
+def genarel_guide(request, slug, gt):
+    guide_type = GuideType.objects.get(key=gt)
+    guide_general_menu = GuideMenu.objects.filter(guidetype =  guide_type).order_by('position')      
     guide = GenarelGuide.objects.filter(menu = guide_general_menu.get(slug=slug)).order_by('position')       
     
     context = {

@@ -1,11 +1,19 @@
 ---
-title: My Document
-summary: A brief description of my document.
+title: Documention of account app of the green fuel validation platform
+summary: Technicale documention of the Account app of the green fuel validatuin platform has been mentioned here.
 authors:
-    - Waylan Limberg
-    - Tom Christie
-date: 2018-07-10
-some_url: https://example.com
+    - Waylan Haradhan Sharma
+    - 
+date: 2023-01-24
+---
+
+# Welcome to Accounts app's Technical Docs
+
+Here I will mention the important points of Account App. These points will help a Django developer get an idea of the project.
+***
+### About `models.py`
+***
+
 ---
 This is the first paragraph of the document.
 

@@ -818,13 +818,13 @@ def eva_index2(request):
     
     #rechecking user is authorized or not, although it is not necessary as only logedin user can enter to this page, but it is safe to avoid error if anyhow decorator are removed. 
     if request.user.is_authenticated:
-        type = UserType.objects.get(slug = request.user.type.slug )
+        usertype = UserType.objects.get(slug = request.user.usertype.slug )
         name = request.user.get_full_name if request.user.get_full_name else first_report_name
         email = request.user.email
         phone = request.user.phone
         orgonization = request.user.orgonization
     else:
-        type = UserType.objects.get(slug = request.session['interested_in'] )
+        usertype = UserType.objects.get(slug = request.session['interested_in'] )
         name = ''
         email = ''
         phone = ''
@@ -917,7 +917,7 @@ def eva_index2(request):
                     
                     
             initial_dict = {
-            "type" : type,
+            "usertype" : usertype,
             "email" : email,
             "phone":phone,
             "orgonization":orgonization,
@@ -1043,7 +1043,7 @@ def thanks(request):
     meta_data['description'] = f"This is the thank you page afte evaluation process completed. Here, registerd user can view his information and created reports. Also Can go to the profiel setting page."
     meta_data['tag'] = 'thank you, gf-vp.com'
     meta_data['robots'] = 'noindex, nofollow'
-    meta_data['og_image'] = request.user.type.icon.url 
+    meta_data['og_image'] = request.user.usertype.icon.url 
 
     context = {
         'donotshow' : 'yes',
@@ -1219,7 +1219,7 @@ def nreport(request, slug):
     meta_data['description'] = f"Green fuel validation platform-Analysis Report."
     meta_data['tag'] = 'Analysis Report, gf-vp.com'
     meta_data['robots'] = 'noindex, nofollow'
-    meta_data['og_image'] = request.user.type.icon.url 
+    meta_data['og_image'] = request.user.usertype.icon.url 
     
     
     context.update({

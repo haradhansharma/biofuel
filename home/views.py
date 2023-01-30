@@ -76,7 +76,7 @@ def user_types(request, slug):
     
     # ensire user logged to evaluation enrolment 
     try:
-        curent_user_type_slug = request.user.type.slug
+        curent_user_type_slug = request.user.usertype.slug
     except:
         curent_user_type_slug = None   
         
@@ -113,7 +113,7 @@ def user_types(request, slug):
     # pass user type data    
     try:
         user_type = UserType.objects.get(slug = slug)
-        users = User.objects.filter(type = user_type)
+        users = User.objects.filter(usertype = user_type)
     except:
         user_type = None
         users = None
@@ -935,7 +935,7 @@ def allreports(request):
 
 from django.forms import formset_factory
 def check_type_to_get_expert(request):
-    user_type_id = request.POST.get('type')
+    user_type_id = request.POST.get('usertype')
     user_type = UserType.objects.get(id = user_type_id)
     request.session['interested_in'] = user_type.slug    
     if user_type.is_expert:

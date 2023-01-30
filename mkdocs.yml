@@ -9,8 +9,11 @@ nav:
   - Accounts: accounts.md
   - CRM: crm.md
   - Blog: blog.md
+  - Doc: doc.md
   - Evaluation: evaluation.md
   - Guide: guide.md
+  - Glossary: glossary.md
+
 use_directory_urls: false
 docs_dir: gfvp_docs/docs
 site_dir: gfvp_docs/site

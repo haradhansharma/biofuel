@@ -179,9 +179,9 @@ def signup(request):
         
                   
         try:
-            type = UserType.objects.get(slug = request.session['interested_in'] )   
+            usertype = UserType.objects.get(slug = request.session['interested_in'] )   
         except Exception as e:            
-            type = None  
+            usertype = None  
             messages.warning(request, f'Select your business type to register!') 
             
             # user type selected facility in the home page so we will forwared user there     
@@ -191,7 +191,7 @@ def signup(request):
         #interacting behind the scenes
         #By Default site is set to all ticked in Term agree and newsletter subscription and user type
         initial_dict = {
-            'type': type,
+            'usertype': usertype,
             'newsletter_subscription' : True,
             'term_agree' : True           
         }     
@@ -213,7 +213,7 @@ def signup(request):
         
     context = {
         'form': form,
-        'type': type,
+        'usertype': usertype,
         'site_info' : meta_data           
     }
     return render(request, 'registration/signup.html', context = context)
@@ -400,7 +400,7 @@ def userpage(request, username):
     meta_data['description'] = f"This is the personalized user profile page for {username}. Here, registerd user can view his information and created reports. Also Can go to the profiel setting page."
     meta_data['tag'] = 'user profile, gf-vp.com'
     meta_data['robots'] = 'noindex, nofollow'
-    meta_data['og_image'] = user.type.icon.url 
+    meta_data['og_image'] = user.usertype.icon.url 
     
    
     

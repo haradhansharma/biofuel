@@ -49,10 +49,16 @@
                                 <a href="blog.html" class="nav-link">Blog</a>
                             </li>
                             <li class="navitem">
+                                <a href="doc.html" class="nav-link">Doc</a>
+                            </li>
+                            <li class="navitem">
                                 <a href="evaluation.html" class="nav-link">Evaluation</a>
                             </li>
                             <li class="navitem">
                                 <a href="guide.html" class="nav-link">Guide</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="glossary.html" class="nav-link">Glossary</a>
                             </li>
                         </ul>
 
@@ -103,7 +109,11 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#remarkable_library_that_used" class="nav-link">Remarkable Library that used</a>
+            <li class="nav-item" data-level="2"><a href="#requirements" class="nav-link">Requirements</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#project_layout" class="nav-link">Project layout</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -111,11 +121,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#commands" class="nav-link">Commands</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#project_layout" class="nav-link">Project layout</a>
+            <li class="nav-item" data-level="2"><a href="#mkdocs_commands" class="nav-link">Mkdocs Commands</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -138,7 +144,7 @@
 <h1 id="welcome_to_gfvp_technical_docs">Welcome to GFVP Technical Docs<a class="headerlink" href="#welcome_to_gfvp_technical_docs" title="Permanent link">&para;</a></h1>
 <h2 id="about_project_technologies">About Project Technologies<a class="headerlink" href="#about_project_technologies" title="Permanent link">&para;</a></h2>
 <ul>
-<li>It is a <code>Python-Djang</code>'s project.</li>
+<li>It is a <code>Python39-Django's</code> project.</li>
 <li>Using <code>Bootstrap5</code> based <code>Volt</code> template partially.</li>
 <li><code>HTMX</code> JS library implemented for interactivity.</li>
 <li><code>MySql</code> as database.</li>
@@ -150,34 +156,49 @@
 <li>Business logic and design idea provided by Krishna Hara Chakrabarti</li>
 <li>Sole developer <a href="https://hrdnsh.com">Haradhan Sharma</a></li>
 </ul>
-<h2 id="remarkable_library_that_used">Remarkable Library that used<a class="headerlink" href="#remarkable_library_that_used" title="Permanent link">&para;</a></h2>
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>Reportlab</code> to create Dynamic PDF and PDF merging.</li>
-<li><code>chartist.js</code> to create chart.</li>
+<li>All python and Django library listed in the <code>requirements.txt</code></li>
+<li><code>Bootstrap 5</code> has been used as CSS librry</li>
+<li><code>HTMX</code> Implemented</li>
+<li><code>chartist.js</code> used to genarate Graphicale chart i the website.</li>
 <li><code>aos.js</code> for animation. using form CDN.</li>
-<li><code>pandas</code> to create series.</li>
-<li><code>ckeditor</code> for text editing.</li>
-<li><code>xhtmlToPDF</code> to create PDF initially.</li>
-<li><code>requests</code> to call <code>youtube API</code>.</li>
-<li><code>django-cron2</code> to manage schedule task.</li>
-<li><code>Custom Python Algorithm</code>.</li>
-<li><code>ThreadPool</code> used somewhere to speedup.</li>
+<li><code>mkdocs</code> for technicale documentation.</li>
 </ul>
+<h2 id="project_layout">Project layout<a class="headerlink" href="#project_layout" title="Permanent link">&para;</a></h2>
+<pre><code>accounts            # Django app to control user accounts. Described at (/docs/accounts.html)
+blog                # Django app to control Blog functionality. Described at (/docs/blog.html)
+crm                 # Django app to control minimalist CRM side width. Described at (/docs/crm.html)
+doc                 # Django app to manage common data site width. Described at (/docs/doc.html)
+evaluation          # Django app to control evaluation procedure and reports. Described at (/docs/evaluation.html)
+gfvp                # Main Django Project
+gfvp_docs           # mkdocs framework to wrie technicale documentation. Described at (https://www.mkdocs.org)
+glossary            # Django app to control glossary feature. Described at (/docs/glossary.html)
+guide               # Django app to manage genarel documetation about site feature and usecase. Described at (/docs/guide.html)
+home                # Django app to manage some general sction. Describe at (/docs/index.html)
+static              # Django's static root directory
+templates           # Main Template directory of the project
+manage.py           # Django Project file
+mkdocs.yml          # The configuration file of mkdocs
+my_project.dot      # About project layout
+my_project.png      # Grahical databse schema of the project.
+requirements        # Dependencies are listed here.
+</code></pre>
 <h2 id="necessary_information">Necessary Information<a class="headerlink" href="#necessary_information" title="Permanent link">&para;</a></h2>
-<p>For full documentation visit <a href="https://www.mkdocs.org">mkdocs.org</a>.</p>
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The project can be deploy at linux and windows both</li>
+<li>To know about features and user guide visit <a href="https://gf-vp.com/guide">Guide</a>.</li>
+<li>If <code>git pull</code> command instruct to stash due to migration file ended with <code>alter_lead_confirm.py</code> and <code>alter_accordion_apps.py</code> just delete those file from target and recall <code>git pull</code></li>
+<li><code>.so</code> is essential for linux environment and <code>.pyd</code> is essential for windows of the evaluation app</li>
+<li><code>.so</code> is essential for linux environment and <code>.pyd</code> is essential for windows of the <strong>gfvp</strong> project folder.</li>
+</ul>
+<h2 id="mkdocs_commands">Mkdocs Commands<a class="headerlink" href="#mkdocs_commands" title="Permanent link">&para;</a></h2>
 <ul>
 <li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
 <li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
 <li><code>mkdocs build</code> - Build the documentation site.</li>
 <li><code>mkdocs -h</code> - Print help message and exit.</li>
 </ul>
-<h2 id="project_layout">Project layout<a class="headerlink" href="#project_layout" title="Permanent link">&para;</a></h2>
-<pre><code>mkdocs.yml    # The configuration file.
-docs/
-    index.md  # The documentation homepage.
-    ...       # Other markdown pages, images and other files.
-</code></pre>
 <h1 id="heading_level_1">Heading level 1<a class="headerlink" href="#heading_level_1" title="Permanent link">&para;</a></h1>
 <h2 id="heading_level_2">Heading level 1<a class="headerlink" href="#heading_level_2" title="Permanent link">&para;</a></h2>
 <h3 id="heading_level_3">Heading level 1<a class="headerlink" href="#heading_level_3" title="Permanent link">&para;</a></h3>
@@ -377,5 +398,5 @@ See the section on <a href="#code"><code>code</code></a>.</p>
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2022-12-13 13:51:22.501769+00:00
+Build Date UTC : 2023-01-24 12:30:35.439650+00:00
 -->

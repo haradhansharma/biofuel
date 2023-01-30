@@ -30,7 +30,7 @@
                                     <div class="card-body">
                                         <div class="row d-block d-lg-flex align-items-center "
                                             style="min-height: 200px; overflow:hidden;">
-                                            <img src="{% static user.type.icon.url %}"
+                                            <img src="{% static user.usertype.icon.url %}"
                                                 class="rounded-circle mx-auto d-block  w-50 img-fluid " alt="{{user.username}}" title="{{user.username}}" width="auto" height="auto">
                                         </div>
                                     </div>
@@ -88,7 +88,7 @@
                                                 <hr>
                                                 <div class=" d-xl-flex">
                                                     <div class="col-12 col-md-6 card  border-0 bg-transparent">
-                                                        <h6> {{ user.type.name }} </h6>
+                                                        <h6> {{ user.usertype.name }} </h6>
                                                         <h6> {% if user.is_expert %} ({{ user.experts_in.name }}) {% endif %}</h6>
                                                         <h6>{% if user.orgonization %}{{ user.orgonization }}{% else %} There is no organization {% endif %} </h6>
                                                     </div>
