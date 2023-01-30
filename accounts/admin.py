@@ -24,12 +24,12 @@ class UserAdmin(UserAdmin):
     form = UserChangeForm   
     inlines = [ProfileInline]    
     model = User
-    list_display = ['type', 'experts_in', 'email', 'username', 'is_staff', 'is_active', 'email_verified',]    
-    list_filter = ('type', 'is_active', 'is_staff', 'experts_in', 'email_verified',)
+    list_display = ['usertype', 'experts_in', 'email', 'username', 'is_staff', 'is_active', 'email_verified',]    
+    list_filter = ('usertype', 'is_active', 'is_staff', 'experts_in', 'email_verified',)
     search_fields = ('email', 'phone', 'orgonization', 'username', 'experts_in', 'email_verified', )
     
     fieldsets =  (
-        (None, {'fields': ('type', 'experts_in','orgonization',)}),
+        (None, {'fields': ('usertype', 'experts_in','orgonization',)}),
     ) + UserAdmin.fieldsets 
     
     
@@ -63,7 +63,7 @@ class UserAdmin(UserAdmin):
     def send_mail_to_expert(self, request, queryset):
         user_type = []
         for i in queryset:
-            user_type.append(i.type.is_marine)
+            user_type.append(i.usertype.is_marine)
         if False in user_type:
             return self.message_user(request, "Non Marine Expert Selected! Please select Marine experts only!")      
         

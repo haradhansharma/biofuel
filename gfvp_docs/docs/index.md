@@ -1,9 +1,17 @@
+---
+title: Techniucale Documentation Homepage
+summary: Here given overview of the Green fuel validation platform.
+authors:
+    - Haradhan Sharma
+    - 
+date: 2023-01-24
+
+---
 # Welcome to GFVP Technical Docs
 
 
 ## About Project Technologies
-
-* It is a `Python-Djang`'s project.
+* It is a `Python39-Django's` project.
 * Using `Bootstrap5` based `Volt` template partially.
 * `HTMX` JS library implemented for interactivity.
 * `MySql` as database.
@@ -15,39 +23,55 @@
 * Business logic and design idea provided by Krishna Hara Chakrabarti
 * Sole developer [Haradhan Sharma](https://hrdnsh.com)
 
-## Remarkable Library that used
+## Requirements
 
-* `Reportlab` to create Dynamic PDF and PDF merging.
-* `chartist.js` to create chart.
+* All python and Django library listed in the `requirements.txt`
+* `Bootstrap 5` has been used as CSS librry
+* `HTMX` Implemented
+* `chartist.js` used to genarate Graphicale chart i the website.
 * `aos.js` for animation. using form CDN.
-* `pandas` to create series.
-* `ckeditor` for text editing.
-* `xhtmlToPDF` to create PDF initially.
-* `requests` to call `youtube API`.
-* `django-cron2` to manage schedule task.
-* `Custom Python Algorithm`.
-* `ThreadPool` used somewhere to speedup.
+* `mkdocs` for technicale documentation.
+
+
+## Project layout
+    accounts            # Django app to control user accounts. Described at (/docs/accounts.html)
+    blog                # Django app to control Blog functionality. Described at (/docs/blog.html)
+    crm                 # Django app to control minimalist CRM side width. Described at (/docs/crm.html)
+    doc                 # Django app to manage common data site width. Described at (/docs/doc.html)
+    evaluation          # Django app to control evaluation procedure and reports. Described at (/docs/evaluation.html)
+    gfvp                # Main Django Project
+    gfvp_docs           # mkdocs framework to wrie technicale documentation. Described at (https://www.mkdocs.org)
+    glossary            # Django app to control glossary feature. Described at (/docs/glossary.html)
+    guide               # Django app to manage genarel documetation about site feature and usecase. Described at (/docs/guide.html)
+    home                # Django app to manage some general sction. Describe at (/docs/index.html)
+    static              # Django's static root directory
+    templates           # Main Template directory of the project
+    manage.py           # Django Project file
+    mkdocs.yml          # The configuration file of mkdocs
+    my_project.dot      # About project layout
+    my_project.png      # Grahical databse schema of the project.
+    requirements        # Dependencies are listed here.
+
 
 ## Necessary Information
+* The project can be deploy at linux and windows both
+* To know about features and user guide visit [Guide](https://gf-vp.com/guide).
+* If `git pull` command instruct to stash due to migration file ended with `alter_lead_confirm.py` and `alter_accordion_apps.py` just delete those file from target and recall `git pull`
+* `.so` is essential for linux environment and `.pyd` is essential for windows of the evaluation app
+* `.so` is essential for linux environment and `.pyd` is essential for windows of the **gfvp** project folder.
 
 
 
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
-
-## Commands 
-
+## Mkdocs Commands 
 * `mkdocs new [dir-name]` - Create a new project.
 * `mkdocs serve` - Start the live-reloading docs server.
 * `mkdocs build` - Build the documentation site.
 * `mkdocs -h` - Print help message and exit.
 
-## Project layout
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+
+
 
 
 # Heading level 1 

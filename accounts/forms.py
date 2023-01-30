@@ -26,7 +26,7 @@ class UserCreationForm(UserCreationForm):
     UserAdmin.add_form = UserCreationForm
     UserAdmin.add_fieldsets = ((None, {
         'classes': ('wide',),
-        'fields': ('type', 'email', 'username', 'password1', 'password2',  'term_agree', 'experts_in', )
+        'fields': ('usertype', 'email', 'username', 'password1', 'password2',  'term_agree', 'experts_in', )
     }),)
         
         
@@ -40,7 +40,7 @@ class UserCreationFormFront(UserCreationForm):
     
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2', 'term_agree', 'newsletter_subscription', 'type', 'experts_in',)  
+        fields = ('username', 'email', 'password1', 'password2', 'term_agree', 'newsletter_subscription', 'usertype', 'experts_in',)  
               
     username = forms.CharField(label = 'Username',widget=forms.TextInput(attrs={"placeholder": "Username", "class": "form-control", 'hx-post': reverse_lazy('accounts:check_username'), 'hx-target': '#username_error', 'hx-trigger': 'keyup[target.value.length > 3]' }))
     email = forms.EmailField(label = 'E-mail Address',  widget=forms.EmailInput(attrs={"placeholder": "Email", "class": "form-control" , 'hx-post': reverse_lazy('accounts:check_email'), 'hx-target': '#email_error', 'hx-trigger': 'keyup[target.value.length > 3]'}))
@@ -53,7 +53,7 @@ class UserCreationFormFront(UserCreationForm):
     captcha = ReCaptchaField( widget=ReCaptchaV2Checkbox)  
     
     widgets = {
-            'type': forms.Select(attrs={ 'class':'form-select', 'aria-label':'type', 'hx-post':"/check_type_to_get_expert/", 'hx-trigger':"change", 'hx-target':"#hx" , 'hx-swap':"innerHTML"}),                    
+            'usertype': forms.Select(attrs={ 'class':'form-select', 'aria-label':'usertype', 'hx-post':"/check_type_to_get_expert/", 'hx-trigger':"change", 'hx-target':"#hx" , 'hx-swap':"innerHTML"}),                    
             # 'experts_in': forms.Select(attrs={ 'class':'form-select', 'aria-label':'experts_in', }), 
             
         }

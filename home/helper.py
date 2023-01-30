@@ -106,7 +106,7 @@ def typewise_user(request):
     record_dict = {}
     for user_type in user_types:       
         record = {
-            user_type : User.objects.filter(type = user_type)[:4]
+            user_type : User.objects.filter(usertype = user_type)[:4]
         }
         record_dict.update(record)   
     

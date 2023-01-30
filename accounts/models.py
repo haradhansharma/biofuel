@@ -61,7 +61,7 @@ class User(AbstractUser):
     '''
     Inheriting Django's default user model with custom fields.
     ''' 
-    type = models.ForeignKey(UserType, on_delete=models.CASCADE)   
+    usertype = models.ForeignKey(UserType, on_delete=models.CASCADE)   
     email = models.EmailField('E-Mail Address', unique=True)
     phone = models.CharField(max_length=252, null=True, blank=True)
     orgonization = models.CharField(max_length=252, null=True, blank=True)
@@ -102,7 +102,7 @@ class User(AbstractUser):
     @property
     def get_type(self):
         try:
-            name = self.type.name
+            name = self.usertype.name
         except Exception as e:
             name = False            
         return name
@@ -117,25 +117,25 @@ class User(AbstractUser):
     
     @property
     def is_producer(self):
-        if self.type.is_producer:
+        if self.usertype.is_producer:
             return True
         return False    
     
     @property
     def is_expert(self):
-        if self.type.is_expert:
+        if self.usertype.is_expert:
             return True
         return False
     
     @property
     def is_consumer(self):
-        if self.type.is_consumer:
+        if self.usertype.is_consumer:
             return True
         return False
     
     @property
     def is_marine(self):
-        if self.type.is_marine:
+        if self.usertype.is_marine:
             return True
         return False
     

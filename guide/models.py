@@ -19,7 +19,7 @@ class GuideType(models.Model):
 class GuideMenu(models.Model):
     title = models.CharField(max_length=252)   
     position = models.IntegerField()
-    type = models.ForeignKey(GuideType, on_delete=models.CASCADE, related_name='typeofguide')
+    guidetype = models.ForeignKey(GuideType, on_delete=models.CASCADE, related_name='typeofguide')
     slug = models.SlugField() 
     
     
@@ -27,7 +27,7 @@ class GuideMenu(models.Model):
         return self.title + ' -- ' + self.type.title
     
     def get_absolute_url(self):
-        return reverse('guide:genarel_guide', kwargs={'slug': str(self.slug), 'type': str(self.type.key)})    
+        return reverse('guide:genarel_guide', kwargs={'slug': str(self.slug), 'type': str(self.guidetype.key)})    
     
 
 class GenarelGuide(models.Model):
@@ -41,9 +41,9 @@ class GenarelGuide(models.Model):
     def __str__(self):
         
         if self.parent:
-            parent = f'It is child of Parent "{str(self.parent.title)}" of {self.menu.type.title}' 
+            parent = f'It is child of Parent "{str(self.parent.title)}" of {self.menu.guidetype.title}' 
         else:
-            parent = f'It is Parent  of {self.menu.type.title}'
+            parent = f'It is Parent  of {self.menu.guidetype.title}'
         
         
         return  self.title + ' -- ' + parent
