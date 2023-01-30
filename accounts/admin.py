@@ -6,9 +6,9 @@ from .models import User, UserType, Profile
 from django.contrib import messages
 from django.utils.translation import ngettext
 
-class ProfileInline(admin.StackedInline):
-    model = Profile
-    can_delete = False  
+# class ProfileInline(admin.StackedInline):
+#     model = Profile
+#     can_delete = False  
     
 
 
@@ -22,7 +22,7 @@ class UserAdmin(UserAdmin):
     
     #taking charge of default Django form.
     form = UserChangeForm   
-    inlines = [ProfileInline]    
+    # inlines = [ProfileInline]    
     model = User
     list_display = ['usertype', 'experts_in', 'email', 'username', 'is_staff', 'is_active', 'email_verified',]    
     list_filter = ('usertype', 'is_active', 'is_staff', 'experts_in', 'email_verified',)
