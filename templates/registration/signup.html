@@ -48,14 +48,14 @@
                             <div class="row d-flex">
                             {% if request.session.interested_in == None %}
                             <div class="form-group mb-4">
-                              <!-- <label for="email">{{text.type}}</label> -->  
+                              <!-- <label for="email">{{text.type}}</label> -->   
                                 <div class="input-group">
                                     <span class="input-group-text" id="basic-addon1">
                                         <span class="fas fa-user-circle"></span>
                                     </span>
-                                    {{ form.type }}
+                                    {{ form.usertype }}
                                 </div>
-                                <span class="text-error">{{ form.type.errors }}</span>
+                                <span class="text-error">{{ form.usertype.errors }}</span>
                             </div>
                             {% else %}
                             <div class="form-group mb-4 d-none">
@@ -64,9 +64,9 @@
                                     <span class="input-group-text" id="basic-addon1">
                                         <span class="fas fa-user-circle"></span>
                                     </span>
-                                    {{ form.type }}
+                                    {{ form.usertype }}
                                 </div>
-                                <span class="text-error">{{ form.type.errors }}</span>
+                                <span class="text-error">{{ form.usertype.errors }}</span>
                             </div>
                             {% endif %}
 
