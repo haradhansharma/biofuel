@@ -318,11 +318,12 @@ def userpage(request, username):
             last_reports = None
 
 
-    label_data = LabelWiseData(last_reports)    
     # df = label_data.packed_labels()
     
             
     if last_reports is not None: 
+        label_data = LabelWiseData(last_reports)    
+        
         gretings = f'The summary of the report number {last_reports.id} genarated by {username}!'        
         
         ans_ques = len(label_data.answered_question_id_list)
