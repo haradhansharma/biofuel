@@ -1,5 +1,7 @@
 
 {% load static %}
+{% load compress %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,14 +16,16 @@
 {% include "includes/meta.html" %}
 
 
-
+{% compress js %}
 <script src="{% static 'assets/vendor/htmx/dist/htmx.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'assets/vendor/font-awesome/js/all.min.js' %}" type="text/javascript"></script>
+{% endcompress %}
+{% compress css %}
 <link type="text/css" href="{% static 'assets/vendor/font-awesome/css/all.min.css' %}" rel="stylesheet" type="text/css"> 
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" type="text/css">
-
+<link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet" type="text/css">
 <link type="text/css" href="{% static 'assets/css/volt.css' %}" rel="stylesheet" type="text/css"> 
 <link type="text/css" href="{% static 'css/common.css' %}" rel="stylesheet" type="text/css"> 
+{% endcompress %}
 
 
 {% block stylesheets %}{% endblock stylesheets %}
