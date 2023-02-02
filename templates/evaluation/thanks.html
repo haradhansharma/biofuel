@@ -7,9 +7,7 @@
     {% include 'includes/g_header.html' %} 
     {% endblock %}
     {% block main %}
-    <main>
-        
-        
+    <main>       
         {% include "includes/hero_section.html" %}
         <div class="section pt-7 bgjessica-light">
             <div class="container mt-n10 mt-lg-n12 z-2">
@@ -144,9 +142,6 @@
                 </div>
                 {% endif %}
                 <!--About Me-->
-
-
-
                 <!--Summary Boxes-->
                 <div id="ques" class="row justify-content-center mb-3">
                     <div class="col-12">
@@ -243,9 +238,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                              
+                                </div>                              
                                 <div class="col-12 col-sm-6 col-xl-4 d-flex">
                                     <div class="flex-fill card bg-danger">
                                         <div class="card-body">
@@ -260,13 +253,9 @@
                                         </div>
                                     </div>
                                 </div>
-                             
-
-
                             </div>                            
                             {% endif %}
                             <!--for last report -->
-
                             </div>
                         </div>
                     </div>
@@ -280,12 +269,9 @@
                         <div class="card text-center bgjessica-light-primary">
                             <div class="card-header bgjessica-primary2 text-primary">
                                 <h2 class="text-light">Traffic-light overview of Report #{{ last_reports.id }}</h2>                                
-                            </div>
-
+                            </div>                           
                             
-                            
-                            <div class="row g-3 p-3  justify-content-center " >
-                                
+                            <div class="row g-3 p-3  justify-content-center" >                                
                                 <div hx-get="{% url 'evaluation:traficlighthori' last_reports.id %}" hx-trigger="load"> 
                                     <div class="card text-center mb-4 mt-4">                                
                                         <div class="row p-3 justify-content-center">
@@ -293,21 +279,10 @@
                                         </div>
                                     </div>    
                                 </div>
-                                
-
-                            <!--
-                                <div class="card-body p-2">                                    
-                                    <div id="sss" class="ct-chart-ranking ct-golden-section ct-series-a">
-                                        
-                                    </div>
-                                </div>
-                            -->
-                            </div>
-                            
+                            </div>                            
                         </div>
                     </div>
-                </div>
-                
+                </div>                
                 {% endif %}
                 <!--Traffic Light ovrview-->
 
@@ -404,19 +379,13 @@
                     </div>    
                 </div>  
             </div>
-        </div>              
-                                   
-    </main>
-   
+        </div>                                  
+    </main>   
     {% endblock %}
     {% block footer %}
     {% include 'includes/g_footer.html' %}
-    {% endblock %}
-    
+    {% endblock %}    
 
-    {% block javascripts %}
-
-
-   
+    {% block javascripts %}   
     {% endblock javascripts %}
 

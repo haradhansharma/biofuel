@@ -7,37 +7,26 @@
 
 
 
-
+{% load compress %}
+<!-- Moment JS -->
+<!-- Github buttons -->
+<script async defer src="https://buttons.github.io/buttons.js" type="text/javascript"></script>
+{% compress js inline %}
 <!-- Charts -->
 <script src="{% static 'assets/vendor/chartist/dist/chartist.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'assets/vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js' %}" type="text/javascript"></script>
-
 <!-- Datepicker -->
 <script src="{% static 'assets/vendor/vanillajs-datepicker/dist/js/datepicker.min.js' %}" type="text/javascript"></script>
-
-
-
-<!-- Moment JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" type="text/javascript"></script>
-
-
-
-
-
-<!-- Github buttons -->
-<script async defer src="https://buttons.github.io/buttons.js" type="text/javascript"></script>
-
+<script src="{% static 'assets/js/moment.min.js' %}" type="text/javascript"></script>
 <!-- Volt JS -->
 <script src="{% static 'assets/js/volt.js' %}" type="text/javascript"></script>
-
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js" type="text/javascript"></script>
-
+<script src="{% static 'assets/vendor/aos/aos.js' %}" type="text/javascript"></script>
 <script>
     AOS.init();
 </script>
-
 <script>
     document.body.addEventListener('htmx:configRequest', (event) => {
       event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
     })
-  </script>
+</script>
+{% endcompress %}
