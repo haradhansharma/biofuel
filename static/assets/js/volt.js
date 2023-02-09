@@ -14,7 +14,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. Please contact us to request a removal. Contact us if you want to remove it.
 
 */
-
+ 
 "use strict";
 const dd = document;
 dd.addEventListener("DOMContentLoaded", function(event) {
@@ -181,7 +181,7 @@ dd.addEventListener("DOMContentLoaded", function(event) {
 
     //Chartist
 
-    
+     
     
     if(dd.querySelector('.ct-chart-sales-value')) {
         //Chart 5
@@ -194,22 +194,22 @@ dd.addEventListener("DOMContentLoaded", function(event) {
           }, {
             low: 0,
             showArea: true,
-            fullWidth: true,
+            fullWidth: false,
             plugins: [
               Chartist.plugins.tooltip()
             ],
             axisX: {
                 // On the x-axis start means top and end means bottom
                 position: 'end',
-                showGrid: true
+                showGrid: true,
+                
             },
             axisY: {
                 // On the y-axis start means left and end means right
                 showGrid: false,
                 showLabel: false,
-                labelInterpolationFnc: function(value) {
-                    return '$' + (value / 1) + 'k';
-                }
+                            
+
             }
         });
     }

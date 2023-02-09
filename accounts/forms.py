@@ -10,7 +10,7 @@ from django.contrib.sites.models import Site
 from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.contrib.auth.admin import UserAdmin
-
+from django.core.exceptions import ValidationError
 # Part of googleee recaptcha.
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Invisible, ReCaptchaV2Checkbox
@@ -36,6 +36,9 @@ class UserCreationForm(UserCreationForm):
         
 class UserCreationFormFront(UserCreationForm):
     
+ 
+        
+    
     #Inheriting and ading html property to default form of Django
     
     class Meta:
@@ -58,6 +61,23 @@ class UserCreationFormFront(UserCreationForm):
             
         }
     
+    def clean_username(self):
+        data = self.cleaned_data.get('username')
+        if " " in data:
+            raise ValidationError("Space in username not allowed!")
+
+        # Always return a value to use as the new cleaned data, even if
+        # this method didn't change it.
+        return data
+    
+    def clean_experts_in(self):
+        user_type = self.cleaned_data.get('usertype')
+        data = self.cleaned_data.get('experts_in') 
+        if user_type.is_expert:       
+            if not data:
+                raise ValidationError("Experts In Required!")
+        return data
+    
     # Inheriting default method of Django to customize for more interactiveness in front end
     def clean(self, *args, **kwargs):        
         username = self.cleaned_data.get('username')       
@@ -73,8 +93,7 @@ class UserCreationFormFront(UserCreationForm):
                 if user already registered and nt verified the email,
                 system will send activation mail again with message.
                 as previous activation mail may be invalid or loss by user.
-                '''
-                
+                '''        
                 
                 
                 ver_email = User.objects.filter(email=email, email_verified=False)

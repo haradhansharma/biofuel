@@ -35,21 +35,19 @@
                         </div>
                     </div>
                     <div class="col-lg-7 text-end"  data-aos="fade-right">
+                        <i class="fa-solid fa-chevrons-left"></i>
                         {% if user.is_authenticated %} 
                         <div class="w-100">
                             <a class="btn btnjessica-primary animate-hover px-4 py-3 mb-4 w-50"
-                                href="{% url 'accounts:user_link' user.username %}"><i
-                                    class="fas fa-chevron-left mr-3 pl-2 animate-left-3"></i> LOGGED IN AS <span
+                                href="{% url 'accounts:user_link' user.username %}"><i class="fa-solid fa-chevron-left animate-left-3"></i> LOGGED IN AS <span
                                     class="text-secondary">{{user.username}}</span> </a>
                         </div>
                         {% else %}
                         <div class="w-100">
-                            <a class="btn btnjessica-primary animate-hover px-4 py-3 mb-4 w-50" href="#register"><i
-                                    class="fas fa-chevron-left mr-3 pl-2 animate-left-3 mb-3"></i> REGISTER </a>
+                            <a class="btn btnjessica-primary animate-hover px-4 py-3 mb-4 w-50" href="#register"><i class="fa-solid fa-chevron-left animate-left-3"></i> REGISTER </a>
                         </div>
                         <div class="w-100">
-                            <a class="btn btnjessica-primary animate-hover px-4 py-3 mb-4 w-50" href="{% url 'login' %}"><i
-                                    class="fas fa-chevron-left mr-3 pl-2 animate-left-3 mb-3"></i> LOGIN </a>
+                            <a class="btn btnjessica-primary animate-hover px-4 py-3 mb-4 w-50" href="{% url 'login' %}"><i class="fa-solid fa-chevron-left animate-left-3"></i> LOGIN </a>
                         </div>
                         {% endif %}
                     </div>

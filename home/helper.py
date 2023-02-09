@@ -8,7 +8,8 @@ from accounts.models import *
 from django.db.models import Count, Min
 from django.db.models.functions import TruncDay
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+import logging
+log =  logging.getLogger('log')
 def total_reports(request):
     total_reports = Evaluator.objects.all().count()
     return total_reports
@@ -39,16 +40,17 @@ def reports_under_each_biofuel(request):
     return record_dict
 
 def weeks_results(request):
-    first_date_of_report = (Evaluator.objects.all().order_by('create_date').first()).create_date
-    # day_last_week = (timezone.now() - timezone.timedelta(days=365))    
-    # print(day_last_week)
-    reports = Evaluator.objects.filter(create_date__gte=first_date_of_report).values('create_date__date').annotate(total = Count('create_date__date') )   
+    # first_date_of_report = (Evaluator.objects.all().order_by('create_date').first()).create_date
+    day_last_week = (timezone.now() - timezone.timedelta(days=365))    
+ 
+    reports = Evaluator.objects.filter(create_date__gte=day_last_week).values('create_date__date').annotate(total = Count('create_date__date'))   
     records = {}
     for i in reports:
         record = {
-            i['create_date__date'].strftime("%d/%m/%y") : i['total']
+           i['create_date__date'].strftime("%m/%y") : i['total']
         }
         records.update(record)     
+  
     return records
 
 def all_reports(request):
@@ -98,7 +100,7 @@ def all_reports(request):
         else:
             return None    
     except Exception as e:
-        print(e)
+        log.warning(f'All report abroted due to {e}')    
         raise Http404
 
 def typewise_user(request):    

@@ -4,18 +4,20 @@
 
 {% block content %}
 
-<div class="row" style="min-height: 100vh;">
+<div class="row" >
     <div class="col-12 mb-4">
         <div class="card bg-yellow-100 border-0 shadow">
             <div class="card-header d-sm-flex flex-row align-items-center flex-0">
                 <div class="d-block mb-3 mb-sm-0">
-                    <h1 class="fs-5 fw-normal mb-2">Total Reports Genarated by the biofuel producer</h1>
+                    <h1 class="fs-5 fw-normal mb-2">Total reports Genarated by the biofuel producers</h1>
                     <h2 class="fs-3 fw-extrabold">#{{total_reports}}</h2>
                 </div>
             </div>
+            {% if user.is_staff or user.is_superuser %}
             <div class="card-body p-2">
                 <div class="ct-chart-sales-value ct-double-octave ct-series-g"></div>
-            </div>
+            </div>  
+            {% endif %}
         </div>
     </div>
 </div>
@@ -23,7 +25,7 @@
     <div class="card-header">
         <div class="row align-items-center">
             <div class="col">
-                <h2 class="fs-5 fw-bold mb-0">Labelwise Partners</h2>
+                <h2 class="fs-5 fw-bold mb-0">Labelwise Registered Partners</h2>
             </div>
         </div>
     </div>
@@ -31,7 +33,7 @@
         <div class="row g-4">
             {% for key, values in user_of_labels.items %}
             <div class="col-12 col-sm-6 col-xl-4">
-                <div class="card border-0 shadow bg-lgreen">
+                <div class="card border-0 shadow bg-light">
                     <div class="card-body">
                         <div class="row d-block d-xl-flex justify-content-center align-items-center">
                             <div class="col-12 col-xl-7 px-xl-0 text-center">
@@ -57,14 +59,16 @@
                     <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h2 class="fs-5 fw-bold mb-0">Latest Reports</h2>
+                                <h2 class="fs-5 fw-bold mb-0">Your Latest Reports</h2>
                             </div>
                             <div class="col text-end">
                                 <a href="{% url 'home:all_reports' %}" class="btn btn-sm btn-primary">See all</a>
                             </div>
                         </div>
                     </div>
+                    
                     <div class="table-responsive">
+                        {% if allreports %}
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
@@ -79,7 +83,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% if allreports %}
+                                
                                 {% for allreport in allreports %}
                                 <tr>
                                     <td class="text-gray-900" scope="row">#
@@ -109,13 +113,14 @@
                                     </td>
                                 </tr>
                                 {% endfor %}
-                                {% else %}
-                                <div class="alert alert-primary" role="alert">
-                                    No report Found!
-                                </div>
-                                {% endif %}
+                                
                             </tbody>
                         </table>
+                        {% else %}
+                        <div class="alert alert-primary m-4" role="alert">
+                            No report found to display here!
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

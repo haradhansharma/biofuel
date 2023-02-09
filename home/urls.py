@@ -13,6 +13,8 @@ urlpatterns = [
     path('dashboard/change_pass/', views.password_change, name='change_pass'),
     path('dashboard/questions/', views.questions, name='questions'),
     path('dashboard/quotations/', views.quotations, name='quotations'),
+    path('dashboard/quotationsatg/', views.quotationsatg, name='quotationsatg'),
+    
     path('dashboard/questions/<str:slug>', views.questions_details, name='questions_details'), 
     path('dashboard/questions/add-quatation/<str:slug>', views.add_quatation, name='add_quatation'), 
     path('dashboard/allreports/', views.allreports, name='all_reports'),  

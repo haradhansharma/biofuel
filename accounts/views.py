@@ -417,6 +417,8 @@ def userpage(request, username):
 # Check live username in signup form
 def check_username(request):
     username = request.POST.get('username')
+    if " " in username:
+        return HttpResponse(' <span class="text-danger"> Space Not allowed! </span>') 
     if User.objects.filter(username = username).exists():
         return HttpResponse(' <span class="text-danger"> This username already exists! </span>') 
     else:

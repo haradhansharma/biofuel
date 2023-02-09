@@ -31,7 +31,7 @@ class UserAdmin(UserAdmin):
     fieldsets =  (
         (None, {'fields': ('usertype', 'experts_in','orgonization',)}),
     ) + UserAdmin.fieldsets 
-    
+    ordering = ('-date_joined',)
     
     
     # Creating custom action for admin to activate user account and send mail    

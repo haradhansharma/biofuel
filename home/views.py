@@ -179,24 +179,39 @@ def dashboard(request):
 def user_setting(request):   
     null_session(request) 
     log.info(f'User setting page accessed by_____________ {request.user}')
+
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = ProfileForm(request.POST, instance=request.user.profile)
-        
-        if user_form.is_valid():
-            user_form.save()
-            messages.success(request,('Your profile was successfully updated!'))		    
-        elif profile_form.is_valid():
-            profile_form.save()
-            messages.success(request,('Your profile data was successfully updated!'))
-        else:
-            messages.error(request, 'Invalid form submission.')
-            messages.error(request, profile_form.errors)
-            messages.error(request, user_form.errors)            
+        password_form = PasswordChangeForm(user=request.user, data=request.POST)    #new
+        if 'user_form' in request.POST:        
+            if user_form.is_valid():
+                user_form.save() 
+                messages.success(request,('Genarel information was successfully updated!'))	
+            else:
+                messages.error(request, 'Invalid form submission.')                
+                messages.error(request, user_form.errors)  	 
+        if 'profile_form' in request.POST:      
+            if profile_form.is_valid():
+                profile_form.save()
+                messages.success(request,('Profile data was successfully updated!'))
+            else:
+                messages.error(request, 'Invalid form submission.')
+                messages.error(request, profile_form.errors)
+        if 'password_form' in request.POST:      #new
+            if password_form.is_valid():
+                password_form.save()
+                messages.success(request,('Password Updated successfully!'))
+            else:
+                messages.error(request, 'Invalid form submission.')
+                messages.error(request, password_form.errors)
+                      
         
         return HttpResponseRedirect(reverse('home:user_settings'))
     user_form = UserForm(instance=request.user)
-    profile_form = ProfileForm(instance=request.user.profile)  
+    profile_form = ProfileForm(instance=request.user.profile)
+    password_form = PasswordChangeForm(user=request.user)    #new  
+    
     
     #meta
     meta_data = site_info()    
@@ -212,6 +227,8 @@ def user_setting(request):
         "user":request.user,
         "user_form":user_form,
         "profile_form":profile_form, 
+        "password_form":password_form, 
+        
         'site_info' : meta_data          
     }
     return render(request, 'home/settings.html', context = context)
@@ -338,6 +355,48 @@ def quotations(request):
     }
     
     return render(request, 'home/quotations.html', context = context)
+
+
+@login_required
+@expert_required
+def quotationsatg(request):  
+    '''get questions related to the current user'''
+    
+    
+    # This is essential where login_required
+    null_session(request)
+    log.info(f'QuotationsATG page accessed by_____________ {request.user}')
+       
+    results = Quotation.objects.filter(service_provider = request.user).order_by('-id')  
+    
+    
+    #Paginated response
+    page = request.GET.get('page', 1)
+    paginator = Paginator(results, 12)
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        results = paginator.page(1)
+    except EmptyPage:
+        results = paginator.page(paginator.num_pages)
+        
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Quotations ATG'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f'Questions at a glance is allowed to include one or more quotations.  It is created by the biofuel experts.'
+    meta_data['tag'] = 'quotation, quotations. at a glance'
+    meta_data['robots'] = 'noindex, nofollow'
+    # meta_data['og_image'] = user_type.icon.url
+    
+    context = {
+        'quotations': results,
+        'site_info' : meta_data   
+                
+    }
+    
+    return render(request, 'home/quotationsatg.html', context = context)
     
 
 
@@ -979,7 +1038,7 @@ def webmanifest(request):
         "scope": "/",
         'lang' : 'en',
         'screenshots' : [static(site.get('og_image')), static(site.get('site_logo'))],     
-        'description': site.get('site_description'),  
+        'description': site.get('description'),  
         "theme_color": "#08793B",
         "background_color": "#08793B",
         "display": "standalone"        

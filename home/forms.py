@@ -10,10 +10,11 @@ from home.models import Quotation
 class PasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super(PasswordChangeForm, self).__init__(*args, **kwargs)
-        self.fields['old_password'].widget = forms.PasswordInput(attrs={'autocomplete': 'current-password', 'autofocus': True, 'class':'form-control'})
+        self.fields['old_password'].widget = forms.PasswordInput(attrs={'autocomplete': 'current-password', 'class':'form-control'})
         self.fields['new_password1'].widget = forms.PasswordInput(attrs={'autocomplete': 'new-password', 'class':'form-control'})
         self.fields['new_password2'].widget = forms.PasswordInput(attrs={'autocomplete': 'new-password', 'class':'form-control'})
         
+    
 
 
 
@@ -26,8 +27,8 @@ class UserForm(forms.ModelForm):
         widgets = {
                       
             'username': forms.TextInput(attrs={'placeholder': 'username', 'class':'form-control', 'aria-label':'username',  }),
-            'first_name': forms.TextInput(attrs={'placeholder': 'first_name', 'class':'form-control', 'aria-label':'first_name' }),
-            'last_name': forms.TextInput(attrs={'placeholder': 'last_name','class':'form-control', 'aria-label':'last_name', }), 
+            'first_name': forms.TextInput(attrs={'placeholder': 'first name', 'class':'form-control', 'aria-label':'first name' }),
+            'last_name': forms.TextInput(attrs={'placeholder': 'last name','class':'form-control', 'aria-label':'last name', }), 
             'orgonization': forms.TextInput(attrs={'placeholder': 'orgonization','class':'form-control', 'aria-label':'orgonization', }), 
             'phone': forms.TextInput(attrs={'placeholder': 'phone','class':'form-control', 'aria-label':'phone', }), 
             'email': forms.EmailInput(attrs={'placeholder': 'email', 'class':'form-control', 'aria-label':'email' , }),            
@@ -37,7 +38,7 @@ class UserForm(forms.ModelForm):
                      
             'username':'Username',
             'first_name':'First name',
-            'first_name':'Last Name',
+            'last_name':'Last Name',
             'orgonization':'Orgonization',
             'phone':'Phone',
             'email': 'Email',

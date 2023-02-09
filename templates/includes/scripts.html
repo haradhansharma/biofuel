@@ -11,7 +11,7 @@
 <!-- Moment JS -->
 <!-- Github buttons -->
 <script async defer src="https://buttons.github.io/buttons.js" type="text/javascript"></script>
-{% compress js inline %}
+<!--{% compress js inline %} -->
 <!-- Charts -->
 <script src="{% static 'assets/vendor/chartist/dist/chartist.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'assets/vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js' %}" type="text/javascript"></script>
@@ -28,5 +28,5 @@
     document.body.addEventListener('htmx:configRequest', (event) => {
       event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
     })
-</script>
-{% endcompress %}
+</script> 
+<!--{% endcompress %} -->

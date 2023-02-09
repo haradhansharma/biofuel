@@ -1,6 +1,6 @@
  
 {% load static %}
-{% load compress %}
+{% load compress %} 
 <!DOCTYPE html>
 <html lang="en">
 {% block head %}
@@ -13,10 +13,9 @@
   </title>
   {% include "includes/meta.html" %}
 
-  {% compress css %}
-  <link type="text/css" href="{% static 'assets/css/volt.css' %}" rel="stylesheet" >
+  <!--{% compress css %} -->
   <link type="text/css" href="{% static 'css/common.css' %}" rel="stylesheet">
-  {% endcompress %}
+  <!--{% endcompress %} -->
 
 </head>
 {% endblock %}

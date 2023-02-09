@@ -2,7 +2,7 @@
        
 <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
      <a class="navbar-brand me-lg-5" href="/">
-       <img src="{% static site_info.logo %}" class="card bg-bgreen"  height="50px" width="auto" title="{{ site_info.name }}" alt="{{ site_info.name }}">         
+       <img src="{% static site_info.logo %}" loading="lazy" class="card bgjessica-primary"  height="50px" width="auto" title="{{ site_info.name }}" alt="{{ site_info.name }}">         
      </a>
      <div class="d-flex align-items-center">
          <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,10 +13,69 @@
 
  
 
- <nav id="sidebarMenu" class="sidebar d-lg-block bg-white collapse" data-simplebar>          
+ <nav id="sidebarMenu" class="sidebar d-lg-block bg-white collapse" data-simplebar>           
    <div class="sidebar-inner px-2 pt-3">
-    <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">              
-          <h1 class="fs-5 h2 fw-semibold">To be answered questions</h1>            
+
+    <div class="d-flex align-items-center justify-content-between justify-content-lg-center pb-4 border-bottom">
+      
+      <div class="d-flex align-items-center">                
+        <div class="d-block">
+          <div class="rounded-circle mb-4 justify-content-center d-flex p-3 bg-warning w-25 w-sm-50">                                                
+            <img src="{% static user.usertype.icon.url %}" loading="lazy" class="img-fluid" alt="{{user.usertype.name}}" height="100px" width="auto" title="{{user.usertype.name}}">
+          </div>   
+          <h2 class="h5 mb-3">Hi, {{request.user.username}}</h2>
+          <a href="{% url 'logout' %}" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
+            <svg class="icon icon-xxs me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>            
+            Sign Out
+          </a>
+        </div>
+      </div>
+      <div class="collapse-close d-lg-none">
+        <a href="#sidebarMenu" data-bs-toggle="collapse"
+            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="true"
+            aria-label="Toggle navigation">
+            <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+          </a>
+      </div>
+    </div>
+
+    <ul class="nav flex-column pt-3 pt-lg-0">
+                 
+      <li class="nav-item {% if 'dashboard' in segment and segment|length == 1 %} active {% endif %}">
+        <a href="{% url 'home:dashboard' %}" class="nav-link">
+          <span class="sidebar-icon">
+            <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+              <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+            </svg>
+          </span> 
+          <span class="sidebar-text link-primary">
+            Dashboard
+          </span>
+        </a>
+      </li>
+      
+      
+      <li class="nav-item">
+        <a href="{% url 'accounts:user_link' user.username %}" 
+          class="nav-link d-flex align-items-center">
+          <span class="sidebar-icon">
+            <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+            </svg>                    
+          </span>
+          <span class="sidebar-text link-primary">My Profile</span>
+        </a>
+      </li>
+      <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
+    </ul>
+               
+        <h1 class="fs-5 h2 fw-semibold">To be answered questions</h1>   
+
         <div class="list-group list-group-flush border-bottom scrollarea">           
                 {% for parent, child in question_dataset.items %}
                 <div class="list-group-item list-group-item-action py-1 lh-tight" aria-current="true">
@@ -42,6 +101,6 @@
                 </div>
                 {% endfor %}          
         </div>
-      </div>
+     
    </div>
  </nav>

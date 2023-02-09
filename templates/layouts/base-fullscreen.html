@@ -1,6 +1,6 @@
 
 {% load static %}
-{% load compress %}
+{% load compress %} 
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 
@@ -18,16 +18,13 @@
 {% include "includes/meta.html" %}
 
 
-{% compress js %}
+<!--{% compress js %}-->
 <script src="{% static 'assets/vendor/htmx/dist/htmx.min.js' %}" type="text/javascript"></script>
 <script src="{% static 'assets/vendor/font-awesome/js/all.min.js' %}" type="text/javascript"></script>
-{% endcompress %}
-{% compress css %}
-<link type="text/css" href="{% static 'assets/vendor/font-awesome/css/all.min.css' %}" rel="stylesheet" type="text/css"> 
-<link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet" type="text/css">
-<link type="text/css" href="{% static 'assets/css/volt.css' %}" rel="stylesheet" type="text/css"> 
+<!--{% endcompress %}-->
+<!--{% compress css %}-->
 <link type="text/css" href="{% static 'css/common.css' %}" rel="stylesheet" type="text/css"> 
-{% endcompress %}
+<!--{% endcompress %}-->
 
 {% block js %}{% endblock js %}
 

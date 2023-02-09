@@ -3,7 +3,7 @@
 {% block title %}{{site_info.title}}{% endblock %}
 {% block header %}
 {% include 'includes/g_header.html' %}
-{% endblock %}   
+{% endblock %}
 {% block main %}
 <main>
     {% include "includes/hero_section.html" %}
@@ -12,44 +12,51 @@
             <div class="row justify-content-center">
                 <div class="col-12">
                     <div class="d-block text-center justify-content-center mt-7 mb-6 mb-lg-5">
-                        <p>
-                            This is the page for user type related to the biofuel. This is not a indivisual page for a registered user!
-                        </p>
-                        <p>
-                            The Icon Showing below is decided by platform orgonizer to indicate <strong>{{user_type.name}}</strong> .
-                        </p>
-                        <div class="icon-user-type icon-shape-user-type  bg-transparent text-center shadow-lg rounded mb-4 mt-4">                            
+                        <div
+                            class="icon-user-type icon-shape-user-type  bg-transparent text-center shadow-lg rounded mb-4 mt-4">
                             <img src="{% static user_type.icon.url %}" alt="{{user_type.name}}}" class="p-4">
                         </div>
                         {% if request.user.is_authenticated %}
-                        {% for title, url in enroll.items %} 
+                        {% for title, url in enroll.items %}
                         <h3 class="h5">
-                            <a href="{{ url }}" class="btn btn-outline-primary d-inline-flex align-items-center me-md-3 shadow-lg"> 
+                            <a href="{{ url }}"
+                                class="btn btn-outline-primary d-inline-flex align-items-center me-md-3 shadow-lg">
                                 {{title}}
                             </a>
                         </h3>
                         {% endfor %}
                         {% else %}
                         <h3 class="h5">
-                            <a href="{% url 'accounts:signup' %}" class="btn btn-outline-primary d-inline-flex align-items-center me-md-3 shadow-lg">
-                                Join as {{ user_type.name }} 
+                            <a href="{% url 'accounts:signup' %}"
+                                class="btn btn-outline-primary d-inline-flex align-items-center me-md-3 shadow-lg">
+                                Join as {{ user_type.name }}
                             </a>
                         </h3>
-                        {% endif %}
+                        {% endif %}                        
+
                         <p class="mt-5">
+                            This page is designed to provide information about various user types. This
+                            page aims to cater to the needs of users who are looking for information and resources
+                            related to different user types. The information provided here will be comprehensive and
+                            updated regularly to ensure that users receive the most accurate and relevant information.
+                            Whether you are a new or experienced user, this page is the perfect place to find everything
+                            you need to know about user types.
+                        </p> 
+                        <p class="mt-5"> 
                             {% if user.is_authenticated %}
-                             If you are looking dedicated page for registered user then follow the <a href="{% url 'accounts:user_link' user.username %}">LINK</a>
+                            If you are searching for specific information about a particular user, you can click on this <a href="{% url 'accounts:user_link' user.username %}">LINK</a>. 
                             {% else %}
-                             Dedicated page for indivisual user is accessible to the registered user!
+                            Dedicated page for indivisual user is accessible to the registered user!
                             {% endif %}
                         </p>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <section class="section section-lg  bgjessica-light pt-0 pb-0">
-        <div class="container">            
+        <div class="container">
         </div>
     </section>
 </main>

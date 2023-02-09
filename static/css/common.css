@@ -1,12 +1,11 @@
-/* .fixedbtm {
-    position: fixed;
-    width: 100%;
-    display: block;
-    bottom: 0;
-    z-index: 100;
-} */
 
+@import '../assets/css/volt.css';
+@import '../assets/vendor/aos/aos.css';
+@import '../assets/vendor/font-awesome/css/fontawesome.min.css';
+@import '../assets/vendor/font-awesome/css/brands.min.css';
+@import '../assets/vendor/font-awesome/css/solid.min.css';
 
+/* @import '../assets/vendor/font-awesome/css/fontawesome.min.css'; */
 
 .bgjessica-primary{
   background-color: #7c9c9c!important;
