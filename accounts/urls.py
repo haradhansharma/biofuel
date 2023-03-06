@@ -15,7 +15,7 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('<str:username>', views.userpage, name='user_link'),    
+    path('my-profile/', views.userpage, name='user_link'),    
 ]
 
 urlpatterns += [

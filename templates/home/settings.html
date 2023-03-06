@@ -1,4 +1,5 @@
 {% extends "layouts/base.html" %}
+{% load static %}
 
 {% block title %}{{site_info.title}}{% endblock %} 
 
@@ -21,8 +22,31 @@
         </div>
     </div>
     {% endif %}
-    <div class="col-12 text-start">
-        <div class="col-12 col-md-8 col-xl-6 mx-auto">
+    <div class="d-flex justify-content-center align-items-center">
+        
+        {% if user.get_profile.company_logo %}
+        <div class="d-block mx-auto mb-4 position-relative ">
+            <img class="img-fluid rounded-circle shadow" src="{% static user.get_profile.company_logo.url %}" alt="{{user.get_full_name}}" title="{{user.get_full_name}}" width="250px" height="250px">   
+            <a class="position-absolute top-50 end-0 translate-middle rounded-circle bg-light btn" href="{% url 'home:delete_avatar' %}">X</a> 
+        </div>  
+        {% else %}
+        <form class="card p-5 mb-5 overflow-hidden" style="width: 300px;" method="post" id="company_logo_form" action="" enctype="multipart/form-data" >
+            {% csrf_token %}
+            <div class="">
+                <div class="form-floating">
+                    {{ company_logo_form.company_logo }}                   
+                </div>
+                <span class="text-error invalid-feedback">{{ company_logo_form.company_logo.errors  }}</span>
+            </div>   
+            <input class="btn btn-primary" name="company_logo_form" name="company_logo_form" type="submit"  value="Upload"> 
+
+        </form> 
+        {% endif %}  
+      
+    </div>
+    
+   
+        <div class="col-12 col-lg-6 d-flex">
             <div class="card border-0 shadow mb-4 p-4 flex-fill">
                 <div class="card-header">
                     <h1 class="h5 mb-4">General information and profile settings</h1>
@@ -114,7 +138,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-8 col-xl-6 mx-auto">
+        <div class="col-12 col-lg-6 d-flex">
             <div class="card border-0 shadow mb-4 p-4 flex-fill">
                 <div class="card-header">
                     <h2 class="h5 mb-4">Profile Information</h2>
@@ -169,53 +193,54 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-8 col-xl-6 mx-auto">
-            <div class="card card-body border-0 shadow mb-4">
-            <h1 class="h5 mb-4">Change Your Password Here</h1>
-            <form method="post" id = "password_form">
-                {% csrf_token %}
-                <div class="row"> 
-                 <!-- Form -->
-                 <div class="col-md-6 mb-3">
-                    <div class="form-group mb-4">
-                        <label for="{{ password_form.old_password.id_for_label }}">{{ password_form.old_password.label_tag }} </label>
-                        <div class="input-group">                            
-                            {{ password_form.old_password }}
-                        </div>  
-                        <span class="text-error">{{ password_form.old_password.errors }}</span>
-                    </div>
+        
+    
+    <div class="col-12 col-lg-6 mx-auto d-flex">
+        <div class="card card-body border-0 shadow mb-4">
+        <h1 class="h5 mb-4">Change Your Password Here</h1>
+        <form method="post" id = "password_form">
+            {% csrf_token %}
+            <div class="row"> 
+             <!-- Form -->
+             <div class="col-md-6 mb-3">
+                <div class="form-group mb-4">
+                    <label for="{{ password_form.old_password.id_for_label }}">{{ password_form.old_password.label_tag }} </label>
+                    <div class="input-group">                            
+                        {{ password_form.old_password }}
+                    </div>  
+                    <span class="text-error">{{ password_form.old_password.errors }}</span>
                 </div>
-                <!-- End of Form -->
-
-                <!-- Form -->
-                <div class="col-md-6 mb-3">
-                    <div class="form-group mb-4">
-                        <label for="{{ password_form.new_password1.id_for_label }}">{{ password_form.new_password1.label_tag }} </label>
-                        <div class="input-group">                            
-                            {{ password_form.new_password1 }}
-                        </div>  
-                        <span class="text-error">{{ password_form.new_password1.errors }}</span>
-                    </div>
-                </div>
-                <!-- End of Form -->
-
-                <!-- Form -->
-                 <div class="col-md-6 mb-3">
-                    <div class="form-group mb-4">
-                        <label for="{{ password_form.new_password2.id_for_label }}">{{ password_form.new_password2.label_tag }} </label>
-                        <div class="input-group">                            
-                            {{ password_form.new_password2 }}
-                        </div>  
-                        <span class="text-error">{{ password_form.new_password2.errors }}</span>
-                    </div>
-                </div>
-                <!-- End of Form -->
-                <div class="mt-3">
-                    <input  class="btn btn-gray-800 mt-2 animate-up-2" form = "password_form" name="password_form" type="submit" value="Update">  
-                </div>
-                </div>       
-            </form>
             </div>
+            <!-- End of Form -->
+
+            <!-- Form -->
+            <div class="col-md-6 mb-3">
+                <div class="form-group mb-4">
+                    <label for="{{ password_form.new_password1.id_for_label }}">{{ password_form.new_password1.label_tag }} </label>
+                    <div class="input-group">                            
+                        {{ password_form.new_password1 }}
+                    </div>  
+                    <span class="text-error">{{ password_form.new_password1.errors }}</span>
+                </div>
+            </div>
+            <!-- End of Form -->
+
+            <!-- Form -->
+             <div class="col-md-6 mb-3">
+                <div class="form-group mb-4">
+                    <label for="{{ password_form.new_password2.id_for_label }}">{{ password_form.new_password2.label_tag }} </label>
+                    <div class="input-group">                            
+                        {{ password_form.new_password2 }}
+                    </div>  
+                    <span class="text-error">{{ password_form.new_password2.errors }}</span>
+                </div>
+            </div>
+            <!-- End of Form -->
+            <div class="mt-3">
+                <input  class="btn btn-gray-800 mt-2 animate-up-2" form = "password_form" name="password_form" type="submit" value="Update">  
+            </div>
+            </div>       
+        </form>
         </div>
     </div>
 

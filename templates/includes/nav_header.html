@@ -45,7 +45,7 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuTop">
                         {% if user.is_authenticated %}
                         <li><a class="dropdown-item" href="{% url 'home:dashboard' %}">Dashboard</a></li>
-                        <li><a class="dropdown-item" href="{% url 'accounts:user_link' user.username %}">Profile</a>
+                        <li><a class="dropdown-item" href="{% url 'accounts:user_link' %}">Profile</a>
                         </li>
                         <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
                         {% else %}

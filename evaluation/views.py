@@ -789,7 +789,7 @@ def eva_question(request, evaluator, slug):
     # meta_data['og_image'] = request.user.type.icon.url 
     
     context.update({
-        'site_info' : meta_data, 
+        'site_info' : meta_data,  
     })
     
     return render(request, 'evaluation/eva_question.html', context = context)

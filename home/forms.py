@@ -1,11 +1,15 @@
 from django import forms
 from accounts.models import User, Profile
-from evaluation.models import Question, Option
-
+from evaluation.models import Question, Option, Suggestions
 from django.contrib.auth.forms import PasswordChangeForm
-
 from home.models import Quotation
-
+from django.forms.models import (
+    inlineformset_factory, 
+    formset_factory, 
+    modelform_factory, 
+    modelformset_factory
+)
+from evaluation.helper import get_sugested_questions
 
 class PasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
@@ -24,15 +28,13 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username','first_name', 'last_name', 'email', 'orgonization', 'phone', )        
-        widgets = {
-                      
+        widgets = {                      
             'username': forms.TextInput(attrs={'placeholder': 'username', 'class':'form-control', 'aria-label':'username',  }),
             'first_name': forms.TextInput(attrs={'placeholder': 'first name', 'class':'form-control', 'aria-label':'first name' }),
             'last_name': forms.TextInput(attrs={'placeholder': 'last name','class':'form-control', 'aria-label':'last name', }), 
             'orgonization': forms.TextInput(attrs={'placeholder': 'orgonization','class':'form-control', 'aria-label':'orgonization', }), 
             'phone': forms.TextInput(attrs={'placeholder': 'phone','class':'form-control', 'aria-label':'phone', }), 
-            'email': forms.EmailInput(attrs={'placeholder': 'email', 'class':'form-control', 'aria-label':'email' , }),            
-            
+            'email': forms.EmailInput(attrs={'placeholder': 'email', 'class':'form-control', 'aria-label':'email' , }),              
         }
         labels = {     
                      
@@ -46,6 +48,19 @@ class UserForm(forms.ModelForm):
         }
         
         
+class CompanyLogoForm(forms.ModelForm):
+    class Meta:
+        
+        
+        model = Profile
+        fields = ('company_logo',)
+        
+        widgets = {  
+            'avatar': forms.FileInput(attrs={ 'class':'form-control', 'aria-label':'company_logo' }),   
+        }
+        
+       
+        
    
         
 class ProfileForm(forms.ModelForm):
@@ -55,16 +70,14 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ('about','location','established',)
         
-        widgets = {
-                      
+        widgets = {                      
             'about': forms.Textarea(attrs={'placeholder': 'About', 'class':'form-control', 'aria-label':'about' }),
             'location': forms.TextInput(attrs={'placeholder': 'Location', 'class':'form-control', 'aria-label':'location' }),
             'established': forms.DateInput(format='%d-%m-%Y', attrs={ 'placeholder':"Select a Date", 'class':'form-control', 'aria-label':'established', }), 
             
             
         }
-        labels = {     
-                     
+        labels = {                       
             'about': 'About',
             'location': 'Location',
             'established': 'Established',           
@@ -137,6 +150,54 @@ class NextActivitiesOnQuotation(forms.ModelForm):
         fields = ('next_activities',)
         widgets = {
             'next_activities': forms.Select(attrs={ 'class':'form-select', 'aria-label':'unit', 'style':"border: None; box-shadow: None; border-radius:0; border-bottom:1px solid " }),
+        }
+        
+        
+class SugestionForm(forms.ModelForm):
+    class Meta:
+        model = Suggestions
+        fields = (
+            
+            'su_type',
+            'title',
+            'statement',
+            
+        )
+        widgets = {
+            
+            'su_type' : forms.Select(attrs={ 'class':'form-select', 'aria-label':'Sugestion Type', 'placeholder':'Select SUgestion Type' }), 
+            'title' : forms.TextInput(attrs={'class':'form-control', 'aria-label':'Title ', 'placeholder':'Title'}),
+            'statement': forms.Textarea(attrs={'rows': 3,'class':'form-control', 'aria-label':'Statement' , 'placeholder':'Statement or Description' }),
+        }
+        
+        
+class QuesSugestionForm(forms.ModelForm):
+    # parent = forms.ModelChoiceField(queryset=Suggestions.objects.filter())
+    
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")       
+        super().__init__(*args, **kwargs)    
+  
+        self.fields['related_qs'].choices = [(ch.pk, ch) for ch in get_sugested_questions(self.request)]
+        self.fields['related_qs'].choices.insert(0, (None, '-----'))
+        
+    class Meta:
+        model = Suggestions
+        fields = (
+            'su_type',
+            'title',
+            'statement',
+            'related_qs'
+        )
+        
+        widgets = {
+            
+            'su_type' : forms.Select(attrs={ 'class':'form-select', 'aria-label':'Sugestion Type', 'placeholder':'Select SUgestion Type' }), 
+            'title' : forms.TextInput(attrs={'class':'form-control', 'aria-label':'Title ', 'placeholder':'Title'}),
+            'statement': forms.Textarea(attrs={'rows': 3,'class':'form-control', 'aria-label':'Statement' , 'placeholder':'Statement or Description' }),
+            'related_qs' : forms.Select(attrs={ 'class':'form-select', 'aria-label':'Sugestion Type', 'placeholder':'Select Related Question' }), 
+            
         }
       
   

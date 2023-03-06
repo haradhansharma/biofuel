@@ -35,7 +35,7 @@ class QuotationDocType(models.Model):
         return self.name
 
 
-
+ 
 class Quotation(models.Model):     
     service_provider = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quotationserviceprovider')   
     show_alternate_email = models.EmailField(help_text='You can show alternate email address in quotation.', null=True, blank=True)
@@ -47,7 +47,7 @@ class Quotation(models.Model):
     needy_time_unit = models.ForeignKey(TimeUnit, verbose_name='Time Unit', on_delete=models.CASCADE, related_name='timeunitquatation')
     sample_amount = models.IntegerField(verbose_name="Sample amount needed for test", help_text="Note how much sample you need to perform this test. Do not forget to select the unit of weight.")
     sample_amount_unit = models.ForeignKey(WeightUnit, verbose_name='Weight Unit', on_delete=models.CASCADE, related_name='weightunitquatation')
-    require_documents = models.ManyToManyField(QuotationDocType, verbose_name='Document needed for test',help_text="Select the documents you need to perform this test. Can select multiple. Hold down “Control”, or “Command” on a Mac, to select more than one.", related_name='requiredocuments')
+    require_documents = models.ManyToManyField(QuotationDocType, verbose_name='Document needed for test',help_text="Select the documents that are needed to perform this test. You can select multiple in mac by holding shift + command and down arrow and in windows ctrl/shift + down arrow.", related_name='requiredocuments')
     factory_pickup = models.BooleanField(verbose_name="Factory Sample pick-up", help_text="Place a tick mark to indicate whether the sample will be collected from the factory.")
     test_for = models.ForeignKey(Question, verbose_name="Tests for question", help_text="Help Text will go here", max_length=252, on_delete=models.CASCADE, related_name='testfor', limit_choices_to={'is_active': True, 'is_door' : False})
     related_questions = models.ManyToManyField(Question, verbose_name="Please select all other question which are also tested within the provided quotation", help_text="Allow multiple option selection. The selected options should be highlighted.", limit_choices_to={'is_active': True, 'is_door' : False})

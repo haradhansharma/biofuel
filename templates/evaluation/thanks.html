@@ -20,7 +20,7 @@
                         {% endfor %}
                     </div>
                     {% endif %}
-                    {% if donotshow == 'no' %}
+                    
                     <div class="col-12">
                         <div class="row g-3 mb-3">
                             <div class="col-12 col-lg-4 d-flex ">
@@ -70,7 +70,7 @@
                                                                 class="me-2">Begin Evaluating</a>
                                                             {% endif %}
                                                             {% if request.user.is_marine or request.user.is_staff or  request.user.is_superuser %}
-                                                            <a href="{% url 'home:questions' %}"
+                                                            <a href="{% url 'home:questionsint' %}"
                                                                 class="me-2">Questions</a>
                                                             {% endif %}
 
@@ -102,10 +102,10 @@
                             </div>
                         </div>
                     </div>
-                    {% endif %}
+                  
                 </div>
                 <!--About Me-->
-                {% if donotshow == 'no' %}
+              
                 <div class="row justify-content-center">
                     <div class="col-12">
                         <div class="card text-center mb-3">
@@ -140,7 +140,7 @@
                         </div>
                     </div>
                 </div>
-                {% endif %}
+           
                 <!--About Me-->
                 <!--Summary Boxes-->
                 <div id="ques" class="row justify-content-center mb-3">
@@ -253,7 +253,32 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>  
+                            {% else %}
+                            <div class="row justify-content-center d-xl-flex mt-3">
+                                <a class="col-12 col-sm-6 col-xl-4 mb-4" href="{% url 'home:user_settings' %}">
+                                    <div class="card border-0 shadow">
+                                        <div class="card-body mx-auto">
+                                            {{ accounts_seting }}
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="col-12 col-sm-6 col-xl-4 mb-4" href="{% url 'home:dashboard' %}">
+                                    <div class="card border-0 shadow">
+                                        <div class="card-body mx-auto">
+                                            {{ dashboard }}
+                                        </div>
+                                    </div>
+                                </a>
+                                
+                                <a class="col-12 col-sm-6 col-xl-4 mb-4" href="{% url 'home:home' %}">
+                                    <div class="card border-0 shadow">
+                                        <div class="card-body mx-auto">
+                                            {{ homepage }}
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>                          
                             {% endif %}
                             <!--for last report -->
                             </div>
@@ -263,7 +288,8 @@
                 <!--Summary Boxes-->
                 
                 <!--Traffic Light OVerview-->
-                {% if last_report != none %}
+              
+                {% if last_reports != none %}
                 <div id="labeldata" class="row justify-content-center mb-3">
                     <div class="col-12">
                         <div class="card text-center bgjessica-light-primary">
@@ -282,15 +308,66 @@
                             </div>                            
                         </div>
                     </div>
-                </div>                
+                </div>     
                 {% endif %}
-                <!--Traffic Light ovrview-->
+
+                {% if user.is_expert or user.is_staff or user.is_superuser %}     
+                <div id="quot" class="row justify-content-center mb-3">      
+                    <div class="col-12">
+                        <div class="card">          
+                            <div class="card-header">
+                                Testing Services Provided
+                            </div>  
+                            <div class="card-body">      
+                                <div class="row">          
+                                    {% for quotation in quotations %}
+                                    <div class="col-md-6 col-xl-4 d-flex g-2">
+                                        <div class="card bg-light bg-gradient flex-fill p-2">
+                                            <img class="card-img-top" src="{% static quotation.service_provider.get_profile.profile_logo %}" alt="{{quotation.test_for.name}}">
+                                            
+                                                <div class="card-header">
+                                                   <strong>Test For:</strong> {{quotation.test_for.name}}
+                                                </div>
+                                                <div class="card-body">
+                                                <h5 class="h6 card-title">                                    
+                                                    <i class="fa-solid fa-heart-circle-check"></i> <strong>Sample Require:</strong> {{quotation.sample_amount}}{{quotation.sample_amount_unit}}
+                                                </h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">
+                                                    <i class="fa-solid fa-heart-circle-check"></i> <strong>Test Price:</strong> {{quotation.price}}{{quotation.price_unit}}
+                                                </h6>
+                                                <p class="card-text">
+                                                    <i class="fa-solid fa-heart-circle-check"></i> {{quotation.related_questions.all.count}} Addition question will be tested along with this test.                                                    
+                                                </p>
+                                            
+                                                <p class="card-text"><i class="fa-solid fa-heart-circle-check"></i> <strong>Sample will be picked from factory:</strong> {{quotation.factory_pickup}}</p>
+                                             
+                                                <ul class="list-inline"><i class="fa-solid fa-heart-circle-check"></i> Required documents to conduct the test:
+                                                    {% for rd in quotation.require_documents.all %}
+                                                    <li class="list-inline-item"><i class="fa-solid fa-check"></i>{{rd.name}}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                                </div>
+                                                <div class="card-footer text-center mx-auto">
+                                                <a href="{% url 'home:quotation_report' quotation.test_for.slug quotation.id %}" class="btn btn-primary">CLick To Find Details</a>
+
+                                                </div>                                    
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            
 
                 <div class="row justify-content-center">
+                    
+                    {% if user.is_producer or user.is_staff or user.is_superuser %}
                     <div class="col-12">
                         <div class="card text-center">                            
-                            <!--for last report -->
-                            {% if last_reports %}
+                            <!--for last report -->                            
                             <div class="row g-3 p-3  justify-content-center">
                                 <div>
                                     <div class="card-footer">
@@ -316,7 +393,7 @@
                                                                 href="{{ report.get_absolute_url }}" target="_blank">
                                                                 View 
                                                             </a>
-                                                            <form action="{% url 'accounts:user_link' user.username %}#labeldata" method="get">
+                                                            <form action="{% url 'accounts:user_link' %}#labeldata" method="get">
                                                                 <input type="hidden" name="slug"  value="{{report.slug}}">
                                                                 <input type="submit" class="btn btn-primary btn-sm m-2" value="See Summary">
                                                             </form>
@@ -337,47 +414,11 @@
                                         </div>
                                     </div>                                    
                                 </div>
-                            </div>                            
-                            {% endif %}
+                            </div> 
                             <!--for last report -->
                         </div>
-
-
-                        {% if not last_reports %}
-                        <div class="row justify-content-center d-xl-flex mt-3">
-                            <a class="col-12 col-sm-6 col-xl-4 mb-4" href="{% url 'home:user_settings' %}">
-                                <div class="card border-0 shadow">
-                                    <div class="card-body mx-auto">
-                                        {{ accounts_seting }}
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="col-12 col-sm-6 col-xl-4 mb-4" href="{% url 'home:dashboard' %}">
-                                <div class="card border-0 shadow">
-                                    <div class="card-body mx-auto">
-                                        {{ dashboard }}
-                                    </div>
-                                </div>
-                            </a>
-                            <!--
-                            <a class="col-12 col-sm-6 col-xl-4 mb-4" href="{% url 'home:change_pass' %}">
-                                <div class="card border-0 shadow">
-                                    <div class="card-body mx-auto">
-                                        {{ change_pass }}
-                                    </div>
-                                </div>
-                            </a>
-                            -->
-                            <a class="col-12 col-sm-6 col-xl-4 mb-4" href="{% url 'home:home' %}">
-                                <div class="card border-0 shadow">
-                                    <div class="card-body mx-auto">
-                                        {{ homepage }}
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        {% endif %}
-                    </div>    
+                    </div>   
+                    {% endif %} 
                 </div>  
             </div>
         </div>                                  

@@ -1,0 +1,75 @@
+{% load static %}
+{% load custom_tags %}
+
+      {% with pageobj=question.get_sugestions|listobj_for_paginator:request %}
+      {% for sugestion in pageobj %}
+      {% if not forloop.last %}
+      <div {% if sugestion.comitted %} class="card mb-3 disabled" {% else %} class="card mb-3" {% endif %} >
+        <div class="card-body" id="delete-res{{sugestion.id}}">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <img class="mr-3 rounded-circle" src="{% static sugestion.sugested_by.get_profile.profile_logo %}"
+                alt="{{ sugestion.sugested_by.username }}" width="50px">
+              <h5 class="card-title">{{ sugestion.sugested_by.username }}</h5>
+            </div>
+            <div class="d-flex">
+              {% if not sugestion.comitted %}
+              <a class="badge bg-primary p-2 m-2" hx-target="#edit-reply{{sugestion.id}}" hx-swap="innerHTML" hx-get="{% url 'home:edit_sugestions' sugestion.question.slug sugestion.pk  %}">edit</a>
+              <a class="badge bg-danger p-2 m-2" hx-target="#delete-res{{sugestion.id}}" hx-swap="innerHTML" hx-get="{% url 'home:delete_sugestions' sugestion.pk %}">Delete</a> 
+             
+              {% endif %}
+            </div>
+          </div>
+          <div id="edit-reply{{sugestion.id}}">
+            <div class="d-flex justify-content-between">
+              <p class="card-text h6 col-4">#{{ sugestion.id }} -- {{ sugestion.title }}</p>
+              <p class="col-4 text-end">{% if sugestion.comitted %}<span class="badge bg-dark">Commited</span>{% else %}<span class="badge bg-danger">Not Commited</span>{% endif %}</p>
+            </div>
+            <p class="text-mute"><small>{{ sugestion.statement }}</small></p>
+          </div>
+
+        </div>
+      </div>
+      {% endif %}
+      
+      {% if forloop.last %}
+      <div {% if sugestion.comitted %} class="card mb-3 disabled" {% else %} class="card mb-3" {% endif %} >
+        <div class="card-body" id="delete-res{{sugestion.id}}">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <img class="mr-3 rounded-circle" src="{% static sugestion.sugested_by.get_profile.profile_logo %}"
+                alt="{{ sugestion.sugested_by.username }}" width="50px">
+              <h5 class="card-title">{{ sugestion.sugested_by.username }}</h5>
+            </div>
+            <div class="d-flex">
+              {% if not sugestion.comitted %}
+              <a class="badge bg-primary p-2 m-2" hx-target="#edit-reply{{sugestion.id}}" hx-swap="innerHTML" hx-get="{% url 'home:edit_sugestions' sugestion.question.slug sugestion.pk  %}">edit</a>
+              <a class="badge bg-danger p-2 m-2" hx-target="#delete-res{{sugestion.id}}" hx-swap="innerHTML" hx-get="{% url 'home:delete_sugestions' sugestion.pk %}">Delete</a> 
+             
+              {% endif %}
+            </div>
+          </div>
+          <div id="edit-reply{{sugestion.id}}">
+            <div class="d-flex justify-content-between">
+              <p class="card-text h6 col-4">#{{ sugestion.id }} -- {{ sugestion.title }}</p>
+              <p class="col-4 text-end">{% if sugestion.comitted %}<span class="badge bg-dark">Commited</span>{% else %}<span class="badge bg-danger">Not Commited</span>{% endif %}</p>
+            </div>
+            <p class="text-mute"><small>{{ sugestion.statement }}</small></p>
+          </div>
+        </div>
+      </div>
+      {% if pageobj.has_next %}
+      <div hx-get="{{ request.path }}?page={{ pageobj.next_page_number  }}"
+        hx-trigger="revealed"
+        hx-swap="afterend"
+        hx-indicator="#sugestionloader{{sugestion.id}}">
+        Page #{{pageobj.next_page_number }}
+       <span id="sugestionloader{{sugestion.id}}" class="sugestion-loaders">Loading..........</span>
+      </div>
+
+    
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+      {% endwith %}
+      

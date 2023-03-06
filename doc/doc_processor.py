@@ -1,8 +1,12 @@
 from crm.forms import SubscriberForm
 
-
-
         
+def get_pending_sugestion():
+    from evaluation.models import Suggestions
+    
+    count = Suggestions.objects.filter(comitted =False).count()
+    
+    return count
         
 
 
@@ -63,16 +67,14 @@ def comon_doc(request):
         'set_new' : 'Set New Password',
         'reset_complete' : 'Passowrd Reset Complete',
         'error404' : 'Error 404',
-        'error403' : 'Error 403'
-        
-        
-        
+        'error403' : 'Error 403',       
     }
     return {   
             'site_info': site_info(),
             'text': text,
             'segment' : load_template,
-            'subscription_form' : SubscriberForm()
+            'subscription_form' : SubscriberForm(),
+            'sugestion_no_comited' : get_pending_sugestion()
             
     }
     

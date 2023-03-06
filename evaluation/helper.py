@@ -17,6 +17,10 @@ log =  logging.getLogger('log')
 
 
 
+    
+
+
+
 def active_sessions():
     '''
     we will collect all active session's evaluator id of before past 24 hours
@@ -588,6 +592,12 @@ def nreport_context(request, slug):
     }
 
     return context
+
+
+def get_sugested_questions(request):
+    sugested_questions = Suggestions.objects.filter(sugested_by = request.user, su_type = 'question', question = None,)
+    
+    return sugested_questions
         
 
 

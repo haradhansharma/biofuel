@@ -1,0 +1,15 @@
+{% if msg %}
+<div class="alert alert-secondary shadow-soft" role="alert">   
+    {% for m in msg %}  
+    <span class="alert-inner--text">{{ m }}</span>    
+    {% endfor %} 
+</div>
+{% endif %}
+<form id="sugetionform{{pk}}" method="post"  hx-post="{% url 'home:edit_new_sugestions' pk %}" hx-target="#new_sug_list" hx-swap="innerHTML">
+        {% csrf_token %}
+        <input type="hidden" name="sug_pk" value="{{pk}}">
+
+{{form.as_p}}
+<button class="btn btn-primary">Submite to Review</button>  
+</form>
+

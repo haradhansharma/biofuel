@@ -6,9 +6,9 @@
         about a quote, simply click on it.
     </div>
     <div class="card-body">
-        <div class="row g-3">
+        <div class="row g-3"> 
             
-            {% for quotation in question.get_quotations %}
+            {% for quotation in question.get_merged_quotations %}
             <div class="col-md-6 col-xl-4 d-flex">
                 <a href="{{quotation.get_absolute_url}}" 
                     target="_blank"
@@ -21,18 +21,7 @@
                 </a>
             </div>
             {% endfor %}
-            {% for quotation in question.get_related_quotations %}
-            <div class="col-md-6 col-xl-4 d-flex">
-                <a href="{{quotation.get_absolute_url}}" 
-                    target="_blank"
-                    class="p-3 flex-fill card">
-                    <small class="text-primary">Provider: {{quotation.get_business_name}}
-                    </small>
-                    <hr>
-                    <small class="text-success"><b>Price:</b> {{quotation.price}} {{quotation.price_unit}}</small>
-                </a>
-            </div>
-            {% endfor %}
+            
             
         </div>
     </div>

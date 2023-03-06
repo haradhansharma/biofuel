@@ -1,0 +1,51 @@
+<div class="card-body" >
+    {% if msg %}
+    <div class="alert alert-secondary shadow-soft" role="alert">   
+        {% for m in msg %}  
+        <span class="alert-inner--text">{{ m }}</span>    
+        {% endfor %} 
+    </div>
+    {% endif %}
+    <form id="replyform{{question.id}}" method="post"
+        hx-post="{% url 'home:add_sugestions' slug %}" hx-target="#reply-form-{{question.id}}" hx-swap="innerHTML">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-12 mb-3">
+                <div class="form-group mb-4">
+                    <div class="row">                       
+                            <div class="p-2 col-sm-3">     
+                                <input type="hidden" name="sug_pk" value="{{pk}}">
+                                {{ sugestion_form.su_type }}<br>
+                                {{ sugestion_form.su_type.errors }}
+                            </div>
+                            <div class="p-2 col-sm-9">
+                                {{ sugestion_form.title }}<br>
+                                {{ sugestion_form.title.errors }}
+                            </div>
+                    </div>
+                    <div class="row">                        
+                            <div class="p-2 col-12">
+                                {{ sugestion_form.statement }}<br>
+                                {{ sugestion_form.statement.errors }}
+                            </div>
+                    </div>
+                          
+                    <button class="btn btn-primary">Submite to Review</button>  
+             
+                    <a class="btn btn-warning" hx-get="{% url 'home:get_sugestions_list' slug %}"  hx-target="#sug_list" hx-swap="innerHTML">Sugestions Count {{question.get_sugestions.count}}</a>   
+                    
+                
+                    
+                </div>
+            </div>
+        </div>
+    
+    </form>
+</div>
+
+<div class="container">  
+    <div class="row">
+        <div class="col-12" id="sug_list">
+        </div>
+    </div>
+</div>

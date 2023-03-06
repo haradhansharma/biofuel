@@ -155,6 +155,32 @@ class StdOilsAdmin(admin.ModelAdmin):
 
 admin.site.register(StdOils, StdOilsAdmin)
 
+class SuggestionsAdmin(admin.ModelAdmin): 
+    list_display = ('su_type','title', 'statement', 'sugested_by', 'related_qs', 'question', 'comitted',)
+    list_filter = ('su_type', 'comitted', 'question', )
+    search_fields = ('title', 'statement', 'question', )   
+    ordering = ('updated',)
+    readonly_fields = ('su_type','question','sugested_by', 'parent', 'related_qs' ) 
+    
+    
+
+    
+    
+    # def get_model_info():
+    #     count = Suggestions.objects.count()        
+    #     return f'({count})'
+    # verbose_name = 'Sugg'
+    # verbose_name_plural = 'get_model_info()'
+    
+
+    # def changelist_view(self, request, extra_context=None):
+  
+    #     extra_context = extra_context or {}
+    #     extra_context['title'] = self.get_model_info()
+    #     return super().changelist_view(request, extra_context=extra_context)
+    
+admin.site.register(Suggestions, SuggestionsAdmin)
+
 
 
 class LogicalStringAdmin(admin.ModelAdmin):

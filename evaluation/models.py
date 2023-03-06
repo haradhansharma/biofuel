@@ -104,7 +104,7 @@ class Question(models.Model):
     # the url to add quatation to the questions 
     @property
     def add_quatation(self):
-        return reverse('home:add_quatation', args=[str(self.slug)])
+        return reverse('home:add_quatation', args=[str(self.slug)]) 
     
     
     @property
@@ -120,8 +120,17 @@ class Question(models.Model):
     @property
     def get_quotations(self):         
         from home.models import Quotation
-        quotations = Quotation.objects.filter(test_for = self)        
+        quotations = Quotation.objects.filter(test_for = self)       
+      
+             
         return quotations
+    @property
+    def get_merged_quotations(self):
+        from itertools import chain
+        result_list = set(chain(self.get_related_quotations, self.get_quotations))      
+             
+        return list(result_list)
+        
     
     @property
     def get_options(self):
@@ -163,6 +172,11 @@ class Question(models.Model):
         if self.is_door == False and not self.parent_question and self.is_active:
             return True
         return False
+    
+    @property
+    def get_sugestions(self):
+        sugestions = self.question_sugestion.all().order_by('-created')
+        return sugestions
     
     
     
@@ -589,5 +603,47 @@ class ReportMailQueue(models.Model):
     
     def __str__(self):
         return self.to
+
+
+
+
     
+    
+class Suggestions(models.Model):
+  
+    class Meta:        
+        verbose_name = 'Suggestion'
+       
+        
+    
+        
+    TYPE_CHOICE = (
+        ('question', 'Question'),
+        ('option', 'Option'),
+    )
+    question = models.ForeignKey(Question, on_delete = models.SET_NULL, related_name='question_sugestion', null=True, blank=True)
+    su_type = models.CharField(max_length=10, choices=TYPE_CHOICE, default='question')    
+    title = models.CharField(max_length=252)
+    statement = models.TextField()
+    sugested_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name='sugestions')
+    parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='replies')
+    related_qs = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='related')
+    
+    comitted =  models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated = models.DateTimeField(auto_now=True, null=True, blank=True)
+    
+    def __str__(self):
+        return self.title
+    
+    
+    # def get_model_info(self, request, obj=None, **kwargs):
+    #     model_info = super().get_model_info(request, obj, **kwargs)
+    
+    #     model_info['verbose_name'] = 'My Custom Name'
+    #     model_info['verbose_name_plural'] = 'My Custom Names'
+    #     return model_info
+    
+    
+
     

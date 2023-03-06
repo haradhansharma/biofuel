@@ -6,6 +6,7 @@ from evaluation.helper import get_current_evaluator
 from doc.models import ExSite
 from evaluation.models import EvaComments, EvaLabel, EvaLebelStatement, Evaluation, Evaluator, Question
 from .models import *
+from home.models import Quotation
 from django.urls import reverse_lazy
 from gfvp import null_session
 from django.shortcuts import render, get_object_or_404
@@ -42,7 +43,7 @@ class CustomLoginView(LoginView):
     def form_valid(self, form): 
         
         #set after login url 
-        self.next_page = reverse_lazy('accounts:user_link', args=[str(form.get_user().username)])           
+        self.next_page = reverse_lazy('accounts:user_link')           
         log.info(f'Login page validating by_____________ {self.request.user}')
         
         #rememberme section        
@@ -298,23 +299,23 @@ def activate(request, uidb64, token):
 
 
 
-@login_required
-def userpage(request, username):  
+@login_required 
+def userpage(request):  
     log.info(f'Userpage accessed by_____________ {request.user}')
     #This is essential where user loggedin
     null_session(request)   
-    user = User.objects.get(username=username)
+    user = request.user
     report_slug = request.GET.get('slug')
     if report_slug:
         try:
-            last_reports = Evaluator.objects.get(slug = report_slug, report_genarated = True)
-        except:
+            last_reports = Evaluator.objects.get(slug = report_slug)
+        except Exception as e:          
             last_reports = None 
     else: 
         
         try:
-            last_reports = Evaluator.objects.filter(creator = user, report_genarated = True).order_by('-create_date').first()  
-        except:
+            last_reports = Evaluator.objects.filter(creator = user).order_by('-create_date').first()  
+        except Exception as e:            
             last_reports = None
 
 
@@ -324,7 +325,7 @@ def userpage(request, username):
     if last_reports is not None: 
         label_data = LabelWiseData(last_reports)    
         
-        gretings = f'The summary of the report number {last_reports.id} genarated by {username}!'        
+        gretings = f'The summary of the report number {last_reports.id} genarated by {user.username}!'        
         
         ans_ques = len(label_data.answered_question_id_list)
         dont_know_ans = ans_ques - label_data.total_positive_answer - label_data.total_nagetive_answer
@@ -346,10 +347,10 @@ def userpage(request, username):
             return HttpResponseRedirect(reverse('evaluation:evaluation2'))  
         
         #increadable setattr to reduce time to make report editing url without touch of database 
-        if request.user.is_superuser:
+        if user.is_superuser or user.is_staff:
             reports = Evaluator.objects.all().order_by('-id')  
         else:        
-            reports = Evaluator.objects.filter(creator = request.user).order_by('-id')  
+            reports = Evaluator.objects.filter(creator = user).order_by('-id')  
         for report in reports:            
             try:   
                 last_question = Evaluation.objects.filter(evaluator = report).order_by('id').last().question        
@@ -372,7 +373,7 @@ def userpage(request, username):
             'reports': reports,
             'last_reports' : last_reports,
             'last_report_button_text' : 'Get Last Report',
-            'username' : username,
+            'username' : user.username,
             # 'item_label' : df.columns.values.tolist(),
             # 'item_seris' : df.values.tolist()
             
@@ -392,23 +393,29 @@ def userpage(request, username):
             'change_pass' : 'Change Password',
             'homepage' : 'Home Page'           
         }
+  
+     
+    if user.is_staff or user.is_superuser:
+        quotations = Quotation.objects.all().order_by('-id')         
+    else:
+        quotations = Quotation.objects.filter(service_provider = user).order_by('-id')  
         
     #meta
     meta_data = site_info()    
-    meta_data['title'] = username
+    meta_data['title'] = user.username
     # meta_data['meta_name'] = 'Green Fuel Validation Platform'
     meta_data['url'] = request.build_absolute_uri(request.path)
-    meta_data['description'] = f"This is the personalized user profile page for {username}. Here, registerd user can view his information and created reports. Also Can go to the profiel setting page."
+    meta_data['description'] = f"This is the personalized user profile page for {user.username}. Here, registerd user can view his information and created reports. Also Can go to the profiel setting page."
     meta_data['tag'] = 'user profile, gf-vp.com'
     meta_data['robots'] = 'noindex, nofollow'
     meta_data['og_image'] = user.usertype.icon.url 
     
    
     
-    
     context.update(
         {
-            'site_info' : meta_data  
+            'site_info' : meta_data,
+            'quotations' : quotations
         }
     )
         

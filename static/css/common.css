@@ -7,6 +7,32 @@
 
 /* @import '../assets/vendor/font-awesome/css/fontawesome.min.css'; */
 
+.sugestion-loaders{
+  opacity:0;
+  transition: opacity 500ms ease-in;
+}
+.htmx-request .sugestion-loaders{
+  opacity:1
+}
+.htmx-request.sugestion-loaders{
+  opacity:1
+}
+
+
+
+
+.disabled {
+  color: #777;
+  opacity: 0.5;
+  pointer-events: none;
+}
+#atgtable .table td, #atgtable .table th {
+  font-size: 0.875rem;
+  white-space:normal;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
 .bgjessica-primary{
   background-color: #7c9c9c!important;
 }

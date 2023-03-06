@@ -1,14 +1,38 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, HttpRequest, HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect, JsonResponse
+from django.http import (
+    Http404, 
+    HttpRequest, 
+    HttpResponse, 
+    HttpResponseNotAllowed, 
+    HttpResponseRedirect, 
+    JsonResponse,
+)
 from doc.models import ExSite
-
+from django.views import View
 from home.models import Quotation
-from .forms import UserForm, ProfileForm, PasswordChangeForm, QuestionForm, OptionForm, QuotationForm, NextActivitiesOnQuotation
+from .forms import ( 
+        UserForm, 
+        ProfileForm, 
+        PasswordChangeForm, 
+        QuestionForm, 
+        OptionForm, 
+        QuotationForm, 
+        NextActivitiesOnQuotation, 
+        CompanyLogoForm, 
+        SugestionForm,
+        QuesSugestionForm,
+)
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
-from accounts.decorators import expert_required, producer_required, consumer_required, marine_required
-from accounts.models import User, UserType
+from accounts.decorators import (
+    expert_required, 
+    producer_required, 
+    consumer_required, 
+    marine_required,
+
+)
+from accounts.models import User, UserType, Profile
 from accounts.helper import check_type
 from gfvp import null_session
 from django.contrib.auth import update_session_auth_hash
@@ -21,6 +45,8 @@ from django.db.models import Count, Min
 from doc.doc_processor import site_info
 from blog.models import BlogPost
 from django.templatetags.static import static
+from django.utils.decorators import method_decorator
+from django.core.mail import mail_admins, send_mail
 import requests
 import logging
 log =  logging.getLogger('log')
@@ -184,6 +210,9 @@ def user_setting(request):
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = ProfileForm(request.POST, instance=request.user.profile)
         password_form = PasswordChangeForm(user=request.user, data=request.POST)    #new
+        company_logo_form = CompanyLogoForm(request.POST, request.FILES, instance=request.user.profile)    #new
+        
+        
         if 'user_form' in request.POST:        
             if user_form.is_valid():
                 user_form.save() 
@@ -205,12 +234,22 @@ def user_setting(request):
             else:
                 messages.error(request, 'Invalid form submission.')
                 messages.error(request, password_form.errors)
+                
+        if 'company_logo_form' in request.POST:      #new
+            if company_logo_form.is_valid():
+                company_logo_form.save()
+                messages.success(request,('Company Logo Updated successfully!'))
+            else:
+                messages.error(request, 'Invalid form submission.')
+                messages.error(request, company_logo_form.errors)
                       
         
         return HttpResponseRedirect(reverse('home:user_settings'))
     user_form = UserForm(instance=request.user)
     profile_form = ProfileForm(instance=request.user.profile)
     password_form = PasswordChangeForm(user=request.user)    #new  
+    company_logo_form = CompanyLogoForm(instance=request.user.profile)    #new  
+    
     
     
     #meta
@@ -228,10 +267,21 @@ def user_setting(request):
         "user_form":user_form,
         "profile_form":profile_form, 
         "password_form":password_form, 
-        
+        "company_logo_form" : company_logo_form,
         'site_info' : meta_data          
     }
     return render(request, 'home/settings.html', context = context)
+
+@login_required
+def delete_avatar(request):    
+    user = request.user
+    profile = user.get_profile
+    profile.company_logo.delete()
+    profile.company_logo = ''
+    profile.save()
+    
+    return HttpResponseRedirect(reverse('home:user_settings'))
+
 
 @login_required
 def password_change(request):   
@@ -269,25 +319,32 @@ def password_change(request):
 
 
 # It is DRY helper to get questions based on user expert type
-def get_question_of_label(request):
+def get_question_of_label(request): 
     # Get where user are expert
     curent_user_expert_in = request.user.experts_in
-       
+   
     # get that lebels, here value define which one are using for this question
     # if multilabel value is one then this question should be displayed to the multi type of expert.
     label_to_question = Label.objects.filter(name = curent_user_expert_in, value = str(1))
     
+    
+    
     if request.user.is_staff or request.user.is_superuser or request.user.is_marine:
         # Staff of super user are accesable to all questions
         questions = [q for q in Question.objects.filter(is_active = True)]
-    else:   
-        # Only user that have label of this question as expert can access this. 
-        questions = []
-        for q in label_to_question:
-            if q.question.is_active:
-                questions.append(q.question)
-            else:
-                continue            
+    ##=======
+    ## below is deactivated as expert has no access to questions as per latest instruction
+    ##=======
+    # elif request.user.is_expert:   
+    #     # Only user that have label of this question as expert can access this. 
+    #     questions = []
+    #     for q in label_to_question:
+    #         if q.question.is_active:
+    #             questions.append(q.question)
+    #         else:
+    #             continue   
+    else:
+        raise PermissionDenied         
     return questions
 
 def child_modal_data(request, id):
@@ -366,8 +423,12 @@ def quotationsatg(request):
     # This is essential where login_required
     null_session(request)
     log.info(f'QuotationsATG page accessed by_____________ {request.user}')
-       
-    results = Quotation.objects.filter(service_provider = request.user).order_by('-id')  
+    if request.user.is_staff or request.user.is_superuser:
+        results = Quotation.objects.all().order_by('-id')         
+    else:
+        results = Quotation.objects.filter(service_provider = request.user).order_by('-id')  
+        
+        
     
     
     #Paginated response
@@ -411,6 +472,7 @@ def questions(request):
     log.info(f'Questions page accessed by_____________ {request.user}')  
     # we need permitted question based on expertise type
     questions = get_question_of_label(request)    
+    
     # build parent         
     parents = []
     for question in questions:        
@@ -453,9 +515,63 @@ def questions(request):
     return render(request, 'home/questions.html', context = context)
 
 
+
+@login_required
+@marine_required
+def questionsint(request):  
+    '''get questions related to the current user'''    
+    
+    # This is essential where login_required
+    null_session(request)
+    log.info(f'Questions Int page accessed by_____________ {request.user}')  
+    # we need permitted question based on expertise type
+    questions = get_question_of_label(request)    
+    
+    # build parent         
+    parents = []
+    for question in questions:        
+        if question.is_door == True:
+            parents.append(question)            
+            
+    #build results of chaptariged questions       
+    results = []    
+    for parent in parents:         
+        data = {
+            parent : [child for child in questions if child.parent_question == parent]
+        }
+        results.append(data)    
+    
+    #Paginated response
+    page = request.GET.get('page', 1)
+    paginator = Paginator(results, 12)
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        results = paginator.page(1)
+    except EmptyPage:
+        results = paginator.page(paginator.num_pages)
+        
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Questions Interface'
+    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
+    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['description'] = f'Here is a collection of specialized questions to get feedback from Marine Expert. The questions and their contents are editable by Marine Expert only.'
+    meta_data['tag'] = 'question, Interface, chapter'
+    meta_data['robots'] = 'noindex, nofollow'
+    # meta_data['og_image'] = user_type.icon.url
+    
+    context = {
+        'questions': results,
+        'site_info' : meta_data    
+    }
+    
+    return render(request, 'home/questionsint.html', context = context)
+
+
 @login_required
 @expert_required
-def add_quatation(request, slug):
+def add_quatation(request, slug): 
     '''
     quotation can be created by indivisual expert
     one question can have one quotation from same user but can be refer to multi question mult time.
@@ -844,18 +960,23 @@ def questions_details(request, slug):
         request.session['extra'] = 0
     
     #validating question is active 
-    res_question = get_object_or_404(Question, slug = slug, is_active = True)
+    # res_question = get_object_or_404(Question, slug = slug, is_active = True)
     
     #get questions related to the current expert
-    curent_user_expert_in = request.user.experts_in    
-    if request.user.is_staff or request.user.is_superuser:
-        question = res_question
-    else:   
-        try:
-            label_to_question = Label.objects.get(name = curent_user_expert_in, value = str(1), question = res_question)
-            question = label_to_question.question
-        except:
-            raise PermissionDenied   
+    # curent_user_expert_in = request.user.experts_in    
+    # if request.user.is_staff or request.user.is_superuser:
+    #     question = res_question
+    # else:   
+    #     try:
+    #         label_to_question = Label.objects.get(name = curent_user_expert_in, value = str(1), question = res_question)
+    #         question = label_to_question.question
+    #     except:
+    #         raise PermissionDenied   
+    
+    ## it has been added by deactivating previous code as all question can be edited by the marine expert and marine expert 
+    ## should not required to select expertise
+    question = get_object_or_404(Question, slug = slug, is_active = True)
+    
     
     #option form set of question.
     OptionFormSet = inlineformset_factory(Question, Option, fk_name='question', form = OptionForm, extra= int(request.session['extra']), can_delete=False)    
@@ -1046,6 +1167,252 @@ def webmanifest(request):
     
     return JsonResponse(site_data, safe=False)
 
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(marine_required, name='dispatch')
+class AddSugestion(View):
+    get_temp = 'home/add_sugestion.html'  
+    # post_temp = 'home/post_sugestion.html'  
+    
+    form_class = SugestionForm   
+    
+    
+    def get(self, request, *args, **kwargs):
+        sugestion_form = self.form_class()
+        slug = kwargs.get('slug')
+        question = get_object_or_404(Question, slug = slug, is_active = True)
+   
+        
+        context = {
+        'sugestion_form' : sugestion_form,
+        'slug' : slug,
+        'question' : question,
+      
+        }
+        
+        return render(request, self.get_temp, context = context)
+    
+    def post(self, request, *args, **kwargs):    
+        slug = kwargs.get('slug')
+        question = get_object_or_404(Question, slug = slug, is_active = True)
+        sugestion_form = self.form_class(request.POST)
+        if sugestion_form.is_valid():   
+            author = request.user       
+            su_type = sugestion_form.cleaned_data.get('su_type')
+            title = sugestion_form.cleaned_data.get('title')
+            statement = sugestion_form.cleaned_data.get('statement')    
+            sug_pk = request.POST.get('sug_pk')
+            parent_id =  request.POST.get('parent_id')   
+             
+            if sug_pk:
+                sugestion = Suggestions.objects.get(pk=sug_pk)
+                
+                if sugestion.sugested_by == request.user or request.user.is_staff or request.user.is_superuser:
+                    pass
+                else:
+                    return HttpResponse('You are not the creator of this sugestion. Nothing happend!')  
+                
+                sugestion.statement = statement
+                sugestion.title = title
+                sugestion.su_type = su_type   
+                
+            else:
+                if parent_id:
+                    parent_sugestion = Suggestions.objects.get(pk=parent_id)                    
+                    sugestion = Suggestions(question=question, sugested_by=author, parent=parent_sugestion, statement=statement, title = title, su_type = su_type)
+                else:
+                    sugestion = Suggestions(question=question, sugested_by=author, statement=statement, title = title, su_type = su_type)
+            sugestion.save()        
+            admins = User.objects.filter(is_staff=True)
+            for admin in admins:
+                subject = f'#{sugestion.id}-Sugestion posted or updated by {sugestion.sugested_by.username}'
+                message = 'Hello {},\n\nThis is an important notification about update in sugestion model that new sugestion creatd or edited by the {}.\n\nBest regards,\nAdmin Team'.format(admin.username, sugestion.sugested_by.username)
+                from_email = settings.DEFAULT_FROM_EMAIL
+                recipient_list = [admin.email]
+                send_mail(subject, message, from_email, recipient_list)
+                    
+                
+           
+            msg = ["Suggestion submitted successfully for review! Once it is approved question will be updated!"]
+        else:
+            msg = sugestion_form.errors
+            
+            
+            
+        context = {
+        'sugestion_form' : sugestion_form,
+        'slug' : slug,
+        'msg' : msg,
+        'question' : question        }
+        
+       
+        
+        return render(request, self.get_temp, context = context)
+    
+    
+@login_required
+@marine_required
+def get_edit_sugestion(request, slug, pk):   
+    instance = Suggestions.objects.get(pk=pk)   
+        
+    sugestion_form = SugestionForm(instance=instance)
+    question = get_object_or_404(Question, slug = slug, is_active = True)
+    
+    
+    context = {
+    'sugestion_form' : sugestion_form, 
+    'slug' : slug,
+    'question' : question,
+    'pk' : pk
+    
+    }
+    
+    return render(request, 'home/add_sugestion.html', context = context)
+
+@login_required
+@marine_required
+def get_sugestion_list(request, slug):   
+ 
+    question = get_object_or_404(Question, slug = slug, is_active = True)
+    
+    
+    context = {  
+    'slug' : slug,
+    'question' : question,
+    
+    }
+    
+    return render(request, 'home/nested_sugestion_list.html', context = context)
+    
+@login_required
+@marine_required
+def delete_sugestion(request, pk):   
+    try:
+        obj = Suggestions.objects.get(pk=pk)
+        if obj.sugested_by == request.user or request.user.is_staff or request.user.is_superuser:
+            obj.delete()
+        else:
+            return HttpResponse('You are not the creator of this sugestion. Nothing happend!')            
+    except:
+        return HttpResponse('Sugestion not found. Nothing Happend!')
+        
+    return HttpResponse('Sugestion Deleted!')
+
+@login_required
+@marine_required
+def sugest_new_ques_option(request):
+    from evaluation.helper import get_sugested_questions
+    form = QuesSugestionForm(request.POST or None, request=request)    
+    new_sugestions = Suggestions.objects.filter(question = None, sugested_by = request.user).order_by('-updated')   
+    msg = []
+    if request.method == 'POST':
+        if form.is_valid():           
+            author = request.user 
+            sug = form.save(commit = False)
+            sug.sugested_by = author
+            sug.save()
+            
+            admins = User.objects.filter(is_staff=True)
+            for admin in admins:
+                subject = f'#{sug.id}-Sugestion posted or updated by {sug.sugested_by.username}'
+                message = 'Hello {},\n\nThis is an important notification about update in sugestion model that new sugestion creatd or edited by the {}.\n\nBest regards,\nAdmin Team'.format(admin.username, sug.sugested_by.username)
+                from_email = settings.DEFAULT_FROM_EMAIL
+                recipient_list = [admin.email]
+                send_mail(subject, message, from_email, recipient_list)
+                    
+                
+           
+            msg.extend(["Suggestion submitted successfully for review! Once it is approved question will be updated!"])
+        else:
+            msg.extend(form.errors)
+                
+    
+    
+    context = {
+        'msg' : msg,
+        'form' : form,
+        'new_sugestions' : new_sugestions,
+        'my_sugested_questions' : get_sugested_questions(request)
+    }
+    
+    return render(request, "home/sugest_new.html", context)
+
+
+
+@login_required
+@marine_required
+def get_edit_new_sugestion(request, pk):   
+    instance = Suggestions.objects.get(pk=pk)   
+        
+    sugestion_form = QuesSugestionForm(instance=instance, request=request)
+    msg = []
+    if request.method == 'POST':
+        sugestion_form = QuesSugestionForm(request.POST or None, request=request)
+        
+        if sugestion_form.is_valid():
+            sug_pk = request.POST.get('sug_pk')
+            author = request.user       
+            su_type = sugestion_form.cleaned_data.get('su_type')
+            title = sugestion_form.cleaned_data.get('title')
+            statement = sugestion_form.cleaned_data.get('statement')    
+            related_qs = sugestion_form.cleaned_data.get('related_qs')
+             
+            if sug_pk:
+                sug = Suggestions.objects.get(pk=sug_pk)                
+                if sug.sugested_by == request.user or request.user.is_staff or request.user.is_superuser:
+                    pass
+                else:
+                    return HttpResponse('You are not the creator of this sugestion. Nothing happend!')  
+                sug.statement = sug_pk
+                sug.statement = statement
+                sug.title = title
+                sug.related_qs = related_qs                
+                sug.su_type = su_type               
+                sug.save()
+            admins = User.objects.filter(is_staff=True)
+            for admin in admins:
+                subject = f'#{sug.id}-Sugestion posted or updated by {sug.sugested_by.username}'
+                message = 'Hello {},\n\nThis is an important notification about update in sugestion model that new sugestion creatd or edited by the {}.\n\nBest regards,\nAdmin Team'.format(admin.username, sug.sugested_by.username)
+                from_email = settings.DEFAULT_FROM_EMAIL
+                recipient_list = [admin.email]
+                send_mail(subject, message, from_email, recipient_list)
+                    
+                
+            
+            msg.extend(["Suggestion submitted successfully for review! Once it is approved question will be updated!"]) 
+        else:
+            msg.extend(sugestion_form.errors)
+            
+        return HttpResponseRedirect(reverse('home:get_new_sugestion_list'))
+ 
+    
+    
+    context = {
+    'form' : sugestion_form,    
+    'pk' : pk,
+    'msg' : msg
+    
+    }
+    
+    return render(request, 'home/post_sugestion.html', context = context)
+
+
+@login_required
+@marine_required
+def get_new_sugestion_list(request):   
+    new_sugestions = Suggestions.objects.filter(question = None, sugested_by = request.user).order_by('-updated')   
+    
+ 
+  
+    
+    
+    context = { 
+    
+    'new_sugestions' : new_sugestions,
+    
+    }
+    
+    return render(request, 'home/new_nested_sugestion_list.html', context = context)
 
 
 

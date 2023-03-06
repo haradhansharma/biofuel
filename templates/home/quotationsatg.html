@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-
+{% load custom_tags %}
 {% block title %}{{site_info.title}}{% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
@@ -13,71 +13,98 @@
             <div class="d-block mb-4 mb-md-0">
                 <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
                 </nav>
-                <h1 class="h4">Your all evaluation report for your biofuel</h1>              
+                <h1 class="h4">Your Quotations</h1>              
             </div>
             <div class="btn-toolbar mb-2 mb-md-0">
             </div>
         </div>
 
     </div> 
-    <div class="card-body">
+    <div id="atgtable" class="card-body">
         <div class="table-responsive">
+
             {% if quotations %}
-            <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                    <tr>
-                        <th class="border-bottom" scope="col">Actions</th>
-               
-                        <th class="border-bottom" scope="col">Test For</th>
-                        <th class="border-bottom" scope="col">Additional Questions</th>
-                        <th class="border-bottom" scope="col">Price</th>
-                        <th class="border-bottom" scope="col">Require Sample</th>
-                        <th class="border-bottom" scope="col">Factory Pickup</th>
-                        <th class="border-bottom" scope="col">Display Site Address</th>
-                    </tr>
+
+            <table class="table table-bordered border-primary align-middle">
+                <thead>
+                  <tr class="d-lg-flex ">
+                    <th scope="col" class="col-lg-2">Actions</th>
+                    <th scope="col" class="col-lg-2">Testing Service For</th>
+                    <th scope="col" class="col-lg-4">Additional Testing</th>
+                    <th scope="col" class="col-lg-1">Price</th>
+                    <th scope="col" class="col-lg-1">Require Sample</th>
+                    <th scope="col" class="col-lg-1">Factory Pickup</th>
+                    <th scope="col" class="col-lg-1">Display Site Address</th>                    
+                  </tr>
                 </thead>
                 <tbody>
-                    
-                    {% for quotation in quotations %}
-                    <tr>
-                        <td class="fw-bolder text-gray-500">
-                            <a class="btn btn-primary" href="{% url 'home:add_quatation' quotation.test_for.slug %}">Edit</a>
-                            <a class="btn btn-warning" href="{% url 'home:quotation_report' quotation.test_for.slug quotation.id %}" target="_blank">View#{{ quotation.id }}</a>
-                        </td>
-                     
-                        <td class="fw-bolder text-gray-500">
+                    {% for quotation in quotations %} 
+                    <tr class="d-lg-flex ">
+                        <th class="col-lg-2">
+                            <a class="btn btn-primary mb-2" href="{% url 'home:add_quatation' quotation.test_for.slug %}">Edit</a>
+                            <a class="btn btn-warning" href="{% url 'home:quotation_report' quotation.test_for.slug quotation.id %}" target="_blank">View#{{ quotation.id }}</a>    
+                        </th>
+                        <td class="col-lg-2">
                             {{ quotation.test_for.name }}
                         </td>
-                        <td class="fw-bolder text-gray-500">
-                            <ul>
-                                {% for q in quotation.related_questions.all %}
-                                <li>{{ q.name }}</li>
-                                {% endfor %}
-                            </ul>
+                        <td class="col-lg-4">
+                            <table class="table table-bordered border-danger align-middle">
+                                <thead>
+                                    <tr>                                 
+                                        <th scope="col">Additional Testing For</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for q in quotation.related_questions.all %}
+                                    <tr>                          
+                                        <td>
+                                            {{ q.name }}
+                                        </td>
+                                        <td>
+                                            {% if q.get_quotations|in_quot:user %}
+                                            {% for qu in q.get_quotations|in_quot:user %}  
+                                                <a class="fw-normal btn btn-success mb-2" href="{{ q.add_quatation }}">Edit</a>
+                                                <a class="btn btn-warning" href="{% url 'home:quotation_report' qu.test_for.slug qu.id %}" target="_blank">View#{{ qu.id }}</a>  
+                                            {% endfor %}
+                                            {% else %}
+                                                {% if user.is_expert or user.is_staff or user.is_superuser %}
+                                                    <a class="fw-normal btn btn-success" href="{{ q.add_quatation }}">Add</a>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         </td>
-                        <td class="fw-bolder text-gray-500">
+                        
+                        <td class="col-lg-1">
                             {{quotation.price}} {{quotation.price_unit}}
                         </td>
-                        <td class="fw-bolder text-gray-500">
+                        <td class="col-lg-1">
                             {{quotation.sample_amount}} {{quotation.sample_amount_unit}}
                         </td>
-                        <td class="fw-bolder text-gray-500">
+                        <td class="col-lg-1">
                             {{ quotation.factory_pickup }}
                         </td>
-                        <td class="fw-bolder text-gray-500">
+                        <td class="col-lg-1">
                             {{ quotation.display_site_address }}
                         </td>
-                        
-                        
                     </tr>
-                    {% endfor %}                    
+                    {% endfor %}
                 </tbody>
-            </table>
-            {% else %}
+              </table>
+
+              {% else %}
             <div class="alert alert-primary m-4" role="alert">
                 No report found to display!
             </div>
             {% endif %}
+
+
+
+
         </div>
     </div>
     {% if quotations %}

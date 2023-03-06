@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from crm.models import *
+from .helper import CustomsernameValidator
+from django.utils.translation import gettext_lazy as _
 
 
 class UserType(models.Model):
@@ -55,9 +57,22 @@ class UserType(models.Model):
         
         # Can be control in admin who can produce or reproduce it.
         permissions = (("can_access_usertype", "Can access usertype"),)
+        
+
 
 
 class User(AbstractUser):   
+    username_validator = CustomsernameValidator() 
+    username = models.CharField(
+        _('username'),
+        max_length=150,
+        unique=True,
+        help_text=_('Required. 150 characters or fewer. Letters and numbers only.'),
+        validators=[username_validator],
+        error_messages={
+            'unique': _("A user with that username already exists."),
+        },
+    )
     '''
     Inheriting Django's default user model with custom fields.
     ''' 
@@ -151,18 +166,23 @@ class User(AbstractUser):
             return False            
     
     def get_absolute_url(self):        
-        return reverse('accounts:user_link', args=[str(self.username)])
+        return reverse('accounts:user_link')
     
     
    
 class Profile(models.Model):
     # It is beeing created autometically during signup by using signal.
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    company_logo = models.ImageField(upload_to='company_logo')
     about = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
     established = models.DateField(null=True, blank=True)
     
     def __str__(self):
         return 'Profile for ' +  str(self.user.username)
+    
+    @property
+    def profile_logo(self):        
+        return self.company_logo.url if self.company_logo != '' else 'rings.png'
 
 
