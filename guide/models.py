@@ -24,10 +24,10 @@ class GuideMenu(models.Model):
     
     
     def __str__(self):
-        return self.title + ' -- ' + self.type.title
+        return self.title 
     
     def get_absolute_url(self):
-        return reverse('guide:genarel_guide', kwargs={'slug': str(self.slug), 'type': str(self.guidetype.key)})    
+        return reverse('guide:genarel_guide', kwargs={'slug': str(self.slug), 'gt': str(self.guidetype.key)})     
     
 
 class GenarelGuide(models.Model):
@@ -35,7 +35,7 @@ class GenarelGuide(models.Model):
     position = models.IntegerField()
     menu = models.ForeignKey(GuideMenu, on_delete=models.CASCADE, related_name='menuofguide')    
     anchor = models.CharField(max_length=252)
-    parent = models.ForeignKey("guide.GenarelGuide", on_delete=models.CASCADE, null=True, blank=True, related_name='menuchild', limit_choices_to={'parent': None} )    
+    parent = models.ForeignKey("self", on_delete=models.SET_NULL, null=True, blank=True, related_name='menuchild', limit_choices_to={'parent': None} )    
     content = RichTextUploadingField()
     
     def __str__(self):

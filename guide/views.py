@@ -46,7 +46,7 @@ def guide_type(request, key):
 
 
     
-def genarel_guide(request, slug, gt):
+def genarel_guide(request, gt, slug):
     guide_type = GuideType.objects.get(key=gt)
     guide_general_menu = GuideMenu.objects.filter(guidetype =  guide_type).order_by('position')      
     guide = GenarelGuide.objects.filter(menu = guide_general_menu.get(slug=slug)).order_by('position')       
