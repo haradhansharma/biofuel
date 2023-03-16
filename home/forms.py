@@ -1,6 +1,6 @@
 from django import forms
 from accounts.models import User, Profile
-from evaluation.models import Question, Option, Suggestions
+from evaluation.models import Question, Option, Suggestions, NextActivities
 from django.contrib.auth.forms import PasswordChangeForm
 from home.models import Quotation
 from django.forms.models import (
@@ -201,7 +201,49 @@ class QuesSugestionForm(forms.ModelForm):
         }
       
   
-    
+class NextActivitiesForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")       
+        super().__init__(*args, **kwargs)   
+    class Meta:
+        model = NextActivities
+        fields = (
+            'name_and_standared',
+            'short_description',
+            'descriptions',
+            'url',
+            'priority',
+            'related_questions',
+            'compulsory_questions',
+            'related_percent',
+            'compulsory_percent',
+            'is_active',
+        )
+        
+        widgets = {
+            
+            'related_questions' : forms.SelectMultiple(attrs={ 'class':'form-select', 'aria-label':'Related questions', 'size': 10 }), 
+            'compulsory_questions' : forms.SelectMultiple(attrs={ 'class':'form-select', 'aria-label':'Compolsury questions', 'size': 10 }), 
+            
+            'name_and_standared' : forms.TextInput(attrs={'class':'form-control', 'aria-label':'name_and_standared ', 'placeholder':'Name And Standared. ex: ISO 8217:2017 test, LCA Analysis etc'}),
+            'priority' : forms.TextInput(attrs={'class':'form-control', 'aria-label':'priority ', 'placeholder':'Priority ex: 1, 2, 3, 4 etc'}),
+            
+            # 'related_percent' : forms.TextInput(attrs={'class':'form-control', 'aria-label':'related_percent ', 'placeholder':'Related Percent ex: 90%'}),
+            # 'compulsory_percent' : forms.TextInput(attrs={'class':'form-control', 'aria-label':'compulsory_percent ', 'placeholder':'Compulsory Percent ex: 80%'}),
+            
+            
+            'short_description': forms.Textarea(attrs={'rows': 2,'class':'form-control', 'aria-label':'Short Descriptions' , 'placeholder':'Short Descriptions about test' }),
+            'descriptions': forms.Textarea(attrs={'rows': 4,'class':'form-control', 'aria-label':'Descriptions' , 'placeholder':'Long Descriptions about test' }),
+            'url' : forms.URLInput(attrs={'class':'form-control', 'aria-label':'url ', 'placeholder':'Write related URL to the test ex: https://example.com'}),
+            
+            # 'related_qs' : forms.Select(attrs={ 'class':'form-select', 'aria-label':'Sugestion Type', 'placeholder':'Select Related Question' }), 
+            
+        }
+        
+        
+        
+        
+      
 
         
        

@@ -81,7 +81,7 @@ class Question(models.Model):
     slug = models.CharField(default=generate_uuid, editable=False, unique=True, max_length=40)
     name = models.CharField(max_length=252)
     chapter_name = models.CharField(max_length=252, null=True, blank=True)
-    parent_question = models.ForeignKey("evaluation.Question", on_delete=models.CASCADE, null=True, blank=True, related_name='child' )
+    parent_question = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, related_name='child' )
     sort_order = models.IntegerField(default=1)    
     description = models.TextField()
     is_active = models.BooleanField(default=False)
@@ -451,7 +451,7 @@ class NextActivities(models.Model):
     
     class Meta:
         verbose_name = 'Next Activity'
-        verbose_name_plural = 'Next Activities'    
+        verbose_name_plural = 'Next Activities'     
         
     '''
     Main parameter to be set here for next activities.
@@ -460,12 +460,13 @@ class NextActivities(models.Model):
     short_description = models.TextField(max_length=152)
     descriptions = models.TextField()
     url = models.URLField(null=True, blank=True)
-    priority = models.CharField(max_length=2)
-    related_questions = models.ManyToManyField(Question, related_name="related_next", verbose_name="Please select related questions", help_text="Allow multiple option selection. The selected options should be highlighted.", limit_choices_to={'is_active': True})
-    compulsory_questions = models.ManyToManyField(Question, related_name="compulsory_next", verbose_name="Please select compulsory questions", help_text="Allow multiple. The selected options should be highlighted.", limit_choices_to={'is_active': True})
-    related_percent = models.IntegerField()
-    compulsory_percent = models.IntegerField()    
-    is_active = models.BooleanField(default=True)
+    priority = models.CharField(max_length=2, help_text="To specify sort order!")
+    related_questions = models.ManyToManyField(Question, related_name="related_next", verbose_name="Please select related questions to be answered by the test", help_text="Allow multiple option selection. The selected options should be highlighted.", limit_choices_to={'is_active': True})
+    compulsory_questions = models.ManyToManyField(Question, related_name="compulsory_next", verbose_name="Please select compulsory questions to be answered by the test", help_text="Allow multiple. The selected options should be highlighted.", limit_choices_to={'is_active': True})
+    related_percent = models.IntegerField(default=90)
+    compulsory_percent = models.IntegerField(default=100)    
+    is_active = models.BooleanField(default=True, verbose_name="Published?", help_text="Tick will published the service directly to the site!")
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name='serviceby')
     create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     

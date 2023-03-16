@@ -247,7 +247,7 @@ def activate(request, uidb64, token):
             messages.success(request, 'Email verified, please wait for approval!')
         else:
             #if email verified and user not expert account will be activated
-            user.is_active = True 
+            user.is_active = False ###IT IS IMPORTANT TO CHANGE HERE before lunching the site 
             subject = 'Account has been Activated!' 
             message = render_to_string('emails/account_activated.html', {
                 'user': user,                    

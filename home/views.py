@@ -22,6 +22,7 @@ from .forms import (
         CompanyLogoForm, 
         SugestionForm,
         QuesSugestionForm,
+        NextActivitiesForm,
 )
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
@@ -1158,7 +1159,7 @@ def webmanifest(request):
         'start_url' : '/', 
         "scope": "/",
         'lang' : 'en',
-        'screenshots' : [static(site.get('og_image')), static(site.get('site_logo'))],     
+        'screenshots' : [static(site.get('og_image')), static(site.get('logo'))],     
         'description': site.get('description'),  
         "theme_color": "#08793B",
         "background_color": "#08793B",
@@ -1400,11 +1401,7 @@ def get_edit_new_sugestion(request, pk):
 @login_required
 @marine_required
 def get_new_sugestion_list(request):   
-    new_sugestions = Suggestions.objects.filter(question = None, sugested_by = request.user).order_by('-updated')   
-    
- 
-  
-    
+    new_sugestions = Suggestions.objects.filter(question = None, sugested_by = request.user).order_by('-updated')     
     
     context = { 
     
@@ -1413,6 +1410,62 @@ def get_new_sugestion_list(request):
     }
     
     return render(request, 'home/new_nested_sugestion_list.html', context = context)
+
+@login_required
+@expert_required
+def my_services(request):
+    
+    context = {
+        'me' : 'me'
+    }
+    
+    return render(request, 'home/my-services.html', context = context)
+
+
+@login_required
+@marine_required
+def add_new_service(request):
+    # from evaluation.helper import get_sugested_questions
+    form = NextActivitiesForm(request.POST or None, request=request)    
+    myservices = NextActivities.objects.filter(created_by = request.user).order_by('-update_date')   
+    msg = []
+    if request.method == 'POST':
+        if form.is_valid():           
+            created_by = request.user 
+            service = form.save(commit = False)
+            service.created_by = created_by
+            service.save()
+            
+            related_questions = form.cleaned_data['related_questions']
+            compulsory_questions= form.cleaned_data['compulsory_questions']
+            
+            service.related_questions.set(related_questions)
+            service.compulsory_questions.set(compulsory_questions) 
+            
+            admins = User.objects.filter(is_staff=True)
+            for admin in admins:
+                subject = f'#{service.id}-New Service posted or updated by {service.created_by.username}'
+                message = 'Hello {},\n\nThis is an important notification about update in sugestion model that new sugestion creatd or edited by the {}.\n\nBest regards,\nAdmin Team'.format(admin.username, service.created_by.username)
+                from_email = settings.DEFAULT_FROM_EMAIL
+                recipient_list = [admin.email]
+                send_mail(subject, message, from_email, recipient_list)
+                    
+                
+           
+            msg.extend(["New Service submitted successfully for review! Once it is approved question will be updated!"])
+        else:
+            msg.extend(form.errors)
+                
+    
+    
+    context = {
+        'msg' : msg,
+        'form' : form,
+        'myservices' : myservices,
+        # 'my_sugested_questions' : get_sugested_questions(request)
+    }
+    
+    return render(request, "home/add_service.html", context)
 
 
 

@@ -14,6 +14,18 @@ Here I will mention the important points of Account App. These points will help 
 ### About `models.py`
 ***
 
+#### `class UserType(models.Model)` have 4 BooleanField:
+* `is_marine`
+* `is_producer`
+* `is_expert`
+* `is_consumer` and
+* `active` BooleanField to control use type in frontend.
+
+indicates the types of user of the site.
+
+
+
+
 ---
 This is the first paragraph of the document.
 

@@ -14,6 +14,10 @@ urlpatterns = [
     # path('dashboard/questions/', views.questions, name='questions'),
     path('dashboard/questionsint/', views.questionsint, name='questionsint'),   
     path('dashboard/quotations/', views.quotations, name='quotations'),
+    path('dashboard/my-services/', views.my_services, name='myservices'),
+    path('dashboard/add-new-services/', views.add_new_service, name='add_new_service'),
+    
+    
     path('dashboard/quotationsatg/', views.quotationsatg, name='quotationsatg'),
     path('delete-avatar/', views.delete_avatar, name='delete_avatar'),   
     path('dashboard/questions/<str:slug>', views.questions_details, name='questions_details'), 
