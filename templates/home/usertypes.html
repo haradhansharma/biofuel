@@ -44,7 +44,7 @@
                         </p> 
                         <p class="mt-5"> 
                             {% if user.is_authenticated %}
-                            If you are searching for specific information about a particular user, you can click on this <a href="{% url 'accounts:user_link' user.username %}">LINK</a>. 
+                            If you are searching for specific information about a particular user, you can click on this <a href="{% url 'accounts:user_link' %}">LINK</a>. 
                             {% else %}
                             Dedicated page for indivisual user is accessible to the registered user!
                             {% endif %}
