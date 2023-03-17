@@ -133,7 +133,7 @@ def user_types(request, slug):
                 'Quotations' : reverse('home:quotations')
                 }  
         else:
-            enroll = {'Thank You for Joining!' : reverse('accounts:user_link', args=[str(request.user.username)])}
+            enroll = {'Thank You for Joining!' : reverse('accounts:user_link')}
     else:
         enroll = {}
     
