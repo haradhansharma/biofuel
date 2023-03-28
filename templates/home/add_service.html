@@ -1,13 +1,7 @@
-{% if msg %}
-<div class="alert alert-secondary shadow-soft" role="alert">
-    {% for m in msg %}
-    <span class="alert-inner--text">{{ m }}</span>
-    {% endfor %}
-</div>
-{% endif %}
-<form id="ques_sug_form" hx-post="{% url 'home:add_new_service' %}" hx-target="#newserviceform" hx-swap="innerHTML">
+
+<form id="ques_sug_form" hx-post="{% url 'home:add_new_service' visiting_user.id %}" hx-target="#serviccelist" hx-swap="innerHTML">
     {% csrf_token %}
-    <div class="row">
+    <div class="row"> 
         <div class="col-12 mb-3">
             <div class="form-group mb-4">
                 <div class="row">
@@ -39,6 +33,9 @@
                     <div class="p-2 col-12">                      
                         {{ form.priority }}
                         {{ form.priority.errors }}
+                        {{ form.related_percent }}
+                        {{ form.compulsory_percent }}
+
                         
                     </div>
                     
@@ -68,20 +65,14 @@
                     </div>
                 </div>
                 
-                <div class="row">
-                    <div class="p-2 col-12">
-                        {{ form.is_active.label_tag }} {{ form.is_active }}<br>
-                        {{ form.is_active.errors }}
-                    </div>
-                    {% if form.is_active.help_text %}
-                    <p class="form-text">{{ form.is_active.help_text|safe }}</p>
-                    {% endif %}
-                </div>
+              
                 
 
                 <button class="btn btn-primary">Submite to Review</button>
+                <!--
                 <a class="btn btn-warning" hx-get="{% url 'home:get_new_sugestion_list' %}" hx-target="#new_sug_list"
                     hx-swap="innerHTML">View all</a>
+                -->
 
             </div>
         </div>
@@ -89,9 +80,3 @@
 
 </form>
 
-<div class="container">
-    <div class="row">
-        <div class="col-12" id="new_sug_list">
-        </div>
-    </div>
-</div>

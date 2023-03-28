@@ -81,17 +81,30 @@
                                         <div class="col-4 d-flex">
                                             <div class="flex-fill border rounded p-2 bg-white">
                                             <div class="">
-                                                <h6 class="border-bottom border-danger">To Dos</h6>
+                                                <h6 class="border-bottom border-danger">ToDo</h6>
+                                                <p>Below are the five test you need to complete!</p>
                                             <ol>
                                                 {% for na in na_ac %}
+                                             
                                                 <li>                                                    
-                                                    <b>{{na.name_and_standared|upper}}</b> ({{na.is_active}})  
-                                                    <div>         
-                                                    {% for quotation in na.get_quotations %}                                                     
-                                                    <a href="{{quotation.get_absolute_url}}" target="_blank" class="badge bg-success">  
-                                                    Quot#{{quotation.id}}::{{quotation.price}}
-                                                    </a>                                                                                                      
-                                                    {% endfor %}   
+                                                    <b><small>{{na.name_and_standared|upper}}</small></b> ({{na.is_active}})  
+                                                    <div>    
+                                                        
+                                                        {% if na.picked_experts %}
+                                                        <small>The test can be done from the below validation partner. </small>
+                                                        <hr>
+                                                        {% for expert in na.picked_experts %}  
+                                                            <a target="_blank" href="{% url 'partner_service' expert.id %}" class="badge bg-success">  
+                                                                <small class="card-title text-center">{% if expert.orgonization  %} {{ expert.orgonization }} {% else %} {{ expert.username }} {% endif %} </small> 
+                                                            </a>   
+                                                        {% endfor %}  
+                                                        <hr>
+                                                        <small>You may click on the partners to know about quotations and more about the partners.</small>
+
+                                                        {% else %}
+                                                        <small class="ms-2 text-muted">More provider going to be added soon!</small>
+                                                        {% endif %}
+                                                   
                                                     </div>                               
                                                 </li>
                                                 {% endfor %}

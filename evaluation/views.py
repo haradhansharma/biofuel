@@ -13,7 +13,7 @@ from accounts.models import User, UserType
 from django.contrib import messages
 from django.urls import reverse
 from django_xhtml2pdf.utils import generate_pdf
-from . helper import label_assesment_for_donot_know, label_assesment_for_positive, overall_assesment_for_donot_know, overall_assesment_for_positive, get_current_evaluator, nreport_context, OilComparision
+from . helper import label_assesment_for_donot_know, label_assesment_for_positive, overall_assesment_for_donot_know, overall_assesment_for_positive, get_current_evaluator, nreport_context, OilComparision, get_picked_na
 from django.contrib.auth.decorators import login_required
 from accounts.decorators import producer_required, report_creator_required
 from gfvp import null_session
@@ -560,12 +560,15 @@ def vedio_urls(request, search_term):
 @sync_to_async
 def std_oils_block(request, slug):
     question = Question.objects.get(slug = slug)
+    
     return render(request, 'evaluation/std_oils_block.html', context = {'question': question})
+
 
 @sync_to_async
 def quotation_block(request, slug):
     question = Question.objects.get(slug = slug)
-    return render(request, 'evaluation/quotation_block.html', context = {'question': question})
+    picked_na = get_picked_na(question)            
+    return render(request, 'evaluation/quotation_block.html', context = {'question': question, 'next_activities':picked_na})
     
 '''
 ====
@@ -625,7 +628,7 @@ def eva_question(request, evaluator, slug):
     if request.session['evaluator'] !=  evaluator:      
         log.info(f'Without completing a report trying to edit another report, so it is abroted________')      
         messages.warning(request, f"You have an active, unfinished Report, Report#{request.session['evaluator']}! So you're not permitted to perform this procedure!")        
-        return HttpResponseRedirect(reverse('accounts:user_link', args=[str(request.user.username)]))   
+        return HttpResponseRedirect(reverse('accounts:user_link'))   
     
     
     '''
@@ -756,6 +759,9 @@ def eva_question(request, evaluator, slug):
     search_term = re.sub('[^A-Za-z0-9]+', ' ',  f'{question.name} {evaluator_data.biofuel.name}')   
     
     # log.info(f'total questions________________{Question.objects.filter(is_active=True).count()}')
+    
+    
+    
     context ={
         'slug' : slug,
         'question_dataset' : question_dataset(request) ,
@@ -773,7 +779,8 @@ def eva_question(request, evaluator, slug):
         # 'vedio_urls' : vedio_urls(search_term),
         'search_term' : search_term,
         # 'oil_graph_data' : oil_graph_data,
-        'answered_percent' : answered_percent
+        'answered_percent' : answered_percent,
+        
         
     }
     
@@ -1000,7 +1007,7 @@ def thanks(request):
     #Session evaluator is most important to view calculated result in the thankyou page.
     #By default session's null evaluator has been created by middlewear
     if request.session['evaluator'] == '':        
-        return HttpResponseRedirect(reverse('accounts:user_link', args=[str(request.user.username)]))
+        return HttpResponseRedirect(reverse('accounts:user_link'))
     
     # evaluator =  get_current_evaluator(request)
     #Calculation to display on the thankyou page.

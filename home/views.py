@@ -33,7 +33,7 @@ from accounts.decorators import (
     marine_required,
 
 )
-from accounts.models import User, UserType, Profile
+from accounts.models import User, UserType, Profile, UsersNextActivity
 from accounts.helper import check_type
 from gfvp import null_session
 from django.contrib.auth import update_session_auth_hash
@@ -140,7 +140,7 @@ def user_types(request, slug):
     # pass user type data    
     try:
         user_type = UserType.objects.get(slug = slug)
-        users = User.objects.filter(usertype = user_type)
+        users = User.objects.filter(usertype = user_type, is_active = True)
     except:
         user_type = None
         users = None
@@ -1411,59 +1411,98 @@ def get_new_sugestion_list(request):
     
     return render(request, 'home/new_nested_sugestion_list.html', context = context)
 
+
+
+
 @login_required
 @expert_required
-def my_services(request):
-    
-    context = {
-        'me' : 'me'
-    }
-    
-    return render(request, 'home/my-services.html', context = context)
-
-
-@login_required
-@marine_required
-def add_new_service(request):
+def add_new_service(request, user_id):
     # from evaluation.helper import get_sugested_questions
     form = NextActivitiesForm(request.POST or None, request=request)    
-    myservices = NextActivities.objects.filter(created_by = request.user).order_by('-update_date')   
+    # myservices = NextActivities.objects.filter(created_by = request.user).order_by('-update_date')   
+    current_user = request.user  
+    if user_id == 'None':        
+        return HttpResponse('You have not logged in and it is unethical operation!')
+    try:
+        visiting_user = User.objects.get(id = int(user_id), is_active = True)
+    except:
+        return HttpResponse('It is unethical operation! No user found!')   
+    
+    context = { }
     msg = []
     if request.method == 'POST':
+                   
+        next_activities = NextActivities.objects.filter(is_active = True)
+        if int(user_id) != current_user.id:
+            return HttpResponse('It is unethical operation, User does not match!')                
+        
+        una = UsersNextActivity.objects.filter(user = visiting_user)
+            
         if form.is_valid():           
-            created_by = request.user 
+            created_by = current_user
             service = form.save(commit = False)
-            service.created_by = created_by
-            service.save()
+            # as we have ovewriten the save method for the form using here
+            # so we are getting difrent value then we need catch separetly
+            existing_found = service['existing_found']  
+            service = service['instance']            
+            if not existing_found: 
+                print('as not found doing here')
+                service.created_by = created_by
+                service.is_active = False    
+                service.save()
+                related_questions = form.cleaned_data['related_questions']
+                compulsory_questions= form.cleaned_data['compulsory_questions']
+                service.related_questions.set(related_questions)
+                service.compulsory_questions.set(compulsory_questions) 
+                msg.extend([f'New Service {service.name_and_standared} submitted successfully for review! Once it is approved service list will be updated!'])    
+                admins = User.objects.filter(is_staff=True)
+                for admin in admins:
+                    subject = f'#{service.id}-New Service posted or updated by {service.created_by.username}'
+                    message = 'Hello {},\n\nThis is an important notification about update in next activity model that new next activity creatd or edited by the {}.\n\nBest regards,\nAdmin Team'.format(admin.username, service.created_by.username)
+                    from_email = settings.DEFAULT_FROM_EMAIL
+                    recipient_list = [admin.email]
+                    send_mail(subject, message, from_email, recipient_list)            
+            else:
+                msg.extend([f'An existing service found for the questions you selected which is "{service.name_and_standared}"! \
+                    If it is not in the list then may be waiting for approval by the admin. \
+                    Please select that one! We appreciate your help to run the platform smooth! \
+                    '])
+                
             
-            related_questions = form.cleaned_data['related_questions']
-            compulsory_questions= form.cleaned_data['compulsory_questions']
-            
-            service.related_questions.set(related_questions)
-            service.compulsory_questions.set(compulsory_questions) 
-            
-            admins = User.objects.filter(is_staff=True)
-            for admin in admins:
-                subject = f'#{service.id}-New Service posted or updated by {service.created_by.username}'
-                message = 'Hello {},\n\nThis is an important notification about update in sugestion model that new sugestion creatd or edited by the {}.\n\nBest regards,\nAdmin Team'.format(admin.username, service.created_by.username)
-                from_email = settings.DEFAULT_FROM_EMAIL
-                recipient_list = [admin.email]
-                send_mail(subject, message, from_email, recipient_list)
-                    
+           
                 
            
-            msg.extend(["New Service submitted successfully for review! Once it is approved question will be updated!"])
         else:
             msg.extend(form.errors)
+            
+        data = {
+            'msg' : msg,
+            # 'form' : form,
+            'visiting_user' : visiting_user,
+            'current_user' : current_user,
+            'next_activities' : next_activities,
+            'na_in_una' : [na.next_activity for na in una.all()]
+            
+        }
+        
+        context.update(data)
+            
+        return render(request, 'registration/commit_service.html', context = context)
                 
     
     
-    context = {
-        'msg' : msg,
-        'form' : form,
-        'myservices' : myservices,
-        # 'my_sugested_questions' : get_sugested_questions(request)
-    }
+    
+    
+    data = {
+            'msg' : msg,
+            'form' : form,
+            'visiting_user' : visiting_user,
+            'current_user' : current_user,
+            # 'myservices' : myservices,
+            # 'my_sugested_questions' : get_sugested_questions(request)
+        }
+        
+    context.update(data)
     
     return render(request, "home/add_service.html", context)
 

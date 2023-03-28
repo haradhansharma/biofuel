@@ -1,6 +1,7 @@
+from django.conf import settings
 from django.db.models.signals import post_save, pre_save, post_delete
 from django.dispatch import receiver
-
+import json
 from doc.models import ExSite
 from .models import *
 from accounts.models import User, UserType
@@ -151,6 +152,41 @@ def on_change(sender, instance, **kwargs):
                         pass
                 else:
                     pass
+                
+                
+@receiver(post_save, sender=NextActivities)
+def add_to_the_user_next(sender, instance, created, **kwargs):    
+    if not created and instance.is_active:     
+        from accounts.models import UsersNextActivity   
+        creator = instance.created_by
+        subject = f'{instance.name_and_standared} has been assigned as your service!'
+        message = 'Hello {},\n\nThis is  to let you know that about requested service "{}" has been assigned to your service list as it has been tried to add to your service list at a time! If it was not requested by you then you are requested to remove it by visiting your service page!\n\nBest regards,\nAdmin Team'.format(creator.username, instance.name_and_standared)
+        una = UsersNextActivity.objects.filter(user = creator).values_list('next_activity', flat=True)
+        if instance not in una:
+            UsersNextActivity.objects.create(user = creator, next_activity = instance)
+            # creator.email_user(subject, message, from_email=settings.DEFAULT_FROM_EMAIL)
+        
+        email_recipent = [creator.email] 
+        same_tried_by = instance.same_tried_by
+        if same_tried_by:
+            same_tried_by_json = json.loads(same_tried_by)   
+            tried_users_ids = list(same_tried_by_json['users'])
+            
+            for user_id in tried_users_ids:
+                try:
+                    tried_user = User.objects.get(id = int(user_id))
+                    tuna = UsersNextActivity.objects.filter(user = tried_user).values_list('next_activity', flat=True)
+                    if tried_user != creator and instance not in tuna:
+                        UsersNextActivity.objects.create(user = tried_user, next_activity = instance)
+                        email_recipent.append(tried_user.email)
+                        # tried_user.email_user(subject, message, from_email=settings.DEFAULT_FROM_EMAIL)
+                except:
+                    pass
+        #sending mail with one connection       
+        send_all_email = [(subject, message, settings.DEFAULT_FROM_EMAIL, [e]) for e in email_recipent]
+        send_mass_mail((send_all_email), fail_silently=False) 
+                    
+        
                 
                 
 

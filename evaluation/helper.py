@@ -598,6 +598,15 @@ def get_sugested_questions(request):
     sugested_questions = Suggestions.objects.filter(sugested_by = request.user, su_type = 'question', question = None,)
     
     return sugested_questions
+
+
+def get_picked_na(question):
+    next_activities = NextActivities.objects.filter(is_active = True)
+    picked_na = []
+    for na in next_activities:
+        if question in na.answering_questions:
+            picked_na.append(na)
+    return picked_na
         
 
 

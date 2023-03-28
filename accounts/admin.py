@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.sites.models import Site
 from .forms import UserCreationForm, UserChangeForm
-from .models import User, UserType, Profile
+from .models import User, UserType, Profile, UsersNextActivity
 from django.contrib import messages
 from django.utils.translation import ngettext
 
@@ -90,5 +90,5 @@ class UserTypeAdmin(admin.ModelAdmin):
     ordering = ('name',)
     
     
-
+admin.site.register(UsersNextActivity)
     

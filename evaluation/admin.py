@@ -384,6 +384,7 @@ class NextActivitiesAdmin(admin.ModelAdmin):
             object.related_questions.set(related_questions)
             object.compulsory_questions.set(compulsory_questions)            
     actions = [duplicate_event]
+    readonly_fields = ('same_tried_by', ) 
 admin.site.register(NextActivities, NextActivitiesAdmin)
 
 

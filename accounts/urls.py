@@ -16,6 +16,7 @@ urlpatterns = [
 
 urlpatterns += [
     path('my-profile/', views.userpage, name='user_link'),    
+    
 ]
 
 urlpatterns += [
@@ -24,7 +25,11 @@ urlpatterns += [
 
 urlpatterns += [
     path('check-username/', views.check_username, name='check_username'),  
-    path('check-email/', views.check_email, name='check_email'),     
+    path('check-email/', views.check_email, name='check_email'),    
+    path('<str:user_id>/<str:na_id>/commit-service/', views.commit_service, name='commit_service'),    
+    path('<str:user_id>/<str:na_id>/delete-service/', views.delete_service, name='delete_service'),     
+     
+     
 ]
 
 

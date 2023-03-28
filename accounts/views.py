@@ -25,6 +25,13 @@ from evaluation.helper import LabelWiseData
 from doc.doc_processor import site_info
 import logging
 log =  logging.getLogger('log')
+from accounts.decorators import (
+    expert_required, 
+    producer_required, 
+    consumer_required, 
+    marine_required,
+
+)
 
 
 '''
@@ -445,6 +452,115 @@ def check_email(request):
             return HttpResponse('<span class="text-success">This email avialable!</span>')
     except:
         return HttpResponse('<span class="text-danger">Type a valid email address!</span>')
+    
+@login_required
+def partner_service(request, pk):
+    from evaluation.models import NextActivities
+    
+    visiting_user = get_object_or_404(User, pk=pk, is_active = True)
+    current_user = request.user
+    next_activities = NextActivities.objects.filter(is_active = True)
+    na_in_una = [na.next_activity for na in visiting_user.selected_activities]
+    
+    
+    context ={
+        'visiting_user' : visiting_user,
+        'current_user' : current_user,
+        'next_activities' : next_activities,
+        'na_in_una' : na_in_una
+        
+    }
+    
+    return render(request, 'registration/partner_service.html', context = context)
+
+@login_required
+@expert_required   
+def commit_service(request, user_id, na_id):
+    context = {}
+    current_user = request.user  
+    
+    if user_id == 'None':        
+        return HttpResponse('You have not logged in and it is unethical operation!')
+    else:
+        from evaluation.models import NextActivities     
+        next_activities = NextActivities.objects.filter(is_active = True)
+        if int(user_id) != current_user.id:
+            return HttpResponse('It is unethical operation, User does not match!')
+            
+        try:
+            visiting_user = User.objects.get(id = int(user_id), is_active = True)
+        except:
+            return HttpResponse('It is unethical operation! No user found!')
+        
+        try:
+            na = next_activities.get(id = int(na_id))
+        except:
+            return HttpResponse('It is unethical operation! No Next Activities found!')
+        
+        una = UsersNextActivity.objects.filter(user = visiting_user)
+        na_in_una = [na.next_activity for na in una]
+        if na not in na_in_una:
+            UsersNextActivity.objects.create(next_activity = na, user = visiting_user)
+        
+        
+        data = {
+            'visiting_user' : visiting_user,
+            'current_user' : current_user,
+            'next_activities' : next_activities,
+            'na_in_una' : [na.next_activity for na in una.all()]
+        }
+        
+        context.update(data)
+    
+    
+    
+    return render(request, 'registration/commit_service.html', context = context)
+@login_required
+@expert_required   
+def delete_service(request, user_id, na_id):
+    context = {}
+    current_user = request.user
+       
+    if user_id == 'None':        
+        return HttpResponse('You have not logged in and it is unethical operation!')
+    else:
+        
+        from evaluation.models import NextActivities    
+        next_activities = NextActivities.objects.filter(is_active = True)
+        if int(user_id) != current_user.id:
+            return HttpResponse('It is unethical operation, User does not match!')
+            
+        try:
+            visiting_user = User.objects.get(id = int(user_id), is_active = True)
+        except:
+            return HttpResponse('It is unethical operation! No user found!')
+        una = UsersNextActivity.objects.filter(user = visiting_user)
+        try:
+            target_una = una.get(id = int(na_id), user = visiting_user)
+        except:
+            return HttpResponse('It is unethical operation! No Next Activities found!')
+        
+        target_una.delete()
+       
+        
+        
+        data = {
+            'visiting_user' : visiting_user,
+            'current_user' : current_user,
+            'next_activities' : next_activities,
+            'na_in_una' : [na.next_activity for na in una.all()]
+        }
+        
+        context.update(data)
+    
+    
+    
+    return render(request, 'registration/commit_service.html', context = context)
+    
+    
+    
+    
+    
     
     
 

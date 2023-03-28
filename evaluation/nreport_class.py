@@ -356,11 +356,18 @@ class ReportPDFData:
             inn += 1
             todo_title = f'{inn}. <li><b>{na.name_and_standared.upper()}</b>({na.is_active})</li>'
             quotations = ''
-            for quotation in na.get_quotations():
-                quotations += f'<font color = green><u><a href="{self.request.build_absolute_uri(quotation.get_absolute_url())}"><b>Quot#</b>{quotation.id}::{quotation.price}</a></u></font> , '    
+            if na.picked_experts:
+                for expert in na.picked_experts:
+                    expert_link = self.request.build_absolute_uri(reverse('partner_service', args=[str(expert.id)]))
+                    expert_data = expert.orgonization if expert.orgonization else expert.username
+                    quotations += f'<font color = green><u><a href="{expert_link}">{expert_data}</a></u></font> , '   
+            else:
+                quotations += f'More Partner going to be added soon!' 
             self.stylesH5.spaceAfter = 0         
             data.append(Paragraph(todo_title, self.stylesH5))
             data.append(self.uline100())
+            self.stylesH6.leftIndent = 18
+            data.append(Paragraph('The test can be conducted with below partners.'))
             self.stylesH6.leftIndent = 18
             data.append(Paragraph(quotations, self.stylesH6))            
             data.append(Spacer(0.05*inch,0.05*inch))           

@@ -14,8 +14,8 @@ urlpatterns = [
     # path('dashboard/questions/', views.questions, name='questions'),
     path('dashboard/questionsint/', views.questionsint, name='questionsint'),   
     path('dashboard/quotations/', views.quotations, name='quotations'),
-    path('dashboard/my-services/', views.my_services, name='myservices'),
-    path('dashboard/add-new-services/', views.add_new_service, name='add_new_service'),
+    # path('dashboard/my-services/', views.my_services, name='myservices'),
+    path('<str:user_id>/add-new-services/', views.add_new_service, name='add_new_service'),
     
     
     path('dashboard/quotationsatg/', views.quotationsatg, name='quotationsatg'),

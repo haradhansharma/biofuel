@@ -163,7 +163,11 @@ class User(AbstractUser):
         if lead.exists():            
             return True
         else:            
-            return False            
+            return False     
+        
+    @property
+    def selected_activities(self):
+        return self.user_next_activity.all()
     
     def get_absolute_url(self):        
         return reverse('accounts:user_link')
@@ -184,5 +188,12 @@ class Profile(models.Model):
     @property
     def profile_logo(self):        
         return self.company_logo.url if self.company_logo != '' else 'rings.png'
+    
+    
+class UsersNextActivity(models.Model):
+    from evaluation.models import NextActivities
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_next_activity' )
+    next_activity = models.ForeignKey(NextActivities, on_delete=models.CASCADE, related_name='next_activities' )
+    
 
 

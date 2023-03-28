@@ -1,0 +1,84 @@
+<div class="row g-3 mb-3">
+    {% if msg %}
+    <div class="alert alert-secondary shadow-soft" role="alert">
+        {% for m in msg %}
+        <span class="alert-inner--text">{{ m }}</span>
+        {% endfor %}
+    </div>
+    {% endif %}              
+    <div class="col-12 d-flex ">
+        <div class="card border-0 shadow flex-fill bg-white">
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center"
+                    style="min-height: 100px;">
+                    <div class="col-12">
+                        <div class="d-block">                                                    
+                            <div class="col-auto">
+                                {% if visiting_user.selected_activities %} 
+                                {% for u in visiting_user.selected_activities %}
+                                    <a href="#na{{u.next_activity.id}}" type="button" class="btn btn-outline-primary mb-2 position-relative">
+                                        {{u.next_activity.name_and_standared}}   
+                                        {% if u.user.id == request.user.id %}
+                                        <button 
+                                        type="button" 
+                                        class="btn-close text-reset position-absolute top-0 end-0" 
+                                        data-bs-dismiss="offcanvas" 
+                                        aria-label="Close"
+                                        hx-get="{% url 'accounts:delete_service' u.user.id u.id %}" 
+                                        hx-trigger="click"
+                                        hx-target = "#serviccelist"
+                                        hx-swap = "innerHTML"></button>       
+                                        {% endif %}
+                                    </a>
+                                {% endfor %}   
+                                {% else %}
+                                    <p> No selected service found </p>
+                                {% endif %}                                                     
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% if request.user == visiting_user %}
+    <div class="col-12 d-flex ">
+        <div class="card border-0 shadow flex-fill bg-white">
+            <div class="card-body">
+                <div class="row d-block d-xl-flex align-items-center"
+                    style="min-height: 100px;">
+                    <div class="col-12 text-center">
+                        <div class="d-block mb-2">                                                    
+                            <div class="col-auto">
+                                {% for na in next_activities %}
+                                <a 
+                                name="add{{na.id}}" 
+                                id="add{{na.id}}" 
+                                class="btn btn-primary {% if na in na_in_una %} active {% endif %} mb-2" 
+                                hx-get="{% url 'accounts:commit_service' visiting_user.id na.id %}" 
+                                hx-target = "#serviccelist"
+                                hx-swap = "innerHTML"
+                                role="button" >
+                                {{na.name_and_standared}}
+                                </a>
+                                {% endfor %}                                                        
+                            </div>
+                        </div>
+
+                        <h5>Have not found the service you provide?</h5>
+            
+                        <div id="newserviceform">
+                            <button type="button" class="btn btn-primary" hx-get="{% url 'home:add_new_service' visiting_user.id %}" hx-target="#newserviceform" hx-swap="innerHTML">
+                                Click Here to Add Service for approval
+                            </button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>

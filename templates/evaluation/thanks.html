@@ -311,55 +311,7 @@
                 </div>     
                 {% endif %}
 
-                {% if user.is_expert or user.is_staff or user.is_superuser %}     
-                <div id="quot" class="row justify-content-center mb-3">      
-                    <div class="col-12">
-                        <div class="card">          
-                            <div class="card-header">
-                                Testing Services Provided
-                            </div>  
-                            <div class="card-body">      
-                                <div class="row">          
-                                    {% for quotation in quotations %}
-                                    <div class="col-md-6 col-xl-4 d-flex g-2">
-                                        <div class="card bg-light bg-gradient flex-fill p-2">
-                                            <img class="card-img-top" src="{% static quotation.service_provider.get_profile.profile_logo %}" alt="{{quotation.test_for.name}}">
-                                            
-                                                <div class="card-header">
-                                                   <strong>Test For:</strong> {{quotation.test_for.name}}
-                                                </div>
-                                                <div class="card-body">
-                                                <h5 class="h6 card-title">                                    
-                                                    <i class="fa-solid fa-heart-circle-check"></i> <strong>Sample Require:</strong> {{quotation.sample_amount}}{{quotation.sample_amount_unit}}
-                                                </h5>
-                                                <h6 class="card-subtitle mb-2 text-muted">
-                                                    <i class="fa-solid fa-heart-circle-check"></i> <strong>Test Price:</strong> {{quotation.price}}{{quotation.price_unit}}
-                                                </h6>
-                                                <p class="card-text">
-                                                    <i class="fa-solid fa-heart-circle-check"></i> {{quotation.related_questions.all.count}} Addition question will be tested along with this test.                                                    
-                                                </p>
-                                            
-                                                <p class="card-text"><i class="fa-solid fa-heart-circle-check"></i> <strong>Sample will be picked from factory:</strong> {{quotation.factory_pickup}}</p>
-                                             
-                                                <ul class="list-inline"><i class="fa-solid fa-heart-circle-check"></i> Required documents to conduct the test:
-                                                    {% for rd in quotation.require_documents.all %}
-                                                    <li class="list-inline-item"><i class="fa-solid fa-check"></i>{{rd.name}}</li>
-                                                    {% endfor %}
-                                                </ul>
-                                                </div>
-                                                <div class="card-footer text-center mx-auto">
-                                                <a href="{% url 'home:quotation_report' quotation.test_for.slug quotation.id %}" class="btn btn-primary">CLick To Find Details</a>
 
-                                                </div>                                    
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-                                </div>   
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
             
 
                 <div class="row justify-content-center">

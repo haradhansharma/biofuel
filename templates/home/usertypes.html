@@ -57,6 +57,37 @@
     </div>
     <section class="section section-lg  bgjessica-light pt-0 pb-0">
         <div class="container">
+            <div class="row">          
+                {% for u in users %}                 
+                <div class="col-md-6 col-xl-4 d-flex g-2">
+                    <div class="card bg-light bg-gradient flex-fill p-0">
+                        <img class="card-img-top w-100 bg-dark" src="{% static u.get_profile.profile_logo %}" alt="{{u.username}}" title={{u.username}}>
+                        
+                            <div class="card-header">
+                               <h4>{% if u.orgonization %}{{u.orgonization}}{% else %}No Orgonization Found{% endif %}</h4>
+                               <h5 class="text-muted"> {% if u.expert_in_name %} Expert In {{u.expert_in_name}} {% else %} No Experties Found {% endif %} </h5> 
+                               <p>{{u.get_type}}</p>
+                            </div>
+                            <div class="card-body">
+                            
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                <i class="fa-solid fa-heart-circle-check"></i> <strong>Location:</strong> {% if u.get_profile.established  %} {{ u.get_profile.location }} {% else %} No Location Found {% endif  %}
+                            </h6>
+                            <p class="card-text">
+                                <i class="fa-solid fa-heart-circle-check"></i> <strong>Established:</strong> {% if u.get_profile.established  %} {{ u.get_profile.established }} {% else %} No Date Found {% endif  %}                                                  
+                            </p>                       
+                            
+                            </div>
+                        {% if u.is_expert %} 
+                         <a href="{% url 'partner_service' u.pk %}" class="btn btn-primary">Visit Service Listing</a>                       
+                        {% endif %}
+                                                             
+                    </div>
+                </div>
+                {% endfor %}
+                
+                
+            </div>
         </div>
     </section>
 </main>

@@ -1,4 +1,7 @@
 from django import forms
+import json
+from django.conf import settings
+from django.db.models import Q
 from accounts.models import User, Profile
 from evaluation.models import Question, Option, Suggestions, NextActivities
 from django.contrib.auth.forms import PasswordChangeForm
@@ -10,7 +13,7 @@ from django.forms.models import (
     modelformset_factory
 )
 from evaluation.helper import get_sugested_questions
-
+from django.core.mail import mail_admins, send_mail
 class PasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super(PasswordChangeForm, self).__init__(*args, **kwargs)
@@ -200,7 +203,9 @@ class QuesSugestionForm(forms.ModelForm):
             
         }
       
-  
+#Below form is dedicated to a specific view which is "add_new_service" of Home
+# So if you want to use this please look into the over written "save" method
+
 class NextActivitiesForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")       
@@ -217,7 +222,9 @@ class NextActivitiesForm(forms.ModelForm):
             'compulsory_questions',
             'related_percent',
             'compulsory_percent',
-            'is_active',
+            'related_percent',
+            'compulsory_percent',
+            
         )
         
         widgets = {
@@ -235,10 +242,86 @@ class NextActivitiesForm(forms.ModelForm):
             'short_description': forms.Textarea(attrs={'rows': 2,'class':'form-control', 'aria-label':'Short Descriptions' , 'placeholder':'Short Descriptions about test' }),
             'descriptions': forms.Textarea(attrs={'rows': 4,'class':'form-control', 'aria-label':'Descriptions' , 'placeholder':'Long Descriptions about test' }),
             'url' : forms.URLInput(attrs={'class':'form-control', 'aria-label':'url ', 'placeholder':'Write related URL to the test ex: https://example.com'}),
+            'related_percent' : forms.HiddenInput(),
+            'compulsory_percent' : forms.HiddenInput(),
+
             
             # 'related_qs' : forms.Select(attrs={ 'class':'form-select', 'aria-label':'Sugestion Type', 'placeholder':'Select Related Question' }), 
             
         }
+        
+    def save(self, commit=True):
+        # going to check if saved service is exists or not which are going to be saved now        
+        
+        
+        related_questions_ids = (self.cleaned_data['related_questions']).values_list('id', flat=True).order_by('id')       
+        compulsory_questions_ids = (self.cleaned_data['compulsory_questions']).values_list('id', flat=True).order_by('id') 
+          
+        forms_selecetd_ids = (related_questions_ids.union(compulsory_questions_ids)).order_by('id')
+        
+        all_saved_instance = self._meta.model.objects.all().order_by('id')
+        
+        
+ 
+        existing_instance = None        
+        for ai in all_saved_instance:          
+            if str(forms_selecetd_ids) == str(ai.selected_ids):
+                existing_instance = ai    
+                break  
+            
+        
+            
+                
+            
+        
+        # modifying the existing save method's return to indicate wherether found or not
+        if existing_instance is not None:
+            if not existing_instance.is_active:
+                
+                
+                #update user id at same_tried_by
+                same_tried_by = existing_instance.same_tried_by
+                if same_tried_by:
+                    same_tried_by_json = json.loads(same_tried_by)   
+                    tried_users = list(same_tried_by_json['users'])
+                    if self.request.user.id not in tried_users:
+                        tried_users.append(self.request.user.id)
+                    data = {
+                        'users' : tried_users
+                    }
+                else:                    
+                    data = {
+                        'users' : [self.request.user.id]
+                    }
+                existing_instance.same_tried_by = json.dumps(data)   
+                existing_instance.save()
+                
+                #send notification to admin
+                admins = User.objects.filter(is_staff=True)
+                for admin in admins:
+                    subject = f' Service "{existing_instance.name_and_standared}"- was tried by {self.request.user.username}, Please approve it!'
+                    message = 'Hello {},\n\nThis is an important notification about the new service which is not approved yet but users tried to add their service list! Details mentioned in the message subject. You may take action to approve it.\n\nBest regards,\nAdmin Team'.format(admin.username)
+                    from_email = settings.DEFAULT_FROM_EMAIL
+                    recipient_list = [admin.email]
+                    send_mail(subject, message, from_email, recipient_list)   
+                
+            context = {
+                'existing_found' : True,
+                'instance' : existing_instance
+            }
+            return context
+        else:        
+            instance = super().save(commit=False)
+            # do something else with the instance
+            if commit:
+                instance.save()
+                
+                
+            context = {
+                'existing_found' : False,
+                'instance' : instance
+            }
+            return context
         
         
         

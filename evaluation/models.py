@@ -178,6 +178,9 @@ class Question(models.Model):
         sugestions = self.question_sugestion.all().order_by('-created')
         return sugestions
     
+   
+        
+    
     
     
     
@@ -316,6 +319,9 @@ class Biofuel(models.Model):
     
 
 class Evaluator(models.Model):
+    class Meta:
+        verbose_name = 'Report'
+        verbose_name_plural = 'Reports'
     # from . models import StandaredChart
     '''
     Do not edit or modyfy anything here from admin side.
@@ -466,6 +472,7 @@ class NextActivities(models.Model):
     related_percent = models.IntegerField(default=90)
     compulsory_percent = models.IntegerField(default=100)    
     is_active = models.BooleanField(default=True, verbose_name="Published?", help_text="Tick will published the service directly to the site!")
+    same_tried_by = models.JSONField(blank=True, null=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name='serviceby')
     create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
@@ -482,6 +489,38 @@ class NextActivities(models.Model):
             for quotation in question.get_related_quotations:
                 quotations.add(quotation)
         return quotations
+    
+    
+        
+    
+    @property
+    def related_questions_ids(self):        
+        return self.related_questions.all().values_list('id', flat= True).order_by('id')
+    
+    @property
+    def compulsory_questions_ids(self):
+        return self.compulsory_questions.all().values_list('id', flat= True).order_by('id')
+    
+    @property
+    def selected_ids(self):
+        return (self.related_questions_ids.union(self.compulsory_questions_ids)).order_by('id')
+    
+    @property
+    def answering_questions(self):
+        return (self.related_questions.all()).union(self.compulsory_questions.all())
+    
+    @property
+    def picked_experts(self):
+        from accounts.models import UsersNextActivity
+        una_list = UsersNextActivity.objects.filter(next_activity = self)
+        
+        experts = [una.user for una in una_list if una.user.is_expert]
+        
+        return experts
+    
+    
+    
+   
                 
     
 
