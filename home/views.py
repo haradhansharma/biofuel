@@ -330,7 +330,7 @@ def get_question_of_label(request):
     
     
     
-    if request.user.is_staff or request.user.is_superuser or request.user.is_expert:
+    if request.user.is_staff or request.user.is_superuser or request.user.is_expert or request.user.is_marine:
         # Staff of super user are accesable to all questions
         questions = [q for q in Question.objects.filter(is_active = True)]
     ##=======
