@@ -167,7 +167,10 @@ class User(AbstractUser):
         
     @property
     def selected_activities(self):
-        return self.user_next_activity.all()
+        una = self.user_next_activity.all()
+        if una.exists():
+            return self.user_next_activity.all()
+        return False
     
     def get_absolute_url(self):        
         return reverse('accounts:user_link')

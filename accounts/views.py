@@ -33,6 +33,8 @@ from accounts.decorators import (
 
 )
 
+from django.core.mail import mail_admins, send_mail, send_mass_mail
+from accounts.helper import send_admin_mail
 
 '''
 Inheriting default loginview of Django
@@ -460,14 +462,27 @@ def partner_service(request, pk):
     visiting_user = get_object_or_404(User, pk=pk, is_active = True)
     current_user = request.user
     next_activities = NextActivities.objects.filter(is_active = True)
-    na_in_una = [na.next_activity for na in visiting_user.selected_activities]
+    na_in_una = [na.next_activity for na in visiting_user.selected_activities] if visiting_user.selected_activities else None
+    
+    if not next_activities.exists() and current_user.is_expert:
+        subject = f'Validation partner are visiting service page but no default service'
+        message = 'Hello Admin,\n\nThis is an important notification that vlidation partner are visiting the service page there is no Next Activities to select by then. Please add some next activities.\n\nBest regards,\nAdmin Team'
+            
+        send_admin_mail(subject, message)
+        
+    if current_user.is_expert or current_user.is_staff or current_user.is_superuser:
+        block_visible = True
+    else:
+        block_visible = False
+        
     
     
     context ={
         'visiting_user' : visiting_user,
         'current_user' : current_user,
         'next_activities' : next_activities,
-        'na_in_una' : na_in_una
+        'na_in_una' : na_in_una,
+        'block_visible' : block_visible
         
     }
     

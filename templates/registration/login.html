@@ -27,11 +27,11 @@
                                     </div>                        
                                 </div>
                                 {% else %}
-                                <p>{{text.credentials}}</p> 
+                                <p class="text-muted">{{text.credentials}} before click on the login button!</p> 
                                 {% endif %} 
                                 {% if form.non_field_errors and not messages %}
                                 {% for error in form.non_field_errors %}
-                                <span >{{ error }}</span>
+                                <span class="text-danger">{{ error }}</span>
                                 {% endfor %}
                                 {% endif %} 
                                 </div>  

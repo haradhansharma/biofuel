@@ -53,7 +53,7 @@
 
 
                 <div class="row justify-content-center">
-                    <h1 class="d-none">User Profile or thank you page</h1>
+                    <h1 class="d-none">Service Page of the Experts</h1>
                     {% if messages %}
                     <div class="alert alert-secondary mt-5" role="alert">
                         {% for message in messages %}
@@ -76,8 +76,8 @@
                 <div id="quot" class="row justify-content-center mb-3">      
                     <div class="col-12">
                         <div class="card">          
-                            <div class="card-header">
-                                <h2>Testing Services wise Quotations</h2>
+                            <div class="card-header d-flex">
+                                <h2>Services wise Quotations</h2>                                
                             </div>  
                             <div class="card-body">      
                                 <div class="row justify-content-center">          
@@ -120,7 +120,13 @@
                                     </div>
                                     {% endfor %}
                                     {% endfor %}
-
+                                    {% else %}
+                                    {% if request.user == visiting_user and block_visible %}
+                                    <p>By Clicking below button you may go to the quotation interface to create quotations for your services!</p>
+                                    <a class="btn btn-primary" href="{% url 'home:quotations' %}">Go to Quotation Interface</a>
+                                    {% else %}
+                                     <p>No quotations found to display!</p>
+                                    {% endif %}
                                     {% endif %}
                                 </div>   
                             </div>

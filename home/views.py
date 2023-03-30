@@ -48,6 +48,7 @@ from blog.models import BlogPost
 from django.templatetags.static import static
 from django.utils.decorators import method_decorator
 from django.core.mail import mail_admins, send_mail
+from accounts.helper import send_admin_mail
 import requests
 import logging
 log =  logging.getLogger('log')
@@ -1223,15 +1224,14 @@ class AddSugestion(View):
                     sugestion = Suggestions(question=question, sugested_by=author, parent=parent_sugestion, statement=statement, title = title, su_type = su_type)
                 else:
                     sugestion = Suggestions(question=question, sugested_by=author, statement=statement, title = title, su_type = su_type)
-            sugestion.save()        
-            admins = User.objects.filter(is_staff=True)
-            for admin in admins:
-                subject = f'#{sugestion.id}-Sugestion posted or updated by {sugestion.sugested_by.username}'
-                message = 'Hello {},\n\nThis is an important notification about update in sugestion model that new sugestion creatd or edited by the {}.\n\nBest regards,\nAdmin Team'.format(admin.username, sugestion.sugested_by.username)
-                from_email = settings.DEFAULT_FROM_EMAIL
-                recipient_list = [admin.email]
-                send_mail(subject, message, from_email, recipient_list)
-                    
+            sugestion.save()    
+                
+            subject = f'#{sugestion.id}-Sugestion posted or updated by {sugestion.sugested_by.username}'
+            message = 'Hello Admin,\n\nThis is an important notification about update in sugestion model that new sugestion creatd or edited by the {}.\n\nBest regards,\nAdmin Team'.format(sugestion.sugested_by.username)
+             
+            send_admin_mail(subject, message)
+           
+                   
                 
            
             msg = ["Suggestion submitted successfully for review! Once it is approved question will be updated!"]
@@ -1313,14 +1313,13 @@ def sugest_new_ques_option(request):
             sug.sugested_by = author
             sug.save()
             
-            admins = User.objects.filter(is_staff=True)
-            for admin in admins:
-                subject = f'#{sug.id}-Sugestion posted or updated by {sug.sugested_by.username}'
-                message = 'Hello {},\n\nThis is an important notification about update in sugestion model that new sugestion creatd or edited by the {}.\n\nBest regards,\nAdmin Team'.format(admin.username, sug.sugested_by.username)
-                from_email = settings.DEFAULT_FROM_EMAIL
-                recipient_list = [admin.email]
-                send_mail(subject, message, from_email, recipient_list)
-                    
+            
+            subject = f'#{sug.id}-Sugestion posted or updated by {sug.sugested_by.username}'
+            message = 'Hello Admin,\n\nThis is an important notification about update in sugestion model that new sugestion creatd or edited by the {}.\n\nBest regards,\nAdmin Team'.format(sug.sugested_by.username)
+                   
+            send_admin_mail(subject, message)
+            
+                
                 
            
             msg.extend(["Suggestion submitted successfully for review! Once it is approved question will be updated!"])
@@ -1370,14 +1369,13 @@ def get_edit_new_sugestion(request, pk):
                 sug.related_qs = related_qs                
                 sug.su_type = su_type               
                 sug.save()
-            admins = User.objects.filter(is_staff=True)
-            for admin in admins:
-                subject = f'#{sug.id}-Sugestion posted or updated by {sug.sugested_by.username}'
-                message = 'Hello {},\n\nThis is an important notification about update in sugestion model that new sugestion creatd or edited by the {}.\n\nBest regards,\nAdmin Team'.format(admin.username, sug.sugested_by.username)
-                from_email = settings.DEFAULT_FROM_EMAIL
-                recipient_list = [admin.email]
-                send_mail(subject, message, from_email, recipient_list)
-                    
+            subject = f'#{sug.id}-Sugestion posted or updated by {sug.sugested_by.username}'
+            message = 'Hello Admin,\n\nThis is an important notification about update in sugestion model that new sugestion creatd or edited by the {}.\n\nBest regards,\nAdmin Team'.format(sug.sugested_by.username)
+                
+                      
+            send_admin_mail(subject, message)
+          
+                
                 
             
             msg.extend(["Suggestion submitted successfully for review! Once it is approved question will be updated!"]) 
@@ -1455,13 +1453,13 @@ def add_new_service(request, user_id):
                 service.related_questions.set(related_questions)
                 service.compulsory_questions.set(compulsory_questions) 
                 msg.extend([f'New Service {service.name_and_standared} submitted successfully for review! Once it is approved service list will be updated!'])    
-                admins = User.objects.filter(is_staff=True)
-                for admin in admins:
-                    subject = f'#{service.id}-New Service posted or updated by {service.created_by.username}'
-                    message = 'Hello {},\n\nThis is an important notification about update in next activity model that new next activity creatd or edited by the {}.\n\nBest regards,\nAdmin Team'.format(admin.username, service.created_by.username)
-                    from_email = settings.DEFAULT_FROM_EMAIL
-                    recipient_list = [admin.email]
-                    send_mail(subject, message, from_email, recipient_list)            
+                
+                subject = f'#{service.id}-New Service posted or updated by {service.created_by.username}'
+                message = 'Hello Admin,\n\nThis is an important notification about update in next activity model that new next activity creatd or edited by the {}.\n\nBest regards,\nAdmin Team'.format(service.created_by.username)
+                       
+                send_admin_mail(subject, message)
+                
+                     
             else:
                 msg.extend([f'An existing service found for the questions you selected which is "{service.name_and_standared}"! \
                     If it is not in the list then may be waiting for approval by the admin. \

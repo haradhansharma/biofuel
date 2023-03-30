@@ -14,6 +14,7 @@ from django.forms.models import (
 )
 from evaluation.helper import get_sugested_questions
 from django.core.mail import mail_admins, send_mail
+from accounts.helper import send_admin_mail
 class PasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super(PasswordChangeForm, self).__init__(*args, **kwargs)
@@ -297,13 +298,12 @@ class NextActivitiesForm(forms.ModelForm):
                 existing_instance.save()
                 
                 #send notification to admin
-                admins = User.objects.filter(is_staff=True)
-                for admin in admins:
-                    subject = f' Service "{existing_instance.name_and_standared}"- was tried by {self.request.user.username}, Please approve it!'
-                    message = 'Hello {},\n\nThis is an important notification about the new service which is not approved yet but users tried to add their service list! Details mentioned in the message subject. You may take action to approve it.\n\nBest regards,\nAdmin Team'.format(admin.username)
-                    from_email = settings.DEFAULT_FROM_EMAIL
-                    recipient_list = [admin.email]
-                    send_mail(subject, message, from_email, recipient_list)   
+                subject = f' Service "{existing_instance.name_and_standared}"- was tried by {self.request.user.username}, Please approve it!'
+                message = 'Hello Admin,\n\nThis is an important notification about the new service which is not approved yet but users tried to add their service list! Details mentioned in the message subject. You may take action to approve it.\n\nBest regards,\nAdmin Team'
+                    
+                send_admin_mail(subject, message)
+                
+                    
                 
             context = {
                 'existing_found' : True,

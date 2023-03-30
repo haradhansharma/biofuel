@@ -43,7 +43,7 @@
         </div>
     </div>
     
-    {% if request.user == visiting_user %}
+    {% if request.user == visiting_user and block_visible %}
     <div class="col-12 d-flex ">
         <div class="card border-0 shadow flex-fill bg-white">
             <div class="card-body">
