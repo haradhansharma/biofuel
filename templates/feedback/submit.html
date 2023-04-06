@@ -1,0 +1,16 @@
+
+<p>If you have any suggestions about this page, please let us know by clicking Submit Feedback. We will be grateful to you.</p>
+   <p>We record the page from which you provide your feedback. So while giving feedback write about this particular page only.
+</p>
+<div class="card">
+    <div class="card-body">
+<form id="feedbackform" hx-post="{% url 'feedback:submit_feedback' %}" hx-target="#canasbody" hx-swap="innerHTML">
+    {% csrf_token %}
+   
+    {{form.as_p}}
+    
+   
+    <button class="btn btn-primary">Submit Feedback</button>
+</form>
+</div>
+</div>

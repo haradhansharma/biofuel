@@ -1,10 +1,12 @@
 from evaluation.models import DifinedLabel
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
+from django.contrib.auth.hashers import make_password
 from django.urls import reverse
 from crm.models import *
 from .helper import CustomsernameValidator
 from django.utils.translation import gettext_lazy as _
+from django.apps import apps
 
 
 class UserType(models.Model):
@@ -61,6 +63,8 @@ class UserType(models.Model):
 
 
 
+
+
 class User(AbstractUser):   
     username_validator = CustomsernameValidator() 
     username = models.CharField(
@@ -85,9 +89,11 @@ class User(AbstractUser):
     email_verified = models.BooleanField(default=False)
     newsletter_subscription = models.BooleanField(default=True)
     
+    
+ 
     #don't change this
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
     
     class Meta:
         ordering = ['-date_joined']
@@ -179,7 +185,7 @@ class User(AbstractUser):
    
 class Profile(models.Model):
     # It is beeing created autometically during signup by using signal.
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     company_logo = models.ImageField(upload_to='company_logo')
     about = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)

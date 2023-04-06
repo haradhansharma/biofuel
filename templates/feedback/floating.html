@@ -1,0 +1,13 @@
+<div class="feedbakbtn fixed-bottom justify-content-end d-flex">
+  
+<a class="btn btn-danger "  type="button" data-bs-toggle="offcanvas" data-bs-target="#feedbackcanvas" aria-controls="feedbackcanvas"  id="feedbackbutton">Feedback</a>
+</div>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="feedbackcanvas" data-bs-scroll="true" aria-labelledby="feedbackcanvasLabel" hx-get={% url 'feedback:submit_feedback' %} hx-target="#canasbody" hx-swap="innerHTML" hx-trigger="revealed once">
+  <div class="offcanvas-header">
+    <h5 id="feedbackcanvasLabel">We consider your valuable feedback about this page you visiting.</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div id="canasbody" class="offcanvas-body">
+    
+  </div>
+</div>

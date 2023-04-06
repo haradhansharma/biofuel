@@ -30,6 +30,7 @@ urlpatterns = [
     path('', include('guide.urls')),
     path('', include('blog.urls')),
     path('g/', include('glossary.urls')),
+    path('feedback/', include('feedback.urls')),
     
     path('types/<str:slug>/', user_types, name='types'),
     path('accounts/', include('accounts.urls')),

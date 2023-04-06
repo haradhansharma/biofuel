@@ -12,6 +12,7 @@ def get_pending_sugestion():
 
 def site_info():
     from .models import ExSite
+    
     site = ExSite.on_site.get()   
     site_info = {
         'name' : site.site.name,
@@ -69,12 +70,15 @@ def comon_doc(request):
         'error404' : 'Error 404',
         'error403' : 'Error 403',       
     }
+    
+
     return {   
             'site_info': site_info(),
             'text': text,
             'segment' : load_template,
             'subscription_form' : SubscriberForm(),
-            'sugestion_no_comited' : get_pending_sugestion()
+            'sugestion_no_comited' : get_pending_sugestion(),
+       
             
     }
     

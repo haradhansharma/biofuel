@@ -5,7 +5,10 @@
 @import '../assets/vendor/font-awesome/css/brands.min.css';
 @import '../assets/vendor/font-awesome/css/solid.min.css';
 
-/* @import '../assets/vendor/font-awesome/css/fontawesome.min.css'; */
+
+.feedbakbtn{
+  z-index: 1000;
+}
 
 .sugestion-loaders{
   opacity:0;

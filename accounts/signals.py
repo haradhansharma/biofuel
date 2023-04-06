@@ -5,10 +5,12 @@ from .models import *
 
 # During signup system will fill profile table autometically by signal to create user profile.
 @receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
+def cup(sender, instance, created, **kwargs):
+    
+    if created:        
+        Profile.objects.create(user=instance)        
+    else:        
+        instance.profile.save()  
+    
+        
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()  
