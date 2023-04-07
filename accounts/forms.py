@@ -26,7 +26,7 @@ class UserCreationForm(UserCreationForm):
     UserAdmin.add_form = UserCreationForm
     UserAdmin.add_fieldsets = ((None, {
         'classes': ('wide',),
-        'fields': ('usertype', 'email', 'username', 'password1', 'password2',  'term_agree', 'experts_in', )
+        'fields': ('usertype', 'email', 'phone', 'username', 'password1', 'password2',  'term_agree', 'experts_in', )
     }),)
         
         
