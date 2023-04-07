@@ -186,7 +186,7 @@ class User(AbstractUser):
 class Profile(models.Model):
     # It is beeing created autometically during signup by using signal.
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    company_logo = models.ImageField(upload_to='company_logo')
+    company_logo = models.ImageField(upload_to='company_logo', blank=True)
     about = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
     established = models.DateField(null=True, blank=True)
