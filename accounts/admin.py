@@ -23,13 +23,13 @@ class UserAdmin(UserAdmin):
     #taking charge of default Django form.
     form = UserChangeForm   
     inlines = [ProfileInline]    
-    # model = User
-    list_display = ['usertype', 'experts_in', 'email', 'username', 'is_staff', 'is_active', 'email_verified',]    
+   
+    list_display = ['usertype', 'experts_in', 'phone', 'email', 'username', 'is_staff', 'is_active', 'email_verified',]    
     list_filter = ('usertype', 'is_active', 'is_staff', 'experts_in', 'email_verified',)
     search_fields = ('email', 'phone', 'orgonization', 'username', 'experts_in', 'email_verified', )
     
     fieldsets =  (
-        (None, {'fields': ('usertype', 'experts_in','orgonization',)}),
+        (None, {'fields': ('usertype',  'experts_in', 'phone', 'orgonization',)}),
     ) + UserAdmin.fieldsets 
     ordering = ('-date_joined',)
     
