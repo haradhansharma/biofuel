@@ -1,7 +1,7 @@
        {% load static %}       
        <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
             <a class="navbar-brand me-lg-5" href="/">
-              <img src="{% static site_info.logo %}" loading="lazy" class="card bgjessica-primary"  height="50px" width="auto" alt="{{ site_info.name }}" title="{{ site_info.name }}">                
+              <img src="{{ site_info.logo }}" loading="lazy" class="card bgjessica-primary"  height="50px" width="auto" alt="{{ site_info.name }}" title="{{ site_info.name }}">                
             </a>
             <div class="d-flex align-items-center">
                 <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,7 @@
             </div>
             <ul class="nav flex-column pt-3 pt-lg-0">
               <div class="rounded-circle mb-4 mx-auto justify-content-center d-flex p-3 bgjessica-primary w-50 w-sm-7">                                                
-                <img src="{% static user.usertype.icon.url %}" loading="lazy" class="img-fluid" alt="{{user.usertype.name}}" height="100px" width="auto" title="{{user.usertype.name}}">
+                <img src="{{ user.usertype.icon.url }}" loading="lazy" class="img-fluid" alt="{{user.usertype.name}}" height="100px" width="auto" title="{{user.usertype.name}}">
               </div>     
                        
               <li class="nav-item {% if 'dashboard' in segment and segment|length == 1 %} active {% endif %}">

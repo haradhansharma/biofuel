@@ -112,7 +112,7 @@
                                     <div class="row d-block d-xl-flex align-items-center">
                                         <div class="text-center">
                                             <div class="icon icon-shape rounded mb-4">
-                                                <img src="{% static user_type.icon.url %}" alt="{{user_type.name}}" title="{{user_type.name}}" width="auto" height="auto">
+                                                <img src="{{ user_type.icon.url }}" alt="{{user_type.name}}" title="{{user_type.name}}" width="auto" height="auto">
                                             </div>
                                             <div
                                                 class="jessica-text text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
@@ -148,7 +148,7 @@
                         {% for blog in latest_blogs %}
                         <div class="col d-flex"  data-aos="zoom-in">
                             <div class="card bgjessica-light shadow-sm flex-fill overflow-hidden">
-                                <img src="{% static blog.image.url %}" class="img-fluid" alt="{{blog.title}}" title="{{blog.title}}" width="auto" height="auto">
+                                <img src="{{ blog.image.url }}" class="img-fluid" alt="{{blog.title}}" title="{{blog.title}}" width="auto" height="auto">
                                 <div class="card-body">
                                     <p class="card-text jessica-text">{{blog.body|safe|truncatechars:200}}</p>
                                     <div class="d-flex justify-content-between align-items-center">

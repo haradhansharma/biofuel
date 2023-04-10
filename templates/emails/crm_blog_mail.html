@@ -159,7 +159,7 @@
 														<tr>
 															<td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
 																<div class="alignment" align="center" style="line-height:10px">
-																	<img class="fullMobileWidth" src="{% if blog.image %}https://{{current_site.domain}}{% static blog.image.url %}{% else %}https://{{current_site.domain}}{% static rings.png %}{% endif %}" 
+																	<img class="fullMobileWidth" src="{% if blog.image %}https://{{current_site.domain}}{{ blog.image.url }}{% else %}https://{{current_site.domain}}{% static rings.png %}{% endif %}" 
 																	style="display: block; height: auto; border: 0; width: 630px; max-width: 100%;" width="630" alt="{{blog.title}}" title="{{blog.title}}"></div>
 															</td>
 														</tr>
@@ -276,7 +276,7 @@
 															<td class="pad" style="padding-bottom:10px;width:100%;padding-right:0px;padding-left:0px;">
 																<div class="alignment" align="center" style="line-height:10px">
 																	<img class="fullMobileWidth" 
-																	src="{% if blog.image %}https://{{current_site.domain}}{% static s_blog.image.url %}{% else %}https://{{current_site.domain}}{% static rings.png %}{% endif %}" 
+																	src="{% if blog.image %}https://{{current_site.domain}}{{ s_blog.image.url }}{% else %}https://{{current_site.domain}}{% static rings.png %}{% endif %}" 
 																	style="display: block; height: auto; border: 0; width: 311px; max-width: 100%;" width="311" alt="{{s_blog.title}}" title="{{s_blog.title}}"></div>
 															</td>
 														</tr>

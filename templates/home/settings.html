@@ -26,7 +26,7 @@
         
         {% if user.get_profile.company_logo %}
         <div class="d-block mx-auto mb-4 position-relative ">
-            <img class="img-fluid rounded-circle shadow" src="{% static user.get_profile.company_logo.url %}" alt="{{user.get_full_name}}" title="{{user.get_full_name}}" width="250px" height="250px">   
+            <img class="img-fluid rounded-circle shadow" src="{{ user.get_profile.company_logo.url }}" alt="{{user.get_full_name}}" title="{{user.get_full_name}}" width="250px" height="250px">   
             <a class="position-absolute top-50 end-0 translate-middle rounded-circle bg-light btn" href="{% url 'home:delete_avatar' %}">X</a> 
         </div>  
         {% else %}

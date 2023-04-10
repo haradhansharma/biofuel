@@ -21,20 +21,20 @@
 <meta property="og:url" content="{{site_info.url}}">
 <meta property="og:title" content="{{site_info.meta_name}} - {{site_info.title}}">
 <meta property="og:description" content="{{site_info.description}}">
-<meta property="og:image" content="{% static site_info.og_image %}">
+<meta property="og:image" content="{{ site_info.og_image }}">
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image">
 <meta property="twitter:url" content="{{site_info.url}}">
 <meta property="twitter:title" content="{{site_info.meta_name}} - {{site_info.title}}"> 
 <meta property="twitter:description" content="{{site_info.description}}">
-<meta property="twitter:image" content="{% static site_info.og_image %}">
+<meta property="twitter:image" content="{{ site_info.og_image }}">
 
 <!-- Favicon -->
-<link rel="apple-touch-icon" sizes="120x120" href="{% static site_info.logo %}">
-<link rel="icon" type="image/png" sizes="32x32" href="{% static site_info.logo %}">
-<link rel="icon" type="image/png" sizes="16x16" href="{% static site_info.logo %}">
+<link rel="apple-touch-icon" sizes="120x120" href="{{ site_info.logo }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ site_info.logo }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ site_info.logo }}">
 <link rel="manifest" href="{% url 'home:webmanifest' %}">
-<link rel="mask-icon" href="{% static site_info.mask_icon %}" color="#08793B">
+<link rel="mask-icon" href="{{ site_info.mask_icon }}" color="#08793B">
 <meta name="msapplication-TileColor" content="#08793B">
 <meta name="theme-color" content="#08793B">

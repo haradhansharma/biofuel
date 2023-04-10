@@ -43,7 +43,7 @@ static/admin/fonts
 static/admin/img
 static/admin/js
 
-
+staticfiles
 
 
 static/ckeditor

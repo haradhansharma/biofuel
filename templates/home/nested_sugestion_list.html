@@ -8,7 +8,7 @@
         <div class="card-body" id="delete-res{{sugestion.id}}">
           <div class="d-flex justify-content-between align-items-center">
             <div>
-              <img class="mr-3 rounded-circle" src="{% static sugestion.sugested_by.get_profile.profile_logo %}"
+              <img class="mr-3 rounded-circle" src="{{ sugestion.sugested_by.get_profile.profile_logo }}"
                 alt="{{ sugestion.sugested_by.username }}" width="50px">
               <h5 class="card-title">{{ sugestion.sugested_by.username }}</h5>
             </div>
@@ -37,7 +37,7 @@
         <div class="card-body" id="delete-res{{sugestion.id}}">
           <div class="d-flex justify-content-between align-items-center">
             <div>
-              <img class="mr-3 rounded-circle" src="{% static sugestion.sugested_by.get_profile.profile_logo %}"
+              <img class="mr-3 rounded-circle" src="{{ sugestion.sugested_by.get_profile.profile_logo }}"
                 alt="{{ sugestion.sugested_by.username }}" width="50px">
               <h5 class="card-title">{{ sugestion.sugested_by.username }}</h5>
             </div>

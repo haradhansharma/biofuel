@@ -14,7 +14,7 @@
                     <div class="d-block text-center justify-content-center mt-7 mb-6 mb-lg-5">
                         <div
                             class="icon-user-type icon-shape-user-type  bg-transparent text-center shadow-lg rounded mb-4 mt-4">
-                            <img src="{% static user_type.icon.url %}" alt="{{user_type.name}}}" class="p-4">
+                            <img src="{{ user_type.icon.url }}" alt="{{user_type.name}}}" class="p-4">
                         </div>
                         {% if request.user.is_authenticated %}
                         {% for title, url in enroll.items %}
@@ -61,7 +61,7 @@
                 {% for u in users %}                 
                 <div class="col-md-6 col-xl-4 d-flex g-2">
                     <div class="card bg-light bg-gradient flex-fill p-0">
-                        <img class="card-img-top w-100 bg-dark" src="{% static u.get_profile.profile_logo %}" alt="{{u.username}}" title={{u.username}}>
+                        <img class="card-img-top w-100 bg-dark" src="{{ u.get_profile.profile_logo }}" alt="{{u.username}}" title={{u.username}}>
                         
                             <div class="card-header">
                                <h4>{% if u.orgonization %}{{u.orgonization}}{% else %}No Orgonization Found{% endif %}</h4>

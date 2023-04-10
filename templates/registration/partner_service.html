@@ -88,7 +88,7 @@
 
                                     <div class="col-md-6 col-xl-4 d-flex g-2">
                                         <div class="card bg-light bg-gradient flex-fill p-2">
-                                            <img class="card-img-top" src="{% static quotation.service_provider.get_profile.profile_logo %}" alt="{{quotation.test_for.name}}">
+                                            <img class="card-img-top" src="{{ quotation.service_provider.get_profile.profile_logo }}" alt="{{quotation.test_for.name}}">
                                             
                                                 <div class="card-header">
                                                    <strong>Test For:</strong> {{quotation.test_for.name}}
