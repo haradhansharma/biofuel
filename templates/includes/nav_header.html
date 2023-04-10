@@ -3,36 +3,36 @@
     <nav class="navbar navbar-expand-lg fixed-top bgjessica-primary border-bottom border-2">
         <div class="container p-2">
             <a href="/">
-                <img src="{% static site_info.logo %}" class="card bgjessica-light-primary" height="50px" width="auto"
-                    alt="{{ site_info.name }}" title="{{ site_info.name }}">
+                <img src="{% static site_info.logo %}" class="card bgjessica-light-primary" height="50px" width="auto" alt="{{ site_info.name }}" title="{{ site_info.name }}">
             </a>
-            <button class="navbar-toggler bgjessica-light-primary text-white" style="min-height: 50px;" type="button"
-                data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse"
-                aria-expanded="false" aria-label="Toggle navigation">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-border-width" viewBox="0 0 16 16">
-                    <path
-                        d="M0 3.5A.5.5 0 0 1 .5 3h15a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-2zm0 5A.5.5 0 0 1 .5 8h15a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1zm0 4a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z" />
-                </svg>
+            <button 
+                class="navbar-toggler bgjessica-light-primary text-white" 
+                style="min-height: 50px;" 
+                type="button"
+                data-bs-toggle="collapse" 
+                data-bs-target="#navbarCollapse" 
+                aria-controls="navbarCollapse"
+                aria-expanded="false" 
+                aria-label="Toggle navigation">
+                    <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        width="16" 
+                        height="16" 
+                        fill="currentColor"
+                        class="bi bi-border-width" 
+                        viewBox="0 0 16 16"><path d="M0 3.5A.5.5 0 0 1 .5 3h15a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-2zm0 5A.5.5 0 0 1 .5 8h15a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1zm0 4a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z" />
+                    </svg>
             </button>
+            
             <div class="collapse bgjessica-primary navbar-collapse shadow-0 "
                 style="top: 100%; height : fit-content!important; background:#7c9c9c; box-shadow:none; border-radius:0cm;"
                 id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    {% for hm in header_menus %}
                     <li class="nav-item">
-                        <a href="/#about" class="link-white btn p-1">About</a>
+                        <a href="{{hm.url}}" class="link-white btn p-1">{{hm.title}}</a>
                     </li>
-                    {% if request.user.is_producer or request.user.is_staff or request.user.is_superuser %}
-                    <li class="nav-item">
-                        <a href="{% url 'evaluation:evaluation2' %}" class="link-white btn p-1">Evaluation</a>
-                    </li>
-                    {% endif %}                    
-                    <li class="nav-item">
-                        <a href="{% url 'blog:post_list' %}" class="link-white btn p-1">Blogs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'glossary:g_list' %}" class="link-white btn p-1">Glossary</a>
-                    </li>
+                    {% endfor %}                    
                 </ul>
                 <div class="nav-link dropdown">
                     {% if user.is_authenticated %}
@@ -43,19 +43,9 @@
                         aria-expanded="false">Account <i class="fa-solid fa-angle-down"></i></span>
                     {% endif %}
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuTop">
-                        {% if user.is_authenticated %}
-                        <li><a class="dropdown-item" href="{% url 'home:dashboard' %}">Dashboard</a></li>
-                        <li><a class="dropdown-item" href="{% url 'accounts:user_link' %}">Profile</a>
-                        {% if user.is_expert or user.is_staff or user.is_superuser %}
-                        <li><a class="dropdown-item" href="{% url 'partner_service' request.user.id %}">My Service</a>
-                        {% endif %}
-                        </li>
-                        <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
-                        {% else %}
-                        <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
-                        <li><a class="dropdown-item" href="/#register">Signup</a></li>
-                        <li><a class="dropdown-item" href="{% url 'password_reset' %}">Reset Password</a></li>
-                        {% endif %}
+                        {% for am in account_menus %}
+                        <li><a class="dropdown-item" href="{{am.url}}">{{am.title}}</a></li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>

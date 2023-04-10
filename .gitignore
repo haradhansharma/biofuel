@@ -38,7 +38,14 @@ logs
 graphical_data_advise_by_krishna.txt
 
 templates/evaluation/bkup_eva.html
-static/admin
+static/admin/css
+static/admin/fonts
+static/admin/img
+static/admin/js
+
+
+
+
 static/ckeditor
 
 static/debug_toolbar

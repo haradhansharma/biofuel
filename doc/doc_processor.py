@@ -1,4 +1,8 @@
 from crm.forms import SubscriberForm
+from navigation.menu import (
+    header_menus,
+    account_menus
+)
 
         
 def get_pending_sugestion():
@@ -78,6 +82,9 @@ def comon_doc(request):
             'segment' : load_template,
             'subscription_form' : SubscriberForm(),
             'sugestion_no_comited' : get_pending_sugestion(),
+            'header_menus' : header_menus(request),
+            'account_menus' : account_menus(request),
+            
        
             
     }
