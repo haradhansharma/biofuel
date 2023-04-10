@@ -86,7 +86,7 @@
                                     <h3 id="na{{u.next_activity.id}}"> {{u.next_activity.name_and_standared}} </h3>
                                     {% for quotation in u.next_activity.get_quotations %}
 
-                                    <div class="col-md-6 col-xl-4 d-flex g-2">
+                                    <div class="col-md-6 col-xl-4 d-flex g-2"> 
                                         <div class="card bg-light bg-gradient flex-fill p-2">
                                             <img class="card-img-top" src="{{ quotation.service_provider.get_profile.profile_logo }}" alt="{{quotation.test_for.name}}">
                                             

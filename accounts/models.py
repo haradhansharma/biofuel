@@ -196,7 +196,7 @@ class Profile(models.Model):
     
     @property
     def profile_logo(self):        
-        return self.company_logo.url if self.company_logo != '' else 'rings.png'
+        return self.company_logo.url if self.company_logo != '' else '/static/rings.png'
     
     
 class UsersNextActivity(models.Model):
