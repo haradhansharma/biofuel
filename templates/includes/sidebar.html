@@ -17,9 +17,7 @@
                 <div class="d-block">
                   <h2 class="h5 mb-3">Hi, {{request.user.username}}</h2>
                   <a href="{% url 'logout' %}" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
-                    <svg class="icon icon-xxs me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-                    </svg>            
+                    <i class="fa-solid fa-right-from-bracket"></i>           
                     Sign Out
                   </a>
                 </div>
@@ -38,124 +36,40 @@
               <div class="rounded-circle mb-4 mx-auto justify-content-center d-flex p-3 bgjessica-primary w-50 w-sm-7">                                                
                 <img src="{{ user.usertype.icon.url }}" loading="lazy" class="img-fluid" alt="{{user.usertype.name}}" height="100px" width="auto" title="{{user.usertype.name}}">
               </div>     
-                       
-              <li class="nav-item {% if 'dashboard' in segment and segment|length == 1 %} active {% endif %}">
-                <a href="{% url 'home:dashboard' %}" class="nav-link">
-                  <span class="sidebar-icon">
-                    <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                      <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-                    </svg>
-                  </span> 
-                  <span class="sidebar-text">
-                    Dashboard
-                  </span>
-                </a>
-              </li>
               
-              {% if user.is_marine or user.is_staff or user.is_superuser %}
-             
-
-              <li class="nav-item {% if 'questionsint' in segment %} active {% endif %}">
-                <a href="{% url 'home:questionsint' %}" class="nav-link">
-                  <span class="sidebar-icon">
-                    <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.496 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"/>
-                    </svg>                   
-                  </span>
-                  <span class="sidebar-text">Questions</span>
-                </a>
-              </li>
-              {% endif %}
-              {% if user.is_expert or user.is_staff or user.is_superuser %}
-             
-              <li class="nav-item {% if 'quotations' in segment %} active {% endif %}">
-                <a href="{% url 'home:quotations' %}" class="nav-link">
-                  <span class="sidebar-icon">
-                    <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6zm0 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm10.113-5.373a6.59 6.59 0 0 0-.445-.275l.21-.352c.122.074.272.17.452.287.18.117.35.26.51.428.156.164.289.351.398.562.11.207.164.438.164.692 0 .36-.072.65-.216.873-.145.219-.385.328-.721.328-.215 0-.383-.07-.504-.211a.697.697 0 0 1-.188-.463c0-.23.07-.404.211-.521.137-.121.326-.182.569-.182h.281a1.686 1.686 0 0 0-.123-.498 1.379 1.379 0 0 0-.252-.37 1.94 1.94 0 0 0-.346-.298zm-2.168 0A6.59 6.59 0 0 0 10 6.352L10.21 6c.122.074.272.17.452.287.18.117.35.26.51.428.156.164.289.351.398.562.11.207.164.438.164.692 0 .36-.072.65-.216.873-.145.219-.385.328-.721.328-.215 0-.383-.07-.504-.211a.697.697 0 0 1-.188-.463c0-.23.07-.404.211-.521.137-.121.327-.182.569-.182h.281a1.749 1.749 0 0 0-.117-.492 1.402 1.402 0 0 0-.258-.375 1.94 1.94 0 0 0-.346-.3z"/>
-                    </svg>                    
-                  </span>
-                  <span class="sidebar-text">Quotations</span>
-                </a>
-              </li>
-
-              <li class="nav-item {% if 'quotationsatg' in segment %} active {% endif %}">
-                <a href="{% url 'home:quotationsatg' %}" class="nav-link">
-                  <span class="sidebar-icon">
-                    <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6zm0 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm10.113-5.373a6.59 6.59 0 0 0-.445-.275l.21-.352c.122.074.272.17.452.287.18.117.35.26.51.428.156.164.289.351.398.562.11.207.164.438.164.692 0 .36-.072.65-.216.873-.145.219-.385.328-.721.328-.215 0-.383-.07-.504-.211a.697.697 0 0 1-.188-.463c0-.23.07-.404.211-.521.137-.121.326-.182.569-.182h.281a1.686 1.686 0 0 0-.123-.498 1.379 1.379 0 0 0-.252-.37 1.94 1.94 0 0 0-.346-.298zm-2.168 0A6.59 6.59 0 0 0 10 6.352L10.21 6c.122.074.272.17.452.287.18.117.35.26.51.428.156.164.289.351.398.562.11.207.164.438.164.692 0 .36-.072.65-.216.873-.145.219-.385.328-.721.328-.215 0-.383-.07-.504-.211a.697.697 0 0 1-.188-.463c0-.23.07-.404.211-.521.137-.121.327-.182.569-.182h.281a1.749 1.749 0 0 0-.117-.492 1.402 1.402 0 0 0-.258-.375 1.94 1.94 0 0 0-.346-.3z"/>
-                    </svg>                    
-                  </span>
-                  <span class="sidebar-text">Quotations ATG</span>
-                </a>
-              </li>
-              {% endif %} 
-
-              
-              {% if user.is_producer or user.is_staff or user.is_superuser %}
-              <li class="nav-item {% if 'allreports' in segment %} active {% endif %}">
-                <a href="{% url 'home:all_reports' %}" class="nav-link">
-                  <span class="sidebar-icon">
-                    <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M2.5 0a.5.5 0 0 1 .5.5V2h10V.5a.5.5 0 0 1 1 0v15a.5.5 0 0 1-1 0V15H3v.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zM3 14h10v-3H3v3zm0-4h10V7H3v3zm0-4h10V3H3v3z"/>
-                    </svg>                                     
-                  </span>
-                  <span class="sidebar-text">All Reports</span>
-                </a>
-              </li>
-              {% endif %}
-              <li class="nav-item {% if 'settings' in segment %} active {% endif %}">
-                <a href="{% url 'home:user_settings' %}" class="nav-link">
-                  <span class="sidebar-icon">
-                    <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
-                    </svg>
-                  </span>
-                  <span class="sidebar-text">Settings</span>
-                </a>
-              </li>
-              {% if user.is_staff or user.is_superuser %}              
-              <li class="nav-item {% if 'crm' in segment %} active {% endif %}">
-                <span  class="nav-link  collapsed  d-flex justify-content-between align-items-center"  data-bs-toggle="collapse" data-bs-target="#submenu-app">          
+              {% for dm in dashboard_menu %}
+              <li class="nav-item {% if dm.url == request.path %} active {% endif %}">
+                <a href={{dm.url}} class="nav-link  collapsed  d-flex justify-content-between align-items-center" {% if dm.childs %}  data-bs-toggle="collapse" data-bs-target="#submenu-app{{ forloop.counter0 }}" {% endif %}>          
                   <span>
                     <span class="sidebar-icon">
-                      <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
-                      </svg>                      
+                      {{dm.icon|safe}}                     
                     </span> 
-                    <span class="sidebar-text">CRM</span>
+                    <span class="sidebar-text">{{dm.title}}</span>
                   </span>
+                  {% if dm.childs %}
                   <span class="link-arrow">
                     <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                     </svg>
                   </span>
-                </span>
+                  {% endif %}
+                </a>
+                {% if dm.childs %}
+                {% for dmc in dm.childs %}
                 <div class="multi-level collapse {% if 'leads' in segment %} show {% endif %}"
-                  role="list" id="submenu-app" aria-expanded="false">
+                  role="list" id="submenu-app{{ forloop.parentloop.counter0 }}" aria-expanded="false">
                   <ul class="flex-column nav">
-                    <li class="nav-item {% if 'leads' in segment %} active {% endif %}">
-                      <a class="nav-link" href="{% url 'crm:leads' %}">
-                        <span class="sidebar-text">Leads</span>
+                    <li class="nav-item {% if dm.url == request.path %} active {% endif %}">
+                      <a class="nav-link" href="{{dmc.url}}">
+                        <span class="sidebar-text">{{dmc.title}}</span>
                       </a>
                     </li>
                   </ul>
                 </div>
+                {% endfor %}
+                {% endif %}
               </li>              
-              {% endif %}
-              <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
-              <li class="nav-item">
-                <a href="{% url 'accounts:user_link' %}" 
-                  class="nav-link d-flex align-items-center">
-                  <span class="sidebar-icon">
-                    <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                      <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                    </svg>                    
-                  </span>
-                  <span class="sidebar-text">My Profile</span>
-                </a>
-              </li>
+             {% endfor %}
             </ul>
           </div>
         </nav>

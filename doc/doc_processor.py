@@ -1,7 +1,8 @@
 from crm.forms import SubscriberForm
 from navigation.menu import (
     header_menus,
-    account_menus
+    account_menus,
+    dashboard_menu
 )
 
         
@@ -46,9 +47,8 @@ def site_info():
 
     
 
-def comon_doc(request):
-   
-    load_template = list(filter(None, request.path.split('/')))
+def comon_doc(request):   
+ 
     text = {
         'user_congrets': f"Hi , {request.user.username}",
         'signup':' Sign Up',
@@ -78,12 +78,12 @@ def comon_doc(request):
 
     return {   
             'site_info': site_info(),
-            'text': text,
-            'segment' : load_template,
+            'text': text,     
             'subscription_form' : SubscriberForm(),
             'sugestion_no_comited' : get_pending_sugestion(),
             'header_menus' : header_menus(request),
             'account_menus' : account_menus(request),
+            'dashboard_menu' : dashboard_menu(request)
             
        
             

@@ -1,5 +1,54 @@
 from django.urls import reverse
 
+def dashboard_menu(request):
+    
+    menu_items = []
+    
+    menu_items.append(
+        {'title': 'Dashboard', 'url': reverse('home:dashboard'), 'data_set': False, 'childs': False, 'icon': '<i class="fa-solid fa-chart-line"></i>'},                            
+        )  
+    if (request.user.is_authenticated and request.user.is_marine) or request.user.is_staff or request.user.is_superuser:
+        menu_items.append(
+        {'title': 'Questions', 'url': reverse('home:questionsint'), 'data_set': False, 'childs': False, 'icon': '<i class="fa-solid fa-question"></i>'},                            
+        ) 
+    if (request.user.is_authenticated and request.user.is_expert) or request.user.is_staff or request.user.is_superuser:
+        menu_items.append(
+        {'title': 'Quotations', 'url': reverse('home:quotations'), 'data_set': False, 'childs': False, 'icon': '<i class="fa-brands fa-quora"></i>'},                            
+        ) 
+        
+        menu_items.append(
+        {'title': 'Quotations ATG', 'url': reverse('home:quotationsatg'), 'data_set': False, 'childs': False, 'icon': '<i class="fa-solid fa-table-list"></i>'},                            
+        ) 
+        
+    if (request.user.is_authenticated and request.user.is_producer) or request.user.is_staff or request.user.is_superuser:
+        menu_items.append(
+        {'title': 'All Reports', 'url': reverse('home:all_reports'), 'data_set': False, 'childs': False, 'icon': '<i class="fa-solid fa-list-check"></i>'},                            
+        ) 
+        
+    menu_items.append(
+        {'title': 'Settings', 'url': reverse('home:user_settings'), 'data_set': False, 'childs': False, 'icon':'<i class="fa-solid fa-gears"></i>'},                            
+        ) 
+    
+    
+    crm_child = [
+        {'title':'Lead', 'url': reverse('crm:leads'),'data_set': False, 'childs': False, 'icon': '<i class="fa-solid fa-chalkboard-user"></i>'}
+    ] 
+    
+    if request.user.is_staff or request.user.is_superuser:
+        menu_items.append(
+        {'title': 'CRM', 'url': '#', 'data_set': False, 'childs': crm_child, 'icon': '<i class="fa-brands fa-leanpub"></i>'},                            
+        )  
+        
+    menu_items.append(
+        {'title': 'Profile', 'url': reverse('accounts:user_link'), 'data_set': False, 'childs': False, 'icon' : '<i class="fa-solid fa-user-tie"></i>'},                            
+        ) 
+        
+        
+    
+    
+    return menu_items
+    
+
 def header_menus(request):    
     
     menu_items = []
