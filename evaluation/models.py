@@ -7,7 +7,7 @@ from django.utils.safestring import mark_safe
 from django.template.defaultfilters import slugify
 import random
 import string
-
+from django.db.models import Count
 
 #Validator in admin to protect from more then one common status to be entry.
 def get_common_status(value):
@@ -140,10 +140,17 @@ class Question(models.Model):
     def get_stdoils(self):
         return self.stanchart.all()
     
-    @property
+    # @property
+    # def have_4labels(self):
+    #     labels = self.questions.filter(value = '1').count()
+    #     if labels > 0:
+    #         return True
+    #     return False
+    
+    
     def have_4labels(self):
-        labels = self.questions.filter(value = '1').count()
-        if labels > 0:
+        labels = self.questions.filter(value='1').annotate(label_count=Count('id')).values('label_count').first()
+        if labels and labels['label_count'] > 0:
             return True
         return False
     
@@ -335,7 +342,7 @@ class Evaluator(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=16, null=True, blank=True)
     orgonization = models.CharField(max_length=252, null=True, blank=True)
-    biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, blank=True)
+    biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, blank=True, related_name='eva_fuel')
     stdoil_key = models.CharField(max_length=20, null=True, blank=True)
     
    

@@ -299,9 +299,12 @@ class LabelWiseData:
         self.evaluator = evaluator   
         # We will neeed total active questions in the site to use by filtering sing diferent parameter     
         self.active_questions = [q for q in Question.objects.filter(is_active=True) if q.have_4labels]
+        # self.active_questions = Question.objects.filter(is_active=True, have_4labels=True).select_related('category')
+
         # we will need the statment added from the selected options during answering for this report/evaluator, must be excluded assesments or logical strings
         self.eva_label_statement = EvaLebelStatement.objects.filter(evaluator = self.evaluator, question__isnull = False, assesment = False)   
-        
+      
+      
     @property
     def answered_question_id_list(self):      
         data = set(s.question.id for s in self.eva_label_statement)        

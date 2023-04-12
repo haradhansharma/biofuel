@@ -529,19 +529,31 @@ def questionsint(request):
     # we need permitted question based on expertise type
     questions = get_question_of_label(request)    
     
-    # build parent         
-    parents = []
-    for question in questions:        
-        if question.is_door == True:
-            parents.append(question)            
+    # # build parent         
+    # parents = []
+    # for question in questions:        
+    #     if question.is_door == True:
+    #         parents.append(question)            
             
-    #build results of chaptariged questions       
-    results = []    
-    for parent in parents:         
+    # #build results of chaptariged questions       
+    # results = []    
+    # for parent in parents:         
+    #     data = {
+    #         parent : [child for child in questions if child.parent_question == parent]
+    #     }
+    #     results.append(data)    
+        
+        
+    parents = Question.objects.filter(is_door=True).prefetch_related('child')
+
+    # Build results of child questions for each parent question
+    results = []
+    for parent in parents:
+        children = parent.child.all()
         data = {
-            parent : [child for child in questions if child.parent_question == parent]
+            parent: children
         }
-        results.append(data)    
+        results.append(data)
     
     #Paginated response
     page = request.GET.get('page', 1)

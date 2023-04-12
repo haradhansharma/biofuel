@@ -80,8 +80,9 @@
                                             <span><button type="button" class="btn btn-sm-light" data-bs-toggle="collapse" data-bs-target="#more{{ child.id }}">Read More</button></span>
                                         </p>
                                         <div class="row justify-content-center">   
-                                            <h6>Current Answereable Options:</h6>                                     
-                                            {% for option in child.get_options %}
+                                            <h6>Current Answereable Options:</h6>     
+                                            {% with options=child.get_options %}                                
+                                            {% for option in options %}
                                             <div class="col-12 col-md-6 ">
                                                 <div class="card text-center mb-3">
                                                     <div 
@@ -97,6 +98,7 @@
                                                 </div>
                                             </div>                                       
                                             {% endfor %}
+                                            {% endwith %}
                                         </div>                                    
                                     
 

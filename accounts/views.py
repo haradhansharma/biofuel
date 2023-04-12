@@ -366,6 +366,20 @@ def userpage(request):
                 setattr(report, 'last_slug', last_question.slug )
             except:
                 setattr(report, 'last_slug', first_of_parent.slug )    
+                
+        
+        # if user.is_superuser or user.is_staff:
+        #     reports = Evaluator.objects.all().order_by('-id').prefetch_related('eva_evaluator__question')  
+        # else:        
+        #     reports = Evaluator.objects.filter(creator=user).order_by('-id').prefetch_related('eva_evaluator__question')  
+
+        # for report in reports:            
+        #     try:   
+        #         last_question = report.eva_evaluator.last().question
+        #         setattr(report, 'last_slug', last_question.slug )
+        #     except:
+        #         setattr(report, 'last_slug', first_of_parent.slug )
+
         
         button = reverse('evaluation:nreport', args=[last_reports.slug])
         context = {
