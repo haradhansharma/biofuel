@@ -11,9 +11,109 @@ from doc.doc_processor import site_info
 from gfvp import null_session
 from django.contrib.sites.shortcuts import get_current_site
 from asgiref.sync import sync_to_async, async_to_sync
-
+from glossary.models import Glossary
+from django.core.cache import cache
+from django.db.models import Prefetch   
 import logging
 log =  logging.getLogger('log')
+
+
+def get_all_questions():
+    questions = cache.get('all_questions')
+    if not questions:
+        questions = Question.objects.all().select_related('parent_question').prefetch_related('stanchart')
+        cache.set('all_questions', questions, 3600)
+    return questions
+
+def get_all_stdoils():
+    stdoils = cache.get('all_stdoils')
+    if not stdoils:
+        stdoils = StdOils.objects.all().select_related('select_oil', 'biofuel')
+        cache.set('all_stdoils', stdoils, 3600)
+    return stdoils
+
+def get_all_glosaries():
+    glosaries = cache.get('all_glosaries')
+    if not glosaries:
+        glosaries = Glossary.objects.all()
+        cache.set('all_glosaries', glosaries, 3600)
+    return glosaries
+
+def get_all_definedlabel():
+    definedlabel = cache.get('all_definedlabel')
+    if not definedlabel:
+        definedlabel = DifinedLabel.objects.all().prefetch_related('user_label')
+        cache.set('all_definedlabel', definedlabel, 3600)
+    return definedlabel
+
+def get_all_evaluations_or_on_question(evaluator, question = None):   
+    '''
+    return all evaluation based on current report
+    if question parameter supply return one evaluation on question
+    '''    
+    cache_key = f"{evaluator.id}_evaluations"    
+    evaluations = cache.get(cache_key)
+    if not evaluations:
+        evaluations = Evaluation.objects.filter(
+            evaluator=evaluator).order_by('id').select_related(
+                'question', 
+                'option'
+                )
+        cache.set(cache_key, evaluations, 3600)
+        
+    if question:        
+        # if question then return single evaluation based on the question
+        return next((eva for eva in evaluations if eva.question == question), None)
+    else:
+        # return all evalaution of this report/evaluator
+        return evaluations
+    
+
+    
+
+    
+def get_all_reports_with_last_answer(request, first_of_parent):
+    
+    user = request.user    
+
+    if user.is_superuser or user.is_staff:
+        reports = Evaluator.objects.all().order_by('-id').prefetch_related(
+            Prefetch(
+                'eva_evaluator', 
+                queryset=Evaluation.objects.order_by('-id')
+                .select_related('question')
+                )
+            ).select_related('creator')       
+    else:
+        reports = Evaluator.objects.filter(creator=user).order_by('-id').prefetch_related(
+            Prefetch(
+                'eva_evaluator', 
+                queryset=Evaluation.objects.order_by('-id')
+                .select_related('question')
+                )
+            ).select_related('creator')
+
+    for report in reports:
+        evaluation = report.eva_evaluator.first()     
+        if report is not None:            
+            try:               
+                last_question = evaluation.question
+                setattr(report, 'last_slug', last_question.slug)
+            except Exception as e:                
+                setattr(report, 'last_slug', first_of_parent.slug)
+                continue
+    
+    return reports
+
+
+def get_biofuel():    
+    biofuels = cache.get('all_biofuels')
+    if not biofuels:
+        biofuels = Biofuel.objects.all().prefetch_related('eva_fuel')
+        cache.set('all_biofuels', biofuels, 3600)
+    return biofuels
+    
+        
 
 
 
@@ -72,7 +172,7 @@ def clear_evaluator():
 
 
 def get_current_evaluator(request):
-    evaluator = Evaluator.objects.get(id = request.session['evaluator'])
+    evaluator = Evaluator.objects.prefetch_related('eva_evaluator').get(id = request.session['evaluator'])    
     return evaluator
 
 def ans_to_the_label(evalebel, evaluator):
@@ -160,9 +260,9 @@ class OilComparision:
         self.oil = oil       
         
         if non_answered is not None:            
-            self.active_questions = [q for q in Question.objects.filter(id__in = non_answered, is_active=True) if q.have_4labels]   
+            self.active_questions = [q for q in get_all_questions().filter(id__in = non_answered, is_active=True) if q.have_4labels]   
         else:
-            self.active_questions = [q for q in Question.objects.filter(is_active=True) if q.have_4labels]  
+            self.active_questions = [q for q in get_all_questions().filter(is_active=True) if q.have_4labels]  
                  
         self.oils = StandaredChart.objects.filter(oil = self.oil)
        
@@ -240,7 +340,7 @@ class OilComparision:
         return round(data, 2)
     
     def label_wise_result(self):       
-        labels = DifinedLabel.objects.filter(common_status = False)        
+        labels = get_all_definedlabel().filter(common_status = False)        
         record_dict = {}
         for label in labels:    
             l_labels = set(label.dlabels.filter(value = 1))
@@ -298,34 +398,48 @@ class LabelWiseData:
         # The evaluator can be either from session or url which will be supplied
         self.evaluator = evaluator   
         # We will neeed total active questions in the site to use by filtering sing diferent parameter     
-        self.active_questions = [q for q in Question.objects.filter(is_active=True) if q.have_4labels]
-        # self.active_questions = Question.objects.filter(is_active=True, have_4labels=True).select_related('category')
+        self.active_questions = [q for q in get_all_questions().filter(is_active=True) if q.have_4labels]        
 
         # we will need the statment added from the selected options during answering for this report/evaluator, must be excluded assesments or logical strings
-        self.eva_label_statement = EvaLebelStatement.objects.filter(evaluator = self.evaluator, question__isnull = False, assesment = False)   
-      
-      
+        self.eva_label_statement = EvaLebelStatement.objects.filter(
+            evaluator = self.evaluator, 
+            question__isnull = False, 
+            assesment = False).select_related(
+                'evalebel', 
+                'question', 
+                'evaluator'
+                )
+    
+
+
+    
     @property
     def answered_question_id_list(self):      
-        data = set(s.question.id for s in self.eva_label_statement)        
-        return list(data)    
+        data = self.eva_label_statement.values_list('question__id', flat=True)
+        return list(set(data))   
     
     @property
     def total_active_questions(self):        
         data = len(self.active_questions) 
         # log.info(f'Active question found___________ {data}')
         return round(data, 2)   
+   
     
     @property
     def answered_percent(self):
         data = (len(self.answered_question_id_list) / self.total_active_questions * 100)   
         return round(data, 2) 
+    
+    
  
     @property
-    def total_positive_answer(self):
-        data = set(s.question.id for s in self.eva_label_statement if s.is_positive)  
-        return round(len(data), 2)        
-      
+    def total_positive_answer(self):       
+        data = [s.question.id for s in self.eva_label_statement if s.is_positive]
+        return round(len(set(data)), 2)    
+    
+
+   
+          
     @property
     def total_nagetive_answer(self):        
         try:
@@ -333,15 +447,19 @@ class LabelWiseData:
         except:
             data = 0     
         return round(len(data), 2)
+       
+    
     
     @property
     def overview_green(self):
         data = (self.total_positive_answer/self.total_active_questions)*100       
         return round(data, 2)
+    
     @property
     def overview_red(self):
         data = (self.total_nagetive_answer/self.total_active_questions)*100      
         return round(data, 2)
+    
     @property
     def overview_grey(self):     
           
@@ -373,7 +491,8 @@ class LabelWiseData:
         record = {            
             'Overview' : serialized_record
             }        
-        return record    
+        return record     
+
 
     
     def label_wise_positive_answered(self, label):  
@@ -381,14 +500,17 @@ class LabelWiseData:
         data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(1)).count()
         return round(data, 2)
     
+
+    
     def label_wise_nagetive_answered(self, label): 
         evalebel = label.labels.all()    
         data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = False).count()      
             
-        return round(data, 2)     
+        return round(data, 2)         
+   
     
     def label_wise_result(self):       
-        labels = DifinedLabel.objects.filter(common_status = False)
+        labels = get_all_definedlabel().filter(common_status = False)
         record_dict = {}
         for label in labels:             
             
@@ -510,7 +632,7 @@ def nreport_context(request, slug):
     dfh = label_data.label_data_history()    
     
     #genarating PDF . Please ensure django-xhtml2pdf==0.0.4 installed
-    evaluation = Evaluation.objects.filter(evaluator = get_report)
+    evaluation = get_all_evaluations_or_on_question(get_report)
     eva_label = EvaLabel.objects.filter(evaluator = get_report).order_by('sort_order')
     eva_statment = EvaLebelStatement.objects.filter(evaluator = get_report).order_by('pk')
     

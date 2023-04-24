@@ -50,6 +50,10 @@ from django.utils.decorators import method_decorator
 from django.core.mail import mail_admins, send_mail
 from accounts.helper import send_admin_mail
 import requests
+from django.core.cache import cache
+
+
+
 import logging
 log =  logging.getLogger('log')
 
@@ -64,9 +68,30 @@ def home(request):
     
     log.info(f'Home page accessed by_____________ {request.user}')
     
-    user_types = UserType.objects.all().order_by('sort_order') 
-    latest_blogs = BlogPost.published.filter(status = 'published').order_by('-publish')[:3]
+
     
+    
+    # First, check if the 'user_types' queryset is already cached
+    user_types = cache.get('user_types')
+    if user_types is None:
+        # If not, fetch the queryset from the database and cache it for future use
+        user_types = UserType.objects.all().order_by('sort_order')
+        cache.set('user_types', user_types, 1800)
+    
+    
+    
+
+    
+    
+    # Next, check if the 'latest_blogs' queryset is already cached
+    latest_3_blogs = cache.get('latest_3_blogs')
+    if latest_3_blogs is None:
+        # If not, fetch the queryset from the database and cache it for future use
+        latest_3_blogs = BlogPost.published.filter(status='published').order_by('-publish')[:3]
+        # Use prefetch_related to fetch related tags queryset in a single query
+        latest_3_blogs = latest_3_blogs.prefetch_related('tags')
+        cache.set('latest_3_blogs', latest_3_blogs, 1800)        
+        
     #meta
     meta_data = site_info()    
     meta_data['title'] = 'Home'
@@ -80,7 +105,7 @@ def home(request):
     
     context = {
         'user_types': user_types ,        
-        'latest_blogs' : latest_blogs,
+        'latest_blogs' : latest_3_blogs,
         'site_info' : meta_data     
     }
     return render(request, 'home/index.html', context = context)
@@ -175,9 +200,9 @@ def dashboard(request):
     log.info(f'Dashboard accessed by_____________ {request.user}')
     
     #dashboard summary
-    
-    day_of_week = [key.split(': ') for key, value in weeks_results(request).items()]    
-    total_of_day = [value for key, value in weeks_results(request).items()]   
+    wr = weeks_results(request)
+    day_of_week = [key.split(': ') for key in wr.keys()]    
+    total_of_day = list(wr.values())
      
     
     #meta

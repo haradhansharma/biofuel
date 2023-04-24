@@ -80,7 +80,7 @@ class User(AbstractUser):
     '''
     Inheriting Django's default user model with custom fields.
     ''' 
-    usertype = models.ForeignKey(UserType, on_delete=models.CASCADE)   
+    usertype = models.ForeignKey(UserType, on_delete=models.CASCADE, related_name='user_usertype')   
     email = models.EmailField('E-Mail Address', unique=True)
     phone = models.CharField(max_length=252, null=True, blank=True)
     orgonization = models.CharField(max_length=252, null=True, blank=True)
@@ -163,20 +163,53 @@ class User(AbstractUser):
             return True
         return False
     
+    # @property
+    # def is_subscriber(self):        
+    #     lead = Lead.objects.filter(email_address = self.email)
+    #     if lead.exists():            
+    #         return True
+    #     else:            
+    #         return False    
+    
     @property
-    def is_subscriber(self):        
-        lead = Lead.objects.filter(email_address = self.email)
-        if lead.exists():            
-            return True
-        else:            
-            return False     
+    def is_subscriber(self):
+        if hasattr(self, '_is_subscriber'):
+            return self._is_subscriber
+
+        lead = Lead.objects.filter(email_address=self.email)
+        if lead.exists():
+            self._is_subscriber = True
+        else:
+            self._is_subscriber = False
+
+        return self._is_subscriber
         
+        
+    # @property
+    # def selected_activities(self):
+    #     if hasattr(self, '_selected_activities'):
+    #         return self._selected_activities
+
+    #     una = self.user_next_activity.all()
+    #     if una.exists():
+    #         self._selected_activities = una
+    #         return self._selected_activities
+
+    #     return False 
+    
     @property
     def selected_activities(self):
-        una = self.user_next_activity.all()
+        if hasattr(self, '_selected_activities'):
+            return self._selected_activities
+
+        una = self.user_next_activity.all().prefetch_related('next_activity')
         if una.exists():
-            return self.user_next_activity.all()
+            self._selected_activities = una
+            return self._selected_activities
+
         return False
+        
+   
     
     def get_absolute_url(self):        
         return reverse('accounts:user_link')

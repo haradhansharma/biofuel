@@ -1,7 +1,10 @@
-import logging
-log =  logging.getLogger('log')
+
 def null_session(request):
-    
+    '''
+    It is necessary in the view where login required
+    `interested_in` parameter to control registering user type
+    if user autheticated then it can make trouble.
+    '''
     if 'interested_in' in request.session:
         request.session['interested_in'] = None   
         

@@ -1,19 +1,39 @@
 import datetime
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from urllib.parse import urlparse
 from . nreport_class import ReportPDFData
-from pprint import pprint
+# from pprint import pprint
 from django.shortcuts import redirect, render
 from django.http import HttpResponse, HttpResponseRedirect
 import requests
 from doc.models import ExSite
-from home.models import WeightUnit
+# from home.models import WeightUnit
 from .forms import *
 from .models import *
 from accounts.models import User, UserType
 from django.contrib import messages
 from django.urls import reverse
 from django_xhtml2pdf.utils import generate_pdf
-from . helper import label_assesment_for_donot_know, label_assesment_for_positive, overall_assesment_for_donot_know, overall_assesment_for_positive, get_current_evaluator, nreport_context, OilComparision, get_picked_na
+from . helper import (
+    get_all_questions,
+    label_assesment_for_donot_know,
+    label_assesment_for_positive,
+    overall_assesment_for_donot_know,
+    overall_assesment_for_positive,
+    get_current_evaluator,
+    nreport_context,
+    OilComparision,
+    get_picked_na,
+    get_all_stdoils,
+    get_all_glosaries,
+    LabelWiseData,
+    get_all_definedlabel,
+    get_all_evaluations_or_on_question,
+    get_all_reports_with_last_answer
+    
+    )
+from django.db.models import Q
+
 from django.contrib.auth.decorators import login_required
 from accounts.decorators import producer_required, report_creator_required
 from gfvp import null_session
@@ -21,36 +41,41 @@ from django.core.exceptions import PermissionDenied
 from django.conf import settings
 from django.utils import timezone
 import ast
-from concurrent.futures import ProcessPoolExecutor, as_completed, ThreadPoolExecutor
-import django
-from evaluation.helper import LabelWiseData
-from django.contrib.sites.shortcuts import get_current_site
+# from concurrent.futures import ProcessPoolExecutor, as_completed, ThreadPoolExecutor
+# import django
+# from evaluation.helper import LabelWiseData
+# from django.contrib.sites.shortcuts import get_current_site
 import io  
 from django.http import FileResponse
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
 from reportlab.lib.units import inch
-from django.db.models import Avg, Count
+# from django.db.models import Avg, Count
 import re
 
 from doc.doc_processor import site_info
-
+from django.core.cache import cache
 
 import logging
 log =  logging.getLogger('log')
 
 #helper function should be called into the @login_required and @producer_required
+
+    
 def set_evaluation(question, selected_option, evaluator):
-    # log.info(f'initilizing set_evaluation for the question {question.id} of the evaluator {evaluator} !')
-    #delete prevous record if have to ensure reentry.
-    try:
-        log.info('Deleteing previous Evaluation Entry...........')   
-        Evaluation.objects.filter(evaluator = evaluator, question = question).delete()    
-        # log.info(f'Deleted previous Evaluation entry for the question {question.id} of the evaluator {evaluator}!')
-    except:
-        log.info(f'No Previous Evaluation entry found for the question {question.id} of the evaluator {evaluator} to delete!')
-    new_evaluation = Evaluation(evaluator = evaluator, option = selected_option, question = question ) 
-    new_evaluation.save()
-    # log.info(f'{new_evaluation} has been saved for the question number {question.id} of the evaluatior {evaluator}! selected option was {selected_option}')
+    # delete previous record if exists
+    prev_evaluations = get_all_evaluations_or_on_question(evaluator)
+    for eva in prev_evaluations:
+        if eva.question == question:
+            eva.delete()
+            break
+    
+    # create new evaluation
+    new_evaluation = Evaluation.objects.create(evaluator=evaluator, option=selected_option, question=question)
+   
+    # update cache
+    evaluations = prev_evaluations | Evaluation.objects.filter(id=new_evaluation.id)
+    cache.set(f"{evaluator.id}_evaluations", evaluations, 300)
+
         
     
 #helper function should be called into the @login_required and @producer_required
@@ -323,7 +348,7 @@ def option_add2(request):
         comment = request.POST['comment']
         
         
-        question = Question.objects.get(slug = question_slug)        
+        question = get_all_questions().get(slug = question_slug)        
         selected_option = Option.objects.get(id = option_id) 
         
         
@@ -432,7 +457,10 @@ def question_dataset(request):
     log.info(f'BNuilding question dataset to show in the evaluation question form')
     #sort_order is most important here    
     
-    stored_questions = Question.objects.filter(is_active = True).order_by('sort_order')   
+    evaluator = get_current_evaluator(request)
+    
+    stored_questions = get_all_questions().filter(is_active = True).order_by('sort_order')   
+    
     
     #build parentwise shorted question    
     questions = []
@@ -442,7 +470,8 @@ def question_dataset(request):
             questions.extend([child for child in stored_questions if child.parent_question == question])   
     
     #Pul answered record of the current report
-    evaluations = Evaluation.objects.filter(evaluator = get_current_evaluator(request)).order_by('id')
+    evaluations = get_all_evaluations_or_on_question(evaluator)
+    
     questions_of_report = []
     for evaluation in evaluations:
         questions_of_report.append(evaluation.question)  
@@ -451,43 +480,53 @@ def question_dataset(request):
     #set temporary status of questions     
     for question in questions:
         if question in questions_of_report:
-            setattr(question, 'stat', 'checked') 
+            question.stat = 'checked'
+            
+            # setattr(question, 'stat', 'checked') 
         else:
-            setattr(question, 'stat', 'skipped')           
+            # setattr(question, 'stat', 'skipped')   
+            question.stat = 'skipped'        
     
     #modify status after checked
     try:
         stop_index = max([i for i, j in enumerate([question.stat for question in questions]) if j == 'checked'])       
         for question in questions[int(stop_index) + 1:]:          
             if question.stat == 'skipped':            
-                setattr(question, 'stat', 'unchecked')
+                # setattr(question, 'stat', 'unchecked')
+                question.stat = 'unchecked'        
+                
             else:            
                 continue
     except:
         for question in questions:          
             if question.stat == 'skipped':            
-                setattr(question, 'stat', 'unchecked')
+                # setattr(question, 'stat', 'unchecked')
+                question.stat = 'unchecked'  
             else:            
                 continue
-        
-    #if dont know or no    
-    for question in questions:
+       
+    option_of_question = {e.question.id: e.option for e in evaluations}    
+    for question in questions:       
         try:
-            get_option = evaluations.get(question = question).option
-            if get_option.dont_know == True or  get_option.name == 'No':
-                setattr(question, 'stat', 'skipped')
+            if (option_of_question[question.id]).dont_know == True or (option_of_question[question.id]).name == 'No':
+                question.stat = 'skipped'
             else:
-                continue                
-        except:
-            pass
+                continue
+        except Exception:            
+            continue    
         
     # if parent is skipped
+    childs_to_delete = []
+    
     for question in questions:
         if question.is_door == True and question.stat == 'skipped':
             childs = [child for child in questions if child.parent_question == question]            
             for child in childs:
                 setattr(child, 'stat', 'skipped')
-                evaluations.filter(question = child).delete()  
+                # evaluations.filter(question = child).delete()  
+                childs_to_delete.append(child)
+    evaluations.filter(question__in = childs_to_delete).delete()
+    
                 
     # print(len(questions))
     parents = []
@@ -559,14 +598,14 @@ def vedio_urls(request, search_term):
     return render(request, 'evaluation/eva_youtube.html', context = {'vedio_urls' : vedio_urls})
 @sync_to_async
 def std_oils_block(request, slug):
-    question = Question.objects.get(slug = slug)
+    question = get_all_questions().get(slug = slug)
     
     return render(request, 'evaluation/std_oils_block.html', context = {'question': question})
 
 
 @sync_to_async
 def quotation_block(request, slug):
-    question = Question.objects.get(slug = slug)
+    question = get_all_questions().get(slug = slug)
     picked_na = get_picked_na(question)            
     return render(request, 'evaluation/quotation_block.html', context = {'question': question, 'next_activities':picked_na})
     
@@ -578,15 +617,20 @@ Main interface during evaluation process.
 
 @login_required
 @producer_required
-def eva_question(request, evaluator, slug):      
-    log.info(f'Another question going to be answered by_____________ {request.user}')
-    #This is essential where user loggedin
+def eva_question(request, evaluator_id, slug):   
+    
+    if isinstance(evaluator_id, str): # Check if the parameter is a string
+        evaluator_id = int(evaluator_id) # Convert the string to an integer
+    
+    '''
+    Question answering process start here
+    :request is current request
+    :evaluator_id ID not object. Alternatively it can call Report ID
+    :slug is question slug
+    ''' 
+    
+     
     null_session(request)     
-    
-    
-    
-    
-    
     
     '''
     ========
@@ -612,39 +656,57 @@ def eva_question(request, evaluator, slug):
     if anybody coming from initial page then system will get session evaluator
     if no report is in progress evaluator will be '' . it is ensured by middleware.
     if anybody going to edit report then report id will be taken as session evaluator.
-    '''
-    eva = Evaluator.objects.get(id = evaluator)   
+    
+    '''   
+        
+    evaluator = Evaluator.objects.get(id=evaluator_id)
     if request.session['evaluator'] == '':
-        request.session['evaluator'] = evaluator
-        edit_evaluator = eva      
-        edit_evaluator.report_genarated = False
-        # log.info(f'As report is being edited so report_genarated set to false________________')
-        edit_evaluator.save()    
+        request.session['evaluator'] = evaluator_id
+        evaluator.report_genarated = False
+        # it helps to move on edit
+        evaluator.save(update_fields=['report_genarated'])
+        
+
+            
+        
+        
     '''
     Below evaluator checking will ensure the correct report are editing.
     Otherwise user will put data by thinking one report but data can be edited in another report. Things can be messy.
      
     ''' 
-    if request.session['evaluator'] !=  evaluator:      
+    if request.session['evaluator'] !=  evaluator_id:      
         log.info(f'Without completing a report trying to edit another report, so it is abroted________')      
         messages.warning(request, f"You have an active, unfinished Report, Report#{request.session['evaluator']}! So you're not permitted to perform this procedure!")        
-        return HttpResponseRedirect(reverse('accounts:user_link'))   
+        return HttpResponseRedirect(reverse('accounts:user_link'))  
     
+    
+
+        
     
     '''
     creator can edit own report!
-    '''    
-    if eva.creator.id == request.user.id or request.user.is_superuser or request.user.is_staff:
+    '''   
+  
+    if evaluator.creator.id == request.user.id or request.user.is_superuser or request.user.is_staff:
         pass
     else:
         log.info(f'The report is being edited is not created you user {request.user}______abroating______')
         raise PermissionDenied  
     
     
-    all_questions = Question.objects.all()
-    question = all_questions.get(slug = slug)   
-    evaluator_data = get_current_evaluator(request)
-    evaluation_data = Evaluation.objects.all()
+ 
+    
+    # all_questions = get_all_questions()
+    # question = all_questions.get(slug = slug)   
+    # evaluator_data = get_current_evaluator(request)
+    # evaluation_data = Evaluation.objects.all()
+    
+    # Fetch all questions and evaluation data
+    all_questions = get_all_questions()
+    currnt_question = all_questions.get(slug=slug)   
+    # evaluator_data = get_current_evaluator(request)
+    current_evaluations = get_all_evaluations_or_on_question(evaluator)
     
     
     
@@ -660,17 +722,17 @@ def eva_question(request, evaluator, slug):
     if 'Yes' User will be able to ans to the child of this parent
     otherwise will give message and will not allow to go to inside.    
     '''
-    if question.is_door:
+    if currnt_question.is_door:
         # log.info(f'Parent Question Clicked________for report {evaluator_data}_______')      
         pass  
     else:
-        parent = question.parent_question
-        evaluations = evaluation_data.filter(evaluator = evaluator_data).order_by('id')
+        parent = currnt_question.parent_question
+        evaluations = current_evaluations        
         questions_of_report = []
         for evaluation in evaluations:
-            questions_of_report.append(evaluation.question) 
+            questions_of_report.append(evaluation.question) # it is getting form cache at there select_related attachd
         try:
-            get_option = evaluation_data.get(evaluator = evaluator_data, question = parent).option
+            get_option = get_all_evaluations_or_on_question(evaluator, parent).option
             if parent not in questions_of_report or get_option.yes_status == False:
                 # log.info(f'Parent question is not answered as "yes" to go inside of this quesion block_____so abroating to the parent question')
                 messages.warning(request, 'To go inside this block, you must answer "Yes" to the specified question!')
@@ -680,6 +742,8 @@ def eva_question(request, evaluator, slug):
             messages.warning(request, 'To go inside this block, you must answer "Yes" to the specified question!')
             return HttpResponseRedirect(reverse('evaluation:eva_question' ,  args=[int(evaluator), str(parent.slug)]))  
         
+        
+                
     
     '''
     The qualified rang can be set from Admin>>Site>>qualified ans rang
@@ -688,18 +752,18 @@ def eva_question(request, evaluator, slug):
         
     # options = Option.objects.filter(question = question)
     
-    eva_lebels = EvaLabel.objects.filter(evaluator = evaluator_data).order_by('sort_order')
+    eva_lebels = EvaLabel.objects.filter(evaluator = evaluator).order_by('sort_order').prefetch_related('elabelstatement').select_related('label')
     
     
-    request.session['total_question'] = evaluation_data.filter(evaluator = evaluator).count()  
-    total_ques = all_questions.count() - request.session['total_question']
+    request.session['total_question'] = session_total_question = get_all_evaluations_or_on_question(evaluator = evaluator).count()  
+    total_ques = all_questions.count() - session_total_question
     timing_text = f"Depending on how many answers you provide, the self assessment will take \
         anywhere from {round(total_ques/10)} to {round(total_ques/3)} minutes. At the end of the \
             assessment, a PDF report will be provided, which can be retrieved via the Dashboard at a later stage."
     
     
     try:
-        submitted_comment = EvaComments.objects.get(evaluator = evaluator_data, question = question).comments
+        submitted_comment = EvaComments.objects.get(evaluator = evaluator, question = currnt_question).comments
     except:
         submitted_comment = None   
     
@@ -709,9 +773,9 @@ def eva_question(request, evaluator, slug):
     then this option will be selected as default and there will set a attribute named 'robot_data' to show the message
     ''' 
     try:
-        selected_option = evaluation_data.get(evaluator =evaluator_data, question = question).option
+        selected_option = get_all_evaluations_or_on_question(evaluator, currnt_question).option
     except:
-        oils = question.get_stdoils.filter(oil__select_oil__key = evaluator_data.stdoil_key)
+        oils = currnt_question.stanchart.filter(oil__select_oil__key = evaluator.stdoil_key)
         if oils.exists():
             selected_option = oils[0].option if oils[0].option else None
             if selected_option is not None:
@@ -721,10 +785,10 @@ def eva_question(request, evaluator, slug):
     
     
     # Create push url for HTMX     
-    question_in_evaluation = evaluation_data.filter(evaluator = evaluator_data, question = question)      
-    if question_in_evaluation.exists():
+    question_in_evaluation = get_all_evaluations_or_on_question(evaluator, currnt_question) 
+    if question_in_evaluation is not None:
         try:
-            next_question_slug = ((question_in_evaluation.get()).option).next_question.slug
+            next_question_slug = question_in_evaluation.option.next_question.slug
             request.session['push_url'] = reverse('evaluation:eva_question', args=[int(request.session['evaluator']), next_question_slug])            
         except:
             request.session['push_url'] = reverse('evaluation:thanks')
@@ -756,7 +820,7 @@ def eva_question(request, evaluator, slug):
      
     '''    
     
-    search_term = re.sub('[^A-Za-z0-9]+', ' ',  f'{question.name} {evaluator_data.biofuel.name}')   
+    search_term = re.sub('[^A-Za-z0-9]+', ' ',  f'{currnt_question.name} {evaluator.biofuel.name}')   
     
     # log.info(f'total questions________________{Question.objects.filter(is_active=True).count()}')
     
@@ -765,9 +829,9 @@ def eva_question(request, evaluator, slug):
     context ={
         'slug' : slug,
         'question_dataset' : question_dataset(request) ,
-        'question': question,
+        'question': currnt_question,
         # 'optns': options,
-        'evaluator_data': evaluator_data,
+        'evaluator_data': evaluator,
         'eva_lebels': eva_lebels,
         'timing_text': timing_text,    
         'total_question': request.session['total_question'], 
@@ -787,7 +851,7 @@ def eva_question(request, evaluator, slug):
     
     #meta
     meta_data = site_info()    
-    meta_data['title'] = question.name
+    meta_data['title'] = currnt_question.name
     # meta_data['meta_name'] = 'Green Fuel Validation Platform'
     meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = f"Depending on how many answers you provide, the self assessment will take anywhere from 10 to 33 minutes. At the end of the assessment, a PDF report will be provided."
@@ -824,18 +888,31 @@ def eva_index2(request):
     
     
     #rechecking user is authorized or not, although it is not necessary as only logedin user can enter to this page, but it is safe to avoid error if anyhow decorator are removed. 
+    # if request.user.is_authenticated:
+    #     usertype = UserType.objects.get(slug = request.user.usertype.slug )
+    #     name = request.user.get_full_name if request.user.get_full_name else first_report_name
+    #     email = request.user.email
+    #     phone = request.user.phone
+    #     orgonization = request.user.orgonization
+    # else:
+    #     usertype = UserType.objects.get(slug = request.session['interested_in'] )
+    #     name = ''
+    #     email = ''
+    #     phone = ''
+    #     orgonization = '' 
+        
     if request.user.is_authenticated:
-        usertype = UserType.objects.get(slug = request.user.usertype.slug )
-        name = request.user.get_full_name if request.user.get_full_name else first_report_name
+        usertype = request.user.usertype
+        name = request.user.get_full_name() or first_report_name
         email = request.user.email
         phone = request.user.phone
         orgonization = request.user.orgonization
     else:
-        usertype = UserType.objects.get(slug = request.session['interested_in'] )
+        usertype = UserType.objects.get(slug=request.session['interested_in'])
         name = ''
         email = ''
         phone = ''
-        orgonization = '' 
+        orgonization = ''
     
     
     #Preparing guard to check whether system should take initial data or need to forwared to next_question of selected question previously.
@@ -849,7 +926,7 @@ def eva_index2(request):
     #get first question of evaluation process based on short_order. If no first question set by admin will redirect to homepage with warning message.
     # log.info(f'Check first question is set or not by admin______________')
     try:
-        first_of_parent = Question.objects.filter(is_door = True).order_by('sort_order').first()        
+        first_of_parent = get_all_questions().filter(is_door = True).order_by('sort_order').first()        
     except:
         # log.info(f'First question has not been set by the admin____________________')
         messages.warning(request,'There is something wrong in procedure setting by site admin, Please try again latter!')
@@ -880,7 +957,7 @@ def eva_index2(request):
                 new_evaluator.save()
                 
                 #Catch user record from the evaluation form in not exists
-                user = User.objects.get(id = request.user.id)
+                user = request.user
                 first_name = name.split()[0]
                 last_name = name.split()[-1]                
                 if not user.first_name:
@@ -897,7 +974,7 @@ def eva_index2(request):
                 request.session['evaluator'] = new_evaluator.id               
                             
                 #decide labels.
-                defined_label = DifinedLabel.objects.all()
+                defined_label = get_all_definedlabel()
                 for dl in defined_label:
                     new_evalabel = EvaLabel(label = dl, evaluator = get_current_evaluator(request), sort_order=dl.sort_order)
                     new_evalabel.save()            
@@ -912,15 +989,23 @@ def eva_index2(request):
             '''
             standalone initial page of evaluation.
             '''           
-            try:
-                first_reports = Evaluator.objects.filter(creator = request.user, report_genarated = True).order_by('create_date').first()  
+            # try:
+            #     first_reports = Evaluator.objects.filter(creator = request.user, report_genarated = True).order_by('create_date').first()  
+            #     first_biofuel = first_reports.biofuel
+            #     first_report_name = first_reports.name
+            # except:
+            #     first_reports = None
+            #     first_biofuel = None
+            #     first_report_name = ''   
+                
+            first_reports = Evaluator.objects.filter(creator=request.user, report_genarated=True).order_by('create_date').first()
+            if first_reports:
                 first_biofuel = first_reports.biofuel
                 first_report_name = first_reports.name
-            except:
-                first_reports = None
+            else:
                 first_biofuel = None
-                first_report_name = ''   
-                
+                first_report_name = ''
+                            
                     
                     
             initial_dict = {
@@ -947,7 +1032,7 @@ def eva_index2(request):
             log.info(f'Report {new_report} being started with the first qestion {first_of_parent}______________')
             return HttpResponseRedirect(reverse('evaluation:eva_question' ,  args=[int(new_report), str(first_of_parent.slug)]))
             
-    total_ques = Question.objects.all().count()
+    total_ques = get_all_questions().count()
     box_timing = f"Depending on how many answers you provide, the self assessment will take n\
     anywhere from {round(total_ques/10)} to {round(total_ques/3)} minutes. At the end of the n\
         assessment, a PDF report will be provided, which can be retrieved via the Dashboard at a later stage."
@@ -955,7 +1040,7 @@ def eva_index2(request):
     
     # stdoil_list = StandaredChart.objects.filter(related_biofuel = first_biofuel).values('oil_name', 'key').order_by('oil_name').distinct()
     
-    stdoil_list = StdOils.objects.filter(biofuel = first_biofuel)
+    stdoil_list = get_all_stdoils().filter(biofuel = first_biofuel)
     
     
     #meta
@@ -1028,20 +1113,27 @@ def thanks(request):
     Build all report editing url
     Parent should be selected by admin otherwise site can arise error. 
     '''
-    #increadable setattr to reduce time to make report editing url without touch of database
-    first_of_parent = Question.objects.filter(is_door = True).order_by('sort_order').first()  
-    if request.user.is_superuser:
-        reports = Evaluator.objects.all().order_by('-id')  
-    else:        
-        reports = Evaluator.objects.filter(creator = request.user).order_by('-id')  
-    for report in reports:            
-        try:   
-            last_question = Evaluation.objects.filter(evaluator = report).order_by('id').last().question        
-            setattr(report, 'last_slug', last_question.slug )
-        except:
-            setattr(report, 'last_slug', first_of_parent.slug )
-            
-   
+    #increadable setattr to reduce time to make report editing url without touch of database    
+    
+    try:             
+        first_of_parent = get_all_questions().filter(is_door=True).order_by('sort_order').first()
+    except:
+        messages.warning(request,'There is something wrong in procedure setting by site admin please try again latter!')
+        return HttpResponseRedirect(reverse('evaluation:evaluation2'))        
+    
+    # Pagination shold be implemented
+    reports = get_all_reports_with_last_answer(request, first_of_parent)
+    
+    #Paginated response
+    page = request.GET.get('page', 1)
+    paginator = Paginator(reports, 10)
+    try:
+        reports = paginator.page(page)
+    except PageNotAnInteger:
+        reports = paginator.page(1)
+    except EmptyPage:
+        reports = paginator.page(paginator.num_pages)
+    
     #meta
     meta_data = site_info()    
     meta_data['title'] = 'Thank you'
@@ -1285,13 +1377,12 @@ def nreport_pdf(request, slug):
 def stdoils(request):
     biofuel_id = request.GET.get('biofuel')    
 
-    stdoil_list = StdOils.objects.filter(biofuel__id = biofuel_id)     
+    stdoil_list = get_all_stdoils().filter(biofuel__id = biofuel_id)     
     return render(request, 'evaluation/std_oils.html', {'stdoil_list' : stdoil_list})
 
 
-def get_glossary(request):
-    from glossary.models import Glossary
-    return render(request, 'glossary/glossary_template.html', {'object_list' : Glossary.objects.all()})
+def get_glossary(request):    
+    return render(request, 'glossary/glossary_template.html', {'object_list' : get_all_glosaries()})
     
 
 

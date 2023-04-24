@@ -425,8 +425,8 @@ class EvaLebelStatement(models.Model):
     It has been genarated autometically during evaluation by user.
     so that it is not displayed in admin side.    
     '''
-    evalebel = models.ForeignKey(EvaLabel, on_delete=models.PROTECT)
-    question = models.ForeignKey(Question, on_delete=models.PROTECT, null=True, blank=True)
+    evalebel = models.ForeignKey(EvaLabel, on_delete=models.PROTECT, related_name='elabelstatement')
+    question = models.ForeignKey(Question, on_delete=models.PROTECT, null=True, blank=True, related_name='evalabelques')
     option_id = models.CharField(max_length=252, null=True, blank=True)
     statement = models.TextField(blank=True, null=True)
     next_step = models.TextField(blank=True, null=True)

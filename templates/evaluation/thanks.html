@@ -1,6 +1,6 @@
 {% extends "includes/g_base.html" %}
 
-{%load static %} 
+
     
     {% block header %}
     {% block title %}{{site_info.title}}{% endblock %}
@@ -352,7 +352,7 @@
                                                             {% else %}
                                                             <span class="btn btn-outline-primary btn-sm m-2">Pend</span>
                                                             {% endif %}
-                                                            {% if report.creator.id == user.id or user.is_superuser %}
+                                                            {% if report.creator.id == request.user.id or request.user.is_superuser %}
                                                             <a class="btn btn-primary btn-sm m-2" href="{% url 'evaluation:eva_question' report.id report.last_slug %} " target="_blank"> Edit </a>
                                                             {% else %}
                                                             <span class="btn btn-outline-primary btn-sm m-2"> Creator Can Edit</span>
@@ -368,6 +368,31 @@
                                 </div>
                             </div> 
                             <!--for last report -->
+
+                            <div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+                                <nav aria-label="Page navigation ">
+                                    <ul class="pagination justify-content-center">
+                                        {% if reports.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page=1">&laquo; first</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ reports.previous_page_number }}">previous</a>
+                                        </li>
+                                        {% endif %}
+                                        <li class="page-item page-link"> Page {{ reports.number }} of {{ reports.paginator.num_pages }}.
+                                        </li>
+                                        {% if reports.has_next %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ reports.next_page_number }}">next</a></li>
+                                        <li class="page-item"> <a class="page-link" href="?page={{ reports.paginator.num_pages }}">last
+                                                &raquo;</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+
+
+
                         </div>
                     </div>   
                     {% endif %} 

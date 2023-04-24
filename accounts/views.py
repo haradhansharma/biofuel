@@ -1,4 +1,4 @@
-from pprint import pprint
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from urllib.parse import urlparse
 from django.http import HttpResponse, HttpResponseRedirect
@@ -21,8 +21,14 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import LoginView
 from crm.models import *
 from crm.views import get_location_info
-from evaluation.helper import LabelWiseData
+from evaluation.helper import (
+    get_all_questions,
+    LabelWiseData,
+    get_all_reports_with_last_answer
+    ) 
 from doc.doc_processor import site_info
+from django.db.models import Q
+
 import logging
 log =  logging.getLogger('log')
 from accounts.decorators import (
@@ -313,8 +319,10 @@ def userpage(request):
     log.info(f'Userpage accessed by_____________ {request.user}')
     #This is essential where user loggedin
     null_session(request)   
+    
     user = request.user
     report_slug = request.GET.get('slug')
+    
     if report_slug:
         try:
             last_reports = Evaluator.objects.get(slug = report_slug)
@@ -349,37 +357,24 @@ def userpage(request):
         then we will forward to first parent otherwise system will redirect to the last question during diting the report.
         
         '''
-        try:
-            first_of_parent = Question.objects.filter(is_door = True).order_by('sort_order').first()        
+        
+        try:             
+            first_of_parent = get_all_questions().filter(is_door=True).order_by('sort_order').first()
         except:
             messages.warning(request,'There is something wrong in procedure setting by site admin please try again latter!')
-            return HttpResponseRedirect(reverse('evaluation:evaluation2'))  
+            return HttpResponseRedirect(reverse('evaluation:evaluation2'))   
+   
+        reports = get_all_reports_with_last_answer(request, first_of_parent)
         
-        #increadable setattr to reduce time to make report editing url without touch of database 
-        if user.is_superuser or user.is_staff:
-            reports = Evaluator.objects.all().order_by('-id')  
-        else:        
-            reports = Evaluator.objects.filter(creator = user).order_by('-id')  
-        for report in reports:            
-            try:   
-                last_question = Evaluation.objects.filter(evaluator = report).order_by('id').last().question        
-                setattr(report, 'last_slug', last_question.slug )
-            except:
-                setattr(report, 'last_slug', first_of_parent.slug )    
-                
-        
-        # if user.is_superuser or user.is_staff:
-        #     reports = Evaluator.objects.all().order_by('-id').prefetch_related('eva_evaluator__question')  
-        # else:        
-        #     reports = Evaluator.objects.filter(creator=user).order_by('-id').prefetch_related('eva_evaluator__question')  
-
-        # for report in reports:            
-        #     try:   
-        #         last_question = report.eva_evaluator.last().question
-        #         setattr(report, 'last_slug', last_question.slug )
-        #     except:
-        #         setattr(report, 'last_slug', first_of_parent.slug )
-
+        #Paginated response
+        page = request.GET.get('page', 1)
+        paginator = Paginator(reports, 10)
+        try:
+            reports = paginator.page(page)
+        except PageNotAnInteger:
+            reports = paginator.page(1)
+        except EmptyPage:
+            reports = paginator.page(paginator.num_pages)
         
         button = reverse('evaluation:nreport', args=[last_reports.slug])
         context = {
@@ -394,7 +389,7 @@ def userpage(request):
             'positive_percent': str("%.2f" % positive_percent) + '%',
             'dont_know_percent': str("%.2f" % dont_know_percent) + '%',
             'reports': reports,
-            'last_reports' : last_reports,
+            # 'last_reports' : last_reports,
             'last_report_button_text' : 'Get Last Report',
             'username' : user.username,
             # 'item_label' : df.columns.values.tolist(),
@@ -418,10 +413,14 @@ def userpage(request):
         }
   
      
-    if user.is_staff or user.is_superuser:
-        quotations = Quotation.objects.all().order_by('-id')         
-    else:
-        quotations = Quotation.objects.filter(service_provider = user).order_by('-id')  
+ 
+        
+    # if user.is_staff or user.is_superuser:
+    #     quotations = Quotation.objects.order_by('-id')         
+    # else:
+    #     # quotations = Quotation.objects.filter(service_provider=user).order_by('-id')
+    #     quotations = Quotation.objects.filter(Q(service_provider=user) | Q(id__gt=0)).order_by('-id')
+
         
     #meta
     meta_data = site_info()    
@@ -438,7 +437,7 @@ def userpage(request):
     context.update(
         {
             'site_info' : meta_data,
-            'quotations' : quotations
+            # 'quotations' : quotations
         }
     )
         
