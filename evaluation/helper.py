@@ -171,8 +171,11 @@ def clear_evaluator():
     
 
 
-def get_current_evaluator(request):
-    evaluator = Evaluator.objects.prefetch_related('eva_evaluator').get(id = request.session['evaluator'])    
+def get_current_evaluator(request, evaluator_id = None):
+    if evaluator_id:
+        evaluator = Evaluator.objects.get(id = evaluator_id)    
+    else:        
+        evaluator = Evaluator.objects.get(id = request.session['evaluator'])      
     return evaluator
 
 def ans_to_the_label(evalebel, evaluator):

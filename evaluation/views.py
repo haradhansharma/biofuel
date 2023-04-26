@@ -61,21 +61,20 @@ log =  logging.getLogger('log')
 #helper function should be called into the @login_required and @producer_required
 
     
-def set_evaluation(question, selected_option, evaluator):
-    # delete previous record if exists
-    prev_evaluations = get_all_evaluations_or_on_question(evaluator)
-    for eva in prev_evaluations:
-        if eva.question == question:
-            eva.delete()
-            break
-    
-    # create new evaluation
-    new_evaluation = Evaluation.objects.create(evaluator=evaluator, option=selected_option, question=question)
-   
-    # update cache
-    evaluations = prev_evaluations | Evaluation.objects.filter(id=new_evaluation.id)
-    cache.set(f"{evaluator.id}_evaluations", evaluations, 300)
 
+
+def set_evaluation(question, selected_option, evaluator):
+    # log.info(f'initilizing set_evaluation for the question {question.id} of the evaluator {evaluator} !')
+    #delete prevous record if have to ensure reentry.
+    try:
+        log.info('Deleteing previous Evaluation Entry...........')   
+        Evaluation.objects.filter(evaluator = evaluator, question = question).delete()    
+        # log.info(f'Deleted previous Evaluation entry for the question {question.id} of the evaluator {evaluator}!')
+    except:
+        log.info(f'No Previous Evaluation entry found for the question {question.id} of the evaluator {evaluator} to delete!')
+    new_evaluation = Evaluation(evaluator = evaluator, option = selected_option, question = question ) 
+    new_evaluation.save()
+    # log.info(f'{new_evaluation} has been saved for the question number {question.id} of the evaluatior {evaluator}! selected option was {selected_option}')
         
     
 #helper function should be called into the @login_required and @producer_required
@@ -348,7 +347,7 @@ def option_add2(request):
         comment = request.POST['comment']
         
         
-        question = get_all_questions().get(slug = question_slug)        
+        question = Question.objects.get(slug = question_slug)        
         selected_option = Option.objects.get(id = option_id) 
         
         
@@ -368,9 +367,11 @@ def option_add2(request):
         
         #check Option Submitted or not on confirming the feedback
         #This is for first time.
+     
         try: 
-            Evaluation.objects.get(evaluator = get_current_evaluator(request), question = question).option
-        except:
+            Evaluation.objects.get(evaluator = get_current_evaluator(request), question = question).option            
+        except Exception as e:
+            print(e)
             log.info(f'Optin not found_______________')
             messages.warning(request, 'To proceed, please select an option or please go with "submit" process first!')
             return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(request.session['evaluator']), str(question_slug)]))          
@@ -459,7 +460,7 @@ def question_dataset(request):
     
     evaluator = get_current_evaluator(request)
     
-    stored_questions = get_all_questions().filter(is_active = True).order_by('sort_order')   
+    stored_questions = get_all_questions().filter(is_active = True)
     
     
     #build parentwise shorted question    
@@ -658,14 +659,14 @@ def eva_question(request, evaluator_id, slug):
     if anybody going to edit report then report id will be taken as session evaluator.
     
     '''   
-        
-    evaluator = Evaluator.objects.get(id=evaluator_id)
+ 
+    eva = get_current_evaluator(request, evaluator_id)
     if request.session['evaluator'] == '':
         request.session['evaluator'] = evaluator_id
-        evaluator.report_genarated = False
-        # it helps to move on edit
-        evaluator.save(update_fields=['report_genarated'])
-        
+        # edit_evaluator = eva      
+        eva.report_genarated = False
+        # log.info(f'As report is being edited so report_genarated set to false________________')
+        eva.save()    
 
             
         
@@ -688,7 +689,7 @@ def eva_question(request, evaluator_id, slug):
     creator can edit own report!
     '''   
   
-    if evaluator.creator.id == request.user.id or request.user.is_superuser or request.user.is_staff:
+    if eva.creator.id == request.user.id or request.user.is_superuser or request.user.is_staff:
         pass
     else:
         log.info(f'The report is being edited is not created you user {request.user}______abroating______')
@@ -697,18 +698,11 @@ def eva_question(request, evaluator_id, slug):
     
  
     
-    # all_questions = get_all_questions()
-    # question = all_questions.get(slug = slug)   
-    # evaluator_data = get_current_evaluator(request)
-    # evaluation_data = Evaluation.objects.all()
-    
-    # Fetch all questions and evaluation data
     all_questions = get_all_questions()
-    currnt_question = all_questions.get(slug=slug)   
-    # evaluator_data = get_current_evaluator(request)
-    current_evaluations = get_all_evaluations_or_on_question(evaluator)
+    question = all_questions.get(slug = slug)  
     
-    
+    evaluator_data = get_current_evaluator(request)
+    evaluation_data = Evaluation.objects.filter(evaluator = evaluator_data).select_related('question','option')
     
     
     
@@ -722,25 +716,27 @@ def eva_question(request, evaluator_id, slug):
     if 'Yes' User will be able to ans to the child of this parent
     otherwise will give message and will not allow to go to inside.    
     '''
-    if currnt_question.is_door:
-        # log.info(f'Parent Question Clicked________for report {evaluator_data}_______')      
+    if question.is_door:
+        log.info(f'Parent Question Clicked________for report {evaluation_data}_______')      
         pass  
     else:
-        parent = currnt_question.parent_question
-        evaluations = current_evaluations        
+        parent = question.parent_question
+        # evaluations = evaluation_data.filter(evaluator = evaluator_data).order_by('id')  
+        evaluations = evaluation_data
+        
         questions_of_report = []
         for evaluation in evaluations:
-            questions_of_report.append(evaluation.question) # it is getting form cache at there select_related attachd
+            questions_of_report.append(evaluation.question)
         try:
-            get_option = get_all_evaluations_or_on_question(evaluator, parent).option
+            get_option = evaluation_data.get(question = parent).option
             if parent not in questions_of_report or get_option.yes_status == False:
-                # log.info(f'Parent question is not answered as "yes" to go inside of this quesion block_____so abroating to the parent question')
+                log.info(f'Parent question is not answered as "yes" to go inside of this quesion block_____so abroating to the parent question')
                 messages.warning(request, 'To go inside this block, you must answer "Yes" to the specified question!')
-                return HttpResponseRedirect(reverse('evaluation:eva_question' ,  args=[int(evaluator),  str(parent.slug)]))  
+                return HttpResponseRedirect(reverse('evaluation:eva_question' ,  args=[int(evaluator_id),  str(parent.slug)]))  
         except:   
-            # log.info(f'Parent question is not answered as "yes" to go inside of this quesion block_____so abroating to the parent question')                     
+            log.info(f'Parent question is not answered as "yes" to go inside of this quesion block_____so abroating to the parent question')                     
             messages.warning(request, 'To go inside this block, you must answer "Yes" to the specified question!')
-            return HttpResponseRedirect(reverse('evaluation:eva_question' ,  args=[int(evaluator), str(parent.slug)]))  
+            return HttpResponseRedirect(reverse('evaluation:eva_question' ,  args=[int(evaluator_id), str(parent.slug)]))  
         
         
                 
@@ -748,22 +744,33 @@ def eva_question(request, evaluator_id, slug):
     '''
     The qualified rang can be set from Admin>>Site>>qualified ans rang
     '''
-    qualified_ans_rang = int(ExSite.on_site.get().qualified_ans_range)    
+    # qualified_ans_rang = int(ExSite.on_site.get().qualified_ans_range)    
+    qualified_ans_rang = int(site_info().get('qualified_ans_range'))    
+    
+    # print(site_info().get('qualified_ans_range'))
         
     # options = Option.objects.filter(question = question)
     
-    eva_lebels = EvaLabel.objects.filter(evaluator = evaluator).order_by('sort_order').prefetch_related('elabelstatement').select_related('label')
+    eva_lebels = EvaLabel.objects.filter(evaluator = evaluator_data).order_by('sort_order').prefetch_related('elabelstatement').select_related('label')
     
     
-    request.session['total_question'] = session_total_question = get_all_evaluations_or_on_question(evaluator = evaluator).count()  
-    total_ques = all_questions.count() - session_total_question
+    # request.session['total_question'] = session_total_question = get_all_evaluations_or_on_question(evaluator = evaluator).count()  
+    # total_ques = all_questions.count() - session_total_question
+    # timing_text = f"Depending on how many answers you provide, the self assessment will take \
+    #     anywhere from {round(total_ques/10)} to {round(total_ques/3)} minutes. At the end of the \
+    #         assessment, a PDF report will be provided, which can be retrieved via the Dashboard at a later stage."
+    
+    # request.session['total_question'] = evaluation_data.filter(evaluator = evaluator_data).count()  
+    total_evaluation_data = len(evaluation_data)
+    request.session['total_question'] = total_evaluation_data
+    
+    total_ques = len(all_questions) - total_evaluation_data
     timing_text = f"Depending on how many answers you provide, the self assessment will take \
         anywhere from {round(total_ques/10)} to {round(total_ques/3)} minutes. At the end of the \
             assessment, a PDF report will be provided, which can be retrieved via the Dashboard at a later stage."
     
-    
     try:
-        submitted_comment = EvaComments.objects.get(evaluator = evaluator, question = currnt_question).comments
+        submitted_comment = EvaComments.objects.get(evaluator = evaluator_data, question = question).comments
     except:
         submitted_comment = None   
     
@@ -772,10 +779,12 @@ def eva_question(request, evaluator_id, slug):
     if not answered previously and there have a option in the standared oil of this question
     then this option will be selected as default and there will set a attribute named 'robot_data' to show the message
     ''' 
+    question_in_evaluation = evaluation_data.filter(question = question) 
+    
     try:
-        selected_option = get_all_evaluations_or_on_question(evaluator, currnt_question).option
+        selected_option = question_in_evaluation.get(question = question).option
     except:
-        oils = currnt_question.stanchart.filter(oil__select_oil__key = evaluator.stdoil_key)
+        oils = question.stanchart.filter(oil__select_oil__key = evaluator_data.stdoil_key)
         if oils.exists():
             selected_option = oils[0].option if oils[0].option else None
             if selected_option is not None:
@@ -785,10 +794,10 @@ def eva_question(request, evaluator_id, slug):
     
     
     # Create push url for HTMX     
-    question_in_evaluation = get_all_evaluations_or_on_question(evaluator, currnt_question) 
+    # question_in_evaluation = evaluation_data.filter(question = question) 
     if question_in_evaluation is not None:
         try:
-            next_question_slug = question_in_evaluation.option.next_question.slug
+            next_question_slug = selected_option.next_question.slug
             request.session['push_url'] = reverse('evaluation:eva_question', args=[int(request.session['evaluator']), next_question_slug])            
         except:
             request.session['push_url'] = reverse('evaluation:thanks')
@@ -811,7 +820,7 @@ def eva_question(request, evaluator_id, slug):
     #     except Exception as e:
     #         continue
     
-    label_data = LabelWiseData(evaluator)
+    label_data = LabelWiseData(evaluator_data)
     answered_percent = label_data.answered_percent
     # print(answered_percent)
     '''
@@ -820,7 +829,7 @@ def eva_question(request, evaluator_id, slug):
      
     '''    
     
-    search_term = re.sub('[^A-Za-z0-9]+', ' ',  f'{currnt_question.name} {evaluator.biofuel.name}')   
+    search_term = re.sub('[^A-Za-z0-9]+', ' ',  f'{question.name} {evaluator_data.biofuel.name}')   
     
     # log.info(f'total questions________________{Question.objects.filter(is_active=True).count()}')
     
@@ -829,14 +838,14 @@ def eva_question(request, evaluator_id, slug):
     context ={
         'slug' : slug,
         'question_dataset' : question_dataset(request) ,
-        'question': currnt_question,
+        'question': question,
         # 'optns': options,
-        'evaluator_data': evaluator,
+        'evaluator_data': evaluator_data,
         'eva_lebels': eva_lebels,
         'timing_text': timing_text,    
         'total_question': request.session['total_question'], 
         'qualified_rang' : qualified_ans_rang,   
-        'evaluator':evaluator, 
+        'evaluator':evaluator_id, 
         'selected_option' : selected_option,
         'submitted_comment' : submitted_comment,
         # 'chart_data' : chart_data,
@@ -851,7 +860,7 @@ def eva_question(request, evaluator_id, slug):
     
     #meta
     meta_data = site_info()    
-    meta_data['title'] = currnt_question.name
+    meta_data['title'] = question.name
     # meta_data['meta_name'] = 'Green Fuel Validation Platform'
     meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = f"Depending on how many answers you provide, the self assessment will take anywhere from 10 to 33 minutes. At the end of the assessment, a PDF report will be provided."
@@ -926,7 +935,7 @@ def eva_index2(request):
     #get first question of evaluation process based on short_order. If no first question set by admin will redirect to homepage with warning message.
     # log.info(f'Check first question is set or not by admin______________')
     try:
-        first_of_parent = get_all_questions().filter(is_door = True).order_by('sort_order').first()        
+        first_of_parent = Question.objects.filter(is_door = True).order_by('sort_order').first()              
     except:
         # log.info(f'First question has not been set by the admin____________________')
         messages.warning(request,'There is something wrong in procedure setting by site admin, Please try again latter!')
@@ -989,22 +998,22 @@ def eva_index2(request):
             '''
             standalone initial page of evaluation.
             '''           
-            # try:
-            #     first_reports = Evaluator.objects.filter(creator = request.user, report_genarated = True).order_by('create_date').first()  
-            #     first_biofuel = first_reports.biofuel
-            #     first_report_name = first_reports.name
-            # except:
-            #     first_reports = None
-            #     first_biofuel = None
-            #     first_report_name = ''   
-                
-            first_reports = Evaluator.objects.filter(creator=request.user, report_genarated=True).order_by('create_date').first()
-            if first_reports:
+            try:
+                first_reports = Evaluator.objects.filter(creator = request.user, report_genarated = True).order_by('create_date').first()  
                 first_biofuel = first_reports.biofuel
                 first_report_name = first_reports.name
-            else:
+            except:
+                first_reports = None
                 first_biofuel = None
-                first_report_name = ''
+                first_report_name = ''   
+                
+            # first_reports = Evaluator.objects.filter(creator=request.user, report_genarated=True).order_by('create_date').first()
+            # if first_reports:
+            #     first_biofuel = first_reports.biofuel
+            #     first_report_name = first_reports.name
+            # else:
+            #     first_biofuel = None
+            #     first_report_name = ''
                             
                     
                     
