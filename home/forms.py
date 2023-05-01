@@ -31,12 +31,12 @@ class PasswordChangeForm(PasswordChangeForm):
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username','first_name', 'last_name', 'email', 'orgonization', 'phone', )        
+        fields = ('orgonization', 'username','first_name', 'last_name', 'email',  'phone', )        
         widgets = {                      
             'username': forms.TextInput(attrs={'placeholder': 'username', 'class':'form-control', 'aria-label':'username',  }),
             'first_name': forms.TextInput(attrs={'placeholder': 'first name', 'class':'form-control', 'aria-label':'first name' }),
             'last_name': forms.TextInput(attrs={'placeholder': 'last name','class':'form-control', 'aria-label':'last name', }), 
-            'orgonization': forms.TextInput(attrs={'placeholder': 'orgonization','class':'form-control', 'aria-label':'orgonization', }), 
+            'orgonization': forms.TextInput(attrs={'placeholder': 'My Organization','class':'form-control', 'aria-label':'organization', }), 
             'phone': forms.TextInput(attrs={'placeholder': 'phone','class':'form-control', 'aria-label':'phone', }), 
             'email': forms.EmailInput(attrs={'placeholder': 'email', 'class':'form-control', 'aria-label':'email' , }),              
         }
@@ -45,7 +45,7 @@ class UserForm(forms.ModelForm):
             'username':'Username',
             'first_name':'First name',
             'last_name':'Last Name',
-            'orgonization':'Orgonization',
+            'orgonization':'Organization',
             'phone':'Phone',
             'email': 'Email',
             

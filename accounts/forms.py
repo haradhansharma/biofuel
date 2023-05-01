@@ -1,7 +1,9 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm, PasswordResetForm, SetPasswordForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm as UserCreationFormDjango, UserChangeForm as UserChangeFormDjango, AuthenticationForm, PasswordResetForm, SetPasswordForm, PasswordChangeForm
 from django.urls import reverse_lazy
 from .models import User
+from django.contrib.auth import get_user_model
+
 from .tokens import account_activation_token
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
@@ -18,12 +20,12 @@ from captcha.widgets import ReCaptchaV2Invisible, ReCaptchaV2Checkbox
 
 
 
-class UserCreationForm(UserCreationForm):
+class UserCreationForm(UserCreationFormDjango):
     
     #adding field to the admin template
     def __init__(self, *args, **kwargs): 
         super(UserCreationForm, self).__init__(*args, **kwargs)   
-    UserAdmin.add_form = UserCreationForm
+    UserAdmin.add_form = UserCreationFormDjango
     UserAdmin.add_fieldsets = ((None, {
         'classes': ('wide',),
         'fields': ('usertype', 'email', 'phone', 'username', 'password1', 'password2',  'term_agree', 'experts_in', )
@@ -31,20 +33,12 @@ class UserCreationForm(UserCreationForm):
         
         
     class Meta:
-        model = User
+        model = get_user_model()
         fields = '__all__'       
         
-class UserCreationFormFront(UserCreationForm):
+class UserCreationFormFront(UserCreationFormDjango):
     
  
-        
-    
-    #Inheriting and ading html property to default form of Django
-    
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'password1', 'password2', 'term_agree', 'newsletter_subscription', 'usertype', 'experts_in',)  
-              
     username = forms.CharField(label = 'Username',widget=forms.TextInput(attrs={"placeholder": "Username", "class": "form-control", 'hx-post': reverse_lazy('accounts:check_username'), 'hx-target': '#username_error', 'hx-trigger': 'keyup[target.value.length > 3]' }))
     email = forms.EmailField(label = 'E-mail Address',  widget=forms.EmailInput(attrs={"placeholder": "Email", "class": "form-control" , 'hx-post': reverse_lazy('accounts:check_email'), 'hx-target': '#email_error', 'hx-trigger': 'keyup[target.value.length > 3]'}))
     password1 = forms.CharField(label = 'Password', widget=forms.PasswordInput(attrs={"placeholder": "Password","class": "form-control" }))
@@ -55,11 +49,22 @@ class UserCreationFormFront(UserCreationForm):
     #implemeting google recapcha.
     captcha = ReCaptchaField( widget=ReCaptchaV2Checkbox)  
     
-    widgets = {
-            'usertype': forms.Select(attrs={ 'class':'form-select', 'aria-label':'usertype', 'hx-post':"/check_type_to_get_expert/", 'hx-trigger':"change", 'hx-target':"#hx" , 'hx-swap':"innerHTML"}),                    
-            # 'experts_in': forms.Select(attrs={ 'class':'form-select', 'aria-label':'experts_in', }), 
-            
-        }
+    #Inheriting and ading html property to default form of Django
+    
+    class Meta:
+        model = get_user_model()
+        fields = ('orgonization', 'username', 'email', 'password1', 'password2', 'term_agree', 'newsletter_subscription', 'usertype', 'experts_in',)  
+             
+    
+    
+        widgets = {
+                'usertype': forms.Select(attrs={ 'class':'form-select', 'aria-label':'usertype', 'hx-post':"/check_type_to_get_expert/", 'hx-trigger':"change", 'hx-target':"#hx" , 'hx-swap':"innerHTML"}),                    
+                'experts_in': forms.Select(attrs={ 'class':'form-select', 'aria-label':'experts_in', }), 
+                'orgonization': forms.TextInput(attrs={'placeholder': 'My Organization','class':'form-control', 'aria-label':'organization', }),
+                
+                
+                
+            }
     
     def clean_username(self):
         data = self.cleaned_data.get('username')
@@ -139,13 +144,13 @@ class UserCreationFormFront(UserCreationForm):
     
     
 
-class UserChangeForm(UserChangeForm):
+class UserChangeForm(UserChangeFormDjango):
     '''
     Inheriting dafault django form to give the facility to edit self account data.
     CVurrently it is being used in dashboard>>setting and dashboard>>password change form.
     '''
     class Meta:
-        model = User
+        model = get_user_model()
         fields = '__all__'
     widgets = {                              
             'email': forms.EmailInput(attrs={ 'class':'form-control', 'aria-label':'email' }),
@@ -168,7 +173,7 @@ class LoginForm(AuthenticationForm):
     captcha = ReCaptchaField( widget=ReCaptchaV2Checkbox) 
     
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ['username', 'password', 'remember_me']    
     
     

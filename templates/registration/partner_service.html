@@ -17,7 +17,7 @@
                 <div class="row justify-content-center">
                     <div class="col-12">
                         <div class="card text-center mb-3">
-                            <div class="card-header">
+                            <div class="card-header"> 
                                 <span class="h5">About {% if visiting_user.orgonization  %} {{ visiting_user.orgonization }} {% else %} {{ visiting_user.username }} {% endif %}</span> <span>
                                     <a href="{% url 'home:user_settings' %}">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -82,60 +82,61 @@
                             <div class="card-body">      
                                 <div class="row justify-content-center">          
                                     {% if visiting_user.selected_activities %} 
-                                    {% for u in visiting_user.selected_activities %}
-                                    <h3 id="na{{u.next_activity.id}}"> {{u.next_activity.name_and_standared}} </h3>
-                                    {% for quotation in u.next_activity.get_quotations %}
+                                        {% for u in visiting_user.selected_activities %}                                                                                
+                                            <h3 class="text-capitalize" id="na{{u.next_activity.id}}"> {{u.next_activity.name_and_standared}} </h3>    
+                                            {% if u.next_activity.quotnextactivity.all %}                               
+                                                {% for quotation in u.next_activity.quotnextactivity.all %}   
+                                                    {% if quotation.service_provider == visiting_user %}
+                                                        <div class="col-md-6 col-xl-4 d-flex g-2"> 
+                                                            <div class="card bg-light bg-gradient flex-fill p-2">
+                                                                <img class="card-img-top" src="{{ quotation.service_provider.get_profile.profile_logo }}" alt="{{quotation.test_for.name}}">
+                                                                
+                                                                    <div class="card-header">
+                                                                    <strong>Test For:</strong> {{quotation.test_for.name}}
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                    <h5 class="h6 card-title">                                    
+                                                                        <i class="fa-solid fa-heart-circle-check"></i> <strong>Sample Require:</strong> {{quotation.sample_amount}}{{quotation.sample_amount_unit}}
+                                                                    </h5>
+                                                                    <h6 class="card-subtitle mb-2 text-muted">
+                                                                        <i class="fa-solid fa-heart-circle-check"></i> <strong>Test Price:</strong> {{quotation.price}}{{quotation.price_unit}}
+                                                                    </h6>
+                                                                    <p class="card-text">
+                                                                        <i class="fa-solid fa-heart-circle-check"></i> {{quotation.related_questions.all.count}} Addition question will be tested along with this test.                                                    
+                                                                    </p>
+                                                                
+                                                                    <p class="card-text"><i class="fa-solid fa-heart-circle-check"></i> <strong>Sample will be picked from factory:</strong> {{quotation.factory_pickup}}</p>
+                                                                
+                                                                    <ul class="list-inline"><i class="fa-solid fa-heart-circle-check"></i> Required documents to conduct the test:
+                                                                        {% for rd in quotation.require_documents.all %}
+                                                                        <li class="list-inline-item"><i class="fa-solid fa-check"></i>{{rd.name}}</li>
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                    </div>
+                                                                    <div class="card-footer text-center mx-auto">
+                                                                    <a href="{% url 'home:quotation_report' quotation.test_for.slug quotation.id %}" class="btn btn-primary">CLick To Find Details</a>
 
-                                    <div class="col-md-6 col-xl-4 d-flex g-2"> 
-                                        <div class="card bg-light bg-gradient flex-fill p-2">
-                                            <img class="card-img-top" src="{{ quotation.service_provider.get_profile.profile_logo }}" alt="{{quotation.test_for.name}}">
-                                            
-                                                <div class="card-header">
-                                                   <strong>Test For:</strong> {{quotation.test_for.name}}
-                                                </div>
-                                                <div class="card-body">
-                                                <h5 class="h6 card-title">                                    
-                                                    <i class="fa-solid fa-heart-circle-check"></i> <strong>Sample Require:</strong> {{quotation.sample_amount}}{{quotation.sample_amount_unit}}
-                                                </h5>
-                                                <h6 class="card-subtitle mb-2 text-muted">
-                                                    <i class="fa-solid fa-heart-circle-check"></i> <strong>Test Price:</strong> {{quotation.price}}{{quotation.price_unit}}
-                                                </h6>
-                                                <p class="card-text">
-                                                    <i class="fa-solid fa-heart-circle-check"></i> {{quotation.related_questions.all.count}} Addition question will be tested along with this test.                                                    
-                                                </p>
-                                            
-                                                <p class="card-text"><i class="fa-solid fa-heart-circle-check"></i> <strong>Sample will be picked from factory:</strong> {{quotation.factory_pickup}}</p>
-                                             
-                                                <ul class="list-inline"><i class="fa-solid fa-heart-circle-check"></i> Required documents to conduct the test:
-                                                    {% for rd in quotation.require_documents.all %}
-                                                    <li class="list-inline-item"><i class="fa-solid fa-check"></i>{{rd.name}}</li>
-                                                    {% endfor %}
-                                                </ul>
-                                                </div>
-                                                <div class="card-footer text-center mx-auto">
-                                                <a href="{% url 'home:quotation_report' quotation.test_for.slug quotation.id %}" class="btn btn-primary">CLick To Find Details</a>
-
-                                                </div>                                    
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-                                    {% endfor %}
-                                    {% else %}
-                                    {% if request.user == visiting_user and block_visible %}
-                                    <p>By Clicking below button you may go to the quotation interface to create quotations for your services!</p>
-                                    <a class="btn btn-primary" href="{% url 'home:quotations' %}">Go to Quotation Interface</a>
-                                    {% else %}
-                                     <p>No quotations found to display!</p>
-                                    {% endif %}
+                                                                    </div>                                    
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}   
+                                            {% else %}   
+                                                {% if request.user == visiting_user and block_visible %}
+                                                    <p>By Clicking <span><a class="" href="{% url 'home:quotations' %}">Go to Quotation Interface</a></span>
+                                                        you may go to the quotation interface to create quotations for your services!                                                        
+                                                    </p>
+                                                {% else %}
+                                                    <p>No quotations found to display!</p>
+                                                {% endif %}
+                                            {% endif %}                                                                                                                         
+                                        {% endfor %}                                    
                                     {% endif %}
                                 </div>   
                             </div>
                         </div>
                     </div>
                 </div>
-             
-            
-
             </div>
         </div>                                  
     </main>   

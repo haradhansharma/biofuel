@@ -49,10 +49,27 @@ class Quotation(models.Model):
     sample_amount_unit = models.ForeignKey(WeightUnit, verbose_name='Weight Unit', on_delete=models.CASCADE, related_name='weightunitquatation')
     require_documents = models.ManyToManyField(QuotationDocType, verbose_name='Document needed for test',help_text="Select the documents that are needed to perform this test. You can select multiple in mac by holding shift + command and down arrow and in windows ctrl/shift + down arrow.", related_name='requiredocuments')
     factory_pickup = models.BooleanField(verbose_name="Factory Sample pick-up", help_text="Place a tick mark to indicate whether the sample will be collected from the factory.")
-    test_for = models.ForeignKey(Question, verbose_name="Tests for question", help_text="Help Text will go here", max_length=252, on_delete=models.CASCADE, related_name='testfor', limit_choices_to={'is_active': True, 'is_door' : False})
-    related_questions = models.ManyToManyField(Question, verbose_name="Please select all other question which are also tested within the provided quotation", help_text="Allow multiple option selection. The selected options should be highlighted.", limit_choices_to={'is_active': True, 'is_door' : False})
+    test_for = models.ForeignKey(
+        Question, 
+        verbose_name="Tests for question", 
+        help_text="Help Text will go here", 
+        max_length=252, 
+        on_delete=models.CASCADE, 
+        related_name='testfor', 
+        limit_choices_to={'is_active': True, 'is_door' : False})
+    related_questions = models.ManyToManyField(
+        Question, 
+        verbose_name="Please select all other question which are also tested within the provided quotation", 
+        help_text="Allow multiple option selection. The selected options should be highlighted.", 
+        limit_choices_to={'is_active': True, 'is_door' : False},
+        related_name='quotations_related_questions'
+        )
     quotation_format = models.FileField(upload_to="quotation", help_text="Only '.pdf' are allowed", verbose_name="Upload Quotation (pdf)", validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
-    next_activities = models.ForeignKey(NextActivities, help_text="Select next activities to select related questions from next activities", on_delete=models.PROTECT, related_name='quotnextactivity', null=True, blank=True, unique=False)
+    next_activities = models.ForeignKey(
+        NextActivities, 
+        help_text="Select next activities to select related questions from next activities", 
+        on_delete=models.PROTECT, 
+        related_name='quotnextactivity', null=True, blank=True, unique=False)
     display_site_address = models.BooleanField(default=True, verbose_name="Display Site Address", help_text="Tick will display system address IO Validation partner address")
     comments = models.TextField(max_length=500, help_text="This field will take charecter upto 500", null=True, blank=True)
     

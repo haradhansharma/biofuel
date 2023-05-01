@@ -474,8 +474,9 @@ def partner_service(request, pk):
     
     visiting_user = get_object_or_404(User, pk=pk, is_active = True)
     current_user = request.user
-    next_activities = NextActivities.objects.filter(is_active = True)
-    na_in_una = [na.next_activity for na in visiting_user.selected_activities] if visiting_user.selected_activities else None
+    next_activities = NextActivities.objects.filter(is_active = True).prefetch_related('quotnextactivity')
+    visiting_users_selecetd = visiting_user.selected_activities
+    na_in_una = [na.next_activity for na in visiting_user.selected_activities] if visiting_users_selecetd else None
     
     if not next_activities.exists() and current_user.is_expert:
         subject = f'Validation partner are visiting service page but no default service'
@@ -511,12 +512,12 @@ def commit_service(request, user_id, na_id):
         return HttpResponse('You have not logged in and it is unethical operation!')
     else:
         from evaluation.models import NextActivities     
-        next_activities = NextActivities.objects.filter(is_active = True)
+        next_activities = NextActivities.objects.filter(is_active = True).prefetch_related('quotnextactivity')
         if int(user_id) != current_user.id:
             return HttpResponse('It is unethical operation, User does not match!')
             
         try:
-            visiting_user = User.objects.get(id = int(user_id), is_active = True)
+            visiting_user = User.objects.get(id = int(user_id), is_active = True) 
         except:
             return HttpResponse('It is unethical operation! No user found!')
         
@@ -528,21 +529,27 @@ def commit_service(request, user_id, na_id):
         una = UsersNextActivity.objects.filter(user = visiting_user)
         na_in_una = [na.next_activity for na in una]
         if na not in na_in_una:
-            UsersNextActivity.objects.create(next_activity = na, user = visiting_user)
-        
+            UsersNextActivity.objects.create(next_activity = na, user = visiting_user)        
+            
+        if current_user.is_expert or current_user.is_staff or current_user.is_superuser:
+            block_visible = True
+        else:
+            block_visible = False
         
         data = {
             'visiting_user' : visiting_user,
             'current_user' : current_user,
             'next_activities' : next_activities,
-            'na_in_una' : [na.next_activity for na in una.all()]
+            'na_in_una' : [na.next_activity for na in una.all()],
+            'block_visible' : block_visible
+            
         }
         
-        context.update(data)
-    
+        context.update(data)   
     
     
     return render(request, 'registration/commit_service.html', context = context)
+
 @login_required
 @expert_required   
 def delete_service(request, user_id, na_id):
@@ -554,7 +561,7 @@ def delete_service(request, user_id, na_id):
     else:
         
         from evaluation.models import NextActivities    
-        next_activities = NextActivities.objects.filter(is_active = True)
+        next_activities = NextActivities.objects.filter(is_active = True).prefetch_related('quotnextactivity')
         if int(user_id) != current_user.id:
             return HttpResponse('It is unethical operation, User does not match!')
             
@@ -569,6 +576,11 @@ def delete_service(request, user_id, na_id):
             return HttpResponse('It is unethical operation! No Next Activities found!')
         
         target_una.delete()
+        
+        if current_user.is_expert or current_user.is_staff or current_user.is_superuser:
+            block_visible = True
+        else:
+            block_visible = False
        
         
         
@@ -576,7 +588,9 @@ def delete_service(request, user_id, na_id):
             'visiting_user' : visiting_user,
             'current_user' : current_user,
             'next_activities' : next_activities,
-            'na_in_una' : [na.next_activity for na in una.all()]
+            'na_in_una' : [na.next_activity for na in una.all()],
+            'block_visible' : block_visible
+            
         }
         
         context.update(data)

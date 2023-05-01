@@ -120,10 +120,9 @@ class Question(models.Model):
     @property
     def get_quotations(self):         
         from home.models import Quotation
-        quotations = Quotation.objects.filter(test_for = self)       
-      
-             
+        quotations = Quotation.objects.filter(test_for = self) 
         return quotations
+    
     @property
     def get_merged_quotations(self):
         from itertools import chain
@@ -485,17 +484,23 @@ class NextActivities(models.Model):
     update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     
     
-    def __str__(self):
+    def __str__(self): 
         return str(self.name_and_standared)
     
     def get_quotations(self):
-        quotations = set()
-        for question in self.related_questions.all():
-            for quotation in question.get_quotations:
-                quotations.add(quotation)
-            for quotation in question.get_related_quotations:
-                quotations.add(quotation)
-        return quotations
+        # quotations = set()
+        # for question in self.related_questions.all():
+        #     for quotation in question.get_quotations:
+        #         quotations.add(quotation)
+        #     for quotation in question.get_related_quotations:
+        #         quotations.add(quotation)
+        # return quotations
+        quotations = self.quotnextactivity.all()
+        
+        return set(quotations)
+    
+    
+ 
     
     
         

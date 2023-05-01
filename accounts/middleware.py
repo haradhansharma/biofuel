@@ -25,6 +25,8 @@ class ServiceMiddleware:
                     messages.warning(request, 'Please select services you provide!')   
 
         return self.get_response(request)
+    
+    
 
 
     

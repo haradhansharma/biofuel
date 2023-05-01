@@ -371,7 +371,7 @@ def option_add2(request):
         try: 
             Evaluation.objects.get(evaluator = get_current_evaluator(request), question = question).option            
         except Exception as e:
-            print(e)
+          
             log.info(f'Optin not found_______________')
             messages.warning(request, 'To proceed, please select an option or please go with "submit" process first!')
             return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(request.session['evaluator']), str(question_slug)]))          
@@ -529,7 +529,7 @@ def question_dataset(request):
     evaluations.filter(question__in = childs_to_delete).delete()
     
                 
-    # print(len(questions))
+
     parents = []
     for question in questions:        
         if question.is_door == True:
@@ -747,7 +747,7 @@ def eva_question(request, evaluator_id, slug):
     # qualified_ans_rang = int(ExSite.on_site.get().qualified_ans_range)    
     qualified_ans_rang = int(site_info().get('qualified_ans_range'))    
     
-    # print(site_info().get('qualified_ans_range'))
+
         
     # options = Option.objects.filter(question = question)
     
@@ -822,7 +822,7 @@ def eva_question(request, evaluator_id, slug):
     
     label_data = LabelWiseData(evaluator_data)
     answered_percent = label_data.answered_percent
-    # print(answered_percent)
+  
     '''
     Geting data from youtube data api 
     update data in each week   
@@ -897,18 +897,7 @@ def eva_index2(request):
     
     
     #rechecking user is authorized or not, although it is not necessary as only logedin user can enter to this page, but it is safe to avoid error if anyhow decorator are removed. 
-    # if request.user.is_authenticated:
-    #     usertype = UserType.objects.get(slug = request.user.usertype.slug )
-    #     name = request.user.get_full_name if request.user.get_full_name else first_report_name
-    #     email = request.user.email
-    #     phone = request.user.phone
-    #     orgonization = request.user.orgonization
-    # else:
-    #     usertype = UserType.objects.get(slug = request.session['interested_in'] )
-    #     name = ''
-    #     email = ''
-    #     phone = ''
-    #     orgonization = '' 
+    
         
     if request.user.is_authenticated:
         usertype = request.user.usertype
@@ -1042,9 +1031,11 @@ def eva_index2(request):
             return HttpResponseRedirect(reverse('evaluation:eva_question' ,  args=[int(new_report), str(first_of_parent.slug)]))
             
     total_ques = get_all_questions().count()
-    box_timing = f"Depending on how many answers you provide, the self assessment will take n\
-    anywhere from {round(total_ques/10)} to {round(total_ques/3)} minutes. At the end of the n\
-        assessment, a PDF report will be provided, which can be retrieved via the Dashboard at a later stage."
+    box_timing = f"Please note that the duration of the self-assessment may vary depending on the number of questions you are required to answer. n\
+    Typically, it can take between {round(total_ques/10)} to {round(total_ques/3)} minutes to complete. Once the assessment is finished, n\
+    you will receive a PDF report, which is also accessible through your profile."
+        
+
     
     
     # stdoil_list = StandaredChart.objects.filter(related_biofuel = first_biofuel).values('oil_name', 'key').order_by('oil_name').distinct()

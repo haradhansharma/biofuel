@@ -159,14 +159,14 @@ def user_types(request, slug):
                 'Quotations' : reverse('home:quotations')
                 }  
         else:
-            enroll = {'Thank You for Joining!' : reverse('accounts:user_link')}
+            enroll = {'My Profile' : reverse('accounts:user_link')}
     else:
         enroll = {}
     
     # pass user type data    
     try:
-        user_type = UserType.objects.get(slug = slug)
-        users = User.objects.filter(usertype = user_type, is_active = True)
+        user_type = UserType.objects.prefetch_related('user_usertype').get(slug = slug)
+        users = user_type.user_usertype.filter(is_active = True)
     except:
         user_type = None
         users = None
@@ -1481,7 +1481,7 @@ def add_new_service(request, user_id):
             existing_found = service['existing_found']  
             service = service['instance']            
             if not existing_found: 
-                print('as not found doing here')
+             
                 service.created_by = created_by
                 service.is_active = False    
                 service.save()

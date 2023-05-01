@@ -7,31 +7,32 @@
 {% block main %}
 <main>
     {% include "includes/hero_section.html" %}
-    <div class="section pt-0 pb-0  bgjessica-light-primary" style="min-height: 100vh;">
+    <div class="section pt-0 pb-0  bg-light" style="min-height: 100vh;">
         <div class="container mt-n8 mt-lg-n12 z-2">
             <div class="row justify-content-center">
                 <div class="col-12">
                     <div class="d-block text-center justify-content-center mt-7 mb-6 mb-lg-5">
+                        <h1>{{user_type.name}}</h1>
                         <div
                             class="icon-user-type icon-shape-user-type  bg-transparent text-center shadow-lg rounded mb-4 mt-4">
                             <img src="{{ user_type.icon.url }}" alt="{{user_type.name}}}" class="p-4">
                         </div>
                         {% if request.user.is_authenticated %}
-                        {% for title, url in enroll.items %}
-                        <h3 class="h5">
-                            <a href="{{ url }}"
-                                class="btn btn-outline-primary d-inline-flex align-items-center me-md-3 shadow-lg">
-                                {{title}}
-                            </a>
-                        </h3>
-                        {% endfor %}
+                            {% for title, url in enroll.items %}
+                            <h3 class="h5">
+                                <a href="{{ url }}"
+                                    class="btn btn-outline-primary d-inline-flex align-items-center me-md-3 shadow-lg">
+                                    {{title}}
+                                </a>
+                            </h3>
+                            {% endfor %}
                         {% else %}
-                        <h3 class="h5">
-                            <a href="{% url 'accounts:signup' %}"
-                                class="btn btn-outline-primary d-inline-flex align-items-center me-md-3 shadow-lg">
-                                Join as {{ user_type.name }}
-                            </a>
-                        </h3>
+                            <h3 class="h5">
+                                <a href="{% url 'accounts:signup' %}"
+                                    class="btn btn-outline-primary d-inline-flex align-items-center me-md-3 shadow-lg">
+                                    Join as {{ user_type.name }}
+                                </a>
+                            </h3>
                         {% endif %}                        
 
                         <p class="mt-5">
@@ -57,6 +58,7 @@
     </div>
     <section class="section section-lg  bgjessica-light pt-0 pb-0">
         <div class="container">
+            {% if user.is_authenticated %}
             <div class="row">          
                 {% for u in users %}                 
                 <div class="col-md-6 col-xl-4 d-flex g-2">
@@ -88,6 +90,15 @@
                 
                 
             </div>
+            {% else %}
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="alert alert-secondary shadow-soft" role="alert">                      
+                        <span class="alert-inner--text">Login to see the registered users</span>                   
+                    </div>
+                </div>                
+            </div>
+            {% endif %}
         </div>
     </section>
 </main>

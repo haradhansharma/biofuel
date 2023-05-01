@@ -83,7 +83,7 @@ class User(AbstractUser):
     usertype = models.ForeignKey(UserType, on_delete=models.CASCADE, related_name='user_usertype')   
     email = models.EmailField('E-Mail Address', unique=True)
     phone = models.CharField(max_length=252, null=True, blank=True)
-    orgonization = models.CharField(max_length=252, null=True, blank=True)
+    orgonization = models.CharField(max_length=252, verbose_name='Organization')
     experts_in = models.ForeignKey(DifinedLabel, on_delete=models.SET_NULL, null=True, blank=True, related_name = 'user_label', limit_choices_to={'common_status': False} )  
     term_agree = models.BooleanField(null=False, blank=False,)
     email_verified = models.BooleanField(default=False)
@@ -184,32 +184,19 @@ class User(AbstractUser):
 
         return self._is_subscriber
         
-        
+
     # @property
-    # def selected_activities(self):
-    #     if hasattr(self, '_selected_activities'):
-    #         return self._selected_activities
-
-    #     una = self.user_next_activity.all()
-    #     if una.exists():
-    #         self._selected_activities = una
-    #         return self._selected_activities
-
-    #     return False 
+    # def selected_activities(self):        
+    #     if not hasattr(self, '_selected_activities'):
+    #         self._selected_activities = self.user_next_activity.all().prefetch_related('next_activity__quotnextactivity__related_questions')
+    #     return self._selected_activities
+    
     
     @property
-    def selected_activities(self):
-        if hasattr(self, '_selected_activities'):
-            return self._selected_activities
-
-        una = self.user_next_activity.all().prefetch_related('next_activity')
-        if una.exists():
-            self._selected_activities = una
-            return self._selected_activities
-
-        return False
-        
-   
+    def selected_activities(self):        
+        if not hasattr(self, '_selected_activities'):
+            self._selected_activities = self.user_next_activity.all().prefetch_related('next_activity__quotnextactivity__related_questions') or False
+        return self._selected_activities
     
     def get_absolute_url(self):        
         return reverse('accounts:user_link')
@@ -234,8 +221,16 @@ class Profile(models.Model):
     
 class UsersNextActivity(models.Model):
     from evaluation.models import NextActivities
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_next_activity' )
-    next_activity = models.ForeignKey(NextActivities, on_delete=models.CASCADE, related_name='next_activities' )
-    
+    user = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        related_name='user_next_activity' 
+        )
+    next_activity = models.ForeignKey(
+        NextActivities, 
+        on_delete=models.CASCADE, 
+        related_name='next_activities' 
+        )
+   
 
 

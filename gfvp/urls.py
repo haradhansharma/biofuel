@@ -1,6 +1,6 @@
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from django.conf import settings
 from home.views import user_types
@@ -42,6 +42,9 @@ urlpatterns = [
     path("terms/", TemplateView.as_view(template_name="includes/terms.html"), name='term'),
     path('docs/', include('django_mkdocs.urls', namespace='mkdocs')),    
     path('<int:pk>/services/', partner_service, name='partner_service'),    
+    
+
+
     
 
     

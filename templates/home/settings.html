@@ -58,6 +58,17 @@
                             <!-- Form -->
                             <div class="col-md-6 mb-3">
                                 <div class="form-group mb-4">
+                                    <label for="{{ user_form.orgonization.id_for_label }}">{{ user_form.orgonization.label_tag }} </label>
+                                    <div class="input-group">
+                                        {{ user_form.orgonization }}
+                                    </div>
+                                    <span class="text-error">{{ user_form.orgonization.errors }}</span>
+                                </div>
+                            </div>
+                            <!-- End of Form -->
+                            <!-- Form -->
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group mb-4">
                                     <label for="{{ user_form.username.id_for_label }}">{{ user_form.username.label_tag }}
                                     </label>
                                     <div class="input-group">
@@ -119,17 +130,7 @@
                             </div>
                             <!-- End of Form -->
 
-                            <!-- Form -->
-                            <div class="col-md-6 mb-3">
-                                <div class="form-group mb-4">
-                                    <label for="{{ user_form.orgonization.id_for_label }}">{{ user_form.orgonization.label_tag }} </label>
-                                    <div class="input-group">
-                                        {{ user_form.orgonization }}
-                                    </div>
-                                    <span class="text-error">{{ user_form.orgonization.errors }}</span>
-                                </div>
-                            </div>
-                            <!-- End of Form -->
+                            
                         </div>
                         <div class="mt-3 mb-3"> 
                             <input class="btn btn-gray-800 mt-2 animate-up-2" form="user_form" name="user_form" type="submit" value="Update">
