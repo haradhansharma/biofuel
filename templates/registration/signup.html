@@ -183,6 +183,17 @@
                                     </label>
                                     <span class="text-error invalid-feedback">{{ form.newsletter_subscription.errors }}</span>
                                 </div>
+                                <!-- End of Form --> 
+
+                                <!-- Form -->
+                                <div class="form-check">
+                                    {{ form.is_public }}
+                                    <label class="mb-2 text-muted" for="{{ form.is_public.id_for_label }}">
+                                        {{ form.is_public.label }} 
+                                        
+                                    </label>
+                                    <span class="text-error invalid-feedback">{{ form.is_public.errors }}</span>
+                                </div>
                                 <!-- End of Form -->
 
                                  <!-- Form -->

@@ -472,7 +472,7 @@ def check_email(request):
 def partner_service(request, pk):
     from evaluation.models import NextActivities
     
-    visiting_user = get_object_or_404(User, pk=pk, is_active = True)
+    visiting_user = get_object_or_404(User, pk=pk, is_active = True, is_public = True)
     current_user = request.user
     next_activities = NextActivities.objects.filter(is_active = True).prefetch_related('quotnextactivity')
     visiting_users_selecetd = visiting_user.selected_activities

@@ -31,14 +31,15 @@ class PasswordChangeForm(PasswordChangeForm):
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('orgonization', 'username','first_name', 'last_name', 'email',  'phone', )        
+        fields = ('orgonization', 'username','first_name', 'last_name', 'email',  'phone', 'is_public', )        
         widgets = {                      
             'username': forms.TextInput(attrs={'placeholder': 'username', 'class':'form-control', 'aria-label':'username',  }),
             'first_name': forms.TextInput(attrs={'placeholder': 'first name', 'class':'form-control', 'aria-label':'first name' }),
             'last_name': forms.TextInput(attrs={'placeholder': 'last name','class':'form-control', 'aria-label':'last name', }), 
             'orgonization': forms.TextInput(attrs={'placeholder': 'My Organization','class':'form-control', 'aria-label':'organization', }), 
             'phone': forms.TextInput(attrs={'placeholder': 'phone','class':'form-control', 'aria-label':'phone', }), 
-            'email': forms.EmailInput(attrs={'placeholder': 'email', 'class':'form-control', 'aria-label':'email' , }),              
+            'email': forms.EmailInput(attrs={'placeholder': 'email', 'class':'form-control', 'aria-label':'email' , }),   
+            'is_public' : forms.CheckboxInput(attrs={"class": "form-check-input"})           
         }
         labels = {     
                      

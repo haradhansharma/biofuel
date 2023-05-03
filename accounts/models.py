@@ -88,6 +88,9 @@ class User(AbstractUser):
     term_agree = models.BooleanField(null=False, blank=False,)
     email_verified = models.BooleanField(default=False)
     newsletter_subscription = models.BooleanField(default=True)
+    is_public = models.BooleanField(default=True, verbose_name='Profile is Public', help_text='If true profile data visible to logged in other users of the platform.')
+    
+    
     
     
  

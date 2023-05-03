@@ -130,6 +130,18 @@
                             </div>
                             <!-- End of Form -->
 
+                            <!-- Form -->
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group mb-4">
+                                    <label for="{{ user_form.is_public.id_for_label }}">{{ user_form.is_public.label_tag }} </label>
+                                    <div class="input-group">
+                                        {{ user_form.is_public }}
+                                    </div>
+                                    <span class="text-error">{{ user_form.is_public.errors }}</span>
+                                </div>
+                            </div>
+                            <!-- End of Form -->
+
                             
                         </div>
                         <div class="mt-3 mb-3"> 

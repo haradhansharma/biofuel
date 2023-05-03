@@ -165,8 +165,8 @@ def user_types(request, slug):
     
     # pass user type data    
     try:
-        user_type = UserType.objects.prefetch_related('user_usertype').get(slug = slug)
-        users = user_type.user_usertype.filter(is_active = True)
+        user_type = UserType.objects.get(slug = slug)
+        users = User.objects.filter(usertype__slug = slug, is_active = True, is_public = True, is_staff = False, is_superuser=False)
     except:
         user_type = None
         users = None

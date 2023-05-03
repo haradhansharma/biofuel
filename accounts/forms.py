@@ -46,6 +46,8 @@ class UserCreationFormFront(UserCreationFormDjango):
     term_agree = forms.BooleanField(label = 'Agree Our', required=True,  widget=forms.CheckboxInput(attrs={"class": "form-check-input"}))
     newsletter_subscription = forms.BooleanField(label = 'Subscribe to our newsletter', required=True,  widget=forms.CheckboxInput(attrs={"class": "form-check-input"}))
     
+    
+    
     #implemeting google recapcha.
     captcha = ReCaptchaField( widget=ReCaptchaV2Checkbox)  
     
@@ -53,7 +55,7 @@ class UserCreationFormFront(UserCreationFormDjango):
     
     class Meta:
         model = get_user_model()
-        fields = ('orgonization', 'username', 'email', 'password1', 'password2', 'term_agree', 'newsletter_subscription', 'usertype', 'experts_in',)  
+        fields = ('orgonization', 'username', 'email', 'password1', 'password2', 'term_agree', 'newsletter_subscription', 'usertype', 'experts_in', 'is_public', )  
              
     
     
@@ -61,6 +63,7 @@ class UserCreationFormFront(UserCreationFormDjango):
                 'usertype': forms.Select(attrs={ 'class':'form-select', 'aria-label':'usertype', 'hx-post':"/check_type_to_get_expert/", 'hx-trigger':"change", 'hx-target':"#hx" , 'hx-swap':"innerHTML"}),                    
                 'experts_in': forms.Select(attrs={ 'class':'form-select', 'aria-label':'experts_in', }), 
                 'orgonization': forms.TextInput(attrs={'placeholder': 'My Organization','class':'form-control', 'aria-label':'organization', }),
+                'is_public' : forms.CheckboxInput(attrs={"class": "form-check-input"})
                 
                 
                 
