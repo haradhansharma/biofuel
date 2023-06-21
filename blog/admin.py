@@ -1,14 +1,11 @@
 from django.contrib import admin
-
 from blog.models import *
 from django.utils import timezone
-
-
-
-
+from django_summernote.admin import SummernoteModelAdmin
 
 @admin.register(BlogPost)
-class BlogPostAdmin(admin.ModelAdmin):
+class BlogPostAdmin(SummernoteModelAdmin):
+    summernote_fields = ('body',)
     list_display = ('title', 'slug', 'author', 'publish', 'updated', 'status',)
     list_filter = ('status', 'created', 'publish', 'author',)
     search_fields = ('title', 'body',)

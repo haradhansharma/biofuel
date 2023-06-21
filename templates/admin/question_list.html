@@ -2,30 +2,39 @@
 
 {% block content %}
     {% if label_pending_in_question %}
-    <div class="errornote">
-        <h4><u>Questions 'short order'es that can have no four labels or all labels have '0':</u> </h4>
+        <div class="errornote">
+            <h4>
+                <u>Questions 'short order'es that can have no four labels or all labels have '0':</u> 
+            </h4>
             {{label_pending_in_question}}
-    </div>
+        </div>
     {% endif %}
+
     {% if problem_in_options %}
-    <div class="errornote">
-        <h4><u>Questions 'short order'es that have "Yes" status is "True" but "positivie" is '0' OR "Don't Know" status is "True" but "positive" is "1" OR Type is "No" but "positive" is '1' OR Minimum Option lower then 3:</u> </h4>
+        <div class="errornote">
+            <h4>
+                <u>
+                    Questions 'short order'es that have "Yes" status is "True" but "positivie" is '0' OR "Don't Know" status is 
+                    "True" but "positive" is "1" OR Type is "No" but "positive" is '1' OR Minimum Option lower then 3:
+                </u> 
+            </h4>
             {{problem_in_options}}
-    </div>
+        </div>
     {% endif %}
 
 
     {% if not_door_but_no_parent %}
-    <div class="errornote">
-        <h4><u>Is door but no parent question:</u> </h4>
+        <div class="errornote">
+            <h4>
+                <u>
+                    Is door but no parent question:
+                </u> 
+            </h4>
             {{not_door_but_no_parent}}
-    </div>
+        </div>
     {% endif %}
 
-{{ block.super }} 
-
-
-
+    {{ block.super }} 
 
     
 {% endblock %}

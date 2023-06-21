@@ -32,9 +32,8 @@ class GfvpSitemap(sitemaps.Sitemap):
             'home:home',
             'home:dashboard',
             'home:user_settings',
-            'home:questions',
-            'home:quotations',
-             
+            'home:questionsint',
+            'home:quotations',             
             
             ] 
         
@@ -43,8 +42,8 @@ class GfvpSitemap(sitemaps.Sitemap):
         return reverse(item)      
     
 class UserSitemap(sitemaps.Sitemap):
-    changefreq = "daily"
-    priority = 0.8    
+    changefreq = "monthly"
+    priority = 0.5    
 
     def items(self):
         Users = get_user_model()
@@ -56,7 +55,7 @@ class UserSitemap(sitemaps.Sitemap):
         
     def location(self, obj):
         # return "/accounts/%s"  % (obj.username)
-        return reverse('accounts:user_link', args=[str(obj.username)])
+        return reverse('accounts:user_link')
     
 class UserTypeSitemap(sitemaps.Sitemap):
     changefreq = "monthly"

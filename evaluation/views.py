@@ -861,8 +861,6 @@ def eva_question(request, evaluator_id, slug):
     #meta
     meta_data = site_info()    
     meta_data['title'] = question.name
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = f"Depending on how many answers you provide, the self assessment will take anywhere from 10 to 33 minutes. At the end of the assessment, a PDF report will be provided."
     meta_data['tag'] = 'biofuel, evaluation'
     meta_data['robots'] = 'noindex, nofollow'
@@ -1046,8 +1044,6 @@ def eva_index2(request):
     #meta
     meta_data = site_info()    
     meta_data['title'] = 'Evaluation Index, starting point of evaluation process!'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = f"This is the starting point of biofuel evaluation process at green fuel validation platform. Here producer need to give authority information to start validation process!"
     meta_data['tag'] = 'biofuel, evaluation'
     meta_data['robots'] = 'noindex, nofollow'
@@ -1137,8 +1133,6 @@ def thanks(request):
     #meta
     meta_data = site_info()    
     meta_data['title'] = 'Thank you'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = f"This is the thank you page afte evaluation process completed. Here, registerd user can view his information and created reports. Also Can go to the profiel setting page."
     meta_data['tag'] = 'thank you, gf-vp.com'
     meta_data['robots'] = 'noindex, nofollow'
@@ -1313,8 +1307,6 @@ def nreport(request, slug):
     #meta
     meta_data = site_info()    
     meta_data['title'] = f'Analysis Report #{report.id}'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = f"Green fuel validation platform-Analysis Report."
     meta_data['tag'] = 'Analysis Report, gf-vp.com'
     meta_data['robots'] = 'noindex, nofollow'

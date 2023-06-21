@@ -65,7 +65,7 @@ def get_ip(request):
 def get_location_info(request):
     log.info('Geting Location details based on IP')
     ip = get_ip(request)
-    token = '6ef5b9c92955e8'
+    token = settings.IPINFO_TOKEN
     info_url = f'https://ipinfo.io/{ip}?token={token}'
     data = {}
     with urllib.request.urlopen(info_url) as url:
@@ -210,6 +210,7 @@ def leads(request):
             
             # If no qualified lead found system will redirect.                
             result_lead = Lead.objects.filter(pk__in = lead_ids, subscribed = True) 
+            
             log.info('recording leads whose are subscribed only...........')
             if not result_lead.exists():
                 messages.warning(request, "No Subscribed lead found")
@@ -224,7 +225,7 @@ def leads(request):
                 #To protect to be unsubscribe lead by robotic action                
                 pending_exists = MailQueue.objects.filter(to = rl.email_address, processed = False).count()   
                 try:             
-                    if not pending_exists:     
+                    if pending_exists <= 0:     
                         confirm_code = random_digits()
                         lead = Lead.objects.get(email_address = rl.email_address)
                         lead.confirm_code = confirm_code
@@ -244,6 +245,7 @@ def leads(request):
                 
             msg_process_to_queue = f"{process_count} Mail processed successfully in mail queue and {pending_in_queue} mail still exists in queue to sent!"     
             messages.success(request, msg_process_to_queue)
+            
             log.info(msg_process_to_queue)
             
         '''Save lead form CSV file'''    
@@ -259,12 +261,12 @@ def leads(request):
                     log.info('file is not CSV, so redirecting...........')
                     return HttpResponseRedirect(reverse('crm:leads'))  
                 
-                #protect to extra large
+                #protect to extra large    
                 if lead_upload.multiple_chunks():
-                    messages.error(request, 'Uploaded file is too big (%.2f MB)' %(lead_upload.size(1000*1000),))
+                    file_size_mb = lead_upload.size / (1024 * 1024)  # Convert file size to MB
+                    messages.error(request, f"Uploaded file is too big ({file_size_mb:.2f} MB)")
                     log.info('File is too big, redirecting.......')
-                    return HttpResponseRedirect(reverse('crm:leads'))  
-                
+                    return HttpResponseRedirect(reverse('crm:leads'))                
                 
                 data = csv.DictReader(chunk.decode() for chunk in lead_upload)
                 
@@ -281,7 +283,8 @@ def leads(request):
                 messages.error(request, f"\n There was {error_count} error! Please check file format, record's title and duplicate email before each upload! \n")       
                 log.info(f'{entry_count} leads added to the lead table and there was {error_count} error during saving.......')   
             else:
-                log.info('Upload form was Invalid')  
+                messages.error(request, f"\n Upload form was Invalid \n")   
+                log.error('Upload form was Invalid')  
             
     upload_csv_form = UploadLead()
     log.info('Lead upload form ready on get request.............')
@@ -292,8 +295,7 @@ def leads(request):
     log.info(f'Found {leads.count()} leads...........')
     
     #pagination
-    page = request.GET.get('page', 1)
-    log.info('Creating pagination............')
+    page = request.GET.get('page', 1)  
     paginator = Paginator(leads, 50)
     try:
         leads = paginator.page(page)
@@ -307,12 +309,10 @@ def leads(request):
     #meta
     meta_data = site_info()    
     meta_data['title'] = 'Leads'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = f'This is a simple CRM for Green Fuel Validation Platform.'
     meta_data['tag'] = 'crm'
     meta_data['robots'] = 'noindex, nofollow'
-    # meta_data['og_image'] = user_type.icon.url
+
     
     context = {        
         'leads': leads,
@@ -337,9 +337,8 @@ def unsubscrib(request, **kwargs):
         log.info(f'{un_email} unsubscribed from CRM mail!............')   
     except:
         messages.warning(request, "No email found or code expired!")
-        log.warning(f'Unsubscribed action attempt where no {un_email} email found or code exppired!!!!!!!!!!!!!!!!!!!!')
-        return HttpResponseRedirect(reverse('home:home'))        
-        
+        log.warning(f'Unsubscribed action attempt where no {un_email} email found or code exppired!')
+        return HttpResponseRedirect(reverse('home:home'))   
         
     return render(request, 'crm/unsubscribed.html', {'lead': lead, 'action': 'unsubscribed'})
 

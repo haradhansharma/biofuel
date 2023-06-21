@@ -5,7 +5,10 @@
 @import '../assets/vendor/font-awesome/css/brands.min.css';
 @import '../assets/vendor/font-awesome/css/solid.min.css';
 
-
+.popover-header {
+  background-color: #214768;
+  color: #eff4f5;
+}
 .feedbakbtn{
   z-index: 1000;
 }
@@ -22,13 +25,12 @@
 }
 
 
-
-
 .disabled {
   color: #777;
   opacity: 0.5;
   pointer-events: none;
 }
+
 #atgtable .table td, #atgtable .table th {
   font-size: 0.875rem;
   white-space:normal;
@@ -39,6 +41,7 @@
 .bgjessica-primary{
   background-color: #7c9c9c!important;
 }
+
 .bgjessica-primary2{
   background: #7c9c9c!important;
 }

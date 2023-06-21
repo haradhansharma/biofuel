@@ -51,57 +51,43 @@ from django.core.mail import mail_admins, send_mail
 from accounts.helper import send_admin_mail
 import requests
 from django.core.cache import cache
-
-
+from evaluation.helper import get_all_questions
+from django.views.decorators.cache import cache_control
 
 import logging
 log =  logging.getLogger('log')
 
 
-
-
-
 def home(request):
     #skip session error
     null_session(request)  
-    # pass user type  
     
-    log.info(f'Home page accessed by_____________ {request.user}')
-    
-
-    
+    log.info(f'Home page accessed by_____________ {request.user}')    
     
     # First, check if the 'user_types' queryset is already cached
     user_types = cache.get('user_types')
     if user_types is None:
         # If not, fetch the queryset from the database and cache it for future use
         user_types = UserType.objects.all().order_by('sort_order')
-        cache.set('user_types', user_types, 1800)
-    
-    
-    
-
-    
+        cache.set('user_types', user_types, 1800)     
     
     # Next, check if the 'latest_blogs' queryset is already cached
     latest_3_blogs = cache.get('latest_3_blogs')
     if latest_3_blogs is None:
+        
         # If not, fetch the queryset from the database and cache it for future use
-        latest_3_blogs = BlogPost.published.filter(status='published').order_by('-publish')[:3]
+        latest_3_blogs = BlogPost.published.filter(status='published').order_by('publish').reverse()[:3]
+            
         # Use prefetch_related to fetch related tags queryset in a single query
         latest_3_blogs = latest_3_blogs.prefetch_related('tags')
         cache.set('latest_3_blogs', latest_3_blogs, 1800)        
         
     #meta
     meta_data = site_info()    
-    meta_data['title'] = 'Home'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['title'] = 'Green Fuel Validation Platform'
     meta_data['description'] = 'New international platform will help increase supply for sustainable fuels for the marine market!'
     meta_data['tag'] = 'green, fuel, validation, marine, biofuel, alfa, laval, MASH, MAN, ENERGY'
-    meta_data['robots'] = 'index, follow'
-    meta_data['og_image'] = site_info().get('og_image')
-    
+    meta_data['robots'] = 'index, follow'      
     
     context = {
         'user_types': user_types ,        
@@ -116,16 +102,14 @@ def user_types(request, slug):
     '''
     Types of user are listed here. User signup journey must be started from here by selecting desired user type.
     Same type of user and admin and staff can have permission to visit this page
-    '''  
-    
+    '''      
     
     #skipp error
     null_session(request)    
     log.info(f'User type page accessed by_____________ {request.user}')
     
     #role player
-    request.session['interested_in'] = slug      
-    
+    request.session['interested_in'] = slug          
     
     # ensire user logged to evaluation enrolment 
     try:
@@ -175,11 +159,9 @@ def user_types(request, slug):
     #meta
     meta_data = site_info()    
     meta_data['title'] = user_type.name if user_type is not None else 'Page for Biofuel User Type'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = f'This is the page for {user_type.name if user_type is not None else "user type registered in our platform"}. This is not a indivisual page for a registered user!!'
     meta_data['tag'] = 'biofuel, usertype, consumer, producer, experts, marine'
-    meta_data['robots'] = 'index, follow'
+    meta_data['robots'] = 'index, follow' 
     meta_data['og_image'] = user_type.icon.url
     
     context = {
@@ -193,6 +175,7 @@ def user_types(request, slug):
 
 
 @login_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def dashboard(request):
     #skipping session error essential for signup process
     null_session(request)  
@@ -202,18 +185,15 @@ def dashboard(request):
     #dashboard summary
     wr = weeks_results(request)
     day_of_week = [key.split(': ') for key in wr.keys()]    
-    total_of_day = list(wr.values())
-     
+    total_of_day = list(wr.values())     
     
     #meta
     meta_data = site_info()    
     meta_data['title'] = 'Dashboard'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = f'The Dashboard displays the consolidated reports and allows approved user types to perform some limited administrative operations.'
     meta_data['tag'] = 'biofuel, dashboard, operation'
     meta_data['robots'] = 'noindex, nofollow'
-    # meta_data['og_image'] = user_type.icon.url
+
     
     context = {
         'user_of_labels' : users_under_each_label(request),
@@ -228,346 +208,17 @@ def dashboard(request):
     
     return render(request, 'home/dashboard.html', context = context)
 
-@login_required
-def user_setting(request):   
-    null_session(request) 
-    log.info(f'User setting page accessed by_____________ {request.user}')
-
-    if request.method == "POST":
-        user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=request.user.profile)
-        password_form = PasswordChangeForm(user=request.user, data=request.POST)    #new
-        company_logo_form = CompanyLogoForm(request.POST, request.FILES, instance=request.user.profile)    #new
-        
-        
-        if 'user_form' in request.POST:        
-            if user_form.is_valid():
-                user_form.save() 
-                messages.success(request,('Genarel information was successfully updated!'))	
-            else:
-                messages.error(request, 'Invalid form submission.')                
-                messages.error(request, user_form.errors)  	 
-        if 'profile_form' in request.POST:      
-            if profile_form.is_valid():
-                profile_form.save()
-                messages.success(request,('Profile data was successfully updated!'))
-            else:
-                messages.error(request, 'Invalid form submission.')
-                messages.error(request, profile_form.errors)
-        if 'password_form' in request.POST:      #new
-            if password_form.is_valid():
-                password_form.save()
-                messages.success(request,('Password Updated successfully!'))
-            else:
-                messages.error(request, 'Invalid form submission.')
-                messages.error(request, password_form.errors)
-                
-        if 'company_logo_form' in request.POST:      #new
-            if company_logo_form.is_valid():
-                company_logo_form.save()
-                messages.success(request,('Company Logo Updated successfully!'))
-            else:
-                messages.error(request, 'Invalid form submission.')
-                messages.error(request, company_logo_form.errors)
-                      
-        
-        return HttpResponseRedirect(reverse('home:user_settings'))
-    user_form = UserForm(instance=request.user)
-    profile_form = ProfileForm(instance=request.user.profile)
-    password_form = PasswordChangeForm(user=request.user)    #new  
-    company_logo_form = CompanyLogoForm(instance=request.user.profile)    #new  
-    
-    
-    
-    #meta
-    meta_data = site_info()    
-    meta_data['title'] = 'User Settings'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
-    meta_data['description'] = f'This page is designated to setup user account and user profile.'
-    meta_data['tag'] = 'settings, user profile'
-    meta_data['robots'] = 'noindex, nofollow'
-    # meta_data['og_image'] = user_type.icon.url  
-    
-    context = {
-        "user":request.user,
-        "user_form":user_form,
-        "profile_form":profile_form, 
-        "password_form":password_form, 
-        "company_logo_form" : company_logo_form,
-        'site_info' : meta_data          
-    }
-    return render(request, 'home/settings.html', context = context)
-
-@login_required
-def delete_avatar(request):    
-    user = request.user
-    profile = user.get_profile
-    profile.company_logo.delete()
-    profile.company_logo = ''
-    profile.save()
-    
-    return HttpResponseRedirect(reverse('home:user_settings'))
-
-
-@login_required
-def password_change(request):   
-    null_session(request) 
-    log.info(f'Passowrd changed page accessed by_____________ {request.user}')
-    if request.method == "POST":        
-        password_form = PasswordChangeForm(user=request.user, data=request.POST)        
-        if password_form.is_valid():            
-            password_form.save()            
-            update_session_auth_hash(request, password_form.user)            
-            messages.success(request,('Your password was successfully updated!')) 
-        else:
-            messages.error(request, 'Invalid form submission.')            
-            messages.error(request, password_form.errors)      
-        
-        return HttpResponseRedirect(reverse('home:change_pass'))    
-    password_form = PasswordChangeForm(request.user)  
-    
-    #meta
-    meta_data = site_info()    
-    meta_data['title'] = 'Change Password'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
-    meta_data['description'] = f'Password is the key to protect account. Here user can manage self password.'
-    meta_data['tag'] = 'user, password, change'
-    meta_data['robots'] = 'noindex, nofollow'
-    # meta_data['og_image'] = user_type.icon.url
-    
-    context = {
-        "user":request.user,        
-        "password_form":password_form,
-        'site_info' : meta_data   
-    }
-    return render(request, 'home/change_pass.html', context = context)
-
-
-# It is DRY helper to get questions based on user expert type
-def get_question_of_label(request): 
-    # Get where user are expert
-    curent_user_expert_in = request.user.experts_in
-   
-    # get that lebels, here value define which one are using for this question
-    # if multilabel value is one then this question should be displayed to the multi type of expert.
-    label_to_question = Label.objects.filter(name = curent_user_expert_in, value = str(1))
-    
-    
-    
-    if request.user.is_staff or request.user.is_superuser or request.user.is_expert or request.user.is_marine:
-        # Staff of super user are accesable to all questions
-        questions = [q for q in Question.objects.filter(is_active = True)]
-    ##=======
-    ## below is deactivated as expert has no access to questions as per latest instruction
-    ##=======
-    # elif request.user.is_expert:   
-    #     # Only user that have label of this question as expert can access this. 
-    #     questions = []
-    #     for q in label_to_question:
-    #         if q.question.is_active:
-    #             questions.append(q.question)
-    #         else:
-    #             continue   
-    else:
-        raise PermissionDenied         
-    return questions
-
-def child_modal_data(request, id):
-    questions = Question.objects.get(id=id)
-    
-    context = {
-        'qquestion': questions      
-    }
-    
-    return render(request, 'home/child_modal_data.html', context = context)
-    
-
-@login_required
-@expert_required
-def quotations(request):  
-    '''get questions related to the current user'''
-    
-    
-    # This is essential where login_required
-    null_session(request)
-    log.info(f'Quotations page accessed by_____________ {request.user}')
-        
-    # we need permitted question based on expertise type
-    questions = get_question_of_label(request)
-    
-    # build parent          
-    parents = []
-    for question in questions:        
-        if question.is_door == True:
-            parents.append(question)
-            
-            
-    #build results of chaptariged questions       
-    results = []    
-    for parent in parents:         
-        data = {
-            parent : [child for child in questions if child.parent_question == parent]
-        }
-        results.append(data)    
-    
-    #Paginated response
-    page = request.GET.get('page', 1)
-    paginator = Paginator(results, 12)
-    try:
-        results = paginator.page(page)
-    except PageNotAnInteger:
-        results = paginator.page(1)
-    except EmptyPage:
-        results = paginator.page(paginator.num_pages)
-        
-    #meta
-    meta_data = site_info()    
-    meta_data['title'] = 'Quotations'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
-    meta_data['description'] = f'Every question is allowed to include one or more quotations.  It is created by the biofuel experts.'
-    meta_data['tag'] = 'quotation, quotations'
-    meta_data['robots'] = 'noindex, nofollow'
-    # meta_data['og_image'] = user_type.icon.url
-    
-    context = {
-        'questions': results,
-        'site_info' : meta_data   
-                
-    }
-    
-    return render(request, 'home/quotations.html', context = context)
-
-
-@login_required
-@expert_required
-def quotationsatg(request):  
-    '''get questions related to the current user'''
-    
-    
-    # This is essential where login_required
-    null_session(request)
-    log.info(f'QuotationsATG page accessed by_____________ {request.user}')
-    if request.user.is_staff or request.user.is_superuser:
-        results = Quotation.objects.all().order_by('-id')         
-    else:
-        results = Quotation.objects.filter(service_provider = request.user).order_by('-id')  
-        
-        
-    
-    
-    #Paginated response
-    page = request.GET.get('page', 1)
-    paginator = Paginator(results, 12)
-    try:
-        results = paginator.page(page)
-    except PageNotAnInteger:
-        results = paginator.page(1)
-    except EmptyPage:
-        results = paginator.page(paginator.num_pages)
-        
-    #meta
-    meta_data = site_info()    
-    meta_data['title'] = 'Quotations ATG'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
-    meta_data['description'] = f'Questions at a glance is allowed to include one or more quotations.  It is created by the biofuel experts.'
-    meta_data['tag'] = 'quotation, quotations. at a glance'
-    meta_data['robots'] = 'noindex, nofollow'
-    # meta_data['og_image'] = user_type.icon.url
-    
-    context = {
-        'quotations': results,
-        'site_info' : meta_data   
-                
-    }
-    
-    return render(request, 'home/quotationsatg.html', context = context)
-    
-
-
 
 @login_required
 @marine_required
-def questions(request):  
-    '''get questions related to the current user'''    
-    
-    # This is essential where login_required
-    null_session(request)
-    log.info(f'Questions page accessed by_____________ {request.user}')  
-    # we need permitted question based on expertise type
-    questions = get_question_of_label(request)    
-    
-    # build parent         
-    parents = []
-    for question in questions:        
-        if question.is_door == True:
-            parents.append(question)            
-            
-    #build results of chaptariged questions       
-    results = []    
-    for parent in parents:         
-        data = {
-            parent : [child for child in questions if child.parent_question == parent]
-        }
-        results.append(data)    
-    
-    #Paginated response
-    page = request.GET.get('page', 1)
-    paginator = Paginator(results, 12)
-    try:
-        results = paginator.page(page)
-    except PageNotAnInteger:
-        results = paginator.page(1)
-    except EmptyPage:
-        results = paginator.page(paginator.num_pages)
-        
-    #meta
-    meta_data = site_info()    
-    meta_data['title'] = 'Questions'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
-    meta_data['description'] = f'Here is a collection of specialized questions. The questions and their contents are editable by authorized users.'
-    meta_data['tag'] = 'question, chapter'
-    meta_data['robots'] = 'noindex, nofollow'
-    # meta_data['og_image'] = user_type.icon.url
-    
-    context = {
-        'questions': results,
-        'site_info' : meta_data    
-    }
-    
-    return render(request, 'home/questions.html', context = context)
-
-
-
-@login_required
-@marine_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def questionsint(request):  
     '''get questions related to the current user'''    
     
     # This is essential where login_required
     null_session(request)
-    log.info(f'Questions Int page accessed by_____________ {request.user}')  
-    # we need permitted question based on expertise type
-    questions = get_question_of_label(request)    
     
-    # # build parent         
-    # parents = []
-    # for question in questions:        
-    #     if question.is_door == True:
-    #         parents.append(question)            
-            
-    # #build results of chaptariged questions       
-    # results = []    
-    # for parent in parents:         
-    #     data = {
-    #         parent : [child for child in questions if child.parent_question == parent]
-    #     }
-    #     results.append(data)    
-        
+    log.info(f'Questions Int page accessed by_____________ {request.user}')      
         
     parents = Question.objects.filter(is_door=True).prefetch_related('child')
 
@@ -593,12 +244,10 @@ def questionsint(request):
     #meta
     meta_data = site_info()    
     meta_data['title'] = 'Questions Interface'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = f'Here is a collection of specialized questions to get feedback from Marine Expert. The questions and their contents are editable by Marine Expert only.'
     meta_data['tag'] = 'question, Interface, chapter'
     meta_data['robots'] = 'noindex, nofollow'
-    # meta_data['og_image'] = user_type.icon.url
+
     
     context = {
         'questions': results,
@@ -609,7 +258,262 @@ def questionsint(request):
 
 
 @login_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def user_setting(request):   
+    
+    null_session(request) 
+    
+    log.info(f'User setting page accessed by_____________ {request.user}')
+
+    if request.method == "POST":
+        user_form = UserForm(request.POST, instance=request.user)
+        
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        
+        password_form = PasswordChangeForm(user=request.user, data=request.POST)
+        
+        company_logo_form = CompanyLogoForm(request.POST, request.FILES, instance=request.user.profile)
+        
+        
+        if 'user_form' in request.POST:        
+            if user_form.is_valid():
+                user_form.save() 
+                messages.success(request,('Genarel information was successfully updated!'))	
+            else:
+                messages.error(request, 'Invalid form submission.')                
+                messages.error(request, user_form.errors)  	 
+                
+                
+        if 'profile_form' in request.POST:      
+            if profile_form.is_valid():
+                profile_form.save()
+                messages.success(request,('Profile data was successfully updated!'))
+            else:
+                messages.error(request, 'Invalid form submission.')
+                messages.error(request, profile_form.errors)
+                
+                
+        if 'password_form' in request.POST:    
+            if password_form.is_valid():
+                password_form.save()
+                messages.success(request,('Password Updated successfully!'))
+            else:
+                messages.error(request, 'Invalid form submission.')
+                messages.error(request, password_form.errors)
+                
+        if 'company_logo_form' in request.POST:  
+            if company_logo_form.is_valid():
+                company_logo_form.save()
+                messages.success(request,('Company Logo Updated successfully!'))
+            else:
+                messages.error(request, 'Invalid form submission.')
+                messages.error(request, company_logo_form.errors)
+                      
+        
+        return HttpResponseRedirect(reverse('home:user_settings'))
+    
+    user_form = UserForm(instance=request.user)
+    
+    profile_form = ProfileForm(instance=request.user.profile)
+    
+    password_form = PasswordChangeForm(user=request.user)  
+    
+    company_logo_form = CompanyLogoForm(instance=request.user.profile)        
+    
+    
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'User Settings' 
+    meta_data['description'] = f'This page is designated to setup user account and user profile.'
+    meta_data['tag'] = 'settings, user profile'
+    meta_data['robots'] = 'noindex, nofollow'
+
+    
+    context = {
+        "user":request.user,
+        "user_form":user_form,
+        "profile_form":profile_form, 
+        "password_form":password_form, 
+        "company_logo_form" : company_logo_form,
+        'site_info' : meta_data          
+    }
+    return render(request, 'home/settings.html', context = context)
+
+
+@login_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def delete_avatar(request):    
+    user = request.user
+    profile = user.get_profile
+    profile.company_logo.delete()
+    profile.company_logo = ''
+    profile.save()
+    
+    return HttpResponseRedirect(reverse('home:user_settings'))
+
+
+@login_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def password_change(request):   
+    null_session(request) 
+    log.info(f'Passowrd changed page accessed by_____________ {request.user}')
+    if request.method == "POST":        
+        password_form = PasswordChangeForm(user=request.user, data=request.POST)        
+        if password_form.is_valid():            
+            password_form.save()            
+            update_session_auth_hash(request, password_form.user)            
+            messages.success(request,('Your password was successfully updated!')) 
+        else:
+            messages.error(request, 'Invalid form submission.')            
+            messages.error(request, password_form.errors)      
+        
+        return HttpResponseRedirect(reverse('home:change_pass'))    
+    password_form = PasswordChangeForm(request.user)  
+    
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Change Password'
+    meta_data['description'] = f'Password is the key to protect account. Here user can manage self password.'
+    meta_data['tag'] = 'user, password, change'
+    meta_data['robots'] = 'noindex, nofollow'
+
+    
+    context = {
+        "user":request.user,        
+        "password_form":password_form,
+        'site_info' : meta_data   
+    }
+    return render(request, 'home/change_pass.html', context = context)
+
+
+@login_required
+def get_question_of_label(request):      
+    if request.user.is_staff or request.user.is_superuser or request.user.is_expert or request.user.is_marine:       
+        questions = get_all_questions()    
+    else:
+        raise PermissionDenied         
+    return questions
+
+
+
+@login_required
 @expert_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def child_modal_data(request, id):
+ 
+    try:
+        questions = Question.objects.prefetch_related('child__testfor', 'child__quotations_related_questions').get(id = id)
+    except Exception as e:   
+        return HttpResponse('No Quotation Found!')
+    
+    
+    context = {
+        'qquestion': questions      
+    }
+    
+    return render(request, 'home/child_modal_data.html', context = context)
+    
+
+@login_required
+@expert_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def quotations(request):  
+    '''get questions related to the current user'''
+    
+    
+    # This is essential where login_required
+    null_session(request)
+    log.info(f'Quotations page accessed by_____________ {request.user}')
+            
+        
+    
+    parents = Question.objects.filter(is_door=True).prefetch_related('child','child__testfor', 'child__quotations_related_questions')
+ 
+    
+    results = []
+    for parent in parents:
+        children = parent.child.all()  
+        data = {
+            parent: children
+        }
+        results.append(data)
+    
+        
+    
+    
+    #Paginated response
+    page = request.GET.get('page', 1)
+    paginator = Paginator(results, 12)
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        results = paginator.page(1)
+    except EmptyPage:
+        results = paginator.page(paginator.num_pages)
+        
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Quotations'
+    meta_data['description'] = f'Every question is allowed to include one or more quotations.  It is created by the biofuel experts.'
+    meta_data['tag'] = 'quotation, quotations'
+    meta_data['robots'] = 'noindex, nofollow'
+
+    
+    context = {
+        'questions': results,
+        'site_info' : meta_data   
+                
+    }
+    
+    return render(request, 'home/quotations.html', context = context)
+
+
+@login_required
+@expert_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def quotationsatg(request):  
+    '''get questions related to the current user'''    
+    
+    # This is essential where login_required
+    null_session(request)
+    
+    log.info(f'QuotationsATG page accessed by_____________ {request.user}')
+    
+    if request.user.is_staff or request.user.is_superuser:
+        results = Quotation.objects.all().order_by('-id').prefetch_related('related_questions', 'test_for')         
+    else:
+        results = Quotation.objects.filter(service_provider = request.user).order_by('-id').prefetch_related('related_questions', 'test_for')         
+    
+    
+    #Paginated response
+    page = request.GET.get('page', 1)
+    paginator = Paginator(results, 12)
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        results = paginator.page(1)
+    except EmptyPage:
+        results = paginator.page(paginator.num_pages)
+        
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = 'Quotations ATG'
+    meta_data['description'] = f'Questions at a glance is allowed to include one or more quotations.  It is created by the biofuel experts.'
+    meta_data['tag'] = 'quotation, quotations. at a glance'
+    meta_data['robots'] = 'noindex, nofollow'
+
+    
+    context = {
+        'quotations': results,
+        'site_info' : meta_data   
+                
+    }
+    
+    return render(request, 'home/quotationsatg.html', context = context) 
+
+@login_required
+@expert_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def add_quatation(request, slug): 
     '''
     quotation can be created by indivisual expert
@@ -690,8 +594,8 @@ def add_quatation(request, slug):
             form = QuotationForm(request.POST,  request.FILES, instance=check_quotation.first(), initial={'test_for': question} )  
             test_for  = request.POST.get('test_for')        
             if question.id == int(test_for):
-                if form.is_valid():
-                    
+                
+                if form.is_valid():                   
                         
                     new_quatation = form.save(commit=False)
                     new_quatation.service_provider = request.user
@@ -723,12 +627,10 @@ def add_quatation(request, slug):
     #meta
     meta_data = site_info()    
     meta_data['title'] = 'Add/edit Quotation'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = f'The place to add or edit quotation under specific question by the marine expert.'
     meta_data['tag'] = 'quotation'
     meta_data['robots'] = 'noindex, nofollow'
-    # meta_data['og_image'] = user_type.icon.url
+
     
     context = {
         'question': question,
@@ -749,6 +651,7 @@ def get_verbose_name(instance, field_name):
 
 # sub function for making PDF
 @login_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def quotation_report2(request, quotation_data):
     null_session(request)
     '''
@@ -765,7 +668,7 @@ def quotation_report2(request, quotation_data):
     from reportlab.lib.colors import black, blue, red
     from reportlab.platypus import  Paragraph
     
-    site_data = site_info()
+    # site_data = site_info()
     
     # Create a file-like buffer to receive PDF data.
     buffer = io.BytesIO()
@@ -780,7 +683,7 @@ def quotation_report2(request, quotation_data):
     c.setFont("Times-Roman", 20)
     
     
-    #reference to make pdf
+    #reference 
     # https://stackoverflow.com/questions/69537038/django-with-reportlab-pdf
     # https://stackoverflow.com/questions/44970128/django-reportlab-generates-empty-pdf
     # https://stackoverflow.com/questions/37697686/python-reportlab-two-items-in-the-same-row-on-a-paragraph
@@ -996,21 +899,8 @@ def questions_details(request, slug):
     log.info(f'Question detail accessed by_____________ {request.user}')
     #controling front end from session
     if 'extra' not in request.session:
-        request.session['extra'] = 0
-    
-    #validating question is active 
-    # res_question = get_object_or_404(Question, slug = slug, is_active = True)
-    
-    #get questions related to the current expert
-    # curent_user_expert_in = request.user.experts_in    
-    # if request.user.is_staff or request.user.is_superuser:
-    #     question = res_question
-    # else:   
-    #     try:
-    #         label_to_question = Label.objects.get(name = curent_user_expert_in, value = str(1), question = res_question)
-    #         question = label_to_question.question
-    #     except:
-    #         raise PermissionDenied   
+        request.session['extra'] = 0    
+  
     
     ## it has been added by deactivating previous code as all question can be edited by the marine expert and marine expert 
     ## should not required to select expertise
@@ -1052,13 +942,9 @@ def questions_details(request, slug):
     #meta
     meta_data = site_info()    
     meta_data['title'] = 'Question in edit mode'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = f'This is the place to view indivisual question in edit mode.'
     meta_data['tag'] = 'Question'
-    meta_data['robots'] = 'noindex, nofollow'
-    # meta_data['og_image'] = user_type.icon.url
-    
+    meta_data['robots'] = 'noindex, nofollow'    
     
     
     context = {
@@ -1095,8 +981,7 @@ def new_questions(request):
                 return HttpResponseRedirect(reverse('home:questions'))
             
         else:
-            return render(request, 'home/new_question.html', {
-                
+            return render(request, 'home/new_question.html', {                
                 'question_form': question_form,
                 'option_formset': option_formset,
             })
@@ -1108,17 +993,12 @@ def new_questions(request):
     #meta
     meta_data = site_info()    
     meta_data['title'] = 'Add New Question'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = f'Here new question can be added by the marine expert. The added question will be justified and reformated by the Admin.'
     meta_data['tag'] = 'Question'
-    meta_data['robots'] = 'noindex, nofollow'
-    # meta_data['og_image'] = user_type.icon.url
+    meta_data['robots'] = 'noindex, nofollow'    
     
     
-    
-    context = {
-        
+    context = {        
         'question_form': question_form,
         'option_formset': option_formset,
         'site_info' : meta_data    
@@ -1136,13 +1016,9 @@ def allreports(request):
     #meta
     meta_data = site_info()    
     meta_data['title'] = 'Evaluation reports of Biofuels.'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = f'Report genareted by the biofuel producer are listed here. Admin can see all reports and reports created by the producer can see self reports.'
     meta_data['tag'] = 'biofuel, evaluation, reports'
-    meta_data['robots'] = 'noindex, nofollow'
-    # meta_data['og_image'] = user_type.icon.url
-    
+    meta_data['robots'] = 'noindex, nofollow'    
     
     context = {
         'allreports' : all_reports(request), 
@@ -1152,7 +1028,7 @@ def allreports(request):
     return render(request, 'home/all_reports.html', context = context)
 
 
-from django.forms import formset_factory
+
 def check_type_to_get_expert(request):
     user_type_id = request.POST.get('usertype')
     user_type = UserType.objects.get(id = user_type_id)
@@ -1211,10 +1087,8 @@ def webmanifest(request):
 @method_decorator(marine_required, name='dispatch')
 class AddSugestion(View):
     get_temp = 'home/add_sugestion.html'  
-    # post_temp = 'home/post_sugestion.html'  
     
-    form_class = SugestionForm   
-    
+    form_class = SugestionForm       
     
     def get(self, request, *args, **kwargs):
         sugestion_form = self.form_class()
@@ -1273,16 +1147,15 @@ class AddSugestion(View):
            
             msg = ["Suggestion submitted successfully for review! Once it is approved question will be updated!"]
         else:
-            msg = sugestion_form.errors
-            
+            msg = sugestion_form.errors           
             
             
         context = {
         'sugestion_form' : sugestion_form,
         'slug' : slug,
         'msg' : msg,
-        'question' : question        }
-        
+        'question' : question
+        }        
        
         
         return render(request, self.get_temp, context = context)
@@ -1311,8 +1184,7 @@ def get_edit_sugestion(request, slug, pk):
 @marine_required
 def get_sugestion_list(request, slug):   
  
-    question = get_object_or_404(Question, slug = slug, is_active = True)
-    
+    question = get_object_or_404(Question, slug = slug, is_active = True)    
     
     context = {  
     'slug' : slug,
@@ -1348,33 +1220,25 @@ def sugest_new_ques_option(request):
             author = request.user 
             sug = form.save(commit = False)
             sug.sugested_by = author
-            sug.save()
-            
+            sug.save()            
             
             subject = f'#{sug.id}-Sugestion posted or updated by {sug.sugested_by.username}'
             message = 'Hello Admin,\n\nThis is an important notification about update in sugestion model that new sugestion creatd or edited by the {}.\n\nBest regards,\nAdmin Team'.format(sug.sugested_by.username)
                    
-            send_admin_mail(subject, message)
-            
-                
+            send_admin_mail(subject, message)          
                 
            
             msg.extend(["Suggestion submitted successfully for review! Once it is approved question will be updated!"])
         else:
-            msg.extend(form.errors)
-                
-    
+            msg.extend(form.errors)       
     
     context = {
         'msg' : msg,
         'form' : form,
         'new_sugestions' : new_sugestions,
         'my_sugested_questions' : get_sugested_questions(request)
-    }
-    
+    }    
     return render(request, "home/sugest_new.html", context)
-
-
 
 @login_required
 @marine_required
@@ -1410,9 +1274,7 @@ def get_edit_new_sugestion(request, pk):
             message = 'Hello Admin,\n\nThis is an important notification about update in sugestion model that new sugestion creatd or edited by the {}.\n\nBest regards,\nAdmin Team'.format(sug.sugested_by.username)
                 
                       
-            send_admin_mail(subject, message)
-          
-                
+            send_admin_mail(subject, message)     
                 
             
             msg.extend(["Suggestion submitted successfully for review! Once it is approved question will be updated!"]) 
@@ -1424,9 +1286,9 @@ def get_edit_new_sugestion(request, pk):
     
     
     context = {
-    'form' : sugestion_form,    
-    'pk' : pk,
-    'msg' : msg
+        'form' : sugestion_form,    
+        'pk' : pk,
+        'msg' : msg
     
     }
     
@@ -1438,10 +1300,8 @@ def get_edit_new_sugestion(request, pk):
 def get_new_sugestion_list(request):   
     new_sugestions = Suggestions.objects.filter(question = None, sugested_by = request.user).order_by('-updated')     
     
-    context = { 
-    
-    'new_sugestions' : new_sugestions,
-    
+    context = {     
+        'new_sugestions' : new_sugestions,    
     }
     
     return render(request, 'home/new_nested_sugestion_list.html', context = context)
@@ -1452,9 +1312,10 @@ def get_new_sugestion_list(request):
 @login_required
 @expert_required
 def add_new_service(request, user_id):
+    
     # from evaluation.helper import get_sugested_questions
     form = NextActivitiesForm(request.POST or None, request=request)    
-    # myservices = NextActivities.objects.filter(created_by = request.user).order_by('-update_date')   
+
     current_user = request.user  
     if user_id == 'None':        
         return HttpResponse('You have not logged in and it is unethical operation!')
@@ -1501,40 +1362,30 @@ def add_new_service(request, user_id):
                 msg.extend([f'An existing service found for the questions you selected which is "{service.name_and_standared}"! \
                     If it is not in the list then may be waiting for approval by the admin. \
                     Please select that one! We appreciate your help to run the platform smooth! \
-                    '])
-                
-            
-           
-                
+                    '])       
            
         else:
             msg.extend(form.errors)
             
         data = {
-            'msg' : msg,
-            # 'form' : form,
+            'msg' : msg,    
             'visiting_user' : visiting_user,
             'current_user' : current_user,
             'next_activities' : next_activities,
-            'na_in_una' : [na.next_activity for na in una.all()]
+            'na_in_una' : [na.next_activity for na in una]
             
         }
         
         context.update(data)
             
         return render(request, 'registration/commit_service.html', context = context)
-                
-    
-    
     
     
     data = {
             'msg' : msg,
             'form' : form,
             'visiting_user' : visiting_user,
-            'current_user' : current_user,
-            # 'myservices' : myservices,
-            # 'my_sugested_questions' : get_sugested_questions(request)
+            'current_user' : current_user,          
         }
         
     context.update(data)

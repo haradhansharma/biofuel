@@ -47,8 +47,10 @@
                                         <div class="col-8 d-flex">
                                             <div class="flex-fill border rounded p-2 bg-white">
                                             <div class="">
-                                            <h6 class="border-bottom border-danger">Graphical Visualization</h6>
-                                            <div class="ct-chart-ranking ct-golden-section ct-series-a col-12"></div>   
+                                                <h6 class="border-bottom border-danger">Graphical Visualization</h6>
+                                                <!--
+                                                <div class="ct-chart-ranking ct-golden-section ct-series-a col-12"></div>  
+                                                --> 
                                             </div>
                                             <div class="col-12">
                                                 <div class="row pt-4">
@@ -245,22 +247,23 @@
                                   
                                         {% endfor %}
                                         </div>
-                                    </div>   
+                                    </div>  
+                                    <!-- 
                                     <div class="row justify-content-center align-items-center">
                                         <h3 id="bfh" class="border-bottom border-3 border-danger">BIOFUEL HISTORY:</h3> 
-                                    {% for d in dfh %} 
-                                    {% for k, label_and_datalist in d.items %}  
-                                    
-                                    <div class="col-6 d-flex mb-4">
-                                        <div class="flex-fill border rounded p-2">                                                                      
-                                            <div class="ct-chart-compjs ct-chart-com ct-chart-compare{{k}} ct-golden-section ct-series-a"></div> 
-                                            <small>{{k}}</small>                                            
-                                        </div>
-                                        
+                                        {% for d in dfh %} 
+                                            {% for k, label_and_datalist in d.items %}                                          
+                                                <div class="col-6 d-flex mb-4">
+                                                    <div class="flex-fill border rounded p-2">                                                                      
+                                                        <div class="ct-chart-compjs ct-chart-com ct-chart-compare{{k}} ct-golden-section ct-series-a"></div> 
+                                                        <small>{{k}}</small>                                            
+                                                    </div>
+                                                    
+                                                </div>
+                                            {% endfor %}
+                                        {% endfor %}
                                     </div>
-                                    {% endfor %}
-                                    {% endfor %}
-                                    </div>
+                                    -->
 
                                                        
                                 </div>

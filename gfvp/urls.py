@@ -29,21 +29,16 @@ urlpatterns = [
     path('', include('guide.urls')),
     path('', include('blog.urls')),
     path('g/', include('glossary.urls')),
-    path('feedback/', include('feedback.urls')),
-    
+    path('feedback/', include('feedback.urls')),    
     path('types/<str:slug>/', user_types, name='types'),
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('taggit_autosuggest/', include('taggit_autosuggest.urls')),
-    path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
+    path('summernote/', include('django_summernote.urls')),
+    path('taggit_autosuggest/', include('taggit_autosuggest.urls')),  
     path("gdpr-policy/", TemplateView.as_view(template_name="includes/gdpr.html"), name='gdpr'),
     path("terms/", TemplateView.as_view(template_name="includes/terms.html"), name='term'),
-    path('docs/', include('django_mkdocs.urls', namespace='mkdocs')),    
-    path('<int:pk>/services/', partner_service, name='partner_service'), 
-    
-
-    
+    path('docs/', include('django_mkdocs.urls', namespace='mkdocs')),     
+    path('<int:pk>/services/', partner_service, name='partner_service'),     
 ] 
 
 if settings.DEBUG:

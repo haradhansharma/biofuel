@@ -1,18 +1,16 @@
 {% extends "admin/change_list.html" %}
 
 {% block content %}
+
     {% if label_pending_in_logical_string %}
-    <div class="errornote">
-        <h4><u>Logical Strings that have no 4 labels or all labels have '0':</u> </h4>
-            {{label_pending_in_logical_string}}
-    </div>
-    {% endif %}
-   
+        <div class="errornote">
+            <h4>
+                <u>Logical Strings that have no 4 labels or all labels have '0':</u> 
+            </h4>
+                {{label_pending_in_logical_string}}
+        </div>
+    {% endif %}   
 
-{{ block.super }} 
-
-
-
-
+    {{ block.super }} 
     
 {% endblock %}

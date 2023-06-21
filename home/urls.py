@@ -14,7 +14,7 @@ urlpatterns = [
     # path('dashboard/questions/', views.questions, name='questions'),
     path('dashboard/questionsint/', views.questionsint, name='questionsint'),   
     path('dashboard/quotations/', views.quotations, name='quotations'),
-    # path('dashboard/my-services/', views.my_services, name='myservices'),
+    # path('dashboard/my-services/', views.my_services, name='myservices'), 
     path('<str:user_id>/add-new-services/', views.add_new_service, name='add_new_service'),
     
     
@@ -25,7 +25,7 @@ urlpatterns = [
     path('dashboard/allreports/', views.allreports, name='all_reports'),  
     path('dashboard/new_questions/', views.new_questions, name='new_question'),
     path('quotation/<str:question>/<int:quotation>', views.quotation_report, name='quotation_report'),
-    path('seo/webmanifest/', views.webmanifest, name='webmanifest'),
+    path('webmanifest/', views.webmanifest, name='webmanifest'),
     
     
     

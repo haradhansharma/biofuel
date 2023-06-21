@@ -18,10 +18,10 @@ import logging
 log =  logging.getLogger('log')
 
 
-def get_all_questions():
-    questions = cache.get('all_questions')
+def get_all_questions():               
+    questions = cache.get('all_questions') 
     if not questions:
-        questions = Question.objects.all().select_related('parent_question').prefetch_related('stanchart')
+        questions = Question.objects.all().select_related('parent_question').prefetch_related('stanchart', 'question')
         cache.set('all_questions', questions, 3600)
     return questions
 
@@ -112,6 +112,28 @@ def get_biofuel():
         biofuels = Biofuel.objects.all().prefetch_related('eva_fuel')
         cache.set('all_biofuels', biofuels, 3600)
     return biofuels
+
+def get_options_of_ques(question):    
+    options = cache.get(f'options_of_ques_{question.id}')
+    if not options:
+        options = question.question.all()
+        cache.set(f'options_of_ques_{question.id}', options, 3600)
+    return options
+
+
+def get_sugestions_of_ques(question):    
+    suggestions = cache.get(f'sugestions_of_ques_{question.id}')
+    if not suggestions:
+        suggestions = question.question_sugestion.all().order_by('-created')
+        cache.set(f'sugestions_of_ques_{question.id}', suggestions, 3600)
+    return suggestions
+
+
+
+
+
+
+    
     
         
 
@@ -398,6 +420,7 @@ class OilComparision:
 class LabelWiseData:
         
     def __init__(self, evaluator):
+        
         # The evaluator can be either from session or url which will be supplied
         self.evaluator = evaluator   
         # We will neeed total active questions in the site to use by filtering sing diferent parameter     
@@ -411,10 +434,7 @@ class LabelWiseData:
                 'evalebel', 
                 'question', 
                 'evaluator'
-                )
-    
-
-
+                )   
     
     @property
     def answered_question_id_list(self):      
@@ -636,11 +656,15 @@ def nreport_context(request, slug):
     
     #genarating PDF . Please ensure django-xhtml2pdf==0.0.4 installed
     evaluation = get_all_evaluations_or_on_question(get_report)
-    eva_label = EvaLabel.objects.filter(evaluator = get_report).order_by('sort_order')
-    eva_statment = EvaLebelStatement.objects.filter(evaluator = get_report).order_by('pk')
+  
+
+    eva_label = EvaLabel.objects.filter(evaluator=get_report).order_by('sort_order').prefetch_related('elabelstatement')
+    eva_statment = EvaLebelStatement.objects.filter(evalebel__evaluator=get_report).order_by('pk').select_related('evalebel', 'question', 'evaluator')
+
+    
     
     # get ordered next activities
-    next_activities = NextActivities.objects.all().order_by('priority')    
+    next_activities = NextActivities.objects.prefetch_related('related_questions').all().order_by('priority')    
     # get common label which is executive summary    
     common_label = eva_label.get(label__common_status = True)
     #delete any prevous record for this current report

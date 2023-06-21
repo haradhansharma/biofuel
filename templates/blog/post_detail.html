@@ -1,18 +1,18 @@
 {% extends "includes/g_base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+
 {% block title %} {{site_info.title}} {% endblock %}
 
-<body class="d-flex flex-column h-100">
-    {% block header %}
+
+{% block header %}
     {% include 'includes/g_header.html' %}
-    {% endblock %}
-    {% block main %}
+{% endblock %}
+
+{% block main %}
     <main class="flex-shrink-0">
         {% include "includes/blog_hero_section.html" %}
         <div class="section bgjessica-light">
-            <div class="container mt-n8 mt-lg-n12 z-2">
+            <div class="container mt-n8 mt-lg-n12 z-2 rounded">
                 <article>
                     <div class="col-12 d-flex">
                         <img src="{{ post.image.url }}" class="img-fluid flex-fill" alt="{{post.title}}" title="{{post.title}}" width="auto" height="auto">
@@ -21,7 +21,7 @@
                         class="d-block d-sm-flex justify-content-between border-top border-bottom border-2 border-danger pt-2 px-0">
                         <div class="mb-2">
                             <div class="text-mute">
-                                Published {{ post.publish.date }} by <strong>{{ post.author.username }}</strong>
+                                Published {{ post.publish.date }} by <strong>{{ post.author.username }}</strong> || View: {{ post.total_view }}
                             </div>
                         </div>
                         <div class=" mb-2">
@@ -39,13 +39,10 @@
                             {% endfor %}
                         </div>
                     </div>
-                    <div class="article-body">
+                    <div class="article-body mt-3">
                         {{post.body|safe}}
                     </div>
-                    <div class="my-3">
-                        <h3>Share Post To:</h3>
-                    </div>
-                    <div class="addthis_inline_share_toolbox_spsh mt-2"></div>
+                    
                 </article>
                 <div
                     class="col-12 d-block d-sm-flex justify-content-between border-top border-bottom border-2 border-danger p-2">
@@ -79,13 +76,13 @@
                                 {{blog.title|upper}}
                             </div>
                             <div class="card-body pt-0">
-                                {{blog.body|safe|truncatechars:150}}
-                                <div class="d-sm-flex d-block justify-content-between align-items-center">
-                                    <div class="btn-group">
+                                {{blog.body|safe|striptags|truncatechars:150}}
+                                <div class="justify-content-start align-items-center">
+                                    <div class="btn-group mt-3">
                                         <a class="btn btn-sm btn-outline-primary" href="{{blog.get_absolute_url}}">Read
                                             More</a>
                                     </div>
-                                    <div class="btn-group">
+                                    <div class="btn-group mt-3">
                                         <div class="btn btn-sm btn-warning">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="#ffffff" class="bi bi-folder2" viewBox="0 0 16 16">
@@ -109,23 +106,9 @@
             </div>
         </div>
     </main>
-    {% endblock %}
-    {% block footer %}
+{% endblock %}
+
+{% block footer %}
     {% include 'includes/g_footer.html' %}
-    {% endblock %}
-    {% block javascripts %}
-    <!-- Go to www.addthis.com/dashboard to customize your tools -->
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4d95fcae2a2f4222"></script>
-    <script type="text/javascript">
-        var addthis_share = {
-            url: "{{request.build_absolute_uri}}",
-            title: "{{post.title}} ",
-        }
-        var addthis_config = {
-            data_track_clickback: false,
-            data_track_addressbar: false,
-        } 
-    </script>
-    {% endblock javascripts %}
-</body>
-</html>
+{% endblock %}
+

@@ -21,9 +21,7 @@ class Glist(ListView):
    
     def get_context_data(self, **kwargs):  
         log.info(f'Glossary accessed by {self.request.user}')      
-        context = super().get_context_data(**kwargs)
-        latest_blogs = BlogPost.published.all().order_by('-updated')
-        context['latest_blogs'] = latest_blogs[:10]
+        context = super().get_context_data(**kwargs)       
         request_form = GRequestForms()
         context['request_form'] = request_form
         
@@ -31,8 +29,6 @@ class Glist(ListView):
         #meta
         meta_data = site_info()    
         meta_data['title'] = f'Glossaries'
-        # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-        meta_data['url'] = self.request.build_absolute_uri(self.request.path)
         meta_data['description'] = f"Glossaries of green fuel validation platform and definitions."
         meta_data['tag'] = 'glossary, glosaries, gf-vp'
         meta_data['robots'] = 'index, follow'

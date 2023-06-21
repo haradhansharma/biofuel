@@ -185,7 +185,7 @@ class QuesSugestionForm(forms.ModelForm):
         super().__init__(*args, **kwargs)    
   
         self.fields['related_qs'].choices = [(ch.pk, ch) for ch in get_sugested_questions(self.request)]
-        self.fields['related_qs'].choices.insert(0, (None, '-----'))
+        self.fields['related_qs'].choices.insert(0, (None, 'Select Related Questions'))
         
     class Meta:
         model = Suggestions
@@ -199,7 +199,7 @@ class QuesSugestionForm(forms.ModelForm):
         widgets = {
             
             'su_type' : forms.Select(attrs={ 'class':'form-select', 'aria-label':'Sugestion Type', 'placeholder':'Select SUgestion Type' }), 
-            'title' : forms.TextInput(attrs={'class':'form-control', 'aria-label':'Title ', 'placeholder':'Title'}),
+            'title' : forms.TextInput(attrs={'class':'form-control', 'aria-label':'Title ', 'placeholder':'Write title of the selected types'}),
             'statement': forms.Textarea(attrs={'rows': 3,'class':'form-control', 'aria-label':'Statement' , 'placeholder':'Statement or Description' }),
             'related_qs' : forms.Select(attrs={ 'class':'form-select', 'aria-label':'Sugestion Type', 'placeholder':'Select Related Question' }), 
             

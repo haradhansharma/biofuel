@@ -1,16 +1,13 @@
 {% extends "admin/base_site.html" %}
 {% load static %}
 
+
 {% block nav-global %}
 
-
-<div id="user-tools">            
-   
-        <a style="color: rgb(215, 185, 15);" href="/admin/evaluation/suggestions/">Sugestions({{sugestion_no_comited}})</a>     
-       
+<div id="user-tools">     
+        <a style="color: rgb(215, 185, 15);" href="/admin/evaluation/suggestions/">Sugestions({{sugestion_no_comited}})</a>    
 </div>
 
 {{ block.super }} 
-
 
 {% endblock %}

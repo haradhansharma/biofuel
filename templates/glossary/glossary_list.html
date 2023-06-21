@@ -1,4 +1,5 @@
 {% extends "layouts/base-fullscreen.html" %}
+
 {% load static %}
 
 {% block title %} {{site_info.title}} {% endblock %}
@@ -14,8 +15,8 @@
 </style>
 
 {% endblock stylesheets %}
-{% block js %}
 
+{% block js %}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         window.addEventListener('scroll', function () {
@@ -41,10 +42,11 @@
 
 
 {% endblock js %}
+
 {% load custom_tags %}
 
-
 {% block content %}
+
 {% block header %}
 <div id="he" class="">
     {% include 'includes/g_header.html' %}
@@ -80,34 +82,17 @@
                         </div>
                         <div class="col-md-4 align-items-start jsutify-content-start">
                             <div class="card p-2 justify-content-center align-items-center" style="min-height: 10vh;">
-                                Total {{object_list.count}} items has been added!
-                                <!--
-                            <div class="display-5 p-2 border-bottom">Latest Updated Blogs</div>
-                                {% for blog in latest_blogs %}
-                                    <div class="row g-0 overflow-hidden flex-md-row p-2 position-relative align-items-center border-bottom">
-                                        <div class="col-md-3">
-                                        <img src="{% static blog.image.url %}" alt="{{blog.title}}" class="img-fluid">                                            
-                                          </div>
-                                      <div class="col-md-9 p-2 d-flex flex-column position-static">                                  
-                                        <p class="card-text mb-auto h6">{{blog.title|safe|truncatechars:150|upper}}</p>
-                                        <a href="{{blog.get_absolute_url}}" class="stretched-link">Continue reading</a>
-                                      </div>                                      
-                                    </div>
-                                {% endfor %}
-                                -->
+                                Total {{object_list.count}} items has been added!                                
                             </div>
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </main>
+
 {% include "includes/g_footer.html" %}
 {% endblock content %}
 
-
-<!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}

@@ -22,8 +22,7 @@ def get_verbose_name(instance, field_name):
 
 @register.filter(name='in_quot') 
 def in_quot(quote, user): 
-    quotes = quote.filter(service_provider=user)
-    
+    quotes = quote.filter(service_provider=user)    
     return quotes
 
 @register.filter(name='offchars') 
@@ -42,3 +41,38 @@ def listobj_for_paginator(value, request):
     sugestions_obj = paginator.get_page(page_number)
     
     return sugestions_obj
+
+
+@register.filter(name='get_options') 
+def get_options(question): 
+    from evaluation.helper import get_options_of_ques
+    options = get_options_of_ques(question) 
+    return options
+
+
+
+
+
+@register.filter(name='get_quotations_user') 
+def get_quotations_user(ques, user): 
+    quotations = [quotation for quotation in ques.get_quotations if user == quotation.service_provider]
+    if quotations:
+        return quotations
+    return []
+
+
+@register.filter(name='get_related_quotations_user') 
+def get_related_quotations_user(ques, user): 
+    quotations = [quotation for quotation in ques.get_related_quotations if user == quotation.service_provider]
+    if quotations:
+        return quotations
+    return []
+
+@register.filter(name='get_merged_quotations_with_user') 
+def get_merged_quotations_with_user(ques, user):
+    quotations = [quotation for quotation in ques.get_merged_quotations if quotation.service_provider == user]
+    if quotations:
+        return quotations
+    return []
+
+

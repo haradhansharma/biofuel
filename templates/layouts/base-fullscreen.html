@@ -1,46 +1,35 @@
-
-{% load static %}
-{% load compress %} 
 <!DOCTYPE html>
+{% load static %}
+
 <html lang="en" class="h-100">
 
-<head> 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>
+            {{site_info.domain}}-{% block title %}{% endblock %} 
+        </title>
+        {% include "includes/meta.html" %}
 
+        <script src="{% static 'assets/vendor/htmx/dist/htmx.min.js' %}" type="text/javascript"></script>    
 
+        <link type="text/css" href="{% static 'css/common.css' %}" rel="stylesheet" type="text/css"> 
 
+        {% block js %}{% endblock js %}
 
+        <!-- Specific Page JS goes HERE  -->    
+        {% block stylesheets %}{% endblock stylesheets %}
+    </head>
 
-<title>
-    {{site_info.meta_name}}-{% block title %}{% endblock %} 
-</title>
+    <body>
 
-{% include "includes/meta.html" %}
+        {% include 'feedback/floating.html' %}
 
+        {% block content %}{% endblock content %}  
 
-<!--{% compress js %}-->
-<script src="{% static 'assets/vendor/htmx/dist/htmx.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'assets/vendor/font-awesome/js/all.min.js' %}" type="text/javascript"></script>
-<!--{% endcompress %}-->
-<!--{% compress css %}-->
-<link type="text/css" href="{% static 'css/common.css' %}" rel="stylesheet" type="text/css"> 
-<!--{% endcompress %}-->
+        {% include 'includes/scripts.html' %}
 
-{% block js %}{% endblock js %}
+        <!-- Specific Page JS goes HERE  -->
+        {% block javascripts %}{% endblock javascripts %}   
 
-<!-- Specific Page JS goes HERE  -->    
-{% block stylesheets %}{% endblock stylesheets %}
-
-</head>
-<body>
-    {% include 'feedback/floating.html' %}
-    {% block content %}{% endblock content %}
-    
-
-    {% include 'includes/scripts.html' %}
-
-    <!-- Specific Page JS goes HERE  -->
-    {% block javascripts %}{% endblock javascripts %}   
-
-</body>
+    </body>
 </html>

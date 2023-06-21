@@ -44,28 +44,31 @@
                         <tbody>
                             <!-- Item -->
                             {% for child in childs %} 
+                       
                             <tr class="border-danger" style="border-style: dotted;">
                                 <td>
                                     <span class="fw-normal">{{ child.name }}({{child.sort_order}})</span>
                                 </td>
-                                <td>                                   
+                                <td>  
+                                                     
 
-                                    {% if child.get_quotations|in_quot:user %} 
-                                    {% for quotation in  child.get_quotations|in_quot:user %}                                       
-                                    {% if user.is_expert or user.is_staff or user.is_superuser %}
-                                    <a class="fw-normal btn btn-secondary" href="{{quotation.get_quot_url}}">Quotation #{{quotation.id}}</a>
-                                    {% endif %}                                    
-                                    {% endfor %}
+                                    {% if child|get_quotations_user:user %} 
+                                        {% for quotation in  child|get_quotations_user:user %}                                       
+                                            {% if user.is_expert or user.is_staff or user.is_superuser %}
+                                                <a class="fw-normal btn btn-secondary" href="{{quotation.get_quot_url}}">Quotation #{{quotation.id}}</a>
+                                            {% endif %}                                    
+                                        {% endfor %}
                                     {% else %}
-                                    {% if user.is_expert or user.is_staff or user.is_superuser %}
-                                    <a class="fw-normal btn btn-success" href="{{ child.add_quatation }}">Add Quotation</a>
+                                        {% if user.is_expert or user.is_staff or user.is_superuser %}
+                                            <a class="fw-normal btn btn-success" href="{{ child.add_quatation }}">Add Quotation</a>
+                                        {% endif %}
                                     {% endif %}
-                                    {% endif %}
-                                    {% if child.get_related_quotations|in_quot:user  %}
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary" hx-get="{% url 'home:child_modal_data' child.id %}" hx-target="#modals-here{{child.id}}" hx-trigger="click" _="on htmx:afterOnLoad wait 10ms then add .show to #modal{{child.id}} then add .show to #modal-backdrop{{child.id}}">
-                                        Referred from other questions
-                                    </button>
+                                    
+                                    {% if child|get_related_quotations_user:user  %}
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary" hx-get="{% url 'home:child_modal_data' child.id %}" hx-target="#modals-here{{child.id}}" hx-trigger="click" _="on htmx:afterOnLoad wait 10ms then add .show to #modal{{child.id}} then add .show to #modal-backdrop{{child.id}}">
+                                            Referred from other questions
+                                        </button>
                                     {% endif %}
                                     <div id="modals-here{{child.id}}"></div>    
                                                                   

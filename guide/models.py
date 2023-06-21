@@ -1,8 +1,6 @@
 from django.db import models
 from django.urls import reverse
 
-from ckeditor.fields import RichTextField
-from ckeditor_uploader.fields import RichTextUploadingField
 
 class GuideType(models.Model):
     title = models.CharField(max_length=252)
@@ -36,7 +34,7 @@ class GenarelGuide(models.Model):
     menu = models.ForeignKey(GuideMenu, on_delete=models.CASCADE, related_name='menuofguide')    
     anchor = models.CharField(max_length=252)
     parent = models.ForeignKey("self", on_delete=models.SET_NULL, null=True, blank=True, related_name='menuchild', limit_choices_to={'parent': None} )    
-    content = RichTextUploadingField()
+    content = models.TextField()
     
     def __str__(self):
         

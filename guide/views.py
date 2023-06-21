@@ -12,9 +12,7 @@ def guide_home(request):
     }
     #meta
     meta_data = site_info()    
-    meta_data['title'] = 'User guide Home'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
+    meta_data['title'] = 'User guide Home' 
     meta_data['description'] = 'This is the landing page for user guide build for Green fuel validation platform'
     meta_data['tag'] = 'guide, gf-vp'
     meta_data['robots'] = 'index, follow'
@@ -34,8 +32,6 @@ def guide_type(request, key):
     #meta
     meta_data = site_info()    
     meta_data['title'] = guidetype.get(key=key).title
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = 'This is the landing page for user guide build for Green fuel validation platform'
     meta_data['tag'] = 'guide type, gf-vp'
     meta_data['robots'] = 'index, follow'
@@ -59,8 +55,6 @@ def genarel_guide(request, gt, slug):
     #meta
     meta_data = site_info()    
     meta_data['title'] = guide[0].title if guide.exists() else slug
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = 'Details instruction'
     meta_data['tag'] = 'guide type, gf-vp'
     meta_data['robots'] = 'index, follow'

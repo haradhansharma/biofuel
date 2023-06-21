@@ -1,14 +1,12 @@
 from django.contrib import admin
 from . models import *
-
+from django_summernote.admin import SummernoteModelAdmin
 
 
 @admin.register(GenarelGuide)
-class GenarelGuideAdmin(admin.ModelAdmin):
+class GenarelGuideAdmin(SummernoteModelAdmin):
+    summernote_fields = ('content',)    
     list_filter = ('menu', )
-    
-
-
 
 @admin.register(GuideType)
 class GuideTypeAdmin(admin.ModelAdmin):    

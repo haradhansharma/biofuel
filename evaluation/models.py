@@ -78,14 +78,14 @@ class Question(models.Model):
     # parent question must be mark by giving tick mark on is_door with proper short_order.
     # every question should have proper sort order and must be selected next_question in option part(mentioned below) to go to next question otherwise system will redirect to the that you page of report.
     '''
-    slug = models.CharField(default=generate_uuid, editable=False, unique=True, max_length=40)
+    slug = models.CharField(default=generate_uuid, editable=False, unique=True, max_length=40, db_index=True)
     name = models.CharField(max_length=252)
     chapter_name = models.CharField(max_length=252, null=True, blank=True)
-    parent_question = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, related_name='child' )
+    parent_question = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, related_name='child', db_index=True )
     sort_order = models.IntegerField(default=1)    
     description = models.TextField()
-    is_active = models.BooleanField(default=False)
-    is_door = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False, db_index=True)
+    is_door = models.BooleanField(default=False, db_index=True)
     chart_title = models.CharField(max_length=252, null=True, blank=True)
     create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
@@ -111,40 +111,42 @@ class Question(models.Model):
     def labels(self):
         return Label.objects.filter(question = self)
     
+    
     @property
     def get_related_quotations(self):   
-        from home.models import Quotation
-        quotations = Quotation.objects.filter(related_questions = self)        
+        from django.core.cache import cache
+        quotations = cache.get(f'related_quotations_of_ques_{self.id}')
+        if not quotations:
+            quotations = self.quotations_related_questions.all()   
+            cache.set(f'related_quotations_of_ques_{self.id}', quotations, 3600)               
         return quotations
     
     @property
-    def get_quotations(self):         
-        from home.models import Quotation
-        quotations = Quotation.objects.filter(test_for = self) 
+    def get_quotations(self): 
+        from django.core.cache import cache
+        quotations = cache.get(f'get_quotations_of_ques_{self.id}')
+        if not quotations:
+            quotations = self.testfor.all()
+            cache.set(f'get_quotations_of_ques_{self.id}', quotations, 3600)               
         return quotations
+     
     
     @property
     def get_merged_quotations(self):
-        from itertools import chain
-        result_list = set(chain(self.get_related_quotations, self.get_quotations))      
-             
-        return list(result_list)
+        from itertools import chain             
+        result_set = set(chain(self.get_related_quotations, self.get_quotations))     
+        result_list =  list(result_set)     
+        return result_list
         
     
     @property
     def get_options(self):
-        return self.question.all()
+        from evaluation.helper import get_options_of_ques
+        return get_options_of_ques(self)
     
     @property
     def get_stdoils(self):
         return self.stanchart.all()
-    
-    # @property
-    # def have_4labels(self):
-    #     labels = self.questions.filter(value = '1').count()
-    #     if labels > 0:
-    #         return True
-    #     return False
     
     
     def have_4labels(self):
@@ -181,7 +183,8 @@ class Question(models.Model):
     
     @property
     def get_sugestions(self):
-        sugestions = self.question_sugestion.all().order_by('-created')
+        from evaluation.helper import get_sugestions_of_ques
+        sugestions = get_sugestions_of_ques(self)
         return sugestions
     
    
@@ -202,7 +205,7 @@ class Label(models.Model):
     # Value is the formulated field as per business logic.
     '''
     name = models.ForeignKey(DifinedLabel, on_delete=models.PROTECT, related_name='dlabels', limit_choices_to={'common_status': False})
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='questions')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='questions', db_index=True)
     value = models.CharField(max_length=1, default=0)
     
     
@@ -224,14 +227,14 @@ class Option(models.Model):
     # When updated any statement or next_step evaluator notify status will be updated by signal 'on_change'
     '''  
     name = models.CharField(max_length=252)
-    yes_status = models.BooleanField(default=False)
-    dont_know = models.BooleanField(default=False)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='question')
-    next_question = models.ForeignKey(Question, on_delete=models.CASCADE, null = True, blank = True, related_name='next_question', limit_choices_to={'is_active': True})
+    yes_status = models.BooleanField(default=False, db_index=True)
+    dont_know = models.BooleanField(default=False, db_index=True)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='question', db_index=True)
+    next_question = models.ForeignKey(Question, on_delete=models.CASCADE, null = True, blank = True, related_name='next_question', limit_choices_to={'is_active': True}, db_index=True)
     statement = models.TextField(null = True, blank = True,)
     next_step = models.TextField(null = True, blank = True,)
-    overall = models.CharField(max_length=1, default=0)
-    positive = models.CharField(max_length=1, default=0)
+    overall = models.CharField(max_length=1, default=0, db_index=True)
+    positive = models.CharField(max_length=1, default=0, db_index=True)
     create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     
@@ -249,10 +252,10 @@ class LogicalString(models.Model):
     # 'overall' should be filled as 1 or 0 (It was recomended during development, and advised to avoid True/Flse). if overall is 1 then statement will be added to the summary.
     # 'positive' should be filled as 1 or 0 (It was recomended during development, and advised to avoid True/Flse). it is used to calculated assesent under the label in report and question form.
     '''
-    options = models.ManyToManyField(Option)
+    options = models.ManyToManyField(Option, db_index=True)
     text = models.TextField(null = True, blank = True,)
-    overall = models.CharField(max_length=1, default=0)
-    positive = models.CharField(max_length=1, default=0)
+    overall = models.CharField(max_length=1, default=0, db_index=True)
+    positive = models.CharField(max_length=1, default=0, db_index=True)
         
     @property
     def option_list(self):
@@ -284,10 +287,10 @@ class OptionSet(models.Model):
     It has been genarated autometically during evaluation by user.
     so that it is not displayed in admin side.    
     '''
-    option_list = models.CharField(max_length=252, unique = True)
+    option_list = models.CharField(max_length=252, unique = True, db_index=True)
     text = models.TextField()
-    positive = models.CharField(max_length=1, default=0)
-    overall = models.CharField(max_length=1, default=0)
+    positive = models.CharField(max_length=1, default=0, db_index=True)
+    overall = models.CharField(max_length=1, default=0, db_index=True)
     ls_id = models.CharField(max_length=252, default=0)
     create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
@@ -304,7 +307,7 @@ class Lslabel(models.Model):
     '''
     
     name = models.ForeignKey(DifinedLabel, on_delete=models.PROTECT, related_name='ls_dlabels', limit_choices_to={'common_status': False})
-    logical_string = models.ForeignKey(LogicalString, on_delete=models.CASCADE, related_name='logical_strings')
+    logical_string = models.ForeignKey(LogicalString, on_delete=models.CASCADE, related_name='logical_strings', db_index=True)
     value = models.CharField(max_length=1, default=0)
 
     def __str__(self):
@@ -335,14 +338,14 @@ class Evaluator(models.Model):
     so that it is not editable in admin side.
     
     '''
-    slug = models.UUIDField( default=uuid.uuid4, editable=False, unique=True)    
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='user')    
+    slug = models.UUIDField( default=uuid.uuid4, editable=False, unique=True, db_index=True)    
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='user', db_index=True)    
     name = models.CharField(max_length=252)
     email = models.EmailField()
     phone = models.CharField(max_length=16, null=True, blank=True)
     orgonization = models.CharField(max_length=252, null=True, blank=True)
-    biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, blank=True, related_name='eva_fuel')
-    stdoil_key = models.CharField(max_length=20, null=True, blank=True)
+    biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, blank=True, related_name='eva_fuel', db_index=True)
+    stdoil_key = models.CharField(max_length=20, null=True, blank=True, db_index=True)
     
    
     create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
@@ -376,7 +379,7 @@ class Evaluation(models.Model):
     It has been genarated autometically during evaluation by user.
     so that it is not displayed in admin side.    
     '''
-    evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='eva_evaluator')
+    evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='eva_evaluator', db_index=True)
     option = models.ForeignKey(Option, on_delete=models.RESTRICT, related_name='eva_option')
     question = models.ForeignKey(Question, on_delete=models.RESTRICT,null=True, blank=True, related_name='eva_question')
     
@@ -395,8 +398,8 @@ class EvaComments(models.Model):
     It has been genarated autometically during evaluation by user.
     so that it is not displayed in admin side.    
     '''
-    evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='coment_evaluator')
-    question = models.ForeignKey(Question, on_delete=models.RESTRICT, related_name='comment_question')
+    evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='coment_evaluator', db_index=True)
+    question = models.ForeignKey(Question, on_delete=models.RESTRICT, related_name='comment_question', db_index=True)
     comments = models.TextField(max_length=600)
 
     def __str__(self):
@@ -408,8 +411,8 @@ class EvaLabel(models.Model):
     It has been genarated autometically during evaluation by user.
     so that it is not displayed in admin side.    
     '''
-    label = models.ForeignKey(DifinedLabel, on_delete=models.PROTECT, related_name='labels')
-    evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='evaluators')
+    label = models.ForeignKey(DifinedLabel, on_delete=models.PROTECT, related_name='labels', db_index=True)
+    evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='evaluators', db_index=True)
     sort_order = models.CharField(max_length=3, default=0)
     create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
@@ -424,16 +427,16 @@ class EvaLebelStatement(models.Model):
     It has been genarated autometically during evaluation by user.
     so that it is not displayed in admin side.    
     '''
-    evalebel = models.ForeignKey(EvaLabel, on_delete=models.PROTECT, related_name='elabelstatement')
-    question = models.ForeignKey(Question, on_delete=models.PROTECT, null=True, blank=True, related_name='evalabelques')
+    evalebel = models.ForeignKey(EvaLabel, on_delete=models.PROTECT, related_name='elabelstatement', db_index=True)
+    question = models.ForeignKey(Question, on_delete=models.PROTECT, null=True, blank=True, related_name='evalabelques', db_index=True)
     option_id = models.CharField(max_length=252, null=True, blank=True)
     statement = models.TextField(blank=True, null=True)
     next_step = models.TextField(blank=True, null=True)
-    positive = models.CharField(max_length=1, default=0)
-    dont_know = models.BooleanField(default=False)
+    positive = models.CharField(max_length=1, default=0, db_index=True)
+    dont_know = models.BooleanField(default=False, db_index=True)
     assesment = models.BooleanField(default=False)
     next_activity = models.BooleanField(default=False)
-    evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='s_evaluators', null=True)    
+    evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='s_evaluators', null=True, db_index=True)    
     create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
 
@@ -473,8 +476,8 @@ class NextActivities(models.Model):
     descriptions = models.TextField()
     url = models.URLField(null=True, blank=True)
     priority = models.CharField(max_length=2, help_text="To specify sort order!")
-    related_questions = models.ManyToManyField(Question, related_name="related_next", verbose_name="Please select related questions to be answered by the test", help_text="Allow multiple option selection. The selected options should be highlighted.", limit_choices_to={'is_active': True})
-    compulsory_questions = models.ManyToManyField(Question, related_name="compulsory_next", verbose_name="Please select compulsory questions to be answered by the test", help_text="Allow multiple. The selected options should be highlighted.", limit_choices_to={'is_active': True})
+    related_questions = models.ManyToManyField(Question, related_name="related_next", verbose_name="Please select related questions to be answered by the test", help_text="Allow multiple option selection. The selected options should be highlighted.", limit_choices_to={'is_active': True}, db_index=True)
+    compulsory_questions = models.ManyToManyField(Question, related_name="compulsory_next", verbose_name="Please select compulsory questions to be answered by the test", help_text="Allow multiple. The selected options should be highlighted.", limit_choices_to={'is_active': True}, db_index=True)
     related_percent = models.IntegerField(default=90)
     compulsory_percent = models.IntegerField(default=100)    
     is_active = models.BooleanField(default=True, verbose_name="Published?", help_text="Tick will published the service directly to the site!")
@@ -541,7 +544,7 @@ class EvaluatorActivities(models.Model):
     It has been genarated autometically during evaluation by user.
     so that it is not displayed in admin side.    
     '''
-    evaluator = models.ForeignKey(Evaluator, on_delete=models.CASCADE, related_name="eaevaluator")    
+    evaluator = models.ForeignKey(Evaluator, on_delete=models.CASCADE, related_name="eaevaluator", db_index=True)    
     next_activity = models.ForeignKey(NextActivities, on_delete=models.CASCADE, related_name="eanextactivities")
     related_percent = models.IntegerField()
     compulsory_percent = models.IntegerField()
@@ -581,7 +584,7 @@ class StdOils(models.Model):
         verbose_name_plural = 'Std Oils'  
         
     select_oil = models.ForeignKey(OliList, on_delete=models.CASCADE, default=1)
-    biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, editable=False,)
+    biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, editable=False, db_index=True)
     
     
     def __str__(self):
@@ -596,8 +599,8 @@ class StandaredChart(models.Model):
     '''
     from home.models import WeightUnit      
     from smart_selects.db_fields import ChainedForeignKey
-    oil = models.ForeignKey(StdOils, on_delete=models.CASCADE,  related_name = 'std_oil_of_chart',)    
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="stanchart", limit_choices_to={'is_active': True})
+    oil = models.ForeignKey(StdOils, on_delete=models.CASCADE,  related_name = 'std_oil_of_chart', db_index=True)    
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="stanchart", limit_choices_to={'is_active': True}, db_index=True)
     unit = models.ForeignKey(WeightUnit, on_delete=models.CASCADE, related_name= "chrartunit", null=True, blank=True)
     value = models.CharField(max_length=252, null=True, blank=True)
     link = models.URLField(null=True, blank=True)
@@ -673,13 +676,13 @@ class Suggestions(models.Model):
         ('question', 'Question'),
         ('option', 'Option'),
     )
-    question = models.ForeignKey(Question, on_delete = models.SET_NULL, related_name='question_sugestion', null=True, blank=True)
+    question = models.ForeignKey(Question, on_delete = models.SET_NULL, related_name='question_sugestion', null=True, blank=True, db_index=True)
     su_type = models.CharField(max_length=10, choices=TYPE_CHOICE, default='question')    
     title = models.CharField(max_length=252)
     statement = models.TextField()
     sugested_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name='sugestions')
-    parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='replies')
-    related_qs = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='related')
+    parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='replies', db_index=True)
+    related_qs = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='related', db_index=True)
     
     comitted =  models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
@@ -689,13 +692,7 @@ class Suggestions(models.Model):
         return self.title
     
     
-    # def get_model_info(self, request, obj=None, **kwargs):
-    #     model_info = super().get_model_info(request, obj, **kwargs)
-    
-    #     model_info['verbose_name'] = 'My Custom Name'
-    #     model_info['verbose_name_plural'] = 'My Custom Names'
-    #     return model_info
-    
+ 
     
 
     

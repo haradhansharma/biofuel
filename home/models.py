@@ -37,7 +37,7 @@ class QuotationDocType(models.Model):
 
  
 class Quotation(models.Model):     
-    service_provider = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quotationserviceprovider')   
+    service_provider = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quotationserviceprovider', db_index=True)   
     show_alternate_email = models.EmailField(help_text='You can show alternate email address in quotation.', null=True, blank=True)
     show_alternate_business = models.CharField(help_text='You can show alternate email address in quotation.', max_length = 50, null=True, blank=True)    
     show_alternate_phone = models.CharField(help_text='You can show alternate phone number in quotation.', max_length = 50, null=True, blank=True)     
@@ -53,6 +53,7 @@ class Quotation(models.Model):
         Question, 
         verbose_name="Tests for question", 
         help_text="Help Text will go here", 
+        db_index=True,
         max_length=252, 
         on_delete=models.CASCADE, 
         related_name='testfor', 
@@ -62,6 +63,7 @@ class Quotation(models.Model):
         verbose_name="Please select all other question which are also tested within the provided quotation", 
         help_text="Allow multiple option selection. The selected options should be highlighted.", 
         limit_choices_to={'is_active': True, 'is_door' : False},
+        db_index=True,        
         related_name='quotations_related_questions'
         )
     quotation_format = models.FileField(upload_to="quotation", help_text="Only '.pdf' are allowed", verbose_name="Upload Quotation (pdf)", validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
@@ -69,6 +71,7 @@ class Quotation(models.Model):
         NextActivities, 
         help_text="Select next activities to select related questions from next activities", 
         on_delete=models.PROTECT, 
+        db_index=True,        
         related_name='quotnextactivity', null=True, blank=True, unique=False)
     display_site_address = models.BooleanField(default=True, verbose_name="Display Site Address", help_text="Tick will display system address IO Validation partner address")
     comments = models.TextField(max_length=500, help_text="This field will take charecter upto 500", null=True, blank=True)

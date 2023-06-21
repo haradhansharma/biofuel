@@ -41,7 +41,7 @@ from accounts.decorators import (
 
 from django.core.mail import mail_admins, send_mail, send_mass_mail
 from accounts.helper import send_admin_mail
-
+from django.views.decorators.cache import cache_control
 '''
 Inheriting default loginview of Django
 '''
@@ -77,14 +77,10 @@ class CustomLoginView(LoginView):
         
         #meta
         meta_data = site_info()    
-        meta_data['title'] = 'User Login'
-        # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-        meta_data['url'] = self.request.build_absolute_uri(self.request.path)
+        meta_data['title'] = 'User Login'    
         meta_data['description'] = f"The Log In page of the gf-vp.com is designed to provide secure access to the user's account. Users can easily log in to their account with their email and password."
         meta_data['tag'] = 'login, gf-vp.com'
-        meta_data['robots'] = 'noindex, nofollow'
-        # meta_data['og_image'] = user_type.icon.url
-        
+        meta_data['robots'] = 'noindex, nofollow'        
         context.update({
             'site_info' : meta_data    
             
@@ -218,14 +214,9 @@ def signup(request):
     #meta
     meta_data = site_info()    
     meta_data['title'] = 'Sign Up'
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = f"The Sign Up page of the gf-vp.com provides users with the ability to create a new account. This page allows users to enter their email address, username, and password."
     meta_data['tag'] = 'signup, gf-vp.com'
     meta_data['robots'] = 'noindex, nofollow'
-    # meta_data['og_image'] = user_type.icon.url
-    
-    
         
     context = {
         'form': form,
@@ -321,6 +312,7 @@ def userpage(request):
     null_session(request)   
     
     user = request.user
+    
     report_slug = request.GET.get('slug')
     
     if report_slug:
@@ -334,9 +326,6 @@ def userpage(request):
             last_reports = Evaluator.objects.filter(creator = user).order_by('-create_date').first()  
         except Exception as e:            
             last_reports = None
-
-
-    # df = label_data.packed_labels()
     
             
     if last_reports is not None: 
@@ -413,20 +402,11 @@ def userpage(request):
         }
   
      
- 
-        
-    # if user.is_staff or user.is_superuser:
-    #     quotations = Quotation.objects.order_by('-id')         
-    # else:
-    #     # quotations = Quotation.objects.filter(service_provider=user).order_by('-id')
-    #     quotations = Quotation.objects.filter(Q(service_provider=user) | Q(id__gt=0)).order_by('-id')
 
         
     #meta
     meta_data = site_info()    
     meta_data['title'] = user.username
-    # meta_data['meta_name'] = 'Green Fuel Validation Platform'
-    meta_data['url'] = request.build_absolute_uri(request.path)
     meta_data['description'] = f"This is the personalized user profile page for {user.username}. Here, registerd user can view his information and created reports. Also Can go to the profiel setting page."
     meta_data['tag'] = 'user profile, gf-vp.com'
     meta_data['robots'] = 'noindex, nofollow'
@@ -436,8 +416,7 @@ def userpage(request):
     
     context.update(
         {
-            'site_info' : meta_data,
-            # 'quotations' : quotations
+            'site_info' : meta_data,            
         }
     )
         
@@ -469,13 +448,18 @@ def check_email(request):
         return HttpResponse('<span class="text-danger">Type a valid email address!</span>')
     
 @login_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def partner_service(request, pk):
     from evaluation.models import NextActivities
     
     visiting_user = get_object_or_404(User, pk=pk, is_active = True, is_public = True)
+    
     current_user = request.user
+    
     next_activities = NextActivities.objects.filter(is_active = True).prefetch_related('quotnextactivity')
+    
     visiting_users_selecetd = visiting_user.selected_activities
+    
     na_in_una = [na.next_activity for na in visiting_user.selected_activities] if visiting_users_selecetd else None
     
     if not next_activities.exists() and current_user.is_expert:
@@ -487,8 +471,7 @@ def partner_service(request, pk):
     if current_user.is_expert or current_user.is_staff or current_user.is_superuser:
         block_visible = True
     else:
-        block_visible = False
-        
+        block_visible = False        
     
     
     context ={
@@ -499,6 +482,23 @@ def partner_service(request, pk):
         'block_visible' : block_visible
         
     }
+    
+    
+    #meta
+    meta_data = site_info()    
+    meta_data['title'] = f'Service of {current_user.username}'
+    meta_data['description'] = f"This is the personalized Service page for {current_user.username}. Here, registerd user can view his information and manage services."
+    meta_data['tag'] = 'user profile, gf-vp.com'
+    meta_data['robots'] = 'noindex, nofollow'
+    meta_data['og_image'] = current_user.usertype.icon.url 
+    
+   
+    
+    context.update(
+        {
+            'site_info' : meta_data,            
+        }
+    )
     
     return render(request, 'registration/partner_service.html', context = context)
 
