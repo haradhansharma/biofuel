@@ -6,14 +6,29 @@ import logging
 log =  logging.getLogger('log')
 
 
-# After saving BlogPost
-# IF post created new and status is published BlogMailQue will be created for each lead for this post.
-# If Post is updated if status is draft then if mail is still in queue having without processed will be deleted
-# and if published then mail ques will be created for the updated post
+# Signal handler to create or update BlogMailQueue entries when a BlogPost is saved
 @receiver(post_save, sender=BlogPost)
 def send_to_mail_que(sender, instance, created, **kwargs):
+    """
+    Signal handler to create or update BlogMailQueue entries when a BlogPost is saved.
+
+    If a new BlogPost is created and its status is 'published', a BlogMailQueue entry
+    will be created for each subscribed lead.
+
+    If a BlogPost is updated, and its status is changed to 'draft', any unprocessed
+    BlogMailQueue entries related to that post will be deleted. If the status is changed
+    to 'published' and there are no existing BlogMailQueue entries, new entries will be
+    created for each subscribed lead.
+
+    :param sender: The sender of the signal.
+    :param instance: The instance of the BlogPost that was saved.
+    :param created: Boolean indicating if the instance was newly created.
+    """
+    
     log.info(f'Initializing BlogMailQueue for Blog {instance.title} to notify to the subscribed leads  ')
+    
     leads = Lead.objects.filter(subscribed = True)    
+    
     if created:
         log.info(f'New Blog titled {instance.title} detected')
         if instance.status == 'published':
@@ -41,10 +56,18 @@ def send_to_mail_que(sender, instance, created, **kwargs):
     log.info(f'BlogMailQueue completing for the blog titled {instance.title} ')
                 
             
-# After deleting  BlogPost
-# if there is unprocessed queue for this blog post will be deleted           
+# Signal handler to delete BlogMailQueue entries when a BlogPost is deleted        
 @receiver(post_delete, sender=BlogPost)
-def delete_mail_queues(sender, instance, **kwargs):    
+def delete_mail_queues(sender, instance, **kwargs):   
+    """
+    Signal handler to delete BlogMailQueue entries when a BlogPost is deleted.
+
+    If there are unprocessed BlogMailQueue entries related to the deleted BlogPost,
+    they will be deleted as well.
+
+    :param sender: The sender of the signal.
+    :param instance: The instance of the BlogPost that was deleted.
+    """ 
     queues = BlogMailQueue.objects.filter(blog = instance, processed = False)
     deleted = 1
     for queue in queues:
