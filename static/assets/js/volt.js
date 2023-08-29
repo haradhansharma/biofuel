@@ -19,6 +19,13 @@
 const dd = document;
 dd.addEventListener("DOMContentLoaded", function(event) {
 
+
+    var popoverTrigger = document.getElementById("feedbackbutton");
+    var popover = new bootstrap.Popover(popoverTrigger, {
+      content: 'If you have any recommendations regarding this page, kindly share your thoughts by clicking on this button. Your input is highly valued, and we would greatly appreciate it. To ensure accurate record-keeping, please focus your feedback specifically on this page. Thank you.',
+      trigger: "hover",
+      placement: "top"
+    });
     
 
     // const swalWithBootstrapButtons = Swal.mixin({
@@ -382,22 +389,24 @@ dd.addEventListener("DOMContentLoaded", function(event) {
 
 
 //controlling popover for feedback button
-var popoverTriggerEl = document.getElementById('feedbackbutton');
+// var popoverTriggerEl = document.getElementById('feedbackbutton');
 var popoverContent = '<div class="popover-content">If you have any suggestions about this page, please let us know by clicking this button. We will be grateful to you.<br>\
 We record the page from which you provide your feedback. So while giving feedback write about this particular page only.</div>';
-var popover = new bootstrap.Popover(popoverTriggerEl, {
-trigger: 'manual',
-html: true,
-content: popoverContent
-});
-popover.show();
-var offcanvasEl = document.getElementById('feedbackcanvas');
-offcanvasEl.addEventListener('shown.bs.offcanvas', function () {
-  popover.hide();
-});
-offcanvasEl.addEventListener('hidden.bs.offcanvas', function () {
-    popover.show();
-});
+// var popover = new bootstrap.Popover(popoverTriggerEl, {
+// trigger: 'manual',
+// html: true,
+// content: popoverContent
+// });
+// popover.show();
+// var offcanvasEl = document.getElementById('feedbackcanvas');
+// offcanvasEl.addEventListener('shown.bs.offcanvas', function () {
+//   popover.hide();
+// });
+// offcanvasEl.addEventListener('hidden.bs.offcanvas', function () {
+//     popover.show();
+// });
+
+
 
 
   

@@ -1053,14 +1053,14 @@ def webmanifest(request):
     site = site_info() 
     icons = []    
     ic192 = {
-        "src": static(site.get('og_image')),
+        "src": site.get('og_image'),
         "sizes": "192x192",
         "type": "image/png"        
     }
     
     icons.append(ic192)   
     ic512 = {
-        "src": static(site.get('og_image')),
+        "src": site.get('og_image'),
         "sizes": "512x512",
         "type": "image/png"        
     }
@@ -1073,7 +1073,7 @@ def webmanifest(request):
         'start_url' : '/', 
         "scope": "/",
         'lang' : 'en',
-        'screenshots' : [static(site.get('og_image')), static(site.get('logo'))],     
+        'screenshots' : [site.get('og_image'), site.get('logo')],     
         'description': site.get('description'),  
         "theme_color": "#08793B",
         "background_color": "#08793B",

@@ -101,6 +101,7 @@ def post_list(request, tag_slug=None):
 #         txt=txt.replace(tag,'')
 #     return txt
 
+
 def post_detail(request, post):    
     """
     View function to display a detailed view of a blog post.
