@@ -15,7 +15,7 @@ To use the Django Blog App in your project, follow these steps:
 
     .. code-block:: bash
 
-       pip install django-blog-app
+       pip install ....
 
 2. Add `'blog'` to the `INSTALLED_APPS` list in your project's `settings.py`:
 
