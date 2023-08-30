@@ -1,6 +1,5 @@
 import csv
 from urllib.error import URLError, HTTPError
-from django.db import IntegrityError
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -9,23 +8,16 @@ from gfvp import null_session
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import *
-import random
-from django.contrib.sites.models import Site
 from django.contrib import messages
 from .forms import UploadLead
-from django.core.files.storage import default_storage
-import os
-from .lead_mail_jobs import pending_queue_count, send_lead_mail, last_process_time, CURRENT, SendQueueMail
+from .lead_mail_jobs import pending_queue_count, SendQueueMail
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from doc.models import Acordion
-from django.utils import timezone 
 from crm.forms import SubscriberForm
 import urllib.request
 import json
-from django_countries import countries
 from django.core.mail import send_mail
-from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from .models import random_digits
 
