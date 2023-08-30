@@ -6,8 +6,8 @@ gfvp_env
 evaluation_bkup  
 task doing for mash.txt 
 .DS_Store  
-gfvp/settings.py
-gfvp/sssssssettings.py
+# gfvp/settings.py
+# gfvp/sssssssettings.py
 static/assets/scss
 static/assets/gulpfile.js
 static/assets/package.json
