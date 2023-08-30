@@ -3,10 +3,18 @@ from django_countries.fields import CountryField
 import random
 from blog.models import *
 
-def random_digits():
+
+# Function to generate random 12-digit numbers
+def random_digits(): 
     return "%0.12d" % random.randint(0, 999999999999)
 
 class Lead(models.Model):
+    """
+    Model representing leads in the CRM app.
+
+    This model stores information about leads, including their name, email address, phone number,
+    address, city, country, subscription status, and confirmation code.
+    """
     lead = models.CharField(max_length=256)
     email_address = models.EmailField(unique=True)
     phone = models.CharField(max_length=256, null=True, blank=True)
@@ -22,6 +30,12 @@ class Lead(models.Model):
     
     @property
     def lead_in_que(self):
+        """
+        Check if the lead's email address is in the mail queue.
+
+        This property checks if the lead's email address is present in the MailQueue's 'to' field.
+        Returns True if the email address is in the queue, otherwise returns False.
+        """
         queue = MailQueue.objects.filter(processed = False)
         q_emails = [q.to for q in queue]
         if self.email_address in q_emails:
@@ -30,6 +44,13 @@ class Lead(models.Model):
             return False
     
 class MailQueue(models.Model):
+    """
+    Model representing queued emails in the CRM app.
+
+    This model stores information about emails in the queue, including the recipient email address,
+    when it was added, whether it has been processed, the process time, and the number of times
+    it has been tried.
+    """
     to = models.CharField(max_length=256, null=True, blank=True)
     added_at = models.DateTimeField(auto_now_add=True)
     processed = models.BooleanField(default=False)
@@ -39,8 +60,15 @@ class MailQueue(models.Model):
     def __str__(self):
         return self.to
 
-# The mail ques will be executed by crontab and will e created during saving BlogPost   
+ 
 class BlogMailQueue(models.Model):
+    """
+    Model representing queued blog-related emails in the CRM app.
+
+    This model stores information about emails related to blog posts in the queue. It includes the
+    recipient email address, the associated blog post, when it was added, whether it has been
+    processed, the process time, and the number of times it has been tried.
+    """
     to = models.CharField(max_length=256, null=True, blank=True)
     blog = models.ForeignKey(BlogPost, on_delete=models.CASCADE)    
     added_at = models.DateTimeField(auto_now_add=True)
