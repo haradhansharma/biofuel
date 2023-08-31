@@ -873,7 +873,7 @@ def quotation_report(request, question, quotation):
     result2 = quotation_report2(request, quotation_data)  
     result = HttpResponse(content_type='application/pdf')
     merger.append(result2)
-    attachmenturl = request.build_absolute_uri(static(quotation_data.quotation_format.url))
+    attachmenturl = request.build_absolute_uri(quotation_data.quotation_format.url)
     atta_res = requests.get(attachmenturl)
     try:
         if atta_res.status_code == 200:
