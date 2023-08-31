@@ -1,12 +1,8 @@
-from time import process_time
-# from doc.doc_processor import site_info
-
-from doc.models import ExSite
 from .models import BlogMailQueue, MailQueue, Lead
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
-from django.core.mail import send_mass_mail, get_connection
+from django.core.mail import get_connection
 from django.utils import timezone 
 from django_cron import CronJobBase, Schedule
 from blog.models import *
