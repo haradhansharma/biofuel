@@ -28,8 +28,8 @@ class Action(models.Model):
     action_type = models.CharField(max_length=4, choices=ACTION_TYPES, default=VIEW, db_index=True)
     timestamp = models.DateTimeField(auto_now_add=True, null=True)  
     
-    class Meta:
-        unique_together = ('content_type', 'object_id', 'user', 'action_type')
+    # class Meta:
+    #     unique_together = ('content_type', 'object_id', 'user', LIKE)
 
 # Model representing a blog post
 class PublishedManager(models.Manager):
