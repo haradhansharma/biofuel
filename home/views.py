@@ -822,7 +822,7 @@ def quotation_report2(request, quotation_data):
         ('left_style_black' , f'-------------------------------------------------------------------------------------'),        
         ('left_style_blue' , f'___This report has been genarated using {site_info().get("domain")}'),         
         ('left_style_black_50' , f'-------------------------------------------------------------------------------------'),        
-        ('left_style_red_head' , f'PLEASE CONSIDER BELOW PAGES UPLOADED BY THE QUOTATION PROVIDER!' if atta_res.status_code == 200 else ''),
+        ('left_style_red_head' , f'PLEASE CONSIDER BELOW PAGES UPLOADED BY THE QUOTATION PROVIDER!' if atta_res.status_code == 200 else f'{attachmenturl} not found!'),
     ]
     for style, values in data:        
         p = Paragraph(values, locals()[style])        
