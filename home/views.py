@@ -875,9 +875,13 @@ def quotation_report(request, question, quotation):
     merger.append(result2)
     attachmenturl = request.build_absolute_uri(static(quotation_data.quotation_format.url))
     atta_res = requests.get(attachmenturl)
-    if atta_res.status_code == 200:
-        quotation_file = quotation_data.quotation_format          
-        merger.append(quotation_file)    
+    try:
+        if atta_res.status_code == 200:
+            quotation_file = quotation_data.quotation_format          
+            merger.append(quotation_file)    
+    except:
+        merger.append(f'No file named {attachmenturl} found!')   
+        
     merger.write(result)
    
     return result
