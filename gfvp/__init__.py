@@ -24,7 +24,7 @@ class CustomFileBasedCache(FileBasedCache):
         # Set the permissions to 666
         cache_path = self._key_to_file(key, version)
         try:
-            os.chmod(cache_path, 0o660)
+            os.chmod(cache_path, 0o666)
             os.chown(cache_path, 'gfvpcom', 'gfvpcom')
         except OSError as e:
             # Handle the exception if needed
