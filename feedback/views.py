@@ -18,7 +18,7 @@ def submit_feedback(request):
             if request.user.is_authenticated:
                 log.info(f"Feedback Saved by_____________ {request.user}. visit: http://{site.get('domain')}/admin/feedback/feedback/{feedback.pk}/change/ to see!")   
             else:
-                log.info(f"Feedback saved by________________{form.changed_data['email']}. visit: http://{site.get('domain')}/admin/feedback/feedback/{feedback.pk}/change/ to see!")
+                log.info(f"Feedback saved by________________{form.cleaned_data['email']}. visit: http://{site.get('domain')}/admin/feedback/feedback/{feedback.pk}/change/ to see!")
             return HttpResponse('<div class="alert alert-primary" role="alert">Feedback Received! Thank you!</div>')
     else:
         initial_dict = {
