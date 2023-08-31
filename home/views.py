@@ -880,7 +880,7 @@ def quotation_report(request, question, quotation):
             quotation_file = quotation_data.quotation_format          
             merger.append(quotation_file)    
     except:
-        merger.append(f'No file named {attachmenturl} found!')   
+        pass
         
     merger.write(result)
    
