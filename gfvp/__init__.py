@@ -14,18 +14,17 @@ def null_session(request):
                 pass
             
 from django.core.cache.backends.filebased import FileBasedCache
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
 import os
+
 class CustomFileBasedCache(FileBasedCache):
-    def _write(self, key, value):
-        # Call the parent class method to write the cache file
-        super()._write(key, value)
-        
-        # Get the cache file path
-        cache_file_path = self._key_to_file(key)
+    def set(self, key, value, timeout=DEFAULT_TIMEOUT, version=None):
+        super().set(key, value, timeout, version)
 
         # Set the permissions to 666
+        cache_path = self._key_to_file(key, version)
         try:
-            os.chmod(cache_file_path, 0o666)
+            os.chmod(cache_path, 0o666)
         except OSError as e:
             # Handle the exception if needed
             pass
