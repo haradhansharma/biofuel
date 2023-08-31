@@ -1,6 +1,5 @@
 from time import process_time
 from doc.doc_processor import site_info
-
 from doc.models import ExSite
 from .models import BlogMailQueue, MailQueue, Lead
 from django.conf import settings
