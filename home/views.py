@@ -1,14 +1,10 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-from django.http import (
-    Http404, 
-    HttpRequest, 
-    HttpResponse, 
-    HttpResponseNotAllowed, 
+from django.http import ( 
+    HttpResponse,   
     HttpResponseRedirect, 
     JsonResponse,
 )
-from doc.models import ExSite
 from django.views import View
 from home.models import Quotation
 from .forms import ( 
@@ -29,30 +25,24 @@ from django.urls import reverse, reverse_lazy
 from accounts.decorators import (
     expert_required, 
     producer_required, 
-    consumer_required, 
     marine_required,
 
 )
-from accounts.models import User, UserType, Profile, UsersNextActivity
-from accounts.helper import check_type
+from accounts.models import User, UserType, UsersNextActivity
 from gfvp import null_session
 from django.contrib.auth import update_session_auth_hash
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from evaluation.models import *
-from django.forms import formset_factory, inlineformset_factory
+from django.forms import inlineformset_factory
 from django.core.exceptions import PermissionDenied
 from .helper import users_under_each_label, reports_under_each_biofuel, weeks_results, all_reports, total_reports, typewise_user
-from django.db.models import Count, Min
 from doc.doc_processor import site_info
 from blog.models import BlogPost
-from django.templatetags.static import static
 from django.utils.decorators import method_decorator
-from django.core.mail import mail_admins, send_mail
 from accounts.helper import send_admin_mail
 import requests
 from django.core.cache import cache
 from evaluation.helper import get_all_questions
-from django.views.decorators.cache import cache_control
 
 import logging
 log =  logging.getLogger('log')
@@ -822,7 +812,7 @@ def quotation_report2(request, quotation_data):
                 aH -= h # reduce the available height   
             continue
     
-    attachmenturl = request.build_absolute_uri(static(quotation_data.quotation_format.url))
+    attachmenturl = request.build_absolute_uri(quotation_data.quotation_format.url)
     atta_res = requests.get(attachmenturl)
     
     
@@ -875,12 +865,11 @@ def quotation_report(request, question, quotation):
     merger.append(result2)
     attachmenturl = request.build_absolute_uri(quotation_data.quotation_format.url)
     atta_res = requests.get(attachmenturl)
-    #try:
+  
     if atta_res.status_code == 200:
         quotation_file = quotation_data.quotation_format          
         merger.append(quotation_file)    
-    #except:
-        #pass
+
         
     merger.write(result)
    
