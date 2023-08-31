@@ -1,5 +1,5 @@
 from time import process_time
-from doc.doc_processor import site_info
+# from doc.doc_processor import site_info
 
 from doc.models import ExSite
 from .models import BlogMailQueue, MailQueue, Lead
@@ -198,7 +198,7 @@ def send_blog_mail():
     pendings = BlogMailQueue.objects.filter(processed = False).order_by('-added_at')[:settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME] 
     
     # Get the current site's information  
-    current_site = site_info()
+    current_site = Site.objects.get_current()  
     subject = 'New post published on "' + current_site.get('domain') + '"!' 
           
     mail_to_lead = []
@@ -276,7 +276,7 @@ def send_report_queue():
     batch = pendings.count()  
     
     # Get the current site's information
-    current_site = site_info()  
+    current_site = Site.objects.get_current()  
     
     # Prepare the subject for the email
     subject = f'Report has been updated at "{current_site.get("domain")}"!'
