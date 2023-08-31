@@ -1,8 +1,12 @@
+from time import process_time
+from doc.doc_processor import site_info
+
+from doc.models import ExSite
 from .models import BlogMailQueue, MailQueue, Lead
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
-from django.core.mail import get_connection
+from django.core.mail import send_mass_mail, get_connection
 from django.utils import timezone 
 from django_cron import CronJobBase, Schedule
 from blog.models import *
@@ -194,7 +198,7 @@ def send_blog_mail():
     pendings = BlogMailQueue.objects.filter(processed = False).order_by('-added_at')[:settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME] 
     
     # Get the current site's information  
-    current_site = Site.objects.get_current()  
+    current_site = site_info()
     subject = 'New post published on "' + current_site.get('domain') + '"!' 
           
     mail_to_lead = []
@@ -272,7 +276,7 @@ def send_report_queue():
     batch = pendings.count()  
     
     # Get the current site's information
-    current_site = Site.objects.get_current()  
+    current_site = site_info()  
     
     # Prepare the subject for the email
     subject = f'Report has been updated at "{current_site.get("domain")}"!'
