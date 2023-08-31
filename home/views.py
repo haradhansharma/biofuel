@@ -651,7 +651,6 @@ def get_verbose_name(instance, field_name):
 
 # sub function for making PDF
 @login_required
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def quotation_report2(request, quotation_data):
     null_session(request)
     '''
