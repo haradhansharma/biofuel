@@ -572,7 +572,6 @@ def check_email(request):
         return HttpResponse('<span class="text-danger">Type a valid email address!</span>')
     
 @login_required
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def partner_service(request, pk):
     """
     Display the personalized service page for a partner user.

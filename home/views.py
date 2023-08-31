@@ -175,7 +175,6 @@ def user_types(request, slug):
 
 
 @login_required
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def dashboard(request):
     #skipping session error essential for signup process
     null_session(request)  
@@ -211,7 +210,6 @@ def dashboard(request):
 
 @login_required
 @marine_required
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def questionsint(request):  
     '''get questions related to the current user'''    
     
@@ -258,7 +256,6 @@ def questionsint(request):
 
 
 @login_required
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def user_setting(request):   
     
     null_session(request) 
@@ -341,7 +338,6 @@ def user_setting(request):
 
 
 @login_required
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def delete_avatar(request):    
     user = request.user
     profile = user.get_profile
@@ -353,7 +349,6 @@ def delete_avatar(request):
 
 
 @login_required
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def password_change(request):   
     null_session(request) 
     log.info(f'Passowrd changed page accessed by_____________ {request.user}')
@@ -398,7 +393,6 @@ def get_question_of_label(request):
 
 @login_required
 @expert_required
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def child_modal_data(request, id):
  
     try:
@@ -416,7 +410,6 @@ def child_modal_data(request, id):
 
 @login_required
 @expert_required
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def quotations(request):  
     '''get questions related to the current user'''
     
@@ -470,7 +463,6 @@ def quotations(request):
 
 @login_required
 @expert_required
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def quotationsatg(request):  
     '''get questions related to the current user'''    
     
@@ -513,7 +505,6 @@ def quotationsatg(request):
 
 @login_required
 @expert_required
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def add_quatation(request, slug): 
     '''
     quotation can be created by indivisual expert
