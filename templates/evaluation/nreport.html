@@ -143,7 +143,7 @@
                                         </table>
                                         {% for el in eva_label %}
                                         <h4 id="{{el.id}}l" class="mt-4  border-bottom border-2 border-primary">{{el.label.label}}:</h4>
-                                        {% for es in el.evalebelstatement_set.all %}
+                                        {% for es in el.elabelstatement.all %}
                                         {% if es.statement is not None %}
                                         <p class="text-start">{{es.statement}}</p>
                                         {% endif %}

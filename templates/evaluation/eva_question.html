@@ -38,7 +38,8 @@
                 <div class="col-12">
                     <div class="justify-content-left d-flex">                    
                         <button class="btn btn-warning btn-block mb-2" onclick="history.back()">Go Back</button>
-                        <button type="button" 
+                        <button 
+                        type="button" 
                         class="btn btn-block btn-primary mb-2 ms-2" 
                         data-bs-toggle="modal" 
                         data-bs-target="#modal-glossary" 
@@ -70,10 +71,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
 
 
                     <div id="ques" class="card text-center">
@@ -216,7 +213,7 @@
                             
 
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6">                    
                             <div class="alert alert-success" role="alert">
                                 Greenfuel Summary
                             </div>
@@ -226,11 +223,11 @@
 {{eva_lebel.label.label}}
 <textarea name="tarea" class="form-control" rows="6" id="floatingTextarea" disabled>
 {% if total_question >= qualified_rang %}
-{% for el in eva_lebel.evalebelstatement_set.all %}{{el.statement.strip|safe}}
+{% for el in eva_lebel.elabelstatement.all %}{{el.statement.strip|safe}}
 {{el.next_step.strip|safe}}
 {% endfor %}
 {% else %}
-<p>Need to submit minimum {{ qualified_rang }} qualified ans to view your results! Current is {{ total_question }} !</p>
+Need to submit minimum {{ qualified_rang }} qualified ans to view your results! Current is {{ total_question }} !
 {% endif %}
 </textarea>
 {% endfor %}

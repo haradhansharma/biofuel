@@ -2,18 +2,11 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from urllib.parse import urlparse
 from django.http import HttpResponse, HttpResponseRedirect
-from evaluation.helper import get_current_evaluator
 from doc.models import ExSite
 from evaluation.models import (
-    EvaComments, 
-    EvaLabel, 
-    EvaLebelStatement, 
-    Evaluation, 
-    Evaluator, 
-    Question
+    Evaluator 
     )
 from .models import *
-from home.models import Quotation
 from django.urls import reverse_lazy
 from gfvp import null_session
 from django.shortcuts import render, get_object_or_404
@@ -37,21 +30,12 @@ from django.db.models import Q
 
 import logging
 log =  logging.getLogger('log')
-from accounts.decorators import (
-    expert_required, 
-    producer_required, 
-    consumer_required, 
-    marine_required,
 
+from accounts.decorators import (
+    expert_required
 )
 
-from django.core.mail import mail_admins, send_mail, send_mass_mail
 from accounts.helper import send_admin_mail
-from django.views.decorators.cache import cache_control
-
-
-
-
 
 '''
 Inheriting default loginview of Django and customizing behavior.
@@ -125,6 +109,10 @@ class CustomLoginView(LoginView):
         Returns:
             dict: A dictionary containing context data for rendering the view.
         """
+        
+        log.info(f'Login accessed by_____________ {self.request.user}')
+        
+        
         context = super().get_context_data(**kwargs)
         
         # Generate meta data for the view
@@ -170,6 +158,8 @@ def signup(request):
     Part of user type segrigation
     =====
     '''
+    
+    log.info(f'signup page accessed by_____________ {request.user}')
     
     # User type segregation based on session.
     if 'interested_in' not in request.session:
@@ -587,6 +577,10 @@ def partner_service(request, pk):
     Returns:
         HttpResponse: Rendered HTML template displaying the service page.
     """
+    
+    log.info(f'Partner service page accessed by_____________ {request.user}')
+    
+    
     # To avoid circular reference
     from evaluation.models import NextActivities
     

@@ -16,10 +16,6 @@ from django.urls import reverse
 from django_xhtml2pdf.utils import generate_pdf
 from . helper import (
     get_all_questions,
-    label_assesment_for_donot_know,
-    label_assesment_for_positive,
-    overall_assesment_for_donot_know,
-    overall_assesment_for_positive,
     get_current_evaluator,
     nreport_context,
     OilComparision,
@@ -29,7 +25,8 @@ from . helper import (
     LabelWiseData,
     get_all_definedlabel,
     get_all_evaluations_or_on_question,
-    get_all_reports_with_last_answer
+    get_all_reports_with_last_answer,
+    EvaLebelStatementAnalyzer
     
     )
 from django.db.models import Q
@@ -157,10 +154,11 @@ def set_evastatment(request, selected_option, evaluator):
             # pass is essential to execute rest of the code
             log.info('No assesmented evalabelstatent found to delete! ')
         
+        assesment = EvaLebelStatementAnalyzer(eva_label, evaluator)
         #This is a calculated assesment based on the answere. Called function gives the idea.    
         summery_statement_do_not_know = EvaLebelStatement(
             evalebel = eva_label, 
-            statement = label_assesment_for_donot_know(request, eva_label, evaluator),  
+            statement = assesment.label_assesment_for_donot_know(),  
             evaluator =  evaluator, 
             # question = question,  
             assesment = True)
@@ -170,7 +168,7 @@ def set_evastatment(request, selected_option, evaluator):
         #This is a calculated assesment based on the answere. Called function gives the idea.    
         summery_statement_positive = EvaLebelStatement(
             evalebel = eva_label, 
-            statement = label_assesment_for_positive(request, eva_label, evaluator),  
+            statement = assesment.label_assesment_for_positive(),  
             evaluator = evaluator, 
             # question = question,  
             assesment = True)
@@ -221,12 +219,12 @@ def set_evastatement_of_logical_string(request, selected_option, evaluator):
     except Exception as e:
         log.warning(f'Assement deleting was not possible due to {e} !')
     
-    
+    assesment = EvaLebelStatementAnalyzer(eva_label_common, evaluator)
     #This is a calculated assesment based on the answere. Called function gives the idea.    
     log.info(f'Recording donot_know_assesment for common label based on answer for report {evaluator} !')
     summery_statement_do_not_know = EvaLebelStatement(
         evalebel = eva_label_common, 
-        statement = overall_assesment_for_donot_know(request, eva_label_common, evaluator),  
+        statement = assesment.overall_assesment_for_donot_know(),  
         evaluator =  evaluator, 
         assesment = True)
     summery_statement_do_not_know.save()
@@ -235,7 +233,7 @@ def set_evastatement_of_logical_string(request, selected_option, evaluator):
     log.info(f'Recording positive_assement for common label based on answer for report {evaluator}!')
     summery_statement_positive = EvaLebelStatement(
         evalebel = eva_label_common, 
-        statement = overall_assesment_for_positive(request, eva_label_common, evaluator),  
+        statement = assesment.overall_assesment_for_positive(),  
         evaluator =  evaluator, 
         assesment = True)
     summery_statement_positive.save()
@@ -460,7 +458,7 @@ def question_dataset(request):
     
     evaluator = get_current_evaluator(request)
     
-    stored_questions = get_all_questions().filter(is_active = True)
+    stored_questions = Question.objects.filter(is_active = True)
     
     
     #build parentwise shorted question    
@@ -470,8 +468,9 @@ def question_dataset(request):
             questions.append(question)            
             questions.extend([child for child in stored_questions if child.parent_question == question])   
     
-    #Pul answered record of the current report
-    evaluations = get_all_evaluations_or_on_question(evaluator)
+    # Pul answered record of the current report
+    # Cache should not use here
+    evaluations = Evaluation.objects.filter(evaluator=evaluator).order_by('id').select_related('question', 'option')
     
     questions_of_report = []
     for evaluation in evaluations:
@@ -481,11 +480,8 @@ def question_dataset(request):
     #set temporary status of questions     
     for question in questions:
         if question in questions_of_report:
-            question.stat = 'checked'
-            
-            # setattr(question, 'stat', 'checked') 
-        else:
-            # setattr(question, 'stat', 'skipped')   
+            question.stat = 'checked'   
+        else:            
             question.stat = 'skipped'        
     
     #modify status after checked
@@ -494,8 +490,7 @@ def question_dataset(request):
         for question in questions[int(stop_index) + 1:]:          
             if question.stat == 'skipped':            
                 # setattr(question, 'stat', 'unchecked')
-                question.stat = 'unchecked'        
-                
+                question.stat = 'unchecked'    
             else:            
                 continue
     except:
@@ -507,6 +502,7 @@ def question_dataset(request):
                 continue
        
     option_of_question = {e.question.id: e.option for e in evaluations}    
+    
     for question in questions:       
         try:
             if (option_of_question[question.id]).dont_know == True or (option_of_question[question.id]).name == 'No':
@@ -517,18 +513,14 @@ def question_dataset(request):
             continue    
         
     # if parent is skipped
-    childs_to_delete = []
-    
+    childs_to_delete = []    
     for question in questions:
         if question.is_door == True and question.stat == 'skipped':
             childs = [child for child in questions if child.parent_question == question]            
             for child in childs:
-                setattr(child, 'stat', 'skipped')
-                # evaluations.filter(question = child).delete()  
+                setattr(child, 'stat', 'skipped')                
                 childs_to_delete.append(child)
-    evaluations.filter(question__in = childs_to_delete).delete()
-    
-                
+    evaluations.filter(question__in = childs_to_delete).delete()               
 
     parents = []
     for question in questions:        
@@ -566,20 +558,7 @@ def get_vedio_urls(search_term):
             continue
     return vedio_urls
 
-# def vedio_urls(search_term):
-#     saved_urls = Youtube_data.objects.filter(term = search_term) 
-#     if saved_urls.exists():
-#         log.info(f'Found saved url for youtube video________')
-#         saved_url = saved_urls[0]
-#         vedio_urls = ast.literal_eval(saved_url.urls) #convert string list to list
-#         if (saved_url.update_date + timezone.timedelta(days=7))  < timezone.now():
-#             saved_url.urls = get_vedio_urls(search_term)
-#             saved_url.save()         
-#     else:
-#         log.info(f'Hiting api for youtube video as no saved video found_______')
-#         vedio_urls = get_vedio_urls(search_term)        
-#         Youtube_data.objects.create(term = search_term, urls = vedio_urls)  
-#     return vedio_urls  
+
 from asgiref.sync import sync_to_async
 @sync_to_async
 def vedio_urls(request, search_term):
@@ -699,10 +678,10 @@ def eva_question(request, evaluator_id, slug):
  
     
     all_questions = get_all_questions()
-    question = all_questions.get(slug = slug)  
+    question = Question.objects.get(slug = slug)  
     
     evaluator_data = get_current_evaluator(request)
-    evaluation_data = Evaluation.objects.filter(evaluator = evaluator_data).select_related('question','option')
+    evaluation_data = Evaluation.objects.filter(evaluator = evaluator_data).select_related('question','option').order_by('id') 
     
     
     
@@ -834,7 +813,7 @@ def eva_question(request, evaluator_id, slug):
     # log.info(f'total questions________________{Question.objects.filter(is_active=True).count()}')
     
     
-    
+    print(request.session.items())
     context ={
         'slug' : slug,
         'question_dataset' : question_dataset(request) ,
@@ -843,8 +822,8 @@ def eva_question(request, evaluator_id, slug):
         'evaluator_data': evaluator_data,
         'eva_lebels': eva_lebels,
         'timing_text': timing_text,    
-        'total_question': request.session['total_question'], 
-        'qualified_rang' : qualified_ans_rang,   
+        'total_question': int(request.session['total_question']), 
+        'qualified_rang' : int(qualified_ans_rang),   
         'evaluator':evaluator_id, 
         'selected_option' : selected_option,
         'submitted_comment' : submitted_comment,

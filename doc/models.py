@@ -7,6 +7,40 @@ from django.core.validators import FileExtensionValidator
 
 
 class ExSite(models.Model):
+    """
+    Represents extended site information associated with a Django Site.
+
+    This model stores extended information about a Django Site, including metadata,
+    logos, contact details, and social media links.
+
+    Attributes:
+        site (Site): One-to-One relationship with the Django Site model.
+        site_meta (str): Meta information for the site.
+        site_description (str): A longer description for the site.
+        site_meta_tag (str): Meta tag for the site.
+        site_favicon (ImageField): Site favicon image.
+        site_logo (ImageField): Site logo image.
+        slogan (str): A short slogan or tagline for the site.
+        og_image (ImageField): Open Graph image for social sharing.
+        mask_icon (FileField): SVG file for mask icon.
+
+        phone (str): Contact phone number.
+        email (EmailField): Contact email address.
+        location (str): Physical location or address.
+        facebook_link (URLField): Facebook profile URL.
+        twitter_link (URLField): Twitter profile URL.
+        linkedin_link (URLField): LinkedIn profile URL.
+
+        qualified_ans_range (int): A numeric value representing a qualification range.
+
+    Managers:
+        objects (models.Manager): The default manager.
+        on_site (CurrentSiteManager): Manager for filtering by the current site.
+
+    Methods:
+        __str__(): Returns a string representation of the ExSite instance.
+
+    """
     site = models.OneToOneField(Site, primary_key=True, verbose_name='site', on_delete=models.CASCADE)
     site_meta = models.CharField(max_length=256)
     site_description = models.TextField(max_length=500)
@@ -36,6 +70,15 @@ class ExSite(models.Model):
         return self.site.__str__()  
 
 def apps_choice():
+    """
+    Generates a list of choices for the 'apps' field in Acordion model.
+
+    This function retrieves the verbose names of all installed apps in the project
+    and generates choices for the 'apps' field in the Acordion model.
+
+    Returns:
+        list: A list of tuples containing choices in the format ('slugified_name', 'Verbose Name').
+    """
     PROJECT_APPS = [app.verbose_name for app in apps.get_app_configs()]    
     al = []
     for pa in PROJECT_APPS:        
@@ -45,6 +88,22 @@ def apps_choice():
     return al
 
 class Acordion(models.Model):
+    """
+    Represents an accordion element with a button and description.
+
+    This model represents an accordion element that typically contains a button
+    with text and a description. It also allows associating the accordion element
+    with a choice of installed apps.
+
+    Attributes:
+        button_text (str): Text displayed on the button.
+        button_des (str): Description or content associated with the accordion element.
+        apps (str): Choice field for associating the accordion with an installed app.
+
+    Methods:
+        __str__(): Returns a string representation of the Acordion instance.
+
+    """
     button_text = models.CharField(max_length=256)
     button_des = models.TextField()
     apps = models.CharField(max_length=50, choices=apps_choice())    

@@ -91,8 +91,8 @@
         <div class="list-group list-group-flush border-bottom scrollarea">           
                 {% for parent, child in question_dataset.items %}
                 <div class="list-group-item list-group-item-action py-1 lh-tight" aria-current="true">
-                    <div class="d-flex w-100 align-items-start justify-content-start">
-                        <a style="white-space:normal" class="text-start badge {% if slug == parent.slug %} btn-primary {% else %} {% if parent.stat == 'checked' %} btn-success {% elif parent.stat == 'skipped' %} btn-gray-100  {% else %} btn-outline-success link-success border border-success {% endif %} {% endif %} mb-1 w-100"
+                    <div class="d-flex w-100 align-items-start justify-content-start">               
+                        <a style="white-space:normal;" class="text-start badge {% if slug == parent.slug %} btn-primary {% else %} {% if parent.stat == 'checked' %} btn-success {% elif parent.stat == 'skipped' %} btn-gray-100  {% else %} btn-outline-success link-success border border-success {% endif %} {% endif %} mb-1 w-100"
                             data-bs-toggle="tooltip" data-bs-html="true" title="{{parent.name}}"
                             href="{% url 'evaluation:eva_question' request.session.evaluator parent.slug %}"> 
                             {% if parent.chapter_name %}
@@ -103,7 +103,7 @@
                         </a>                        
                     </div>
                     <div class="col-10 mb-1 small float-end">
-                        {% for item in child %}
+                        {% for item in child %}                   
                         <a class="badge {% if slug == item.slug %} btn-primary {% else %} {% if item.stat == 'checked' %} btn-success {% elif item.stat == 'skipped' %} btn-gray-100  {% else %} btn-outline-success link-success border border-success {% endif %} {% endif %} mb-1 w-100 "
                             data-bs-toggle="tooltip" data-bs-html="true" title="{{item.name}}"  href="{% url 'evaluation:eva_question' request.session.evaluator item.slug %}">
                             Question - {{forloop.parentloop.counter}}.{{forloop.counter}}
@@ -112,7 +112,6 @@
                     </div>                    
                 </div>
                 {% endfor %}          
-        </div>
-     
+        </div>     
    </div>
  </nav>

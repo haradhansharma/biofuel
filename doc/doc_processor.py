@@ -10,6 +10,16 @@ from .models import ExSite
 
 
 def site_info():
+    """
+    Retrieves and caches site information.
+
+    This function fetches information about the site from the 'ExSite' model,
+    including site name, domain, meta information, logos, contact details, and more.
+    It caches the retrieved information to improve performance.
+
+    Returns:
+        dict: A dictionary containing site information.
+    """
     SITE_INFO_CACHE_KEY = 'site_info'    
     site_info = cache.get(SITE_INFO_CACHE_KEY)
     
@@ -18,6 +28,8 @@ def site_info():
     
     site = ExSite.on_site.select_related('site').get()
     
+    
+    # Construct the site_info dictionary
     site_info = {
         'name': site.site.name,
         'domain': site.site.domain,    
@@ -48,9 +60,18 @@ def site_info():
 
 
 def get_pending_sugestion():
+    """
+    Retrieves the count of pending suggestions.
+
+    This function fetches the count of pending suggestions from the 'Suggestions' model.
+    It caches the count for future use to optimize performance.
+
+    Returns:
+        int: The count of pending suggestions.
+    """
     from evaluation.models import Suggestions
     
-    # First, check if the count is already cached
+     # First, check if the count is already cached
     count = cache.get('pending_suggestion_count')
     if count is None:
         # If not, fetch the count from the database and cache it for future use
@@ -61,6 +82,18 @@ def get_pending_sugestion():
 
 
 def comon_doc(request):   
+    """
+    Generates common data for rendering templates.
+
+    This function generates common data required for rendering templates, such as
+    text translations, site information, menus, and subscription forms.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        dict: A dictionary containing common data for rendering templates.
+    """
  
     text = {
         'user_congrets': f"Hi , {request.user.username}",

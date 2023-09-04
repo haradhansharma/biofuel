@@ -57,5 +57,8 @@ static/jquery-autosuggest
 .env
 cache
 
+evaluation/readme.rst
+doc/readme.rst
+
 
 

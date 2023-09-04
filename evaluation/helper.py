@@ -1,24 +1,30 @@
 from concurrent.futures import ThreadPoolExecutor
-
 import django
 from .models import *
 from django.utils import timezone
-from django_cron import CronJobBase, Schedule
 import pandas as pd
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.contrib import messages
-from doc.doc_processor import site_info
 from gfvp import null_session
 from django.contrib.sites.shortcuts import get_current_site
-from asgiref.sync import sync_to_async, async_to_sync
 from glossary.models import Glossary
 from django.core.cache import cache
 from django.db.models import Prefetch   
+
 import logging
 log =  logging.getLogger('log')
 
 
-def get_all_questions():               
+def get_all_questions():  
+    """
+    Retrieve and cache all Question instances.
+
+    This function fetches all Question instances from the database and caches the result for better performance on
+    subsequent calls.
+
+    Returns:
+        QuerySet: A QuerySet containing all Question instances.
+    """             
     questions = cache.get('all_questions') 
     if not questions:
         questions = Question.objects.all().select_related('parent_question').prefetch_related('stanchart', 'question')
@@ -26,6 +32,15 @@ def get_all_questions():
     return questions
 
 def get_all_stdoils():
+    """
+    Retrieve and cache all StdOils instances.
+
+    This function fetches all StdOils instances from the database and caches the result for better performance on
+    subsequent calls.
+
+    Returns:
+        QuerySet: A QuerySet containing all StdOils instances.
+    """
     stdoils = cache.get('all_stdoils')
     if not stdoils:
         stdoils = StdOils.objects.all().select_related('select_oil', 'biofuel')
@@ -33,6 +48,15 @@ def get_all_stdoils():
     return stdoils
 
 def get_all_glosaries():
+    """
+    Retrieve and cache all Glossary instances.
+
+    This function fetches all Glossary instances from the database and caches the result for better performance on
+    subsequent calls.
+
+    Returns:
+        QuerySet: A QuerySet containing all Glossary instances.
+    """
     glosaries = cache.get('all_glosaries')
     if not glosaries:
         glosaries = Glossary.objects.all()
@@ -40,6 +64,15 @@ def get_all_glosaries():
     return glosaries
 
 def get_all_definedlabel():
+    """
+    Retrieve and cache all DifinedLabel instances.
+
+    This function fetches all DifinedLabel instances from the database and caches the result for better performance on
+    subsequent calls.
+
+    Returns:
+        QuerySet: A QuerySet containing all DifinedLabel instances.
+    """
     definedlabel = cache.get('all_definedlabel')
     if not definedlabel:
         definedlabel = DifinedLabel.objects.all().prefetch_related('user_label')
@@ -47,10 +80,21 @@ def get_all_definedlabel():
     return definedlabel
 
 def get_all_evaluations_or_on_question(evaluator, question = None):   
-    '''
-    return all evaluation based on current report
-    if question parameter supply return one evaluation on question
-    '''    
+    """
+    Retrieve and cache all evaluations for a given evaluator.
+
+    This function fetches all Evaluation instances related to a specific evaluator and caches the result for better
+    performance on subsequent calls. Optionally, it can return a single evaluation for a specific question if the
+    'question' parameter is provided.
+
+    Args:
+        evaluator (Evaluator): The evaluator for whom evaluations are fetched.
+        question (Question, optional): The specific question for which to retrieve an evaluation.
+
+    Returns:
+        QuerySet or Evaluation: A QuerySet containing all evaluations for the evaluator, or a single Evaluation
+        instance for the specified question (if provided).
+    """ 
     cache_key = f"{evaluator.id}_evaluations"    
     evaluations = cache.get(cache_key)
     if not evaluations:
@@ -62,17 +106,27 @@ def get_all_evaluations_or_on_question(evaluator, question = None):
         cache.set(cache_key, evaluations, 3600)
         
     if question:        
-        # if question then return single evaluation based on the question
+         # If 'question' parameter is provided, return a single evaluation based on the question
         return next((eva for eva in evaluations if eva.question == question), None)
     else:
-        # return all evalaution of this report/evaluator
-        return evaluations
-    
-
-    
+        # Otherwise, return all evaluations of this report/evaluator
+        return evaluations   
 
     
 def get_all_reports_with_last_answer(request, first_of_parent):
+    """
+    Retrieve and cache all reports with their last answered question.
+
+    This function fetches all reports (evaluators) and their corresponding evaluations, including the last answered
+    question, and caches the result for better performance on subsequent calls.
+
+    Args:
+        request: The HTTP request object.
+        first_of_parent: The first question of the parent questionnaire.
+
+    Returns:
+        QuerySet: A QuerySet containing all reports (evaluators) with their last answered question.
+    """
     
     user = request.user    
 
@@ -107,6 +161,15 @@ def get_all_reports_with_last_answer(request, first_of_parent):
 
 
 def get_biofuel():    
+    """
+    Retrieve and cache all Biofuel instances.
+
+    This function fetches all Biofuel instances from the database and caches the result for better performance on
+    subsequent calls.
+
+    Returns:
+        QuerySet: A QuerySet containing all Biofuel instances.
+    """
     biofuels = cache.get('all_biofuels')
     if not biofuels:
         biofuels = Biofuel.objects.all().prefetch_related('eva_fuel')
@@ -114,171 +177,302 @@ def get_biofuel():
     return biofuels
 
 def get_options_of_ques(question):    
+    """
+    Retrieve and cache all options for a given question.
+
+    This function fetches all Option instances related to a specific question and caches the result for better
+    performance on subsequent calls.
+
+    Args:
+        question (Question): The question for which to retrieve options.
+
+    Returns:
+        QuerySet: A QuerySet containing all options for the given question.
+    """
     options = cache.get(f'options_of_ques_{question.id}')
     if not options:
         options = question.question.all()
         cache.set(f'options_of_ques_{question.id}', options, 3600)
+        
     return options
 
 
 def get_sugestions_of_ques(question):    
+    """
+    Retrieve and cache all suggestions for a given question.
+
+    This function fetches all Suggestions instances related to a specific question, orders them by creation date, and
+    caches the result for better performance on subsequent calls.
+
+    Args:
+        question (Question): The question for which to retrieve suggestions.
+
+    Returns:
+        QuerySet: A QuerySet containing all suggestions for the given question.
+    """
     suggestions = cache.get(f'sugestions_of_ques_{question.id}')
     if not suggestions:
         suggestions = question.question_sugestion.all().order_by('-created')
         cache.set(f'sugestions_of_ques_{question.id}', suggestions, 3600)
-    return suggestions
-
-
-
-
-
-
-    
-    
         
-
-
-
-    
-
+    return suggestions  
 
 
 def active_sessions():
-    '''
-    we will collect all active session's evaluator id of before past 24 hours
-    it returns list
-    '''
+    """
+    Retrieve Active Evaluator IDs from the Past 24 Hours.
+
+    This function collects all active sessions' evaluator IDs from the past 24 hours and returns them as a list.
+
+    Returns:
+        list: A list of evaluator IDs from active sessions within the last 24 hours.
+    """
     from django.contrib.sessions.models import Session # As it is sensative operation I will call it inside this function only.
-    sessions = Session.objects.filter(expire_date__gt = (timezone.now() - timezone.timedelta(hours=24)))
-    s_evs = set()
-    for s in sessions:
-        s_data = s.get_decoded()
-        try:
-            eva = s_data.get('evaluator')
-        except:
-            eva = None
-        if eva:
-            s_evs.add(s_data.get('evaluator'))
-    # log.info(f"Collected active session's evaluator id set, which is {s_evs}")
-    return list(s_evs)
+        
+    # Get sessions that have not expired within the past 24 hours
+    sessions = Session.objects.filter(expire_date__gt=(timezone.now() - timezone.timedelta(hours=24)))
+    
+    # Initialize a set to store unique evaluator IDs
+    active_evaluator_ids = set()
+    
+    # Iterate through active sessions
+    for session in sessions:
+        session_data = session.get_decoded()
+        evaluator_id = session_data.get('evaluator')
+        
+        # Check if an evaluator ID is present in the session data
+        if evaluator_id:
+            active_evaluator_ids.add(evaluator_id)
+   
+    # Convert the set of evaluator IDs to a list
+    return list(active_evaluator_ids)  
+
 
 def clear_evaluator():
-    '''
-    IT IS RUNNING BY CRON JOB
-    we will remove all wastage report which just initialized but have no data and which is not qualified to show in the profile page.
-    It returns total deleted report in a call.
-    It is created to call by CRONJOB but can be called from anywhere.
-    
-    '''
-    evaluator = Evaluator.objects.filter(report_genarated = False) 
-    total_deleted = 0
-    if evaluator.exists(): 
-        try:
-            for e in evaluator:                
-                if e.id not in active_sessions(): # to avoid deleting running session's evaluator
-                    if e.eva_evaluator.count() == 0: # as first related data is beeing saving into the evaluation table so that we will check these table only.
-                        Evaluation.objects.filter(evaluator = e).delete()
-                        EvaLebelStatement.objects.filter(evaluator = e).delete()                
-                        EvaLabel.objects.filter(evaluator = e).delete()
-                        EvaComments.objects.filter(evaluator = e).delete()                
-                        Evaluator.objects.filter(id = e.id).delete()
-                        log.info(f'Report {e} with related data from Evaluation, EvaLabelStatement, EvaLabel, EvaComments, Evaluator has been deleted due t no record to the related tables!')   
-                        total_deleted += 1             
-        except Exception as e:
-            log.warning(f'error {e} happend while deleteing incomplete report!')
-            
-    # log.info(f'{total_deleted} incomplete report has been deleted!')
-    return total_deleted
+    """
+    Clear Incomplete Evaluators and Their Related Data
 
+    This function is typically scheduled to run as a background task (e.g., via a CRON job) to remove incomplete
+    evaluator records that were initialized but have no associated data and are not qualified for display on the
+    user's profile page. It deletes these incomplete evaluators along with their related data to maintain a clean
+    database.
+
+    Returns:
+        int: The total number of incomplete evaluators deleted in the process.
+    """    
     
+    # Fetch incomplete evaluators that have not generated a report
+    incomplete_evaluators = Evaluator.objects.filter(report_genarated=False)
+    
+    # Get the IDs of currently active evaluator sessions
+    active_evaluator_ids = set(active_sessions())
+    
+    # Initialize a list to store the IDs of evaluators to be deleted
+    evaluators_to_delete = []
+    
+    # Iterate through incomplete evaluators
+    for evaluator in incomplete_evaluators:
+        if evaluator.id not in active_evaluator_ids:            
+            # Check if the evaluator has no associated data in the evaluation table
+            if evaluator.eva_evaluator.count() == 0:
+                evaluators_to_delete.append(evaluator.id)
+                
+    # If there are evaluators to delete
+    if evaluators_to_delete:
+        total_deleted = len(evaluators_to_delete)
+        
+        # Delete related data in a specific sequence to avoid foreign key constraints
+        # as first related data is beeing saving into the evaluation table so that we will check these table only.
+        Evaluation.objects.filter(evaluator__id__in=evaluators_to_delete).delete()
+        EvaLebelStatement.objects.filter(evaluator__id__in=evaluators_to_delete).delete()
+        EvaLabel.objects.filter(evaluator__id__in=evaluators_to_delete).delete()
+        EvaComments.objects.filter(evaluator__id__in=evaluators_to_delete).delete()
+        Evaluator.objects.filter(id__in=evaluators_to_delete).delete()
+
+        log.info(f'{total_deleted} incomplete reports with related data have been deleted.')
+        
+        return total_deleted
+    else:
+        log.info('No incomplete reports to delete.')
+        return 0
 
 
 def get_current_evaluator(request, evaluator_id = None):
-    if evaluator_id:
-        evaluator = Evaluator.objects.get(id = evaluator_id)    
-    else:        
-        evaluator = Evaluator.objects.get(id = request.session['evaluator'])      
+    """
+    Get the Current Evaluator.
+
+    This function retrieves the current evaluator object based on the provided `evaluator_id` or the
+    `evaluator_id` stored in the user's session. It is assumed that the middleware ensures 'evaluator'
+    exists in the session.
+
+    Args:
+        request (HttpRequest): The current request object.
+        evaluator_id (int, optional): The ID of the evaluator to retrieve. Defaults to None.
+
+    Returns:
+        Evaluator: The current evaluator object.
+
+    Example:
+        To get the current evaluator from the session:
+        ```
+        current_evaluator = get_current_evaluator(request)
+        # Perform actions with the current evaluator
+        ```
+
+        To get a specific evaluator by ID:
+        ```
+        evaluator_id = 123
+        specific_evaluator = get_current_evaluator(request, evaluator_id)
+        # Perform actions with the specific evaluator
+        ```
+    """
+    try:
+        if evaluator_id:
+            evaluator = Evaluator.objects.get(id = evaluator_id)    
+        else:   
+            evaluator_id_from_session = request.session['evaluator']     
+            evaluator = Evaluator.objects.get(id = int(evaluator_id_from_session))   
+    except Evaluator.DoesNotExist:
+        log.debug(f'No current evaluator found____________it is an important issue!')
+        pass
+           
     return evaluator
 
-def ans_to_the_label(evalebel, evaluator):
-    ans_to_the_label = EvaLebelStatement.objects.filter(evalebel = evalebel, evaluator = evaluator, question__isnull = False, assesment = False).values('evalebel').distinct().count()
-    return ans_to_the_label
+
+#======================
+class EvaLebelStatementAnalyzer:
+    def __init__(self, evalebel, evaluator):
+        self.evalebel = evalebel
+        self.evaluator = evaluator
+        # self.request = request
+        
+
+    def get_statement_count(self, values_key, **filter_kwargs):
+        counted = (
+            EvaLebelStatement.objects
+            .filter(**filter_kwargs)
+            .values(values_key)
+            .distinct()
+            .count()
+        )
+        return counted
     
+    def ans_to_the_label(self):
+        filter_kwargs = {
+            'evalebel': self.evalebel,
+            'evaluator': self.evaluator,
+            'question__isnull': False,
+            'assesment': False
+        }
+        values_key = 'evalebel'
+        return self.get_statement_count(values_key, **filter_kwargs)
 
-#calculated statement genarator for report, is called in evaluatin procedure. function name telling what is being calulated
-def label_assesment_for_donot_know(request, evalebel, evaluator):
-    'label wise Sumamry'
-    # ans_to_the_label = EvaLebelStatement.objects.filter(evalebel = evalebel, evaluator = evaluator, question__isnull = False, assesment = False).values('evalebel').distinct().count()
-    dont_know_ans_to_the_lebel = EvaLebelStatement.objects.filter(evalebel = evalebel, evaluator = evaluator, question__isnull = False, dont_know = 1, assesment = False).values('evalebel').distinct().count()
-    dont_know_percent_to_the_label = (int(dont_know_ans_to_the_lebel) * 100)/int(ans_to_the_label(evalebel, evaluator))
+    def get_dont_know_statement(self, label_name, value_count):    
+        if value_count < 20:
+            statement = f'{label_name} assessment of your biofuel shows that you have very detailed knowledge.'
+        elif value_count < 35:
+            statement = f'{label_name} assessment of your biofuel shows that you have very significant knowledge.'
+        elif value_count < 50:
+            statement = f'{label_name} assessment of your biofuel shows that you have very limited knowledge.'
+        else:
+            statement = f'{label_name} assessment of your biofuel shows that you have very rudimentary knowledge.'
+        
+        return statement
     
-    if dont_know_percent_to_the_label < 20:
-        statement = str(evalebel.label.name) + ' assessment of your biofuel shows that you have very detailed knowledge.'
-    elif dont_know_percent_to_the_label < 35:
-        statement = str(evalebel.label.name) + ' assessment of your biofuel shows that you have very significant knowledge.'
-    elif dont_know_percent_to_the_label < 50:
-        statement = str(evalebel.label.name) + ' assessment of your biofuel shows that you have very limited knowledge.'
-    else:
-        statement = str(evalebel.label.name) + ' assessment of your biofuel shows that you have very rudimentary knowledge.'
+    def get_positive_statement(self, label_name, value_count):    
+        if value_count < 50:
+            statement = f'Based on the response to the enquiry, the {label_name} evaluation of your oil contains multiple serious shortcomings.'
+        elif value_count < 75:
+            statement = f'According to the response to the query, the {label_name} evaluation of your oil is generally good. However, there are a few shortcomings that needs be addressed further.'
+        elif value_count < 90:
+            statement = f'According to the response to the inquery, the {label_name} evaluation of your oil is largely favourable Nonetheless, the aformentioned issues must be considered in to account.'
+        else:
+            statement = f'According to the response to the query, the {label_name} evaluation of your oil is highly promising. It has a lot of promise in terms of the {self.evalebel.label.adj.lower()}.'
 
-    return statement
-
-#calculated statement genarator for report, is called in evaluatin procedure. function name telling what is being calulated
-def label_assesment_for_positive(request, evalebel, evaluator):
-    'label wise Sumamry'
-    # ans_to_the_label = EvaLebelStatement.objects.filter(evalebel = evalebel, evaluator = evaluator, question__isnull = False, assesment = False).values('evalebel').distinct().count()
-    pos_ans_to_the_lebel = EvaLebelStatement.objects.filter(evalebel = evalebel, evaluator = evaluator, question__isnull = False, positive = 1, assesment = False).values('evalebel').distinct().count()
-    positive_percent_to_the_label = (int(pos_ans_to_the_lebel) * 100)/int(ans_to_the_label(evalebel, evaluator))
+        return statement  
     
-    if positive_percent_to_the_label < 50:
-        statement = 'Based on the response to the enquiry, the ' + str(evalebel.label.name).lower() + ' evaluation of your oil contains multiple serious shortcomings.'
-    elif positive_percent_to_the_label < 75:
-        statement = 'According to the response to the query, the ' + str(evalebel.label.name).lower() + ' evaluation of your oil is generally good. However, there are a few shortcomings that needs be addressed further.'
-    elif positive_percent_to_the_label < 90:
-        statement = 'According to the response to the inquery, the ' + str(evalebel.label.name).lower() + ' evaluation of your oil is largely favourable Nonetheless, the aformentioned issues must be considered in to account.'
-    else:
-        statement = 'According to the response to the query, the ' + str(evalebel.label.name).lower() + ' evaluation of your oil is highly promising. It has a lot of promise in terms of the ' + str(evalebel.label.adj).lower() + '.'
+    def label_assesment_for_donot_know(self):
+        filter_kwargs = {
+            'evalebel' : self.evalebel,  
+            'evaluator' : self.evaluator, 
+            'question__isnull' : False,
+            'dont_know' : 1, 
+            'assesment' : False
+            }
+        values_key = 'evalebel'
+        
+        dont_know_ans_to_the_lebel = self.get_statement_count(values_key, **filter_kwargs)
+        
+        dont_know_percent_to_the_label = (int(dont_know_ans_to_the_lebel) * 100)/int(self.ans_to_the_label())
+        
+        statement = self.get_dont_know_statement(str(self.evalebel.label.name), int(dont_know_percent_to_the_label))   
 
-    return statement
-
-def ans_ques(evaluator):
-    ans_ques = EvaLebelStatement.objects.filter(evaluator = evaluator, question__isnull = False, assesment = False).values('question').distinct().count()
-    return ans_ques
+        return statement
     
-
-#calculated statement genarator for report, is called in evaluatin procedure. function name telling what is being calulated
-def overall_assesment_for_donot_know(request, evalebel, evaluator):
-    # ans_ques = EvaLebelStatement.objects.filter(evaluator = evaluator, question__isnull = False, assesment = False).values('question').distinct().count()
-    dont_know_ans = EvaLebelStatement.objects.filter(evaluator = evaluator, question__isnull = False, dont_know = 1, assesment = False).values('question').distinct().count()
-    dont_know_percent = (int(dont_know_ans) * 100)/int(ans_ques(evaluator)) if ans_ques(evaluator) != 0 else 100
-
-    if dont_know_percent < 20:
-        statement = 'Overall' + ' assessment of your biofuel shows that you have very detailed knowledge.'
-    elif dont_know_percent < 35:
-        statement = 'Overall' + ' assessment of your biofuel shows that you have very significant knowledge.'
-    elif dont_know_percent < 50:
-        statement = 'Overall' + ' assessment of your biofuel shows that you have very limited knowledge.'
-    else:
-        statement = 'Overall'+ ' assessment of your biofuel shows that you have very rudimentary knowledge.'
-    return statement
-
-#calculated statement genarator for report, is called in evaluatin procedure. function name telling what is being calulated
-def overall_assesment_for_positive(request, evalebel, evaluator):
-    # ans_ques = EvaLebelStatement.objects.filter(evaluator = evaluator, question__isnull = False, assesment = False).values('question').distinct().count()
-    pos_ans = EvaLebelStatement.objects.filter(evaluator = evaluator, question__isnull = False, positive = 1, assesment = False).values('question').distinct().count()   
+    def label_assesment_for_positive(self):       
+        filter_kwargs = {
+            'evalebel' : self.evalebel,  
+            'evaluator' : self.evaluator, 
+            'question__isnull' : False,
+            'positive' : 1, 
+            'assesment' : False
+            }
+        values_key = 'evalebel'
+        
+        pos_ans_to_the_lebel = self.get_statement_count(values_key, **filter_kwargs)
+        
+        positive_percent_to_the_label = (int(pos_ans_to_the_lebel) * 100)/int(self.ans_to_the_label())
+        
+        statement = self.get_positive_statement(str(self.evalebel.label.name).lower(), int(positive_percent_to_the_label))    
     
-    positive_percent = (int(pos_ans) * 100)/int(ans_ques(evaluator)) if ans_ques(evaluator) != 0 else 100
+        return statement
     
-    if positive_percent < 50:
-        statement = 'Based on the response to the enquiry, the ' + 'overall' + ' evaluation of your oil contains multiple serious shortcomings.'
-    elif positive_percent < 75:
-        statement = 'According to the response to the query, the ' + 'overall' + ' evaluation of your oil is generally good. However, there are a few shortcomings that needs be addressed further.'
-    elif positive_percent < 90:
-        statement = 'According to the response to the inquery, the ' + 'overall' + ' evaluation of your oil is largely favourable Nonetheless, the aformentioned issues must be consdered in to account.'
-    else:
-        statement = 'According to the response to the query, the ' + 'overall' + ' evaluation of your oil is highly promising. It has a lot of promise in terms of the ' + str(evalebel.label.adj).lower() + '.'
-
-    return statement
+    def ans_ques(self):    
+        filter_kwargs = {      
+            'evaluator' : self.evaluator, 
+            'question__isnull' : False,       
+            'assesment' : False
+            }
+        values_key = 'question'
+        
+        ans_ques = self.get_statement_count(values_key, **filter_kwargs)   
+        
+        return ans_ques
+    
+    def overall_assesment_for_donot_know(self):
+        filter_kwargs = {      
+            'evaluator' : self.evaluator, 
+            'question__isnull' : False,
+            'dont_know' : 1, 
+            'assesment' : False
+            }
+        values_key = 'question'
+        
+        dont_know_ans = self.get_statement_count(values_key, **filter_kwargs)       
+        
+        dont_know_percent = (int(dont_know_ans) * 100)/int(self.ans_ques()) if self.ans_ques() != 0 else 100
+        
+        statement = self.get_dont_know_statement('Overall', int(dont_know_percent)) 
+        
+        return statement
+    
+    def overall_assesment_for_positive(self):
+        filter_kwargs = {      
+            'evaluator' : self.evaluator, 
+            'question__isnull' : False,
+            'positive' : 1, 
+            'assesment' : False
+            }
+        values_key = 'question'    
+        
+        pos_ans = self.get_statement_count(values_key, **filter_kwargs)   
+        
+        positive_percent = (int(pos_ans) * 100)/int(self.ans_ques()) if self.ans_ques() != 0 else 100
+        
+        statement = self.get_positive_statement('overall', int(positive_percent))     
+        
+        return statement
+#======================
 
 class OilComparision:
     def __init__(self, oil, non_answered = None):
