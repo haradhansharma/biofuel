@@ -896,7 +896,7 @@ def questions_details(request, slug):
         #build combined form
         question_form = QuestionForm(request.POST, request.FILES, prefix='questions', instance=question)        
         option_formset = OptionFormSet(request.POST, request.FILES, prefix='options', instance=question)
-        
+         
         
         if question_form.is_valid() and option_formset.is_valid():
             question = question_form.save()

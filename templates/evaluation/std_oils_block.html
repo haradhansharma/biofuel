@@ -7,24 +7,36 @@
             <thead>
                 <tr>
                     <th scope="col">Oil Name</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Unit</th>
                     <th scope="col">Value</th>
                     <th scope="col">Link</th>
                     <th scope="col">Option</th>
-                    <th scope="col">Status</th>
+                    
                 </tr>
             </thead>
             <tbody>
-                {% for cd in question.get_stdoils %}
+                {% for cd in question.stanchart.all %}
                 <tr>
                     <th scope="row">{{cd.oil.select_oil.name }}</th>
+                    <td 
+                        data-bs-toggle="tooltip" 
+                        data-bs-placement="top" 
+                        title="The results is based on the configuration of Sandared oils. If selected option is positive then it is green, if selecetd option negetive and not don't know then it is red, and if selectd option positive and don't know then it is grey!" 
+                        {% if cd.option.positive == '1' %} 
+                        class="table-success" 
+                        {% elif cd.option.positive == '0' and not cd.option.dont_know %} 
+                        class="table-danger" {% elif cd.option.positive == '0' and cd.option.dont_know %} 
+                        class="table-light" {% else %} 
+                        class="table-light" {% endif %}>
+                    </td>
+
                     <td>{{cd.unit }}</td>
                     <td>{{cd.value }}</td>
                     <td>{{cd.link }}</td>
                     <td>{{ cd.option.name }}</td>
-                    <td {% if cd.option.positive == '1' %} class="table-success" {% elif cd.option.positive == '0' and not cd.option.dont_know %} class="table-danger" {% elif cd.option.positive == '0' and cd.option.dont_know %} class="table-light" {% else %} class="table-light" {% endif %}></td>
                 </tr>
-                {% endfor %}
+                {% endfor %} 
             </tbody>
         </table>
     </div>

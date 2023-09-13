@@ -62,7 +62,7 @@ class Labels(admin.TabularInline):
     formset = LabelCheckFormset
     
 
-class Options(admin.TabularInline):
+class Options(admin.StackedInline):
     '''
     Inline admin for Option model.
 
@@ -223,24 +223,24 @@ class BiofuelAdmin(admin.ModelAdmin):
 admin.site.register(Biofuel, BiofuelAdmin)
 
 admin.site.register(OliList)
-admin.site.register(LabelDataHistory)
+# admin.site.register(LabelDataHistory)
 
 
-class EvaLebelStatementAdmin(admin.ModelAdmin):
-    '''
-    Admin configuration for the EvaLebelStatement model.
+# class EvaLebelStatementAdmin(admin.ModelAdmin):
+#     '''
+#     Admin configuration for the EvaLebelStatement model.
 
-    This admin class configures the display and behavior of the EvaLebelStatement model in the admin panel.
+#     This admin class configures the display and behavior of the EvaLebelStatement model in the admin panel.
 
-    Attributes:
-        list_display (tuple): Fields to display in the list view of evaluation label statements.
-        list_filter (tuple): Fields to filter evaluation label statements by.
-    '''
-    list_display = ('evalebel', 'question', 'option_id', 'positive', 'dont_know', 'evaluator', 'assesment',)
-    list_filter = ('evalebel', 'evaluator', 'assesment' ,)   
-admin.site.register(EvaLebelStatement, EvaLebelStatementAdmin)
+#     Attributes:
+#         list_display (tuple): Fields to display in the list view of evaluation label statements.
+#         list_filter (tuple): Fields to filter evaluation label statements by.
+#     '''
+#     list_display = ('evalebel', 'question', 'option_id', 'positive', 'dont_know', 'evaluator', 'assesment',)
+#     list_filter = ('evalebel', 'evaluator', 'assesment' ,)   
+# admin.site.register(EvaLebelStatement, EvaLebelStatementAdmin)
 
-class StandaredCharts(admin.TabularInline):
+class StandaredCharts(admin.StackedInline):
     '''
     Inline admin for StandaredChart model.
 
@@ -318,6 +318,13 @@ class LogicalStringAdmin(admin.ModelAdmin):
     inlines = [LsLabels]
     list_filter = ('overall', 'positive' ,)   
     
+    class Media:
+        css = {
+            'all': (
+                '/static/css/fancy.css',
+            )
+        } 
+    
     # To add error notes in the admin about question configuration 
     change_list_template = 'admin/logical_string_list.html'
     
@@ -341,8 +348,8 @@ class LogicalStringAdmin(admin.ModelAdmin):
         extra_context['label_pending_in_logical_string'] = label_pending_in_logical_string  
           
         return super().changelist_view(request, extra_context=extra_context)  
+    
 admin.site.register(LogicalString, LogicalStringAdmin)
-
 
 class EvaluatorAdmin(admin.ModelAdmin): 
     '''

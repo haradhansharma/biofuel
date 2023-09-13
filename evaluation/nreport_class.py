@@ -277,9 +277,9 @@ class ReportPDFData:
             Paragraph('<a name="lsb"/>LATEST STATUS OF THE BIOFUEL', self.SectionT),
             self.uline(),
             Spacer(0.25*inch,0.25*inch),
-            # Paragraph('<b>:Traffic-light Overview:</b>', self.Footer),
-            # Spacer(0.05*inch,0.05*inch),                     
-            # drawing,
+            Paragraph('<b>:Traffic-light Overview:</b>', self.Footer),
+            Spacer(0.05*inch,0.05*inch),                     
+            drawing,
             Spacer(0.25*inch,0.25*inch),
             Paragraph('<b>:Remarkable Points:</b>', self.Footer),         
             Spacer(0.05*inch,0.05*inch),            
@@ -505,67 +505,67 @@ class ReportPDFData:
             Spacer(0.5*inch,0.5*inch)
         ] 
         
-        # for results in dfh:
-        #     for data_date, data_list in results.items():
-        #         h_date = data_date
-        #         h_label = data_list[0]
-        #         h_series = data_list[1] 
+        for results in dfh:
+            for data_date, data_list in results.items():
+                h_date = data_date
+                h_label = data_list[0]
+                h_series = data_list[1] 
                 
-        #         data = h_series
+                data = h_series
 
-        #         labels = h_label
+                labels = h_label
 
-        #         drawing = Drawing(self.PW-self.M*3, 170)
+                drawing = Drawing(self.PW-self.M*3, 170)
 
-        #         bc = VerticalBarChart()
-        #         bc.x = self.M
-        #         # bc.y = 50
-        #         bc.height = 150
-        #         bc.width = self.PW-self.M*3
-        #         bc.data = data
+                bc = VerticalBarChart()
+                bc.x = self.M
+                # bc.y = 50
+                bc.height = 150
+                bc.width = self.PW-self.M*3
+                bc.data = data
 
-        #         bc.barSpacing = 2
-        #         bc.groupSpacing = 10
-        #         bc.barWidth = 10
+                bc.barSpacing = 2
+                bc.groupSpacing = 10
+                bc.barWidth = 10
 
-        #         bc.valueAxis.valueMin = 0
-        #         bc.valueAxis.valueMax = 100
-        #         bc.valueAxis.valueStep = 20
-        #         bc.valueAxis.labels.fontName = 'Helvetica'
-        #         bc.valueAxis.labels.fontSize = 8
+                bc.valueAxis.valueMin = 0
+                bc.valueAxis.valueMax = 100
+                bc.valueAxis.valueStep = 20
+                bc.valueAxis.labels.fontName = 'Helvetica'
+                bc.valueAxis.labels.fontSize = 8
 
-        #         bc.categoryAxis.categoryNames = labels
-        #         bc.categoryAxis.labels.fontName = 'Helvetica'
-        #         bc.categoryAxis.labels.fontSize = 8
-        #         bc.valueAxis.labels.boxAnchor = 'n'
-        #         bc.valueAxis.labels.textAnchor = 'middle'
-        #         bc.categoryAxis.labels.dy = -10
+                bc.categoryAxis.categoryNames = labels
+                bc.categoryAxis.labels.fontName = 'Helvetica'
+                bc.categoryAxis.labels.fontSize = 8
+                bc.valueAxis.labels.boxAnchor = 'n'
+                bc.valueAxis.labels.textAnchor = 'middle'
+                bc.categoryAxis.labels.dy = -10
 
-        #         bc.barLabels.nudge = 10
+                bc.barLabels.nudge = 10
 
-        #         bc.barLabelFormat = '%0.2f'
-        #         bc.barLabels.dx = 0
-        #         bc.barLabels.dy = 0
-        #         bc.barLabels.boxAnchor = 'n'  # irrelevant (becomes 'c')
-        #         bc.barLabels.fontName = 'Helvetica'
-        #         bc.barLabels.fontSize = 6
+                bc.barLabelFormat = '%0.2f'
+                bc.barLabels.dx = 0
+                bc.barLabels.dy = 0
+                bc.barLabels.boxAnchor = 'n'  # irrelevant (becomes 'c')
+                bc.barLabels.fontName = 'Helvetica'
+                bc.barLabels.fontSize = 6
                 
                 
-        #         bc.bars[0].fillColor = green
-        #         bc.bars[0].strokeColor = green                
-        #         bc.bars[1].fillColor = gray
-        #         bc.bars[1].strokeColor = gray                
-        #         bc.bars[2].fillColor = red
-        #         bc.bars[2].strokeColor = red
+                bc.bars[0].fillColor = green
+                bc.bars[0].strokeColor = green                
+                bc.bars[1].fillColor = gray
+                bc.bars[1].strokeColor = gray                
+                bc.bars[2].fillColor = red
+                bc.bars[2].strokeColor = red
 
-        #         drawing.add(bc)
+                drawing.add(bc)
                 
-        #         history_title = Paragraph(f'<font color="green">On : {h_date}</font>', self.stylesN)
-        #         history_data.append(history_title)
-        #         history_data.append(self.ulineG100())   
-        #         history_data.append(Spacer(0.20*inch,0.20*inch))                                            
-        #         history_data.append(drawing)
-        #         history_data.append(Spacer(0.20*inch,0.20*inch))           
+                history_title = Paragraph(f'<font color="green">On : {h_date}</font>', self.stylesN)
+                history_data.append(history_title)
+                history_data.append(self.ulineG100())   
+                history_data.append(Spacer(0.20*inch,0.20*inch))                                            
+                history_data.append(drawing)
+                history_data.append(Spacer(0.20*inch,0.20*inch))           
         
         return history_data
         

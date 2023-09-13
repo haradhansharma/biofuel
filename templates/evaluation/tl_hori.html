@@ -1,13 +1,10 @@
-
-
 <div class="card-body p-2">                                    
-    <div id="sss" class="ct-chart-ranking ct-golden-section ct-series-a">
-        
+    <div id="sss" class="ct-chart-ranking ct-golden-section ct-series-a">        
     </div>
 </div>
 
 
-{% if report.stdoil_key %}
+{% comment %} {% if report.stdoil_key %}
 <style>
   .ct-chart-ranking .ct-label{
     display: block;
@@ -85,7 +82,7 @@
     /* stroke-width: 50px; */
   }
 </style>
-{% else %}
+{% else %} {% endcomment %}
 <style>
   .ct-chart-ranking .ct-label{
     display: block;
@@ -127,7 +124,8 @@
     /* stroke-width: 50px; */
   }
 </style>
-{% endif %}
+
+{% comment %} {% endif %} {% endcomment %}
 
 <script type="text/javascript">
     let item_label, item_seris;    

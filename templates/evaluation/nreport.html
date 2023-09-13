@@ -48,9 +48,20 @@
                                             <div class="flex-fill border rounded p-2 bg-white">
                                             <div class="">
                                                 <h6 class="border-bottom border-danger">Graphical Visualization</h6>
-                                                <!--
-                                                <div class="ct-chart-ranking ct-golden-section ct-series-a col-12"></div>  
-                                                --> 
+                                               
+
+                                               <div class="row g-3 p-3  justify-content-center" >                                
+                                                    <div hx-get="{% url 'evaluation:traficlighthori' current_evaluator.id %}" hx-trigger="load"> 
+                                                        <div class="card text-center mb-4 mt-4">                                
+                                                            <div class="row p-3 justify-content-center">
+                                                            Loading traffic light overview...
+                                                            </div>
+                                                        </div>    
+                                                    </div>
+                                                </div> 
+
+
+
                                             </div>
                                             <div class="col-12">
                                                 <div class="row pt-4">
@@ -248,22 +259,16 @@
                                         {% endfor %}
                                         </div>
                                     </div>  
-                                    <!-- 
-                                    <div class="row justify-content-center align-items-center">
-                                        <h3 id="bfh" class="border-bottom border-3 border-danger">BIOFUEL HISTORY:</h3> 
-                                        {% for d in dfh %} 
-                                            {% for k, label_and_datalist in d.items %}                                          
-                                                <div class="col-6 d-flex mb-4">
-                                                    <div class="flex-fill border rounded p-2">                                                                      
-                                                        <div class="ct-chart-compjs ct-chart-com ct-chart-compare{{k}} ct-golden-section ct-series-a"></div> 
-                                                        <small>{{k}}</small>                                            
-                                                    </div>
-                                                    
+                                    
+                                    <div class="row g-3 p-3  justify-content-center" >                                
+                                        <div hx-get="{% url 'evaluation:fuel_history' current_evaluator.id %}" hx-trigger="load"> 
+                                            <div class="card text-center mb-4 mt-4">                                
+                                                <div class="row p-3 justify-content-center">
+                                                Loading traffic light overview...
                                                 </div>
-                                            {% endfor %}
-                                        {% endfor %}
-                                    </div>
-                                    -->
+                                            </div>    
+                                        </div>
+                                    </div> 
 
                                                        
                                 </div>
@@ -281,13 +286,5 @@
 
 
     {% block javascripts %}
-    <script>
-        var item_label, item_seris, dfh;
-        item_label = {{ item_label | safe }};   
-        item_seris = {{ item_seris | safe }}; 
-        dfh = {{ dfh | safe }};
-
-        
-    </script>
-
+  
     {% endblock javascripts %}

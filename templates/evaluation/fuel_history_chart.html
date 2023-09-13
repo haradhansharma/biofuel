@@ -1,0 +1,190 @@
+<div class="row justify-content-center align-items-center">
+    <h3 id="bfh" class="border-bottom border-3 border-danger">BIOFUEL HISTORY:</h3> 
+    {% for d in dfh %} 
+        {% for k, label_and_datalist in d.items %}                                          
+            <div class="col-6 d-flex mb-4">
+                <div class="flex-fill border rounded p-2">                                                                      
+                    <div class="ct-chart-compjs ct-chart-com ct-chart-compare{{k}} ct-golden-section ct-series-a"></div> 
+                    <small>{{k}}</small>                                            
+                </div>
+                
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
+
+
+
+{% comment %} {% if report.stdoil_key %}
+<style>
+  .ct-chart-ranking .ct-label{
+    display: block;
+
+  }
+  .ct-chart-ranking .ct-series-a .ct-bar{
+    stroke: green;
+    stroke-linecap: butt;
+    /* stroke-dasharray: 2px;
+    stroke-dashoffset: 2px; */
+    /* z-index: 1; */
+    /* stroke-linejoin: bevel; */
+    /* display: block; */
+    /* stroke-width: 50px; */
+
+    
+  }
+  .ct-chart-ranking .ct-series-b .ct-bar{
+    stroke: rgb(4, 250, 4);
+    stroke-linecap: butt;
+    /* stroke-dasharray: 2px;
+    stroke-dashoffset: 2px; */
+    /* z-index: 1; */
+    /* stroke-linejoin: bevel; */
+    /* display: block; */
+    /* stroke-width: 50px; */
+
+    
+  }
+  .ct-chart-ranking .ct-series-c .ct-bar{
+    stroke: rgb(250, 250, 250);
+    stroke-linecap: butt;
+    /* stroke-dasharray: 2px;
+    stroke-dashoffset: 2px; */
+    /* z-index: 1; */
+    /* stroke-linejoin: bevel; */
+    /* display: block; */
+    /* stroke-width: 50px; */
+
+    
+  }
+  .ct-chart-ranking .ct-series-d .ct-bar{
+    stroke: rgb(252, 142, 142);
+    stroke-linecap: butt;
+    /* stroke-dasharray: 2px;
+    stroke-dashoffset: 2px; */
+    /* z-index: 1; */
+    /* stroke-linejoin: bevel; */
+    /* display: block; */
+    /* stroke-width: 50px; */
+
+    
+  }
+
+  .ct-chart-ranking .ct-series-e .ct-bar{
+    stroke: grey;
+    stroke-linecap: butt;
+    /* stroke-dasharray: 2px 50px; */
+    /* z-index: -1; */
+    /* stroke-dashoffset: 2px; */
+    /* stroke-linejoin: bevel; */
+    /* display: block; */
+    /* stroke-width: 50px; */
+
+  }
+
+  .ct-chart-ranking .ct-series-f .ct-bar{
+    stroke: Red;
+    stroke-linecap: butt;
+    /* stroke-dasharray: 2px; */
+    /* stroke-dashoffset: 2px; */
+    /* z-index: 1; */
+    /* stroke-linejoin: bevel; */
+    /* display: block; */
+    /* stroke-width: 50px; */
+  }
+</style>
+{% else %} {% endcomment %}
+<style>
+    .ct-chart-ranking .ct-label{
+      display: block;
+  
+    }
+    .ct-chart-ranking .ct-series-a .ct-bar{
+      stroke: green;
+      stroke-linecap: butt;
+      /* stroke-dasharray: 2px;
+      stroke-dashoffset: 2px; */
+      /* z-index: 1; */
+      /* stroke-linejoin: bevel; */
+      /* display: block; */
+      /* stroke-width: 50px; */
+  
+      
+    }
+  
+    .ct-chart-ranking .ct-series-b .ct-bar{
+      stroke: grey;
+      stroke-linecap: butt;
+      /* stroke-dasharray: 2px 50px; */
+      /* z-index: -1; */
+      /* stroke-dashoffset: 2px; */
+      /* stroke-linejoin: bevel; */
+      /* display: block; */
+      /* stroke-width: 50px; */
+  
+    }
+  
+    .ct-chart-ranking .ct-series-c .ct-bar{
+      stroke: Red;
+      stroke-linecap: butt;
+      /* stroke-dasharray: 2px; */
+      /* stroke-dashoffset: 2px; */
+      /* z-index: 1; */
+      /* stroke-linejoin: bevel; */
+      /* display: block; */
+      /* stroke-width: 50px; */
+    }
+  </style>
+  
+  {% comment %} {% endif %} {% endcomment %}
+
+  <script type="text/javascript">
+
+    if(document.querySelector('.ct-chart-compjs')) {
+        let  dfh;       
+        dfh = {{ dfh | safe }};    
+        
+        for (var df in dfh){
+            var xxxx;
+            xxxx = dfh[df];            
+            for (var xx in xxxx){
+                var yyyy, label, series;
+                yyyy = xxxx[xx];
+                label = yyyy[0];
+                series = yyyy[1];
+                if(document.querySelector('.ct-chart-compare' + xx)) {
+                    var compchart = new Chartist.Bar('.ct-chart-compare' + xx, {
+                        labels: label,
+                        series: series
+                      }, {           
+                        
+                        seriesBarDistance: 10,
+                        plugins: [
+                          Chartist.plugins.tooltip()
+                        ],
+                        
+                        axisX: {                        
+                            offset: 100,                        
+                          },
+                        axisY: {
+                            offset: 100,
+                            labelInterpolationFnc: function(value) {
+                                return value + ' %'
+                                },
+                                scaleMinSpace: 15    
+                        }                    
+                        });                  
+                      compchart.on('draw', function(data) {
+                        if(data.type === 'bar') {
+                            data.element.attr({
+                              style: 'stroke-width: 10px;stroke-linecap: square; width:auto;height:auto;'
+                            });
+                        }                     
+                    });
+                }
+            } 
+        }
+    }
+    
+
+  </script>

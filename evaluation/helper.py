@@ -78,41 +78,7 @@ def get_all_definedlabel():
         definedlabel = DifinedLabel.objects.all().prefetch_related('user_label')
         cache.set('all_definedlabel', definedlabel, 3600)
     return definedlabel
-
-def get_all_evaluations_or_on_question(evaluator, question = None):   
-    """
-    Retrieve and cache all evaluations for a given evaluator.
-
-    This function fetches all Evaluation instances related to a specific evaluator and caches the result for better
-    performance on subsequent calls. Optionally, it can return a single evaluation for a specific question if the
-    'question' parameter is provided.
-
-    Args:
-        evaluator (Evaluator): The evaluator for whom evaluations are fetched.
-        question (Question, optional): The specific question for which to retrieve an evaluation.
-
-    Returns:
-        QuerySet or Evaluation: A QuerySet containing all evaluations for the evaluator, or a single Evaluation
-        instance for the specified question (if provided).
-    """ 
-    cache_key = f"{evaluator.id}_evaluations"    
-    evaluations = cache.get(cache_key)
-    if not evaluations:
-        evaluations = Evaluation.objects.filter(
-            evaluator=evaluator).order_by('id').select_related(
-                'question', 
-                'option'
-                )
-        cache.set(cache_key, evaluations, 3600)
-        
-    if question:        
-         # If 'question' parameter is provided, return a single evaluation based on the question
-        return next((eva for eva in evaluations if eva.question == question), None)
-    else:
-        # Otherwise, return all evaluations of this report/evaluator
-        return evaluations   
-
-    
+ 
 def get_all_reports_with_last_answer(request, first_of_parent):
     """
     Retrieve and cache all reports with their last answered question.
@@ -176,7 +142,7 @@ def get_biofuel():
         cache.set('all_biofuels', biofuels, 3600)
     return biofuels
 
-def get_options_of_ques(question):    
+def get_options_of_ques(question):     
     """
     Retrieve and cache all options for a given question.
 
@@ -338,16 +304,114 @@ def get_current_evaluator(request, evaluator_id = None):
            
     return evaluator
 
+# def get_all_evaluations_or_on_question(evaluator, question = None):   
+#     """
+#     Retrieve and cache all evaluations for a given evaluator.
 
-#======================
+#     This function fetches all Evaluation instances related to a specific evaluator and caches the result for better
+#     performance on subsequent calls. Optionally, it can return a single evaluation for a specific question if the
+#     'question' parameter is provided.
+
+#     Args:
+#         evaluator (Evaluator): The evaluator for whom evaluations are fetched.
+#         question (Question, optional): The specific question for which to retrieve an evaluation.
+
+#     Returns:
+#         QuerySet or Evaluation: A QuerySet containing all evaluations for the evaluator, or a single Evaluation
+#         instance for the specified question (if provided).
+#     """ 
+#     cache_key = f"{evaluator.id}_evaluations"    
+#     evaluations = cache.get(cache_key)
+#     if not evaluations:
+#         evaluations = Evaluation.objects.filter(
+#             evaluator=evaluator).order_by('id').select_related(
+#                 'question', 
+#                 'option'
+#                 )
+#         cache.set(cache_key, evaluations, 3600)
+        
+#     if question:        
+#          # If 'question' parameter is provided, return a single evaluation based on the question
+#         return next((eva for eva in evaluations if eva.question == question), None)
+#     else:
+#         # Otherwise, return all evaluations of this report/evaluator
+#         return evaluations   
+
+
+
 class EvaLebelStatementAnalyzer:
+    """
+    A class for analyzing evaluation statements related to EvaLebel.
+
+    This class provides methods for analyzing and generating assessment statements
+    based on various criteria related to EvaLebel evaluations.
+
+    Args:
+        evalebel: An instance of EvaLebel representing the evaluation label.
+        evaluator: An instance representing the evaluator.
+
+    Attributes:
+        evalebel: An instance of EvaLebel representing the evaluation label.
+        evaluator: An instance representing the evaluator.
+
+    Methods:
+        get_statement_count(values_key, **filter_kwargs):
+            Get the count of distinct statements based on filtering criteria.
+
+        get_dont_know_statement(label_name, value_count):
+            Generate a statement based on the value count for "don't know" evaluations.
+
+        get_positive_statement(label_name, value_count):
+            Generate a statement based on the value count for positive evaluations.
+
+        ans_to_the_label():
+            Get the count of answers related to the evaluation label.
+
+        calculate_percentage(ans_to_the_label):
+            Calculate the percentage based on answers related to the evaluation label.
+
+        label_assessment_for_donot_know():
+            Generate an assessment statement for "don't know" evaluations related to the label.
+
+        label_assessment_for_positive():
+            Generate an assessment statement for positive evaluations related to the label.
+
+        ans_ques():
+            Get the count of answerable questions.
+
+        calculate_overall_percent(ans):
+            Calculate the overall percentage based on the given count.
+
+        overall_assessment_for_donot_know():
+            Generate an overall assessment statement for "don't know" evaluations.
+
+        overall_assessment_for_positive():
+            Generate an overall assessment statement for positive evaluations.
+    """
     def __init__(self, evalebel, evaluator):
+        """
+        Initialize a new EvaLebelStatementAnalyzer.
+
+        Args:
+            evalebel: An instance of EvaLebel representing the evaluation label.
+            evaluator: An instance representing the evaluator.
+        """
         self.evalebel = evalebel
         self.evaluator = evaluator
-        # self.request = request
+       
         
 
     def get_statement_count(self, values_key, **filter_kwargs):
+        """
+        Get the count of distinct statements based on filtering criteria.
+
+        Args:
+            values_key: The key to be used for grouping and counting.
+            **filter_kwargs: Additional filter criteria as keyword arguments.
+
+        Returns:
+            The count of distinct statements based on the given filter criteria.
+        """
         counted = (
             EvaLebelStatement.objects
             .filter(**filter_kwargs)
@@ -355,19 +419,20 @@ class EvaLebelStatementAnalyzer:
             .distinct()
             .count()
         )
-        return counted
+        return counted    
     
-    def ans_to_the_label(self):
-        filter_kwargs = {
-            'evalebel': self.evalebel,
-            'evaluator': self.evaluator,
-            'question__isnull': False,
-            'assesment': False
-        }
-        values_key = 'evalebel'
-        return self.get_statement_count(values_key, **filter_kwargs)
 
-    def get_dont_know_statement(self, label_name, value_count):    
+    def get_dont_know_statement(self, label_name, value_count): 
+        """
+        Generate a statement based on the value count for "don't know" evaluations.
+
+        Args:
+            label_name: The name of the evaluation label.
+            value_count: The count of "don't know" evaluations.
+
+        Returns:
+            A statement describing the assessment based on the value count.
+        """   
         if value_count < 20:
             statement = f'{label_name} assessment of your biofuel shows that you have very detailed knowledge.'
         elif value_count < 35:
@@ -380,6 +445,16 @@ class EvaLebelStatementAnalyzer:
         return statement
     
     def get_positive_statement(self, label_name, value_count):    
+        """
+        Generate a statement based on the value count for positive evaluations.
+
+        Args:
+            label_name: The name of the evaluation label.
+            value_count: The count of positive evaluations.
+
+        Returns:
+            A statement describing the assessment based on the value count.
+        """
         if value_count < 50:
             statement = f'Based on the response to the enquiry, the {label_name} evaluation of your oil contains multiple serious shortcomings.'
         elif value_count < 75:
@@ -389,9 +464,46 @@ class EvaLebelStatementAnalyzer:
         else:
             statement = f'According to the response to the query, the {label_name} evaluation of your oil is highly promising. It has a lot of promise in terms of the {self.evalebel.label.adj.lower()}.'
 
-        return statement  
+        return statement 
+    
+    
+    def ans_to_the_label(self):
+        """
+        Get the count of answers related to the evaluation label.
+
+        Returns:
+            The count of answers related to the evaluation label.
+        """
+        filter_kwargs = {
+            'evalebel': self.evalebel,
+            'evaluator': self.evaluator,
+            'question__isnull': False,
+            'assesment': False
+        }
+        values_key = 'evalebel'
+        return self.get_statement_count(values_key, **filter_kwargs)
+     
+    
+    def calculate_percentage(self, ans_to_the_lavel):
+        """
+        Calculate the percentage based on answers related to the evaluation label.
+
+        Args:
+            ans_to_the_label: The count of answers related to the evaluation label.
+
+        Returns:
+            The percentage calculated based on the given count.
+        """
+        return (int(ans_to_the_lavel) * 100)/int(self.ans_to_the_label())        
+
     
     def label_assesment_for_donot_know(self):
+        """
+        Generate an assessment statement for "don't know" evaluations related to the label.
+
+        Returns:
+            An assessment statement based on "don't know" evaluations.
+        """
         filter_kwargs = {
             'evalebel' : self.evalebel,  
             'evaluator' : self.evaluator, 
@@ -403,13 +515,19 @@ class EvaLebelStatementAnalyzer:
         
         dont_know_ans_to_the_lebel = self.get_statement_count(values_key, **filter_kwargs)
         
-        dont_know_percent_to_the_label = (int(dont_know_ans_to_the_lebel) * 100)/int(self.ans_to_the_label())
+        dont_know_percent_to_the_label = self.calculate_percentage(dont_know_ans_to_the_lebel)
         
         statement = self.get_dont_know_statement(str(self.evalebel.label.name), int(dont_know_percent_to_the_label))   
 
         return statement
     
-    def label_assesment_for_positive(self):       
+    def label_assesment_for_positive(self):     
+        """
+        Generate an assessment statement for positive evaluations related to the label.
+
+        Returns:
+            An assessment statement based on positive evaluations.
+        """  
         filter_kwargs = {
             'evalebel' : self.evalebel,  
             'evaluator' : self.evaluator, 
@@ -421,13 +539,19 @@ class EvaLebelStatementAnalyzer:
         
         pos_ans_to_the_lebel = self.get_statement_count(values_key, **filter_kwargs)
         
-        positive_percent_to_the_label = (int(pos_ans_to_the_lebel) * 100)/int(self.ans_to_the_label())
+        positive_percent_to_the_label = self.calculate_percentage(pos_ans_to_the_lebel)
         
         statement = self.get_positive_statement(str(self.evalebel.label.name).lower(), int(positive_percent_to_the_label))    
     
         return statement
     
-    def ans_ques(self):    
+    def ans_ques(self):   
+        """
+        Get the count of answerable questions.
+
+        Returns:
+            The count of answerable questions.
+        """ 
         filter_kwargs = {      
             'evaluator' : self.evaluator, 
             'question__isnull' : False,       
@@ -439,7 +563,26 @@ class EvaLebelStatementAnalyzer:
         
         return ans_ques
     
+    def calculate_overall_percent(self, ans):
+        """
+        Calculate the overall percentage based on the given count.
+
+        Args:
+            ans: The count used to calculate the overall percentage.
+
+        Returns:
+            The overall percentage calculated based on the given count.
+        """
+        return (int(ans) * 100)/int(self.ans_ques()) if self.ans_ques() != 0 else 100    
+
+    
     def overall_assesment_for_donot_know(self):
+        """
+        Generate an overall assessment statement for "don't know" evaluations.
+
+        Returns:
+            An overall assessment statement based on "don't know" evaluations.
+        """
         filter_kwargs = {      
             'evaluator' : self.evaluator, 
             'question__isnull' : False,
@@ -450,13 +593,19 @@ class EvaLebelStatementAnalyzer:
         
         dont_know_ans = self.get_statement_count(values_key, **filter_kwargs)       
         
-        dont_know_percent = (int(dont_know_ans) * 100)/int(self.ans_ques()) if self.ans_ques() != 0 else 100
+        dont_know_percent = self.calculate_overall_percent(dont_know_ans)
         
         statement = self.get_dont_know_statement('Overall', int(dont_know_percent)) 
         
         return statement
     
     def overall_assesment_for_positive(self):
+        """
+        Generate an overall assessment statement for positive evaluations.
+
+        Returns:
+            An overall assessment statement based on positive evaluations.
+        """
         filter_kwargs = {      
             'evaluator' : self.evaluator, 
             'question__isnull' : False,
@@ -467,26 +616,26 @@ class EvaLebelStatementAnalyzer:
         
         pos_ans = self.get_statement_count(values_key, **filter_kwargs)   
         
-        positive_percent = (int(pos_ans) * 100)/int(self.ans_ques()) if self.ans_ques() != 0 else 100
+        positive_percent = self.calculate_overall_percent(pos_ans)
         
         statement = self.get_positive_statement('overall', int(positive_percent))     
         
         return statement
-#======================
+
 
 class OilComparision:
-    def __init__(self, oil, non_answered = None):
+    def __init__(self, oil, non_answered = None):        
         self.oil = oil       
         
         if non_answered is not None:            
-            self.active_questions = [q for q in get_all_questions().filter(id__in = non_answered, is_active=True) if q.have_4labels]   
+            self.active_questions = [q for q in Question.objects.filter(id__in = non_answered, is_active=True) if q.have_4labels]   
         else:
-            self.active_questions = [q for q in get_all_questions().filter(is_active=True) if q.have_4labels]  
+            self.active_questions = [q for q in Question.objects.filter(is_active=True) if q.have_4labels]  
                  
         self.oils = StandaredChart.objects.filter(oil = self.oil)
        
     @property   
-    def total_active_questions(self):
+    def total_active_questions(self): 
         data = len(self.active_questions)
         return round(data, 2)    
     
@@ -688,19 +837,32 @@ class LabelWiseData:
         As per writen CSS our fist stacked bar will be green, second bar will be grey and third bar will be red so 
         we will placed the value in the list acordingly. We need to decide label name here so that it will be easy to impleted along with labels as each label has predifiened name.
         '''
-        try:
-            std_oil = StdOils.objects.get(select_oil__key = self.evaluator.stdoil_key)
-            oc = OilComparision(std_oil)
-            serialized_record = [self.overview_green, self.overview_grey/2, self.overview_red]
+        
+        '''
+        ============================================================
+        BELOW COMENTED CODE HAS CONFUSION ON INSTRUCTION SO COMENTED
+        ============================================================
+        '''
+        # try:
+        #     std_oil = StdOils.objects.get(select_oil__key = self.evaluator.stdoil_key)
+        #     oc = OilComparision(std_oil)
+        #     serialized_record = [self.overview_green, self.overview_grey/2, self.overview_red]
             
-            # # print(serialized_record)
-            aaaa = list(oc.total_result().values())[0]
-            # # # print(list(oc.total_result().values())[0])
-            aa = [(a * (self.overview_grey/2))/100 for a in aaaa]
-            serialized_record[1:1] = aa
+        #     # # print(serialized_record)
+        #     aaaa = list(oc.total_result().values())[0]
+        #     # # # print(list(oc.total_result().values())[0])
+        #     aa = [(a * (self.overview_grey/2))/100 for a in aaaa]
+        #     serialized_record[1:1] = aa
             
-        except:
-            serialized_record = [self.overview_green, self.overview_grey, self.overview_red]
+        # except:
+        #     serialized_record = [self.overview_green, self.overview_grey, self.overview_red]
+        '''
+        ============================================================
+        ABOVE COMENTED CODE HAS CONFUSION ON INSTRUCTION SO COMENTED
+        ============================================================
+        '''
+            
+        serialized_record = [self.overview_green, self.overview_grey, self.overview_red]
             
             
         
@@ -751,23 +913,35 @@ class LabelWiseData:
                 grey = round(100-(green+red),2)
             except:
                 grey = 0   
-            # serialized_record = [green , grey, red]  
+             
+            '''
+            ============================================================
+            BELOW COMENTED CODE HAS CONFUSION ON INSTRUCTION SO COMENTED
+            ============================================================
+            '''
+            # try:
+            #     std_oil = StdOils.objects.get(select_oil__key = self.evaluator.stdoil_key)
+            #     oc = OilComparision(std_oil)
+            #     serialized_record = [green , grey/2 , red]  
+            #     # d = [ v for k, v in oc.label_wise_result() if k == label.name]
+            #     # # print(serialized_record)
+            #     # print(oc.label_wise_result())
+            #     aaaa = [ v for k, v in oc.label_wise_result().items() if k == label.name]
+            #     # # # print(list(oc.total_result().values())[0])            
+            #     aa = [(a * (grey/2))/100 for a in aaaa[0]]
+                
+            #     serialized_record[1:1] = aa                
+                
+            # except Exception as e:                
+            #     serialized_record = [green , grey, red]  
+                
+            '''
+            ============================================================
+            ABOVE COMENTED CODE HAS CONFUSION ON INSTRUCTION SO COMENTED
+            ============================================================
+            '''
+            serialized_record = [green , grey, red]  
             
-            try:
-                std_oil = StdOils.objects.get(select_oil__key = self.evaluator.stdoil_key)
-                oc = OilComparision(std_oil)
-                serialized_record = [green , grey/2 , red]  
-                # d = [ v for k, v in oc.label_wise_result() if k == label.name]
-                # # print(serialized_record)
-                # print(oc.label_wise_result())
-                aaaa = [ v for k, v in oc.label_wise_result().items() if k == label.name]
-                # # # print(list(oc.total_result().values())[0])            
-                aa = [(a * (grey/2))/100 for a in aaaa[0]]
-                
-                serialized_record[1:1] = aa                
-                
-            except Exception as e:                
-                serialized_record = [green , grey, red]  
             record = {                
                 #green>>grey>>red
                 label.name: serialized_record
@@ -822,6 +996,8 @@ class LabelWiseData:
         
         return date_wise_df_list
     
+
+    
 def nreport_context(request, slug):  
     #essential part where login_required
     
@@ -849,7 +1025,7 @@ def nreport_context(request, slug):
     dfh = label_data.label_data_history()    
     
     #genarating PDF . Please ensure django-xhtml2pdf==0.0.4 installed
-    evaluation = get_all_evaluations_or_on_question(get_report)
+    evaluation = Evaluation.objects.filter(evaluator=get_report).order_by('id').select_related('question', 'option')
   
 
     eva_label = EvaLabel.objects.filter(evaluator=get_report).order_by('sort_order').prefetch_related('elabelstatement')

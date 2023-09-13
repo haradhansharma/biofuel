@@ -24,7 +24,6 @@ from . helper import (
     get_all_glosaries,
     LabelWiseData,
     get_all_definedlabel,
-    get_all_evaluations_or_on_question,
     get_all_reports_with_last_answer,
     EvaLebelStatementAnalyzer
     
@@ -578,7 +577,7 @@ def vedio_urls(request, search_term):
     return render(request, 'evaluation/eva_youtube.html', context = {'vedio_urls' : vedio_urls})
 @sync_to_async
 def std_oils_block(request, slug):
-    question = get_all_questions().get(slug = slug)
+    question = Question.objects.prefetch_related('stanchart').get(slug = slug)
     
     return render(request, 'evaluation/std_oils_block.html', context = {'question': question})
 
@@ -610,7 +609,7 @@ def eva_question(request, evaluator_id, slug):
     ''' 
     
      
-    null_session(request)     
+    null_session(request)      
     
     '''
     ========
@@ -696,7 +695,7 @@ def eva_question(request, evaluator_id, slug):
     otherwise will give message and will not allow to go to inside.    
     '''
     if question.is_door:
-        log.info(f'Parent Question Clicked________for report {evaluation_data}_______')      
+        log.info(f'Parent Question Clicked________for report {evaluator_data}_______')      
         pass  
     else:
         parent = question.parent_question
@@ -813,7 +812,7 @@ def eva_question(request, evaluator_id, slug):
     # log.info(f'total questions________________{Question.objects.filter(is_active=True).count()}')
     
     
-    print(request.session.items())
+
     context ={
         'slug' : slug,
         'question_dataset' : question_dataset(request) ,
@@ -1153,6 +1152,20 @@ def trafic_light_hori(request, last_reports):
         'report' : report
     }
     return render(request, 'evaluation/tl_hori.html', context = context)
+
+
+def fuel_history(request, last_reports):
+    report = Evaluator.objects.get(id = last_reports)
+    label_data = LabelWiseData(report)
+    dfh = label_data.label_data_history()         
+    # item_label = df.columns.values.tolist()
+    # item_seris = df.values.tolist()
+    context = {
+        'dfh' : dfh,
+        
+        
+    }
+    return render(request, 'evaluation/fuel_history_chart.html', context = context)
     
 
 

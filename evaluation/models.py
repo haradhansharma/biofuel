@@ -558,8 +558,8 @@ class EvaluatorActivities(models.Model):
 class OliList(models.Model):
     
     class Meta:
-        verbose_name = 'Oil List'
-        verbose_name_plural = 'Oil Lists'   
+        verbose_name = 'Defined Oil'
+        verbose_name_plural = 'Defined Oils'   
         
     name = models.CharField(max_length = 250, unique=True)
     key = models.CharField(null=True, blank=True, editable=False, max_length=250)    
@@ -580,11 +580,11 @@ class OliList(models.Model):
 class StdOils(models.Model):    
     
     class Meta:
-        verbose_name = 'Std Oil'
-        verbose_name_plural = 'Std Oils'  
+        verbose_name = 'Standard Oil'
+        verbose_name_plural = 'Standard Oils'  
         
     select_oil = models.ForeignKey(OliList, on_delete=models.CASCADE, default=1)
-    biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, editable=False, db_index=True)
+    biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, db_index=True)
     
     
     def __str__(self):

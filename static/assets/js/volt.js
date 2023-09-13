@@ -1,19 +1,4 @@
-/*
 
-=========================================================
-* Volt Pro - Premium Bootstrap 5 Dashboard
-=========================================================
-
-* Product Page: https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard
-* Copyright 2021 Themesberg (https://www.themesberg.com)
-
-* Designed and coded by https://themesberg.com
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. Please contact us to request a removal. Contact us if you want to remove it.
-
-*/
  
 "use strict";
 const dd = document;
@@ -189,6 +174,7 @@ dd.addEventListener("DOMContentLoaded", function(event) {
     }
 
     //Chartist
+    
 
      
     
@@ -223,49 +209,7 @@ dd.addEventListener("DOMContentLoaded", function(event) {
         });
     }
 
-    if(document.querySelector('.ct-chart-compjs')) {
-    for (var df in dfh){
-        var xxxx;
-        xxxx = dfh[df];            
-        for (var xx in xxxx){
-            var yyyy, label, series;
-            yyyy = xxxx[xx];
-            label = yyyy[0];
-            series = yyyy[1];
-            if(document.querySelector('.ct-chart-compare' + xx)) {
-                var compchart = new Chartist.Bar('.ct-chart-compare' + xx, {
-                    labels: label,
-                    series: series
-                  }, {           
-                    
-                    seriesBarDistance: 10,
-                    plugins: [
-                      Chartist.plugins.tooltip()
-                    ],
-                    
-                    axisX: {                        
-                        offset: 100,                        
-                      },
-                    axisY: {
-                        offset: 100,
-                        labelInterpolationFnc: function(value) {
-                            return value + ' %'
-                            },
-                            scaleMinSpace: 15    
-                    }                    
-                    });                  
-                  compchart.on('draw', function(data) {
-                    if(data.type === 'bar') {
-                        data.element.attr({
-                          style: 'stroke-width: 10px;stroke-linecap: square; width:auto;height:auto;'
-                        });
-                    }                     
-                });
-            }
-        } 
-    }
-}
-
+    
 
 
 
