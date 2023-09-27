@@ -1,11 +1,8 @@
-from concurrent.futures import ThreadPoolExecutor
-import django
 from .models import *
 from django.utils import timezone
 import pandas as pd
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from gfvp import null_session
 from django.contrib.sites.shortcuts import get_current_site
 from glossary.models import Glossary
 from django.core.cache import cache
@@ -300,7 +297,7 @@ def get_current_evaluator(request, evaluator_id = None):
             evaluator = Evaluator.objects.get(id = int(evaluator_id_from_session))   
     except Evaluator.DoesNotExist:
         log.debug(f'No current evaluator found____________it is an important issue!')
-        pass
+        evaluator = None
            
     return evaluator
 
@@ -624,18 +621,34 @@ class EvaLebelStatementAnalyzer:
 
 
 class OilComparision:
+    ############## It is nowhere using now but kept for further use if instruction is clear ###################
     def __init__(self, oil, non_answered = None):        
+        """
+        Initialize an OilComparision instance.
+
+        Args:
+            oil: The oil instance for which the comparison is being performed.
+            non_answered: A list of non-answered question IDs (optional).
+        """
         self.oil = oil       
         
+         # Filter active questions that have 4 labels
         if non_answered is not None:            
             self.active_questions = [q for q in Question.objects.filter(id__in = non_answered, is_active=True) if q.have_4labels]   
         else:
             self.active_questions = [q for q in Question.objects.filter(is_active=True) if q.have_4labels]  
-                 
+         
+        # Get standard chart records for the given oil        
         self.oils = StandaredChart.objects.filter(oil = self.oil)
        
     @property   
     def total_active_questions(self): 
+        """
+        Get the total count of active questions with 4 labels.
+
+        Returns:
+            The total count of active questions.
+        """
         data = len(self.active_questions)
         return round(data, 2)    
     
@@ -655,9 +668,12 @@ class OilComparision:
     
     @property
     def total_negative_options(self):     
-        '''
-        to get negetive question based on negative options of the oil
-        '''   
+        """
+        Get the count of negetive options for the oil.
+
+        Returns:
+            The count of negetive options.
+        """         
         data = []
         for oil in self.oils:
             try:                             
@@ -669,45 +685,93 @@ class OilComparision:
     
     @property
     def overview_green(self):
+        """
+        Calculate the percentage of positive options out of total active questions.
+
+        Returns:
+            The percentage of positive options.
+        """
         data = (self.total_positive_options/self.total_active_questions)*100    
         return round(data, 2)
         
     @property    
     def overview_red(self):
+        """
+        Calculate the percentage of negative options out of total active questions.
+
+        Returns:
+            The percentage of negative options.
+        """ 
         data = (self.total_negative_options/self.total_active_questions)*100    
         return round(data, 2)
     
     @property    
     def overview_grey(self):
-        '''
+        """
+        Calculate the percentage of options that are neither positive nor negative out of total active questions.
+        
         As overview green and overview red is in parcent so we will deduct from 100 the both to equalized dividation in barchart.
         As each question have no label and have multiple positive value or negative value so sum of labelwise questions result is diferent then actual total question.
-        For this reason to get rid of the mismatched result we had to deduct from 100 to get matching report in the barchart.        
-        '''
+        For this reason to get rid of the mismatched result we had to deduct from 100 to get matching report in the barchart.    
+
+        Returns:
+            The percentage of such options.
+        """
+        
         data = 100 - (self.overview_green + self.overview_red)           
         return round(data, 2)
     
     def total_result(self):
-        '''
+        """
+        Get the overall results in a dictionary format.
+        
         As per writen CSS our fist stacked bar will be green, second bar will be grey and third bar will be red so 
         we will placed the value in the list acordingly. We need to decide label name here so that it will be easy to impleted along with labels as each label has predifiened name.
-        '''
+
+        Returns:
+            A dictionary containing overall results.
+        """
+        
         record = {
-            #green>>grey>>red
+            # green >> grey >> red
             'Overview' : [self.overview_green, self.overview_grey, self.overview_red]
             }
         return record   
 
     
-    def label_wise_positive_option(self, label):              
+    def label_wise_positive_option(self, label):    
+        """
+        Get the count of positive options for a specific label.
+
+        Args:
+            label: The label for which positive options are counted.
+
+        Returns:
+            The count of positive options for the label.
+        """          
         data = self.oils.filter(question__questions__name = label, option__positive = str(1)).count()        
         return round(data, 2)
     
-    def label_wise_negative_option(self, label):              
+    def label_wise_negative_option(self, label):       
+        """
+        Get the count of negative options for a specific label.
+
+        Args:
+            label: The label for which negative options are counted.
+
+        Returns:
+            The count of negative options for the label.
+        """       
         data = self.oils.filter(question__questions__name = label, option__positive = str(0), option__dont_know = False).count()       
         return round(data, 2)
     
-    def label_wise_result(self):       
+    def label_wise_result(self):  
+        """
+        Get label-wise results in a dictionary format.
+
+        Returns:
+            A dictionary containing label-wise results.
+        """     
         labels = get_all_definedlabel().filter(common_status = False)        
         record_dict = {}
         for label in labels:    
@@ -735,8 +799,8 @@ class OilComparision:
                 grey = 0   
             
             record = {
-                #Same as total total result
-                #green>>grey>>red
+                # Same as total total result
+                # green >> grey >> red
                 label.name : [green , grey, red]
             }  
             
@@ -746,15 +810,27 @@ class OilComparision:
     
     
     def picked_labels_dict(self):
+        """
+        Get the dictionary containing picked labels' results.
+
+        Returns:
+            A dictionary containing results for picked labels and the overall result.
+        """
+        
         label_result = {}    
         label_result.update(self.label_wise_result())
         label_result.update(self.total_result()) 
         return label_result
     
-    def packed_labels(self):        
-        '''
+    def packed_labels(self):  
+        """
+        Create a DataFrame from the picked labels' results.
         From dataframe we will take rows to use in JS's series.
-        '''
+
+        Returns:
+            A DataFrame containing results for picked labels and the overall result.
+        """      
+        
         df = pd.DataFrame(self.picked_labels_dict())   
         return df  
         
@@ -764,79 +840,132 @@ class LabelWiseData:
         
     def __init__(self, evaluator):
         
-        # The evaluator can be either from session or url which will be supplied
+        """
+        Initialize a LabelWiseData instance.
+
+        Args:
+            evaluator: The evaluator, which can be from the session or URL.
+        """       
         self.evaluator = evaluator   
-        # We will neeed total active questions in the site to use by filtering sing diferent parameter     
+        
+        # Get all active questions with 4 labels 
         self.active_questions = [q for q in get_all_questions().filter(is_active=True) if q.have_4labels]        
 
-        # we will need the statment added from the selected options during answering for this report/evaluator, must be excluded assesments or logical strings
+        # Get statement data from selected options during answering
+        # Exclude assessments and logical strings
         self.eva_label_statement = EvaLebelStatement.objects.filter(
             evaluator = self.evaluator, 
             question__isnull = False, 
-            assesment = False).select_related(
+            assesment = False
+            ).select_related(
                 'evalebel', 
                 'question', 
                 'evaluator'
-                )   
+            )   
     
     @property
-    def answered_question_id_list(self):      
+    def answered_question_id_list(self):     
+        """
+        Get a list of unique answered question IDs.
+
+        Returns:
+            A list of unique answered question IDs.
+        """ 
         data = self.eva_label_statement.values_list('question__id', flat=True)
         return list(set(data))   
     
     @property
-    def total_active_questions(self):        
-        data = len(self.active_questions) 
-        # log.info(f'Active question found___________ {data}')
-        return round(data, 2)   
-   
+    def total_active_questions(self):  
+        """
+        Get the total count of active questions with 4 labels.
+
+        Returns:
+            The total count of active questions.
+        """      
+        data = len(self.active_questions)         
+        return round(data, 2)      
     
     @property
     def answered_percent(self):
+        """
+        Calculate the percentage of answered questions out of total active questions.
+
+        Returns:
+            The percentage of answered questions.
+        """
         data = (len(self.answered_question_id_list) / self.total_active_questions * 100)   
         return round(data, 2) 
-    
-    
  
     @property
-    def total_positive_answer(self):       
-        data = [s.question.id for s in self.eva_label_statement if s.is_positive]
-        return round(len(set(data)), 2)    
-    
+    def total_positive_answer(self):   
+        """
+        Get the total count of positive answers.
 
-   
+        Returns:
+            The total count of positive answers.
+        """    
+        data = [s.question.id for s in self.eva_label_statement if s.is_positive]
+        return round(len(set(data)), 2)  
           
     @property
-    def total_nagetive_answer(self):        
+    def total_nagetive_answer(self):   
+        """
+        Get the total count of negative answers.
+
+        Returns:
+            The total count of negative answers.
+        """     
         try:
             data = set(s.question.id for s in self.eva_label_statement if s.is_negative)
         except:
             data = 0     
-        return round(len(data), 2)
-       
-    
+        return round(len(data), 2)         
     
     @property
     def overview_green(self):
+        """
+        Calculate the percentage of positive answers out of total active questions.
+
+        Returns:
+            The percentage of positive answers.
+        """
         data = (self.total_positive_answer/self.total_active_questions)*100       
         return round(data, 2)
     
     @property
     def overview_red(self):
+        """
+        Calculate the percentage of negative answers out of total active questions.
+
+        Returns:
+            The percentage of negative answers.
+        """
         data = (self.total_nagetive_answer/self.total_active_questions)*100      
         return round(data, 2)
     
     @property
-    def overview_grey(self):     
-          
+    def overview_grey(self):  
+        """
+        Calculate the percentage of answers that are neither positive nor negative out of total active questions.
+
+        Returns:
+            The percentage of such answers.
+        """         
         data = 100 - self.overview_green - self.overview_red 
         return round(data, 2)
     
     def total_result(self):
-        '''
+        """
+        Get the overall results in a dictionary format.
+        
         As per writen CSS our fist stacked bar will be green, second bar will be grey and third bar will be red so 
-        we will placed the value in the list acordingly. We need to decide label name here so that it will be easy to impleted along with labels as each label has predifiened name.
-        '''
+        we will placed the value in the list acordingly. We need to decide label name here so that it will be easy to 
+        impleted along with labels as each label has predifiened name.
+
+        Returns:
+            A dictionary containing overall results.
+        """
+        
         
         '''
         ============================================================
@@ -862,38 +991,58 @@ class LabelWiseData:
         ============================================================
         '''
             
-        serialized_record = [self.overview_green, self.overview_grey, self.overview_red]
-            
-            
-        
+        serialized_record = [self.overview_green, self.overview_grey, self.overview_red]        
         
         record = {            
             'Overview' : serialized_record
             }        
         return record     
 
-
     
     def label_wise_positive_answered(self, label):  
+        """
+        Get the count of positive answers for a specific label.
+
+        Args:
+            label: The label for which positive answers are counted.
+
+        Returns:
+            The count of positive answers for the label.
+        """
         evalebel = label.labels.all()         
         data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(1)).count()
-        return round(data, 2)
-    
+        return round(data, 2)    
 
     
     def label_wise_nagetive_answered(self, label): 
+        """
+        Get the count of negative answers for a specific label.
+
+        Args:
+            label: The label for which negative answers are counted.
+
+        Returns:
+            The count of negative answers for the label.
+        """
         evalebel = label.labels.all()    
         data = self.eva_label_statement.filter(evalebel__in = evalebel, positive = str(0), dont_know = False).count()      
             
         return round(data, 2)         
    
     
-    def label_wise_result(self):       
+    def label_wise_result(self):      
+        """
+        Get label-wise results in a dictionary format.
+
+        Returns:
+            A dictionary containing label-wise results.
+        """ 
         labels = get_all_definedlabel().filter(common_status = False)
         record_dict = {}
         for label in labels:             
             
-            l_labels = set(label.dlabels.filter(value = 1))
+            l_labels = set(label.dlabels.filter(value = 1))            
+            
             active_question = len([l.question for l in l_labels if l.question.is_active and l.question.have_4labels])            
             
             positive_answered = self.label_wise_positive_answered(label)          
@@ -946,36 +1095,42 @@ class LabelWiseData:
                 #green>>grey>>red
                 label.name: serialized_record
             }        
-            record_dict.update(record)  
-            
-              
+            record_dict.update(record)     
             
                
         return record_dict
     
     def picked_labels_dict(self):
+        """
+        Get the dictionary containing picked labels' results.
+
+        Returns:
+            A dictionary containing results for picked labels and the overall result.
+        """
         label_result = {}    
-        with ThreadPoolExecutor(max_workers=2, initializer=django.setup) as executor:
-            #re-confirm to avoid oparation mistak. as an unnecessary function running from client recomendation
-            a = executor.submit(self.label_wise_result)
-            #control adding or editing
-            b = executor.submit(self.total_result)
-            #control adding or editing            
-            label_result.update(a.result())
-            label_result.update(b.result()) 
-            executor.shutdown() 
-        # log.info(label_result)
+        label_result.update(self.label_wise_result())
+        label_result.update(self.total_result())        
         return label_result
     
     def packed_labels(self):
-        
-        '''
+        """
+        Create a DataFrame from the picked labels' results.
         From dataframe we will take rows to use in JS's series.
-        '''
+
+        Returns:
+            A DataFrame containing results for picked labels and the overall result.
+        """   
+        
         df = pd.DataFrame(self.picked_labels_dict())   
         return df
     
     def label_data_history(self):
+        """
+        Get historical label data.
+
+        Returns:
+            A list of dictionaries containing historical label data.
+        """
         data = LabelDataHistory.objects.filter(evaluator = self.evaluator) 
         result_dict=[]
         for d in data:
@@ -994,50 +1149,59 @@ class LabelWiseData:
                 }
                 date_wise_df_list.append(date_wise_df)       
         
-        return date_wise_df_list
+        return date_wise_df_list    
+        
     
+def nreport_context(request, slug): 
+    """
+    Generate a comprehensive PDF report context for a given evaluator.
 
+    Args:
+        request: The HTTP request object.
+        slug: The unique identifier (slug) of the evaluator.
+
+    Returns:
+        A dictionary containing all the data required for generating the PDF report.
+    """ 
     
-def nreport_context(request, slug):  
-    #essential part where login_required
-    
-    null_session(request) 
-    #as report marked as completed in the thank you page it is no more required, so that it will let edit the page.
+    # Clear the evaluator session variable to allow editing the report.
     request.session['evaluator'] = ''
     
-    #as report completed om the thank you page question and total_question no more required.
+    # Clear unnecessary session variables for completed reports.
     try:        
         del request.session['question']
         del request.session['total_question']            
     except KeyError:
         pass
 
-    #As we are checking the function with decorator then we can query the report directly  
+    # Try to retrieve the evaluator report using the provided slug.
     try:  
         get_report = Evaluator.objects.get(slug = slug)
     except:
         messages.warning(request, 'No report found!')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     
+    # Create a LabelWiseData instance for the evaluator.
     label_data = LabelWiseData(get_report)
     
+    # Generate data for PDF report.
     df = label_data.packed_labels() 
     dfh = label_data.label_data_history()    
     
-    #genarating PDF . Please ensure django-xhtml2pdf==0.0.4 installed
+    # Get evaluation data for the evaluator.
     evaluation = Evaluation.objects.filter(evaluator=get_report).order_by('id').select_related('question', 'option')
   
-
+    # Get evaluator labels and statements.
     eva_label = EvaLabel.objects.filter(evaluator=get_report).order_by('sort_order').prefetch_related('elabelstatement')
     eva_statment = EvaLebelStatement.objects.filter(evalebel__evaluator=get_report).order_by('pk').select_related('evalebel', 'question', 'evaluator')
-
     
-    
-    # get ordered next activities
+    # Get ordered next activities for the evaluator.
     next_activities = NextActivities.objects.prefetch_related('related_questions').all().order_by('priority')    
-    # get common label which is executive summary    
+    
+    # Get the common label, which is "executive summary."  
     common_label = eva_label.get(label__common_status = True)
-    #delete any prevous record for this current report
+    
+    # Delete any previous records for the current report related to the common label.
     try:
         EvaLebelStatement.objects.filter(evalebel = common_label, evaluator =  get_report, next_activity = True).delete()        
     except:
@@ -1048,32 +1212,36 @@ def nreport_context(request, slug):
     part of next activitis started
     ========
     '''
-    # to get percentage of related question answered we will make set
+    # Calculate the percentage of answered questions for this report.
     questions_of_report = set()   
     for es in eva_statment:    
-        # dont know question will not consider as answere    
+        # Exclude "don't know" questions.
         if es.question and not es.dont_know:            
-            questions_of_report.add(es.question)   
+            questions_of_report.add(es.question)  
+             
+    # Initialize a list to store active next activities.
     na_ac = []
-    for na in next_activities: 
-        
-        #geting perchantage
+    
+    # Iterate through next activities and calculate related and compulsory question percentages.
+    for na in next_activities:         
+       
         related_questions = set(na.related_questions.all())
         compulsory_questions = set(na.compulsory_questions.all())
+        
         rel_ques_pecent_in_report = round(len(questions_of_report.intersection(related_questions))/len(related_questions)*100, 2)
         com_ques_percent_in_report = round(len(questions_of_report.intersection(compulsory_questions))/len(compulsory_questions)*100, 2)        
         
         try:  
-            #if exist we will edit the percentage only      
+            # Update existing EvaluatorActivities with new percentages if they exist.     
             eva_ac = EvaluatorActivities.objects.get(evaluator=get_report, next_activity=na)            
             eva_ac.related_percent = rel_ques_pecent_in_report
             eva_ac.compulsory_percent = com_ques_percent_in_report 
             eva_ac.save()            
         except:  
-            #otherwise will be created new.                    
+            # Create a new EvaluatorActivities record if it doesn't exist.                 
             eva_ac = EvaluatorActivities.objects.create(evaluator=get_report, next_activity=na, related_percent = rel_ques_pecent_in_report, compulsory_percent = com_ques_percent_in_report ) 
         
-        # as we need 3 type of result we will take help of memory to change change bool atribute
+        # Determine if the next activity is active (completed, not completed, not started, or unknown).
         if int(eva_ac.related_percent) >= int(na.related_percent) and int(eva_ac.compulsory_percent) >= int(na.compulsory_percent):            
             setattr(na, 'is_active', 'Completed')  
         elif int(eva_ac.related_percent) < int(na.related_percent) and int(eva_ac.related_percent) > 0 and int(eva_ac.compulsory_percent) >= int(na.compulsory_percent):
@@ -1082,10 +1250,9 @@ def nreport_context(request, slug):
             #if 0 we will consider not started becoz if it is touched any percentage can be set.          
             setattr(na, 'is_active', 'Not Started')                         
         else:
-            setattr(na, 'is_active', 'Unknown for this report')     
-        
+            setattr(na, 'is_active', 'Unknown for this report')  
             
-        # we will take which is not completed    
+         # Append non-completed next activities to the list (up to a maximum of 5). 
         if na.is_active != 'Completed':  
             if len(na_ac) <= 5:
                 na_ac.append(na)
@@ -1099,7 +1266,7 @@ def nreport_context(request, slug):
     part of next activitis end
     ========
     '''  
-
+    # Prepare the report context dictionary.
     context = {
         'evaluation': evaluation,
         'current_evaluator': get_report,
@@ -1117,18 +1284,70 @@ def nreport_context(request, slug):
 
 
 def get_sugested_questions(request):
-    sugested_questions = Suggestions.objects.filter(sugested_by = request.user, su_type = 'question', question = None,)
-    
+    """
+    Retrieve suggested questions submitted by the current user.
+
+    Args:
+        request: The HTTP request object containing the user information.
+
+    Returns:
+        QuerySet: A QuerySet of suggested questions submitted by the user.
+    """
+    # Filter Suggestions objects by the current user, type 'question', and no associated question.
+    sugested_questions = Suggestions.objects.filter(sugested_by = request.user, su_type = 'question', question = None) 
+       
     return sugested_questions
 
 
 def get_picked_na(question):
+    """
+    Retrieve active next activities that involve a specific question.
+
+    Args:
+        question: The Question object to check for inclusion in next activities.
+
+    Returns:
+        list: A list of active NextActivities objects that involve the specified question.
+    """
+    
+    # Retrieve all active NextActivities.
     next_activities = NextActivities.objects.filter(is_active = True)
+    
+    # Initialize an empty list to store picked next activities.
     picked_na = []
+    
+    # Iterate through active next activities and check if the question is involved.
     for na in next_activities:
         if question in na.answering_questions:
             picked_na.append(na)
     return picked_na
         
 
+from django.contrib.sites.models import Site
+def build_full_url(path):
+    """
+    Build a full URL by appending a path to the domain of the current site.
 
+    Args:
+        path (str): The path or URL component to append.
+
+    Returns:
+        str: The full URL.
+    """
+    current_site = Site.objects.get_current()
+    domain = current_site.domain
+
+    # Check if the domain already contains 'http://' or 'https://'
+    if not domain.startswith('http://') and not domain.startswith('https://'):
+        protocol = 'https://' if current_site.domain.startswith('www.') else 'http://'
+    else:
+        protocol = ''
+
+    # Ensure that the path starts with a forward slash
+    if not path.startswith('/'):
+        path = '/' + path
+
+    # Construct the full URL
+    full_url = f"{protocol}{domain}{path}"
+
+    return full_url

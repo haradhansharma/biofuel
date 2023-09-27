@@ -405,6 +405,37 @@ Feel free to incorporate the `SendQueueMail` cron job class into your CRM app's 
 
 
 
+### Sending New Report Notifications
+
+The `send_new_report_notification()` function within the `your_module.py` module is responsible for sending notifications to consumers about new fuel reports within your application.
+
+#### Function Overview
+
+This function retrieves pending email notifications from the queue, constructs notification messages, and sends them to consumers. It also handles updating the queue and deleting old queue entries. Here's a brief overview of what it does:
+
+1. **Retrieve Pending Emails**: The function fetches pending email notifications from the queue that haven't been processed yet.
+
+2. **Construct Messages**: It constructs individual notification messages for each pending email, including information about the new fuel report and a link to it.
+
+3. **Update Queue**: The function updates the pending email records by incrementing the "tried" count, marking them as processed, and recording the process time.
+
+4. **Send Emails**: It sends the constructed notification emails to the respective consumers.
+
+5. **Delete Old Entries**: The function identifies and deletes old queue entries that meet specific conditions (e.g., tried more than twice or older than 90 days).
+
+#### Usage
+
+You can call this function as needed within your Django project, typically as part of a scheduled task using Django's built-in cron-like scheduler or a third-party package like `django-cron`. It helps ensure that consumers are notified about new fuel reports efficiently.
+
+```python
+from your_module import send_new_report_notification
+
+# Call the function to send new report notifications
+total_sent = send_new_report_notification()
+
+----
+
+
 
 ### Deleting Incomplete Reports using Cron Job
 

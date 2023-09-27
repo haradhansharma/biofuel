@@ -25,6 +25,8 @@ def dashboard_menu(request):
         {'title': 'All Reports', 'url': reverse('home:all_reports'), 'data_set': False, 'childs': False, 'icon': '<i class="fa-solid fa-list-check"></i>'},                            
         ) 
         
+        
+        
     menu_items.append(
         {'title': 'Settings', 'url': reverse('home:user_settings'), 'data_set': False, 'childs': False, 'icon':'<i class="fa-solid fa-gears"></i>'},                            
         ) 

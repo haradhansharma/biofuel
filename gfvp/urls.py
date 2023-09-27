@@ -5,7 +5,7 @@ from django.conf import settings
 from home.views import user_types
 from django.views.generic.base import TemplateView
 # from django.views.static import serve
-from accounts.views import partner_service
+from accounts.views import partner_service, producer_fuels
 
 
 
@@ -38,7 +38,9 @@ urlpatterns = [
     path("gdpr-policy/", TemplateView.as_view(template_name="includes/gdpr.html"), name='gdpr'),
     path("terms/", TemplateView.as_view(template_name="includes/terms.html"), name='term'),
     path('docs/', include('django_mkdocs.urls', namespace='mkdocs')),     
-    path('<int:pk>/services/', partner_service, name='partner_service'),     
+    path('<int:pk>/services/', partner_service, name='partner_service'), 
+    path('<int:pk>/producer-fuels/', producer_fuels, name='producer_fuels'),     
+        
 ] 
 
 if settings.DEBUG:

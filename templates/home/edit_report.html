@@ -1,0 +1,39 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}{{site_info.title}}{% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="card border-0 shadow table-wrapper table-responsive">
+    <div class="card-header">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+            <div class="d-block mb-4 mb-md-0">
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                </nav>
+                <h1 class="h4">Your all evaluation report for your biofuel</h1>              
+            </div>
+            <div class="btn-toolbar mb-2 mb-md-0">
+            </div>
+        </div>
+
+    </div> 
+    <div class="card-body">
+        <form method="POST" id="edit_report" >
+            {% csrf_token %}   
+            {{form.as_p}}
+
+            <input class="btn btn-success" type="submit" value="Submit">
+        </form>
+    </div>
+  
+   
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

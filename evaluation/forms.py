@@ -30,13 +30,14 @@ class EvaluatorForm(forms.ModelForm):
     """
     class Meta:
         model = Evaluator
-        fields = ('name', 'email', 'phone', 'orgonization', 'biofuel')
+        fields = ('name', 'email', 'phone', 'orgonization', 'biofuel', 'make_it_public',)
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'your name', 'class':'form-control', 'aria-label':'name', 'required': True}),
             'email': forms.EmailInput(attrs={'placeholder': 'your email', 'class':'form-control', 'aria-label':'email', 'required': True }),
             'orgonization': forms.TextInput(attrs={'placeholder': 'Organization', 'class':'form-control', 'aria-label':'orgonization', }), 
             'phone': forms.TextInput(attrs={'placeholder': 'your phone', 'class':'form-control', 'aria-label':'phone'}),
-            'biofuel': forms.Select(attrs={'class':'form-select', 'aria-label':'biofuel', 'hx-get':'/evaluation/stdoils/', 'hx-target': '#stdoil',  'hx-indicator':".oilindicator", 'required': True }),                      
+            'biofuel': forms.Select(attrs={'class':'form-select', 'aria-label':'biofuel', 'hx-get':'/evaluation/stdoils/', 'hx-target': '#stdoil',  'hx-indicator':".oilindicator", 'required': True }),   
+            'make_it_public' : forms.CheckboxInput(attrs={'class': 'form-check-input'})                   
         }        
         
         labels = {  
@@ -63,6 +64,18 @@ class EvaluatorForm(forms.ModelForm):
         
         if not biofuel:
             raise forms.ValidationError(f'Fuel selction is mandatory!')
+        
+        
+class EvaluatorEditForm(forms.ModelForm):
+    
+    class Meta:
+        model = Evaluator
+        fields = ('make_it_public',)
+        widgets = {            
+            'make_it_public' : forms.CheckboxInput(attrs={'class': 'form-check-input'})                   
+        }        
+        
+
         
       
     

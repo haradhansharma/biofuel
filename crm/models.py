@@ -3,6 +3,7 @@ from django_countries.fields import CountryField
 import random
 from blog.models import *
 
+from evaluation.models import Evaluator
 
 # Function to generate random 12-digit numbers
 def random_digits(): 
@@ -27,6 +28,25 @@ class Lead(models.Model):
     
     def __str__(self):
         return self.lead
+    
+    @property
+    def user(self):
+        from accounts.models import User
+        user = User.objects.filter(email = self.email_address)
+        if user.exists():
+            return user.first()
+        else:
+            return None
+    
+    @property
+    def ns(self):
+        from accounts.models import NotificationSettings
+        if self.user:
+            if not hasattr(self.user, 'notificationsettings'):
+                NotificationSettings.objects.create(user=self.user)  
+            return self.user.notificationsettings
+        return None
+        
     
     @property
     def lead_in_que(self):
@@ -78,3 +98,15 @@ class BlogMailQueue(models.Model):
     
     def __str__(self):
         return self.to
+    
+class ConsumerMailQueue(models.Model):
+    to = models.CharField(max_length=256, null=True, blank=True)
+    report = models.ForeignKey(Evaluator, on_delete=models.CASCADE)
+    added_at = models.DateTimeField(auto_now_add=True)
+    processed = models.BooleanField(default=False)
+    process_time = models.DateTimeField(auto_now=True)
+    tried=models.IntegerField(default=0)
+    
+    def __str__(self):
+        return self.to
+    

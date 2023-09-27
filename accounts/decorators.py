@@ -98,6 +98,36 @@ producer_required = user_type_required('producer')
 consumer_required = user_type_required('consumer')
 marine_required = user_type_required('marine')
 
+
+
+def expert_or_producer_requried(function):
+    def wrap(request, *args, **kwargs):
+    
+        # Check if either @expert_required or @producer_required is applied
+        if request.user.is_staff or request.user.is_superuser or request.user.is_expert or request.user.is_producer:
+            return function(request, *args, **kwargs)
+        else:
+            raise PermissionDenied("Permission Denied")
+        
+    wrap.__doc__ = function.__doc__
+    wrap.__name__ = function.__name__                
+    return wrap
+
+def creator_or_consumer_requried(function):
+    from evaluation.models import Evaluator   
+    def wrap(request, *args, **kwargs):
+    
+        report_user = Evaluator.objects.get(slug=kwargs['slug']).creator
+        if report_user == request.user or request.user.is_staff or request.user.is_superuser or request.user.is_consumer:
+            return function(request, *args, **kwargs)
+        else:            
+            raise PermissionDenied
+        
+    wrap.__doc__ = function.__doc__
+    wrap.__name__ = function.__name__                
+    return wrap
+
+
 def report_creator_required(function):
     """
     Decorator that restricts access to the view function based on the report creator or staff/superuser.

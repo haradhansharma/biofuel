@@ -27,7 +27,7 @@ from evaluation.helper import (
     ) 
 from doc.doc_processor import site_info
 from django.db.models import Q
-
+from accounts.decorators import producer_required, consumer_required, expert_or_producer_requried
 import logging
 log =  logging.getLogger('log')
 
@@ -380,6 +380,9 @@ def userpage(request):
     # Clear the session data to ensure a clean state when the user logs in.
     null_session(request)   #This is essential where user loggedin
     
+    producer_slug = UserType.objects.filter(Q(name__icontains='producer') | Q(slug__icontains='producer')).first().slug
+ 
+    
     user = request.user
     
     report_slug = request.GET.get('slug')
@@ -455,12 +458,10 @@ def userpage(request):
             'last_reports' : last_reports,
             'positive_percent': str("%.2f" % positive_percent) + '%',
             'dont_know_percent': str("%.2f" % dont_know_percent) + '%',
-            'reports': reports,
-            # 'last_reports' : last_reports,
+            'reports': reports,       
             'last_report_button_text' : 'Get Last Report',
-            'username' : user.username,
-            # 'item_label' : df.columns.values.tolist(),
-            # 'item_seris' : df.values.tolist()
+            'username' : user.username,   
+            'producer_slug' : producer_slug
             
         }
     else:
@@ -474,7 +475,8 @@ def userpage(request):
             'accounts_seting' : 'Accounts Settings',
             'dashboard' : 'Dashboard',
             'change_pass' : 'Change Password',
-            'homepage' : 'Home Page'           
+            'homepage' : 'Home Page',
+            'producer_slug' : producer_slug         
         } 
         
     # Prepare meta data for the page.
@@ -562,6 +564,9 @@ def check_email(request):
         return HttpResponse('<span class="text-danger">Type a valid email address!</span>')
     
 @login_required
+@producer_required
+@expert_required
+@expert_or_producer_requried
 def partner_service(request, pk):
     """
     Display the personalized service page for a partner user.
@@ -575,7 +580,7 @@ def partner_service(request, pk):
         pk (int): The primary key of the visiting user.
         
     Returns:
-        HttpResponse: Rendered HTML template displaying the service page.
+        HttpResponse: Rendered HTML template displaying the service page. 
     """
     
     log.info(f'Partner service page accessed by_____________ {request.user}')
@@ -787,6 +792,54 @@ def delete_service(request, user_id, na_id):
     
     # Render the template and return the HTML response
     return render(request, 'registration/commit_service.html', context = context)
+
+
+@login_required
+@consumer_required
+def producer_fuels(request, pk):
+    
+    # Get the visiting user based on the provided primary key (pk).
+    visiting_user = get_object_or_404(User, pk=pk, is_active = True, is_public = True)
+    
+    # Get the currently logged-in user.
+    current_user = request.user    
+    
+    reports = Evaluator.objects.filter(creator=visiting_user, report_genarated=True).order_by('-update_date')
+    
+    page = request.GET.get('page', 1)
+    paginator = Paginator(reports, 10)
+    try:
+        reports = paginator.page(page)
+    except PageNotAnInteger:
+        reports = paginator.page(1)
+    except EmptyPage:
+        reports = paginator.page(paginator.num_pages)
+    
+  
+    context ={
+        'visiting_user' : visiting_user,
+        'current_user' : current_user,
+        'reports' : reports,
+          
+    }    
+    
+    # Generate meta data for SEO and page information.
+    meta_data = site_info()    
+    meta_data['title'] = f'Service of {current_user.username}'
+    meta_data['description'] = f"This is the personalized Service page for {current_user.username}. Here, registerd user can view his information and manage services."
+    meta_data['tag'] = 'user profile, gf-vp.com'
+    meta_data['robots'] = 'noindex, nofollow'
+    meta_data['og_image'] = current_user.usertype.icon.url 
+    
+    # Update the context with the generated meta data.    
+    context.update(
+        {
+            'site_info' : meta_data,            
+        }
+    )
+    
+    # Render the template with the provided context.
+    return render(request, 'registration/producer_fules.html', context = context)
     
     
     

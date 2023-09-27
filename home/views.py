@@ -20,6 +20,7 @@ from .forms import (
         QuesSugestionForm,
         NextActivitiesForm,
 )
+from accounts.forms import NotificationSettingsForm
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from accounts.decorators import (
@@ -28,7 +29,7 @@ from accounts.decorators import (
     marine_required,
 
 )
-from accounts.models import User, UserType, UsersNextActivity
+from accounts.models import User, UserType, UsersNextActivity, NotificationSettings
 from gfvp import null_session
 from django.contrib.auth import update_session_auth_hash
 from django.shortcuts import render, get_object_or_404
@@ -140,7 +141,23 @@ def user_types(request, slug):
     # pass user type data    
     try:
         user_type = UserType.objects.get(slug = slug)
-        users = User.objects.filter(usertype__slug = slug, is_active = True, is_public = True, is_staff = False, is_superuser=False)
+        parameter = {
+            'usertype__slug' : slug,
+            'is_active' : True,
+            'is_public' : True,
+        }
+        if request.user.is_superuser:
+            parameter.update({
+                'is_staff' : False,
+                'is_superuser': False
+            })
+        else:
+            parameter.update({
+                'is_staff' : True,
+                'is_superuser': True
+            })
+            
+        users = User.objects.filter(**parameter)
     except:
         user_type = None
         users = None
@@ -260,6 +277,15 @@ def user_setting(request):
         password_form = PasswordChangeForm(user=request.user, data=request.POST)
         
         company_logo_form = CompanyLogoForm(request.POST, request.FILES, instance=request.user.profile)
+        notification_form = NotificationSettingsForm(request.POST, instance=request.user.notificationsettings)
+        
+        if 'notification_form' in request.POST:        
+            if notification_form.is_valid():
+                notification_form.save() 
+                messages.success(request,('Notifcation was successfully updated!'))	
+            else:
+                messages.error(request, 'Invalid form submission.')                
+                messages.error(request, user_form.errors)  	        
         
         
         if 'user_form' in request.POST:        
@@ -305,7 +331,12 @@ def user_setting(request):
     
     password_form = PasswordChangeForm(user=request.user)  
     
-    company_logo_form = CompanyLogoForm(instance=request.user.profile)        
+    company_logo_form = CompanyLogoForm(instance=request.user.profile)    
+    
+    if not hasattr(request.user, 'notificationsettings'):
+        NotificationSettings.objects.create(user=request.user)  
+    
+    notification_form = NotificationSettingsForm(instance=request.user.notificationsettings)  
     
     
     #meta
@@ -322,6 +353,7 @@ def user_setting(request):
         "profile_form":profile_form, 
         "password_form":password_form, 
         "company_logo_form" : company_logo_form,
+        'notification_form' : notification_form,
         'site_info' : meta_data          
     }
     return render(request, 'home/settings.html', context = context)

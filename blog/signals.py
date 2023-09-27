@@ -34,8 +34,9 @@ def send_to_mail_que(sender, instance, created, **kwargs):
         if instance.status == 'published':
             queued = 1
             for lead in leads:
-                BlogMailQueue.objects.create(to=lead.email_address, blog = instance)
-                queued += 1
+                if lead.ns.blog_notifications:
+                    BlogMailQueue.objects.create(to=lead.email_address, blog = instance)
+                    queued += 1
             log.info(f'Total {queued} BlogMailQueue created for new created blog {instance.title} ')
     else:  
         log.info(f'A blog titled {instance.title} has been updated')      
@@ -49,8 +50,9 @@ def send_to_mail_que(sender, instance, created, **kwargs):
             if not queues.exists():
                 queued = 1
                 for lead in leads:
-                    BlogMailQueue.objects.create(to=lead.email_address, blog = instance)
-                    queued += 1
+                    if lead.ns.blog_notifications:
+                        BlogMailQueue.objects.create(to=lead.email_address, blog = instance)
+                        queued += 1
                     
                 log.info(f'Total {queued} BlogMailQueue created for updated blog {instance.title} ')
     log.info(f'BlogMailQueue completing for the blog titled {instance.title} ')

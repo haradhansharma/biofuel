@@ -59,10 +59,6 @@ class UserType(models.Model):
         
         # Can be control in admin who can produce or reproduce it.
         permissions = (("can_access_usertype", "Can access usertype"),)
-        
-
-
-
 
 
 class User(AbstractUser):   
@@ -89,8 +85,6 @@ class User(AbstractUser):
     email_verified = models.BooleanField(default=False)
     newsletter_subscription = models.BooleanField(default=True)
     is_public = models.BooleanField(default=True, verbose_name='Profile is Public', help_text='If true profile data visible to logged in other users of the platform.')
-    
-    
     
     
  
@@ -201,6 +195,13 @@ class User(AbstractUser):
             self._selected_activities = self.user_next_activity.all().prefetch_related('next_activity__quotnextactivity__related_questions') or False
         return self._selected_activities
     
+    @property
+    def ns(self):    
+        if not hasattr(self, 'notificationsettings'):
+            NotificationSettings.objects.create(user=self)  
+        return self.notificationsettings
+      
+    
     def get_absolute_url(self):        
         return reverse('accounts:user_link')
     
@@ -235,5 +236,15 @@ class UsersNextActivity(models.Model):
         related_name='next_activities' 
         )
    
+   
+class NotificationSettings(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, editable=False)
+    marketing_mail = models.BooleanField(default=True)
+    new_fuel_notifications = models.BooleanField(default=True)
+    blog_notifications = models.BooleanField(default=True)
+    
+    
+
+    
 
 

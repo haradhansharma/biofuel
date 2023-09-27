@@ -303,20 +303,24 @@ def leads(request):
             mail_queue_data = []
             
             for rl in result_lead:
-                #To protect to be unsubscribe lead by robotic action                
-                if rl.email_address not in (pending_count['to'] for pending_count in pending_counts):
-                    confirm_code = random_digits()
-                    update_data.append({'id': rl.id, 'confirm_code': confirm_code})
-                    mail_queue_data.append(MailQueue(to=rl.email_address))
-                    process_count += 1
-                else:
-                    pending_in_queue += 1
-
-            # Bulk update confirm codes
-            Lead.objects.bulk_update(update_data, ['confirm_code'])
-            
-            # Bulk create mail queue entries
-            MailQueue.objects.bulk_create(mail_queue_data)
+                if rl.ns.marketing_mail:
+                    #To protect to be unsubscribe lead by robotic action                
+                    if rl.email_address not in (pending_count['to'] for pending_count in pending_counts):
+                        confirm_code = random_digits()
+                        rl.confirm_code = confirm_code
+                        update_data.append(rl)                                
+                        mail_queue_data.append(MailQueue(to=rl.email_address))
+                        process_count += 1
+                    else:
+                        pending_in_queue += 1
+                        
+            if len(update_data) > 0:
+                # Bulk update confirm codes
+                Lead.objects.bulk_update(update_data, ['confirm_code'])
+              
+            if len(mail_queue_data) > 0:  
+                # Bulk create mail queue entries
+                MailQueue.objects.bulk_create(mail_queue_data)
             
             msg_process_to_queue = f"{process_count} mail processed successfully in mail queue and {pending_in_queue} mail still in queue to be sent!"
             messages.success(request, msg_process_to_queue)

@@ -425,12 +425,12 @@ class EvaluatorAdmin(admin.ModelAdmin):
             for eo_id in list(set(eo.option_id for eo in evastatement_options)):  
                 set_evastatment(request, Option.objects.get(id = int(eo_id)), copy_evaluator)
                 set_evastatement_of_logical_string(request, Option.objects.get(id = int(eo_id)), copy_evaluator)
-                
-            ReportMailQueue.objects.create(
-                to = i.email,
-                from_report = i,
-                new_report = copy_evaluator,
-            )   
+            if i.creator.ns.new_fuel_notifications:  
+                ReportMailQueue.objects.create(
+                    to = i.email,
+                    from_report = i,
+                    new_report = copy_evaluator,
+                )   
              
         #sucess message
         self.message_user(request, ngettext( f'{done} mail has been queued.'), messages.SUCCESS)

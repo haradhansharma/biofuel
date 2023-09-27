@@ -2,12 +2,9 @@ import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from urllib.parse import urlparse
 from . nreport_class import ReportPDFData
-# from pprint import pprint
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse, HttpResponseRedirect
 import requests
-from doc.models import ExSite
-# from home.models import WeightUnit
 from .forms import *
 from .models import *
 from accounts.models import User, UserType
@@ -18,7 +15,6 @@ from . helper import (
     get_all_questions,
     get_current_evaluator,
     nreport_context,
-    OilComparision,
     get_picked_na,
     get_all_stdoils,
     get_all_glosaries,
@@ -31,21 +27,17 @@ from . helper import (
 from django.db.models import Q
 
 from django.contrib.auth.decorators import login_required
-from accounts.decorators import producer_required, report_creator_required
+from accounts.decorators import producer_required, report_creator_required, creator_or_consumer_requried
 from gfvp import null_session
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
 from django.utils import timezone
 import ast
-# from concurrent.futures import ProcessPoolExecutor, as_completed, ThreadPoolExecutor
-# import django
-# from evaluation.helper import LabelWiseData
-# from django.contrib.sites.shortcuts import get_current_site
+
 import io  
 from django.http import FileResponse
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
 from reportlab.lib.units import inch
-# from django.db.models import Avg, Count
 import re
 
 from doc.doc_processor import site_info
@@ -54,37 +46,96 @@ from django.core.cache import cache
 import logging
 log =  logging.getLogger('log')
 
-#helper function should be called into the @login_required and @producer_required
-
-    
-
 
 def set_evaluation(question, selected_option, evaluator):
-    # log.info(f'initilizing set_evaluation for the question {question.id} of the evaluator {evaluator} !')
-    #delete prevous record if have to ensure reentry.
+    """
+    Set the evaluation for a given question and evaluator.
+
+    This function is intended to be used within the context of the @login_required and @producer_required decorators.
+
+    Parameters:
+    - question (Question): The question being evaluated.
+    - selected_option (Option): The selected option by the evaluator.
+    - evaluator (User): The user performing the evaluation.
+
+    Returns:
+    None
+
+    Raises:
+    None
+
+    Comments:
+    - This function first attempts to delete any previous evaluation entry for the given question and evaluator combination.
+    - If no previous evaluation entry is found, it logs a message indicating so.
+    - Then, it creates a new evaluation entry with the provided information and saves it to the database.
+
+    Example Usage:
+    @login_required
+    @producer_required
+    def some_view(request, question_id, selected_option_id):
+        # Retrieve the Question, Selected Option, and Evaluator
+        question = get_question_by_id(question_id)
+        selected_option = get_option_by_id(selected_option_id)
+        evaluator = request.user
+
+        # Set the evaluation for the given question and evaluator
+        set_evaluation(question, selected_option, evaluator)
+    """
     try:
-        log.info('Deleteing previous Evaluation Entry...........')   
-        Evaluation.objects.filter(evaluator = evaluator, question = question).delete()    
-        # log.info(f'Deleted previous Evaluation entry for the question {question.id} of the evaluator {evaluator}!')
+        log.info('Deleting previous Evaluation Entry...........')
+        # Delete any previous evaluation entry for the same question and evaluator
+        Evaluation.objects.filter(evaluator = evaluator, question = question).delete()         
     except:
         log.info(f'No Previous Evaluation entry found for the question {question.id} of the evaluator {evaluator} to delete!')
+        
+    # Create a new evaluation entry with the provided information
     new_evaluation = Evaluation(evaluator = evaluator, option = selected_option, question = question ) 
     new_evaluation.save()
-    # log.info(f'{new_evaluation} has been saved for the question number {question.id} of the evaluatior {evaluator}! selected option was {selected_option}')
+
         
-    
-#helper function should be called into the @login_required and @producer_required
-def set_eva_comments(question, comment, evaluator):    
-    # log.info(f'Initializing set_eva_cooments for the question {question.id} of the evaluator {evaluator} !')
-    #check editing or fresh entry
+def set_eva_comments(question, comment, evaluator):  
+    """
+    Set evaluation comments for a given question and evaluator.
+
+    This function is intended to be used within the context of the @login_required and @producer_required decorators.
+
+    Parameters:
+    - question (Question): The question for which comments are being set.
+    - comment (str): The evaluation comments to be set.
+    - evaluator (User): The user (evaluator) providing the comments.
+
+    Returns:
+    None
+
+    Raises:
+    None
+
+    Comments:
+    - This function checks whether an evaluation comment for the given question and evaluator already exists.
+    - If a comment entry exists, it updates the comment if a new comment is provided.
+    - If no comment entry exists or if the provided comment is empty, it logs a message and creates a new comment entry.
+
+    Example Usage:
+    @login_required
+    @producer_required
+    def add_comment(request, question_id, comment_text):
+        # Retrieve the Question and Evaluator
+        question = get_question_by_id(question_id)
+        evaluator = request.user
+
+        # Set the evaluation comments for the given question and evaluator
+        set_eva_comments(question, comment_text, evaluator)
+    """
+    # Check if an evaluation comment entry already exists for the same question and evaluator
     evacomments = EvaComments.objects.filter(evaluator = evaluator, question = question)
+    
+    # Ensure that a new comment is provided (non-empty)
     if evacomments.exists():        
         #Ensure new comments
         if comment != '':
             com = evacomments[0]
             com.comments = comment
-            com.save() 
-            # log.info('Previous comments found so updated previous comments!')       
+            com.save()     
     else:
         log.info('No previous comments found!')
         new_eva_comment = EvaComments(evaluator = evaluator, question = question, comments = comment)
@@ -92,44 +143,60 @@ def set_eva_comments(question, comment, evaluator):
         log.info(f'Saved comments for the question {question.id} for the evaluator {evaluator}! ')
         
 #helper function should be called into the @login_required and @producer_required    
-def set_evastatment(request, selected_option, evaluator):    
-    question = selected_option.question  
-    # log.info(f'{question.id} detected to set_evastatment for the evaluator {evaluator} ! selected option {selected_option} found! ')  
-    #delete previous record of this option
+def set_evastatment(request, selected_option, evaluator):  
+    """
+    Set evaluation statements for a selected option and evaluator.
+
+    This function is intended to be used within the context of the @login_required and @producer_required decorators.
+
+    Parameters:
+    - request: The HTTP request object.
+    - selected_option (Option): The selected option for which statements are being set.
+    - evaluator (User): The user (evaluator) providing the statements.
+
+    Returns:
+    None
+
+    Raises:
+    None
+
+    Comments:
+    - This function is responsible for setting evaluation statements for a selected option and evaluator.
+    - It begins by deleting any previous records of non-assessment statements for the same option and evaluator.
+    - It then retrieves the labels associated with the question and sets statements for each label.
+    - For each label, it creates a new EvaLebelStatement entry with calculated assessment statements for "don't know" and "positive" answers.
+    - It also deletes any previous records of assessment statements for the same label and evaluator.
+    - Finally, it logs the completion of the process.
+
+    Example Usage:
+    @login_required
+    @producer_required
+    def set_statements(request, selected_option_id):
+        # Retrieve the Selected Option and Evaluator
+        selected_option = get_selected_option_by_id(selected_option_id)
+        evaluator = request.user
+
+        # Set evaluation statements for the selected option and evaluator
+        set_evastatement(request, selected_option, evaluator)
+    """
+    # Extract the question associated with the selected option  
+    question = selected_option.question      
+    
+    # Delete previous records of non-assessment statements for the same option and evaluator
     try:
-        # log.info(f'Deleteing previous EvalebelStatement which is not assesment............')
         EvaLebelStatement.objects.filter(question = question, evaluator = evaluator, assesment = False).delete()   
-        # log.info(f'Deleted previous evalabelstatement for the option {selected_option} under the question {question.id} for the evaluator {evaluator} which is not assesment !')
     except:
         log.info(f'No previous EvalebelStatement found to delete for the option {selected_option} under question {question.id} of evaluator {evaluator} !')
         
-    #assined labels to the questions
-    # log.info(f'Collecting labels for the question {question.id} where value set to "1" ')
-    set_labels = Label.objects.filter(question =  question, value = 1)
-    # log.info(f'{set_labels.count()} set labels found in the question {question.id} !')
-    
-    
-    # '''
-    # NEW ADDITION TO CATCH NON LABELED ANS
-    # '''
-    
-    # if not set_labels.exists():
-    #     new_evalebel_statement = EvaLebelStatement(
-    #         evalebel = None, //it can not be null, if i am making null acceptable then i do not know where it can be efect as our first intention was to record answer labelwise. and based on that intension somewhere can be effected, i can not guise
-    #         option_id = selected_option.id, 
-    #         statement = selected_option.statement, 
-    #         next_step = selected_option.next_step, 
-    #         dont_know = selected_option.dont_know, 
-    #         question = selected_option.question, 
-    #         positive = selected_option.positive, 
-    #         evaluator =  evaluator)
-    #     new_evalebel_statement.save()
-    #     log.info(f'non labeled saved________________________________!')
         
+    # Retrieve labels associated with the question
+    set_labels = Label.objects.filter(question =  question, value = 1) 
     
     for set_label in set_labels:
-        # defined_label = DifinedLabel.objects.get(name = set_label.name)
+        # Retrieve the evaluator's EvaLabel for the current label
         eva_label = EvaLabel.objects.get(label__name = set_label.name, evaluator = evaluator)
+        
+        # Create a new EvaLebelStatement entry for non-assessment
         new_evalebel_statement = EvaLebelStatement(
             evalebel = eva_label, 
             option_id = selected_option.id, 
@@ -140,39 +207,39 @@ def set_evastatment(request, selected_option, evaluator):
             positive = selected_option.positive, 
             evaluator =  evaluator)
         new_evalebel_statement.save()
-        # log.info(f'non assesment evlabelstatment saved for the label {eva_label} for evaluator {evaluator} !')
+  
         try:
-            #delete previous record of this label
-            # log.info(f'Deleting previous evalabelstatment which was saved by assesment for evaluator {evaluator}!')
+            # Delete previous records of assessment statements for the same label and evaluator
             EvaLebelStatement.objects.filter(
                 evalebel = eva_label, 
                 evaluator = evaluator, 
                 assesment = True).delete()     
             log.info(f'Deleted evalebelstatment which was saved by assesment for evaluator {evaluator} !')       
-        except Exception as e:
-            # pass is essential to execute rest of the code
+        except Exception as e:            
             log.info('No assesmented evalabelstatent found to delete! ')
         
+        # Calculate assessment statements based on answers and save them
         assesment = EvaLebelStatementAnalyzer(eva_label, evaluator)
-        #This is a calculated assesment based on the answere. Called function gives the idea.    
+        
+        # Save the assessment statement for "don't know" answer
         summery_statement_do_not_know = EvaLebelStatement(
             evalebel = eva_label, 
             statement = assesment.label_assesment_for_donot_know(),  
             evaluator =  evaluator, 
             # question = question,  
             assesment = True)
-        summery_statement_do_not_know.save()
-        log.info(f'Saved new evalebelstatement for do_not_know answer for the label {eva_label}')
+        summery_statement_do_not_know.save()        
+        log.info(f'Saved new EvaLebelStatement for "don\'t know" answer for the label {eva_label}')
 
-        #This is a calculated assesment based on the answere. Called function gives the idea.    
+        # Save the assessment statement for "positive" answer 
         summery_statement_positive = EvaLebelStatement(
             evalebel = eva_label, 
             statement = assesment.label_assesment_for_positive(),  
-            evaluator = evaluator, 
-            # question = question,  
+            evaluator = evaluator,          
             assesment = True)
         summery_statement_positive.save()
         log.info(f'Saved new evalebelstatement for positive answer for the label {eva_label}')
+        
     log.info(f'set_evalabelstatement completed for the question {question.id} ! ')
         
 def get_eoi(eva_statement):
@@ -371,33 +438,15 @@ def option_add2(request):
           
             log.info(f'Optin not found_______________')
             messages.warning(request, 'To proceed, please select an option or please go with "submit" process first!')
-            return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(request.session['evaluator']), str(question_slug)]))          
+            return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(request.session['evaluator']), str(question_slug)]))     
         
         
-        # #re-confirm to avoid oparation mistak. as an unnecessary function running from client recomendation
-        # set_evaluation(question, selected_option, get_current_evaluator(request))  
-        
-        # #control adding or editing
-        # set_evastatment(request, selected_option, get_current_evaluator(request))     
-           
-        # #control adding or editing
-        # set_evastatement_of_logical_string(request, selected_option, get_current_evaluator(request))
-        
-        # with ThreadPoolExecutor(max_workers=2, initializer=django.setup) as executor:
-        #     #re-confirm to avoid oparation mistak. as an unnecessary function running from client recomendation
-        #     executor.submit(set_evaluation, question, selected_option, get_current_evaluator(request))
-        #     #control adding or editing
-        #     executor.submit(set_evastatment, question, selected_option, get_current_evaluator(request))
-        #     #control adding or editing
-        #     executor.submit(set_evastatement_of_logical_string, question, selected_option, get_current_evaluator(request))
-        #re-confirm to avoid oparation mistak. as an unnecessary function running from client recomendation
-        # log.info(f'Setting evaluation for report {get_current_evaluator(request)}')
         set_evaluation(question, selected_option, get_current_evaluator(request))
         #control adding or editing
-        # log.info(f'Setting evastatement for report {get_current_evaluator(request)}')        
+    
         set_evastatment(question, selected_option, get_current_evaluator(request))
         #control adding or editing
-        # log.info(f'Setting logical string for report {get_current_evaluator(request)}')        
+         
         set_evastatement_of_logical_string(question, selected_option, get_current_evaluator(request))
             
             
@@ -429,11 +478,8 @@ def option_add2(request):
                 
                 
             log.info(f'Redirecting to the thankyou page')
-            return HttpResponseRedirect(reverse('evaluation:thanks'))
-        
-        #It is for manual submission but button hide in front-end
-        # if 'submit_and_stay' in request.POST:   
-        #     return HttpResponseRedirect(reverse('evaluation:eva_question', args=[int(request.session['evaluator']), question_slug]))
+            return HttpResponseRedirect(reverse('evaluation:thanks'))        
+
         
         #It is for automatic detection where to go to next based on selection of admin
         if 'submit_and_auto' in request.POST:            
@@ -722,23 +768,11 @@ def eva_question(request, evaluator_id, slug):
     '''
     The qualified rang can be set from Admin>>Site>>qualified ans rang
     '''
-    # qualified_ans_rang = int(ExSite.on_site.get().qualified_ans_range)    
-    qualified_ans_rang = int(site_info().get('qualified_ans_range'))    
+  
+    qualified_ans_rang = int(site_info().get('qualified_ans_range'))       
     
-
-        
-    # options = Option.objects.filter(question = question)
+    eva_lebels = EvaLabel.objects.filter(evaluator = evaluator_data).order_by('sort_order').prefetch_related('elabelstatement').select_related('label')    
     
-    eva_lebels = EvaLabel.objects.filter(evaluator = evaluator_data).order_by('sort_order').prefetch_related('elabelstatement').select_related('label')
-    
-    
-    # request.session['total_question'] = session_total_question = get_all_evaluations_or_on_question(evaluator = evaluator).count()  
-    # total_ques = all_questions.count() - session_total_question
-    # timing_text = f"Depending on how many answers you provide, the self assessment will take \
-    #     anywhere from {round(total_ques/10)} to {round(total_ques/3)} minutes. At the end of the \
-    #         assessment, a PDF report will be provided, which can be retrieved via the Dashboard at a later stage."
-    
-    # request.session['total_question'] = evaluation_data.filter(evaluator = evaluator_data).count()  
     total_evaluation_data = len(evaluation_data)
     request.session['total_question'] = total_evaluation_data
     
@@ -772,7 +806,7 @@ def eva_question(request, evaluator_id, slug):
     
     
     # Create push url for HTMX     
-    # question_in_evaluation = evaluation_data.filter(question = question) 
+ 
     if question_in_evaluation is not None:
         try:
             next_question_slug = selected_option.next_question.slug
@@ -780,23 +814,8 @@ def eva_question(request, evaluator_id, slug):
         except:
             request.session['push_url'] = reverse('evaluation:thanks')
     else:
-        request.session['push_url'] = ''
-        
-    # Get Chart Data of this question    
-    # log.info(f'Geting standared oil data for the question {question.id}___for the report {evaluator_data}__________')
-    # chart_data = question.get_stdoils 
-    # oil_graph_data = []
-    # for oil in question.get_stdoils:            
-    #     try:             
-    #         oil_data = OilComparision(oil).packed_labels()      
-    #         item_label = oil_data.columns.values.tolist()
-    #         item_seris = oil_data.values.tolist()
-    #         data_dict = {
-    #             oil.oil_name : [item_label, item_seris]
-    #         }
-    #         oil_graph_data.append(data_dict)
-    #     except Exception as e:
-    #         continue
+        request.session['push_url'] = ''        
+    
     
     label_data = LabelWiseData(evaluator_data)
     answered_percent = label_data.answered_percent
@@ -918,19 +937,24 @@ def eva_index2(request):
                 phone = form.cleaned_data['phone']
                 orgonization = form.cleaned_data['orgonization']
                 biofuel = form.cleaned_data['biofuel']
-                stdoil_key = request.POST.get('stdoil')
-                
-                # if not stdoil_key or stdoil_key == '':
-                #     messages.warning(request,'Select related Oil!')
-                #     return redirect(request.path)
-                
+                stdoil_key = request.POST.get('stdoil')    
+                make_it_public = form.cleaned_data['make_it_public']
                
-                
+          
                 #genarate report's initial data. It is a basement of a report or evaluation.
-                new_evaluator = Evaluator(creator = request.user, name = name, email = email, phone = phone, orgonization = orgonization, biofuel = biofuel, stdoil_key = stdoil_key )
+                new_evaluator = Evaluator(
+                    creator = request.user, 
+                    name = name, 
+                    email = email, 
+                    phone = phone, 
+                    orgonization = orgonization, 
+                    biofuel = biofuel, 
+                    stdoil_key = stdoil_key,
+                    make_it_public = make_it_public                    
+                    )
                 new_evaluator.save()
                 
-                #Catch user record from the evaluation form in not exists
+                #Catch user record from the evaluation form if not exists
                 user = request.user
                 first_name = name.split()[0]
                 last_name = name.split()[-1]                
@@ -970,16 +994,7 @@ def eva_index2(request):
             except:
                 first_reports = None
                 first_biofuel = None
-                first_report_name = ''   
-                
-            # first_reports = Evaluator.objects.filter(creator=request.user, report_genarated=True).order_by('create_date').first()
-            # if first_reports:
-            #     first_biofuel = first_reports.biofuel
-            #     first_report_name = first_reports.name
-            # else:
-            #     first_biofuel = None
-            #     first_report_name = ''
-                            
+                first_report_name = ''  
                     
                     
             initial_dict = {
@@ -1045,9 +1060,7 @@ def eva_index2(request):
    
 @login_required
 @producer_required    
-def thanks(request):    
-    
-    
+def thanks(request):   
     
     #essential part where login_required
     null_session(request)  
@@ -1055,10 +1068,9 @@ def thanks(request):
     '''
     Deletion of incomplete report are not necessary , if need can uncomments below code. need to check if raising any error.As an incomplete report may not have evalauation or statment both.
     '''  
-   
+    producer_slug = UserType.objects.filter(Q(name__icontains='producer') | Q(slug__icontains='producer')).first().slug
     
-    try:
-        # last_reports = Evaluator.objects.filter(creator = request.user, report_genarated = True).order_by('-create_date').first()  
+    try:        
         last_reports = get_current_evaluator(request)        
     except:
         last_reports = None    
@@ -1081,7 +1093,7 @@ def thanks(request):
     
      
     gretings = 'Thank you very much! Your information has been saved!'
-    button = reverse('evaluation:nreport', args=[last_reports.slug])
+    button = f"{reverse('evaluation:nreport', args=[last_reports.slug])}"+"?confirm=confirm" 
     
     '''
     Build all report editing url
@@ -1129,8 +1141,7 @@ def thanks(request):
         'dont_know_percent': str("%.2f" % dont_know_percent) + '%',
         'reports': reports,
         'last_reports' : last_reports,
-        # 'item_label' : item_label,
-        # 'item_seris' : item_seris,
+        'producer_slug' : producer_slug,
         'complete_report_button_text': 'Confirm and Generate',
         'complete_warning' : 'Please confirm that this session of self-evaluation has been completed by clicking here. n\
             It will generate a comprehensive report. Before any changes to other reports can be made, the confirmation is n\
@@ -1170,7 +1181,7 @@ def fuel_history(request, last_reports):
 
 
 @login_required
-@report_creator_required
+@creator_or_consumer_requried
 def report(request, slug): 
     #essential part where login_required
     
@@ -1266,10 +1277,6 @@ def report(request, slug):
     part of next activitis end
     ========
     '''
-    
-    
-   
-    
 
     context = {
         'evaluation': evaluation,
@@ -1287,15 +1294,38 @@ def report(request, slug):
     result = generate_pdf( 'evaluation/report.html', context = context, file_object=resp)
     return result
 
+from crm.models import ConsumerMailQueue
+def create_notification_to_consumer(report):
+    consumers = User.objects.filter(usertype__is_consumer = True, is_active = True)    
+    # Assuming you have a list of consumers with emails
+    consumer_emails = [consumer.email for consumer in consumers if consumer.ns.new_fuel_notifications]
+    # Create a list of ConsumerMailQueue instances
+    consumer_mail_queues = [
+        ConsumerMailQueue(to=email, report=report) for email in consumer_emails
+    ]
 
-
+    # Bulk insert the instances into the database
+    ConsumerMailQueue.objects.bulk_create(consumer_mail_queues)
+    
+    return None
+               
 
 
 @login_required
-@report_creator_required
+@creator_or_consumer_requried
 def nreport(request, slug): 
-    context = nreport_context(request, slug)
+    #essential part where login_required    
+    null_session(request)         
+    
+    context = nreport_context(request, slug)  
+    
     report = context['current_evaluator']
+    
+    
+    # if report creating or editing
+    if 'confirm' in request.GET:
+        create_notification_to_consumer(report)
+        
     #meta
     meta_data = site_info()    
     meta_data['title'] = f'Analysis Report #{report.id}'
@@ -1313,7 +1343,7 @@ def nreport(request, slug):
 
         
 @login_required
-@report_creator_required       
+@creator_or_consumer_requried       
 def nreport_pdf(request, slug):
     '''
     new df report based on reportlab
@@ -1367,6 +1397,22 @@ def stdoils(request):
 
 def get_glossary(request):    
     return render(request, 'glossary/glossary_template.html', {'object_list' : get_all_glosaries()})
+
+@report_creator_required
+def edit_report(request, slug):   
+    report = get_object_or_404(Evaluator, slug=slug) 
+    form = EvaluatorEditForm(instance=report)
+    if request.method == 'POST':    
+        form = EvaluatorEditForm(request.POST, instance=report)
+        if form.is_valid():
+            form.save()
+            
+        return HttpResponseRedirect(reverse('home:all_reports'))
+        
+    context = {
+       'form' : form 
+    }
+    return render(request, 'home/edit_report.html', context)
     
 
 

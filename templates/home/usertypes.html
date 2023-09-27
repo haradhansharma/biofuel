@@ -79,6 +79,10 @@
                         {% if u.is_expert %} 
                          <a href="{% url 'partner_service' u.pk %}" class="btn btn-primary">Visit Service Listing</a>                       
                         {% endif %}
+
+                        {% if u.is_producer %} 
+                         <a href="{% url 'producer_fuels' u.pk %}" class="btn btn-primary">Visit Listed Fuel</a>                       
+                        {% endif %}
                                                              
                     </div>
                 </div>

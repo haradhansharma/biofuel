@@ -1,0 +1,121 @@
+{% extends "includes/g_base.html" %}
+
+{%load static %} 
+    
+    {% block header %}
+    {% block title %}{{site_info.title}}{% endblock %}
+    {% include 'includes/g_header.html' %} 
+    {% endblock %}
+    {% block main %}
+    <main>       
+        {% include "includes/hero_section.html" %}
+        <div class="section pt-7 bgjessica-light">
+            <div class="container mt-n10 mt-lg-n12 z-2">
+
+                <!--About Me-->
+              
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <div class="card text-center mb-3">
+                            <div class="card-header"> 
+                                <span class="h5">About {% if visiting_user.orgonization  %} {{ visiting_user.orgonization }} {% else %} {{ visiting_user.username }} {% endif %}</span> <span>
+                                    <a href="{% url 'home:user_settings' %}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                            data-supported-dps="24x24" fill="currentColor" class="mercado-match"
+                                            width="24" height="24" focusable="false">
+                                            <path  d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"> </path>
+                                        </svg>
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                {% if visiting_user.get_profile.about %}
+                                <p>{{visiting_user.get_profile.about}}</p>
+                                {% else %}
+                                <p>No information found!</p>
+                                {% endif %}
+                            </div>
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-between">
+                                    <div class="text-mute">
+                                        Location: {% if visiting_user.get_profile.location %} {{ visiting_user.get_profile.location }} {% else %} No location found {% endif %}
+                                    </div>
+                                    <div class="text-mute">
+                                        EST.: {% if visiting_user.get_profile.established %} {{ visiting_user.get_profile.established }} {% else %} No date found {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           
+                <!--About Me-->
+
+
+                <div class="row justify-content-center">
+                    <h1 class="d-none">Service Page of the Experts</h1>
+                    {% if messages %}
+                    <div class="alert alert-secondary mt-5" role="alert">
+                        {% for message in messages %}
+                        <span class="alert-inner--text">{{ message }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <div id="serviccelist"  class="col-12">
+                        <div class="row g-3 mb-3">
+                            {% if msg %}
+                            <div class="alert alert-secondary shadow-soft" role="alert">
+                                {% for m in msg %}
+                                <span class="alert-inner--text">{{ m }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}              
+                            <div class="col-12 d-flex ">
+                                <div class="card border-0 shadow flex-fill bg-white">
+                                    <div class="card-body">
+                                        <div class="row d-block d-xl-flex align-items-center"  style="min-height: 100px;">                    
+                                                   
+                                            {% if reports %} 
+                                                {% for report in reports %}
+                                                    <a href="{{report.get_absolute_url}}" target="_blanK" type="button" class="col-md-3 col-lg-4 d-flex mb-3">  
+                                                        <div class="card flex-fill">                                                              
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">{{report.biofuel.name}} </h5>
+                                                                <p class="card-text">Updated on {{report.update_date}}</p>
+                                                                <p class="card-text">{{report.email}}</p>
+                                                                <p class="card-text">{{report.phone}}</p>                                                                        
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                {% endfor %}                                                
+
+                                                {% include "includes/pagination.html" with page=reports %}
+                                            {% else %}
+                                                <p> No selected service found </p>
+                                            {% endif %}      
+                                       
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                  
+                </div>
+                
+
+                
+            </div>
+        </div>                                  
+    </main>   
+    {% endblock %}
+    {% block footer %}
+    {% include 'includes/g_footer.html' %}
+    {% endblock %}    
+
+    {% block javascripts %}   
+    {% endblock javascripts %}
+

@@ -9,7 +9,7 @@ from django.contrib.auth.forms import (
 )
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
-from .models import User
+from .models import User, NotificationSettings
 from .tokens import account_activation_token
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
@@ -330,4 +330,31 @@ class LoginForm(AuthenticationForm):
                             raise forms.ValidationError("Incorrect password. Please try again!")             
                                     
         return super(LoginForm, self).clean(*args, **kwargs)
+    
+    
+class NotificationSettingsForm(forms.ModelForm):
+    class Meta:
+        model = NotificationSettings
+        fields = '__all__'
+        
+    def __init__(self, *args, **kwargs):
+        print(kwargs)
+        super(NotificationSettingsForm, self).__init__(*args, **kwargs)
+        user = kwargs['instance'].user
+        print(user.is_consumer)
+        if not user.is_consumer or user.is_staff or user.is_superuser:
+            self.fields.pop('new_fuel_notifications')
+        # Define the CSS class you want to add to all fields
+        css_class = 'form-control'
+
+        # Iterate through all fields in the form
+        for field_name, field in self.fields.items():
+                
+            if isinstance(field, forms.BooleanField):
+                # This field is a BooleanField
+                field.widget.attrs['class'] = 'form-check-input'
+            else:
+                # Add the class attribute to other fields
+                field.widget.attrs['class'] = css_class
+               
     

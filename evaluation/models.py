@@ -9,8 +9,14 @@ import random
 import string
 from django.db.models import Count
 
-#Validator in admin to protect from more then one common status to be entry.
+# Validator in admin to protect from more than one common status entry.
 def get_common_status(value):
+    """
+    Validate that there is only one common status entry in DifinedLabel objects.
+
+    :param value: The value to check (usually 1 for common status).
+    :raises ValidationError: Raised if there is already a common status defined.
+    """
     try:
         common_status_total = DifinedLabel.objects.filter(common_status = True).count()
         common_status = DifinedLabel.objects.get(common_status = True)
@@ -20,37 +26,25 @@ def get_common_status(value):
     if common_status_total == int(1) and value == 1:
         raise ValidationError('A common status named "' + common_status.name +'" already exist! Only One common status allowed!')
     else:
-        pass
+        pass    
     
-    
-
-
 
 class DifinedLabel(models.Model):
-    '''
-    # database connector for label to use in sidewide
-    # We need to define labe to work in report and each question settings in admin.
-    # common status can be only one
-    
-    ''' 
+    """
+    Database connector for labels used site-wide.
+    Labels are used in reports and question settings in the admin.
+    Common status can only be one.
+    """
     
     class Meta:
         verbose_name = 'Defined Label'
         verbose_name_plural = 'Defined Labels'
     
     
-    name = models.CharField(max_length=252) 
-    
-    # label to be display on the evaluation's question form
+    name = models.CharField(max_length=252)   
     label = models.CharField(max_length=252, default='')
-    
-    #adj to use alternative name in the statement
     adj = models.CharField(max_length=252, default='')
-    
-    # Summary should be marked as common_status
     common_status = models.BooleanField(default=False, validators=[get_common_status])
-    
-    #sor_order is most importent to maintain display order
     sort_order = models.CharField(max_length=3, default=0)
 
     def __str__(self):
@@ -58,26 +52,24 @@ class DifinedLabel(models.Model):
 
    
 def generate_uuid():
-    '''
-    # genarate hexacode for slug url. currently it is beeing used only on questions.
-    '''
+    """
+    Generate a hexadecimal code for slug URL (currently used only on questions).
+    """
     return uuid.uuid4().hex
 
 
-
-
-
 class Question(models.Model):
-    '''
-    # database connection for questions
-    # IF question is parent then have to be selected is_door
-    # Active question is accessible everywhere, if please keep careful eye to tick mark on is_active.
-    # To make question chaptaries have to select parent_question
-    # sort_order is most important to work system corrctly. So be careful here.
-    # do not touch the slug.
-    # parent question must be mark by giving tick mark on is_door with proper short_order.
-    # every question should have proper sort order and must be selected next_question in option part(mentioned below) to go to next question otherwise system will redirect to the that you page of report.
-    '''
+    """
+    Database connection for questions.
+    - If a question is a parent, it must be selected as 'is_door'.
+    - Active questions are accessible everywhere; use 'is_active' to control.
+    - To make questions part of a chapter, select 'parent_question'.
+    - 'sort_order' is crucial for correct system operation.
+    - Do not modify the slug.
+    - Parent questions must be marked as 'is_door' with proper 'sort_order'.
+    - Every question should have a proper 'sort_order' and be linked to the 'next_question' in options.
+      Otherwise, the system will redirect to the report page.
+    """
     slug = models.CharField(default=generate_uuid, editable=False, unique=True, max_length=40, db_index=True)
     name = models.CharField(max_length=252)
     chapter_name = models.CharField(max_length=252, null=True, blank=True)
@@ -96,43 +88,56 @@ class Question(models.Model):
     def __str__(self):
         return  '(' + str(self.sort_order) +') ' + self.name
     
-    #The url to brows indivisual question to edit but it is not usefule in evaluation procedure.
-    def get_absolute_url(self):        
+    
+    def get_absolute_url(self):   
+        """
+        Get the URL to browse an individual question for editing (not used in the evaluation procedure).
+        """     
         return reverse('home:questions_details', args=[str(self.slug)])
     
     
-    # the url to add quatation to the questions 
+    
     @property
     def add_quatation(self):
+        """
+        Get the URL to add a quotation to the question.
+        """
         return reverse('home:add_quatation', args=[str(self.slug)]) 
     
     
     @property
     def labels(self):
+        """
+        Get labels related to this question.
+        """
         return Label.objects.filter(question = self)
     
     
     @property
-    def get_related_quotations(self):   
-        from django.core.cache import cache
-        quotations = cache.get(f'related_quotations_of_ques_{self.id}')
-        if not quotations:
-            quotations = self.quotations_related_questions.all()   
-            cache.set(f'related_quotations_of_ques_{self.id}', quotations, 3600)               
+    def get_related_quotations(self): 
+        """
+        Get related quotations for this question.
+        
+        """  
+        quotations = self.quotations_related_questions.all()  
         return quotations
     
     @property
     def get_quotations(self): 
-        from django.core.cache import cache
-        quotations = cache.get(f'get_quotations_of_ques_{self.id}')
-        if not quotations:
-            quotations = self.testfor.all()
-            cache.set(f'get_quotations_of_ques_{self.id}', quotations, 3600)               
+        """
+        Get quotations associated with this question.        
+        """       
+        
+        quotations = self.testfor.all()
+                         
         return quotations
      
     
     @property
     def get_merged_quotations(self):
+        """
+        Get merged quotations, including related and associated quotations.
+        """
         from itertools import chain             
         result_set = set(chain(self.get_related_quotations, self.get_quotations))     
         result_list =  list(result_set)     
@@ -141,15 +146,24 @@ class Question(models.Model):
     
     @property
     def get_options(self):
+        """
+        Get options for this question.
+        """
         from evaluation.helper import get_options_of_ques
         return get_options_of_ques(self)
     
     @property
     def get_stdoils(self):
+        """
+        Get standard oils for this question.
+        """
         return self.stanchart.all()
     
     
     def have_4labels(self):
+        """
+        Check if the question has at least 4 labels.
+        """
         labels = self.questions.filter(value='1').annotate(label_count=Count('id')).values('label_count').first()
         if labels and labels['label_count'] > 0:
             return True
@@ -157,8 +171,10 @@ class Question(models.Model):
     
     @property
     def problem_in_option(self):
-        options = self.question.all()
-        
+        """
+        Check for problems in question options.
+        """
+        options = self.question.all()        
         total_option = options.count()
         if total_option >= 3 :
             option_ok = True
@@ -176,33 +192,31 @@ class Question(models.Model):
         return True
     
     @property
-    def not_is_door_nor_have_parent(self):        
+    def not_is_door_nor_have_parent(self):     
+        """
+        Check if the question is neither a door nor has a parent.
+        """   
         if self.is_door == False and not self.parent_question and self.is_active:
             return True
         return False
     
     @property
     def get_sugestions(self):
+        """
+        Get suggestions related to this question.
+        """
         from evaluation.helper import get_sugestions_of_ques
         sugestions = get_sugestions_of_ques(self)
-        return sugestions
-    
-   
-        
-    
-    
-    
-    
-            
+        return sugestions            
         
     
  
 class Label(models.Model):
     '''
-    # database conenctor for labels
-    # The label has to be set during seting up questions.
-    # so that this is made inline in the admin side.
-    # Value is the formulated field as per business logic.
+    Database connector for labels.
+    Labels are set during the setup of questions.
+    They are managed inline in the admin side.
+    The 'value' field is formulated according to business logic.
     '''
     name = models.ForeignKey(DifinedLabel, on_delete=models.PROTECT, related_name='dlabels', limit_choices_to={'common_status': False})
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='questions', db_index=True)
@@ -215,17 +229,17 @@ class Label(models.Model):
 
 class Option(models.Model):  
     '''
-    # database conenctor for options
-    # if name is 'Yes' or not but option represent yes then 'yes_status' must be marked, otherwise system will give wrong result and behave unexected.
-    # if name is 'Don't Know' or not but represent do not know then 'dont_know' must be tick marked, otherwise system will give wrong result and behave unexected.
-    # if name 'No' or not but represent as 'no' then 'name' should be writen as 'No'(Case sensative), otherwise system will give wrong result and behave unexected.
-    # 'next_question' must be selected to go to the next question during process of evaluation otherwise system will redirect to the thank you page.
-    # 'statement' will be printed under label in report and question page based on selection of questions.
-    # 'next_step' will be printed under the label based on selection as per business logic in report and question forms.
-    # 'overall' should be filled as 1 or 0 (It was recomended during development, and advised to avoid True/Flse). if overall is 1 then statement will be added to the summary.
-    # 'positive' should be filled as 1 or 0 (It was recomended during development, and advised to avoid True/Flse). it is used to calculated assesent under the label in report and question form.
-    # When updated any statement or next_step evaluator notify status will be updated by signal 'on_change'
-    '''  
+    Database connector for options.
+    - If the option represents 'Yes', 'yes_status' must be marked.
+    - If the option represents 'Don't Know', 'dont_know' must be ticked.
+    - If the option represents 'No', 'name' should be written as 'No' (case-sensitive).
+    - 'next_question' must be selected to go to the next question during the evaluation process; otherwise, the system will redirect to the thank-you page.
+    - 'statement' will be printed under the label in the report and question page based on question selection.
+    - 'next_step' will be printed under the label based on business logic in report and question forms.
+    - 'overall' should be filled as '1' or '0' (recommended to avoid True/False). If 'overall' is '1', the statement will be added to the summary.
+    - 'positive' should be filled as '1' or '0' (recommended to avoid True/False). It is used to calculate assessment under the label in report and question form.
+    - When updating any statement or next_step, the evaluator notify status will be updated by the 'on_change' signal.
+    '''
     name = models.CharField(max_length=252)
     yes_status = models.BooleanField(default=False, db_index=True)
     dont_know = models.BooleanField(default=False, db_index=True)
@@ -240,17 +254,17 @@ class Option(models.Model):
     
 
     def __str__(self):
-        return self.name + '(' + str(self.question.sort_order) + ')'
+        return f"{self.name} ({self.question.sort_order})"
 
 class LogicalString(models.Model):
     '''
-    # database conenctor for logical statement based on selected options.
-    # As per business logic it is another part of statement.
-    # can selecte multi option. 
-    # 'tex' is act as statment.
-    # based on selection statement will be added to the labels of report and questions form
-    # 'overall' should be filled as 1 or 0 (It was recomended during development, and advised to avoid True/Flse). if overall is 1 then statement will be added to the summary.
-    # 'positive' should be filled as 1 or 0 (It was recomended during development, and advised to avoid True/Flse). it is used to calculated assesent under the label in report and question form.
+    Database connector for logical statements based on selected options.
+    This is another part of the statement according to business logic.
+    Multiple options can be selected.
+    'text' acts as the statement.
+    Based on selection, the statement will be added to the labels of reports and question forms.
+    'overall' should be filled as '1' or '0' (recommended to avoid True/False). If 'overall' is '1', the statement will be added to the summary.
+    'positive' should be filled as '1' or '0' (recommended to avoid True/False). It is used to calculate assessment under the label in reports and question forms.
     '''
     options = models.ManyToManyField(Option, db_index=True)
     text = models.TextField(null = True, blank = True,)
@@ -276,16 +290,15 @@ class LogicalString(models.Model):
             
 
     def __str__(self):
-        #do not change this, if done then return same as optionset
-        return self.text
+        # Do not change this; if done, then return the same as the option set
+        return self.text   
     
-    
-        
+       
     
 class OptionSet(models.Model):
     '''    
-    It has been genarated autometically during evaluation by user.
-    so that it is not displayed in admin side.    
+    Automatically generated during evaluation by the user.
+    Not displayed in the admin side.    
     '''
     option_list = models.CharField(max_length=252, unique = True, db_index=True)
     text = models.TextField()
@@ -296,14 +309,14 @@ class OptionSet(models.Model):
     update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
 
 
-    def __str__(self):
-        #do not change below, if done then return same as logicalstring
+    def __str__(self):        
+        # Do not change below; if done, then return the same as the logical string
         return self.text
 
 class Lslabel(models.Model):
     '''
-    # Labels for logical string to select during seting up logical string
-    # It is mandatory.    
+    Labels for logical strings to select during the setup of logical strings.
+    Mandatory to select.
     '''
     
     name = models.ForeignKey(DifinedLabel, on_delete=models.PROTECT, related_name='ls_dlabels', limit_choices_to={'common_status': False})
@@ -315,8 +328,8 @@ class Lslabel(models.Model):
 
 class Biofuel(models.Model):
     '''
-    The biofuel selected by user in initial page of evaluation.
-    Based on this value a summary has been displayed under the dashboard.    
+    The biofuel selected by the user on the initial page of evaluation.
+    Based on this value, a summary is displayed under the dashboard.
     '''
     name = models.CharField(max_length=252)
     
@@ -327,16 +340,11 @@ class Biofuel(models.Model):
 
     
 
-class Evaluator(models.Model):
-    class Meta:
-        verbose_name = 'Report'
-        verbose_name_plural = 'Reports'
-    # from . models import StandaredChart
+class Evaluator(models.Model):       
     '''
-    Do not edit or modyfy anything here from admin side.
-    It has been genarated autometically during evaluation by user.
-    so that it is not editable in admin side.
-    
+    Do not edit or modify anything here from the admin side.
+    Automatically generated during evaluation by the user.
+    Not editable in the admin side.
     '''
     slug = models.UUIDField( default=uuid.uuid4, editable=False, unique=True, db_index=True)    
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='user', db_index=True)    
@@ -346,8 +354,7 @@ class Evaluator(models.Model):
     orgonization = models.CharField(max_length=252, null=True, blank=True)
     biofuel = models.ForeignKey(Biofuel, on_delete=models.SET_NULL, null=True, blank=True, related_name='eva_fuel', db_index=True)
     stdoil_key = models.CharField(max_length=20, null=True, blank=True, db_index=True)
-    
-   
+    make_it_public = models.BooleanField(default=True, help_text="By default it is public! If not tick marked it will not be visible to the site!")
     create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     update_date = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     report_genarated = models.BooleanField(default=False)
@@ -355,29 +362,54 @@ class Evaluator(models.Model):
     # it is been updated when statement and next_step of option has been changed and when genarate new report based on report 
     feedback_updated = models.BooleanField(default=False)
     
+    class Meta:
+        verbose_name = 'Report'
+        verbose_name_plural = 'Reports'    
     
-        
-    
-    
-    #Colored output of Pending to notify to the evaluator about feedback update of option
+
     def notified(self):
+        """
+        Generate a visual indicator for notification based on the 'feedback_updated' status.
+        
+        If 'feedback_updated' is True, display a green background with "Updated" text.
+        If 'feedback_updated' is False, display an orange background with "Pending" text.
+        
+        :return: HTML representation of the notification status.
+        """
         if self.feedback_updated:
             return mark_safe('<b style="background:{};padding:5px;color:#ffffff;" >{}</b>'.format('green', self.feedback_updated))
         else:
-            return mark_safe('<b style="background:{};padding:5px;color:#ffffff;" >{}</b>'.format('orange', 'Pending'))
-    
+            return mark_safe('<b style="background:{};padding:5px;color:#ffffff;" >{}</b>'.format('orange', 'Pending'))    
 
     def __str__(self):
+        """
+        Return a string representation of the object.
+
+        :return: A string containing the name and ID of the object.
+        """
         return str(self.name) + str(self.id)
     
     def get_absolute_url(self):
+        """
+        Get the absolute URL for the object, typically used for linking to its detailed view.
+
+        :return: The absolute URL for the object.
+        """
         return reverse('evaluation:nreport', args=[str(self.slug)])    
+    
+    def get_edit_url(self):
+        """
+        Get the absolute URL for the object, typically used for linking to its detailed view.
+
+        :return: The absolute URL for the object.
+        """
+        return reverse('evaluation:edit_report', args=[str(self.slug)])    
 
 
 class Evaluation(models.Model):
     '''    
-    It has been genarated autometically during evaluation by user.
-    so that it is not displayed in admin side.    
+    Automatically generated during evaluation by the user.
+    Not displayed in the admin side.    
     '''
     evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='eva_evaluator', db_index=True)
     option = models.ForeignKey(Option, on_delete=models.RESTRICT, related_name='eva_option')
@@ -389,14 +421,19 @@ class Evaluation(models.Model):
 
     @property
     def get_question_comment(self):
+        """
+        Get comments associated with this evaluation's question.
+
+        :return: QuerySet of comments for the question.
+        """
         eva_comment = EvaComments.objects.filter(question = self.question, evaluator = self.evaluator)
         return eva_comment
 
 
 class EvaComments(models.Model):
     '''    
-    It has been genarated autometically during evaluation by user.
-    so that it is not displayed in admin side.    
+    Automatically generated during evaluation by the user.
+    Not displayed in the admin side.    
     '''
     evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='coment_evaluator', db_index=True)
     question = models.ForeignKey(Question, on_delete=models.RESTRICT, related_name='comment_question', db_index=True)
@@ -408,8 +445,8 @@ class EvaComments(models.Model):
 
 class EvaLabel(models.Model):
     '''    
-    It has been genarated autometically during evaluation by user.
-    so that it is not displayed in admin side.    
+    Automatically generated during evaluation by the user.
+    Not displayed in the admin side.    
     '''
     label = models.ForeignKey(DifinedLabel, on_delete=models.PROTECT, related_name='labels', db_index=True)
     evaluator = models.ForeignKey(Evaluator, on_delete=models.RESTRICT, related_name='evaluators', db_index=True)
@@ -420,13 +457,16 @@ class EvaLabel(models.Model):
         return self.label.name
 
 class EvaLebelStatement(models.Model):
+    
+    '''    
+    Automatically generated during evaluation by the user.
+    Not displayed in the admin side.    
+    '''
+    
     class Meta:
         verbose_name = 'Eva Label Statement'
         verbose_name_plural = 'Eva Label Statements'
-    '''    
-    It has been genarated autometically during evaluation by user.
-    so that it is not displayed in admin side.    
-    '''
+    
     evalebel = models.ForeignKey(EvaLabel, on_delete=models.PROTECT, related_name='elabelstatement', db_index=True)
     question = models.ForeignKey(Question, on_delete=models.PROTECT, null=True, blank=True, related_name='evalabelques', db_index=True)
     option_id = models.CharField(max_length=252, null=True, blank=True)
@@ -444,17 +484,32 @@ class EvaLebelStatement(models.Model):
         return self.statement
     @property
     def is_positive(self):
+        """
+        Check if the statement is positive.
+
+        :return: True if positive, False otherwise.
+        """
         if self.positive == str(1):
             return True
         return False
     @property
     def is_negative(self):
+        """
+        Check if the statement is negative.
+
+        :return: True if negative, False otherwise.
+        """
         if self.positive == str(0) and self.dont_know == False:
             return True
         return False
     
     @property
     def is_dontknow(self):
+        """
+        Check if the statement represents 'Don't Know'.
+
+        :return: True if 'Don't Know', False otherwise.
+        """
         if self.dont_know == True:
             return True
         return False
@@ -463,14 +518,14 @@ class EvaLebelStatement(models.Model):
     
     
 class NextActivities(models.Model):
+    '''
+    Main parameters for next activities.
+    '''
     
     class Meta:
         verbose_name = 'Next Activity'
-        verbose_name_plural = 'Next Activities'     
-        
-    '''
-    Main parameter to be set here for next activities.
-    '''
+        verbose_name_plural = 'Next Activities'    
+
     name_and_standared = models.CharField(max_length=250)
     short_description = models.TextField(max_length=152)
     descriptions = models.TextField()
@@ -490,60 +545,85 @@ class NextActivities(models.Model):
     def __str__(self): 
         return str(self.name_and_standared)
     
-    def get_quotations(self):
-        # quotations = set()
-        # for question in self.related_questions.all():
-        #     for quotation in question.get_quotations:
-        #         quotations.add(quotation)
-        #     for quotation in question.get_related_quotations:
-        #         quotations.add(quotation)
-        # return quotations
+    def get_quotations(self):        
+        """
+        Get quotations related to this next activity.
+
+        :return: Quotations related to this next activity.
+        """
         quotations = self.quotnextactivity.all()
         
-        return set(quotations)
-    
-    
- 
-    
-    
-        
+        return set(quotations)    
     
     @property
-    def related_questions_ids(self):        
+    def related_questions_ids(self):      
+        """
+        Get the IDs of related questions.
+
+        :return: IDs of related questions.
+        """  
         return self.related_questions.all().values_list('id', flat= True).order_by('id')
     
     @property
     def compulsory_questions_ids(self):
+        """
+        Get the IDs of compulsory questions.
+
+        :return: IDs of compulsory questions.
+        """
         return self.compulsory_questions.all().values_list('id', flat= True).order_by('id')
     
     @property
     def selected_ids(self):
+        """
+        Get the IDs of selected questions (related and compulsory).
+
+        :return: IDs of selected questions.
+        """
         return (self.related_questions_ids.union(self.compulsory_questions_ids)).order_by('id')
     
     @property
     def answering_questions(self):
+        """
+        Get the questions that need to be answered for this next activity.
+
+        :return: Questions to be answered.
+        """
         return (self.related_questions.all()).union(self.compulsory_questions.all())
     
     @property
     def picked_experts(self):
+        """
+        Get the experts assigned to this next activity.
+
+        :return: Experts assigned to this next activity.
+        """
         from accounts.models import UsersNextActivity
         una_list = UsersNextActivity.objects.filter(next_activity = self)
         
         experts = [una.user for una in una_list if una.user.is_expert]
         
         return experts
-    
-    
-    
-   
                 
     
 
 class EvaluatorActivities(models.Model):
-    '''    
-    It has been genarated autometically during evaluation by user.
-    so that it is not displayed in admin side.    
-    '''
+    """
+    Model to represent Evaluator Activities.
+
+    Attributes:
+        evaluator (ForeignKey): The associated evaluator.
+        next_activity (ForeignKey): The next activity related to the evaluator.
+        related_percent (IntegerField): Related percentage.
+        compulsory_percent (IntegerField): Compulsory percentage.
+        is_active (BooleanField): Whether the activity is active or not.
+        create_date (DateTimeField): Date and time of creation.
+        update_date (DateTimeField): Date and time of the last update.
+
+    Methods:
+        __str__(): Returns a string representation of the next activity's name and standard.
+    """
+       
     evaluator = models.ForeignKey(Evaluator, on_delete=models.CASCADE, related_name="eaevaluator", db_index=True)    
     next_activity = models.ForeignKey(NextActivities, on_delete=models.CASCADE, related_name="eanextactivities")
     related_percent = models.IntegerField()
@@ -556,6 +636,17 @@ class EvaluatorActivities(models.Model):
         return str(self.next_activity.name_and_standared)
     
 class OliList(models.Model):
+    """
+    Model to represent Defined Oils.
+
+    Attributes:
+        name (CharField): The name of the defined oil (unique).
+        key (CharField): A unique key generated based on the name.
+
+    Methods:
+        __str__(): Returns the name of the defined oil.
+        save(): Overrides the default save method to generate and save the key based on the name.
+    """
     
     class Meta:
         verbose_name = 'Defined Oil'
@@ -573,11 +664,17 @@ class OliList(models.Model):
         self.key = key_sample
         super(OliList, self).save(*args, **kwargs)
     
-    
-    
-    
-    
 class StdOils(models.Model):    
+    """
+    Model to represent Standard Oils.
+
+    Attributes:
+        select_oil (ForeignKey): The selected oil from OliList.
+        biofuel (ForeignKey): The associated biofuel (nullable).
+
+    Methods:
+        __str__(): Returns the name of the selected oil.
+    """
     
     class Meta:
         verbose_name = 'Standard Oil'
@@ -591,36 +688,58 @@ class StdOils(models.Model):
         return self.select_oil.name
 
 class StandaredChart(models.Model):
+    """
+    Model to represent Standard Charts.
+
+    Attributes:
+        oil (ForeignKey): The associated standard oil.
+        question (ForeignKey): The associated question.
+        unit (ForeignKey): The associated weight unit (nullable).
+        value (CharField): The value for the chart (nullable).
+        link (URLField): A URL link (nullable).
+        option (ChainedForeignKey): The associated option (nullable).
+
+    Methods:
+        oil_key(): Returns the lowercase key of the associated standard oil.
+        __str__(): Returns the name of the associated standard oil.
+
+    Note: Check the admin for this model, as options are overwritten to narrow down.
+    """
     class Meta:
         verbose_name = 'Standard Chart'
         verbose_name_plural = 'Standard Charts'   
-    '''
-    Please check admin for this model if you changing anythig as here option is overwriting form admin to narrow down.
-    '''
+    
     from home.models import WeightUnit      
     from smart_selects.db_fields import ChainedForeignKey
     oil = models.ForeignKey(StdOils, on_delete=models.CASCADE,  related_name = 'std_oil_of_chart', db_index=True)    
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="stanchart", limit_choices_to={'is_active': True}, db_index=True)
     unit = models.ForeignKey(WeightUnit, on_delete=models.CASCADE, related_name= "chrartunit", null=True, blank=True)
     value = models.CharField(max_length=252, null=True, blank=True)
-    link = models.URLField(null=True, blank=True)
-    # option = models.ForeignKey(Option, on_delete=models.SET_NULL, related_name='stoption', null=True, blank=True)
+    link = models.URLField(null=True, blank=True)   
     option = ChainedForeignKey(Option, chained_field="question", chained_model_field="question", show_all=False,auto_choose=True, sort=True, on_delete=models.SET_NULL, related_name='stoption', null=True, blank=True)
     
     
     @property
     def oil_key(self):
         return self.oil.selected_oil.key.lower() 
-    
-    
-    
         
     def __str__(self):
-        return self.oil.select_oil.name
+        return self.oil.select_oil.name    
     
-    
-#to reduce youtube API call we will save the dat in our databse
+
 class Youtube_data(models.Model):
+    """
+    Model to store YouTube data for specific search terms.
+
+    Attributes:
+        term (TextField): The search term for YouTube data.
+        urls (TextField): URLs related to the search term.
+        create_date (DateTimeField): Date and time of creation.
+        update_date (DateTimeField): Date and time of the last update.
+
+    Methods:
+        __str__(): Returns the search term as a string.
+    """
     term = models.TextField()
     urls = models.TextField()
     create_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
@@ -630,24 +749,52 @@ class Youtube_data(models.Model):
         return self.term
     
 class LabelDataHistory(models.Model):
-    
+    """
+    Model to store Label Data History.
+
+    Attributes:
+        evaluator (ForeignKey): The associated evaluator.
+        items (TextField): History of labeled items (limited to 250 characters).
+        created (DateTimeField): Date and time of creation.
+
+    Methods:
+        __str__(): Returns the items history as a string.
+
+    Meta:
+        verbose_name = 'Label Data History'
+        verbose_name_plural = 'Label Data Histories'
+    """    
     
     class Meta:
         verbose_name = 'Label Data History'
-        verbose_name_plural = 'Label Data Histories'    
+        verbose_name_plural = 'Label Data Histories'        
     
-    
-    evaluator = models.ForeignKey(Evaluator, on_delete=models.CASCADE)
-    # label = models.TextField(max_length=250)
+    evaluator = models.ForeignKey(Evaluator, on_delete=models.CASCADE)  
     items= models.TextField(max_length=250)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     
     def __str__(self):
-        return self.items
+        return self.items    
     
-    
-#The mail ques will be executed by crontab and will e created during saving BlogPost   
+
 class ReportMailQueue(models.Model):
+    """
+    Model to queue report mail sending tasks.
+
+    Attributes:
+        to (CharField): Email address of the recipient.
+        from_report (ForeignKey): The sender (Evaluator) of the report.
+        new_report (ForeignKey): The report being sent.
+        added_at (DateTimeField): Date and time when the report was added to the queue.
+        processed (BooleanField): Indicates whether the task has been processed.
+        process_time (DateTimeField): Date and time of processing.
+        tried (IntegerField): Number of attempts to send the report.
+
+    Methods:
+        __str__(): Returns the recipient's email address as a string.
+
+    Note: The mail queues will be executed by crontab and are created during the saving of BlogPost.
+    """
     to = models.CharField(max_length=256, null=True, blank=True)
     from_report = models.ForeignKey(Evaluator, on_delete=models.CASCADE, related_name='reportquefrom')   
     new_report = models.ForeignKey(Evaluator, on_delete=models.CASCADE, related_name='reportqueto')         
@@ -658,19 +805,34 @@ class ReportMailQueue(models.Model):
     
     def __str__(self):
         return self.to
-
-
-
-
     
     
 class Suggestions(models.Model):
-  
-    class Meta:        
+    """
+    Model to store user suggestions.
+
+    Attributes:
+        question (ForeignKey): The associated question (nullable).
+        su_type (CharField): Type of suggestion ('question' or 'option').
+        title (CharField): Title of the suggestion.
+        statement (TextField): The suggestion statement.
+        suggested_by (ForeignKey to User): The user who suggested the idea.
+        parent (ForeignKey to self): The parent suggestion (nullable, used for replies).
+        related_qs (ForeignKey to self): Related suggestion (nullable, for cross-reference).
+        comitted (BooleanField): Indicates whether the suggestion has been committed.
+        created (DateTimeField): Date and time of creation.
+        updated (DateTimeField): Date and time of the last update.
+
+    Methods:
+        __str__(): Returns the title of the suggestion.
+
+    Meta:
         verbose_name = 'Suggestion'
-       
-        
-    
+
+    Note: The 'question' field is nullable, allowing suggestions without an associated question.
+    """  
+    class Meta:        
+        verbose_name = 'Suggestion'        
         
     TYPE_CHOICE = (
         ('question', 'Question'),

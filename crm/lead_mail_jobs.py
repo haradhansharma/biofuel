@@ -1,7 +1,7 @@
 from time import process_time
 from doc.doc_processor import site_info
 from doc.models import ExSite
-from .models import BlogMailQueue, MailQueue, Lead
+from .models import BlogMailQueue, MailQueue, Lead, ConsumerMailQueue
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
@@ -14,6 +14,7 @@ from evaluation.models import ReportMailQueue
 from evaluation.helper import clear_evaluator
 from django.core.mail.message import EmailMessage
 from django.db.models import Count, Q 
+from evaluation.helper import build_full_url
 
 import logging
 log =  logging.getLogger('log')
@@ -126,7 +127,7 @@ def send_lead_mail():
  
     
     # Get the pending emails from the queue
-    pendings = MailQueue.objects.filter(processed = False).order_by('-added_at')[:settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME] 
+    pendings = MailQueue.objects.filter(processed = False).order_by('added_at')[:settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME] 
     
     # Get the current site's domain
     current_site = Site.objects.get_current()   
@@ -134,7 +135,7 @@ def send_lead_mail():
      
     mail_to_lead = []    
     deleted_queue_ids = []
-    
+    updated_pendings = []
     for pending in pendings:
         try:
             # Find the corresponding lead         
@@ -149,11 +150,11 @@ def send_lead_mail():
                             }) 
                 mail_to_lead.append((subject, mark_safe(message), settings.DEFAULT_FROM_EMAIL, [pending.to]))                            
                 
-                # Update pending email
-                pending.tried += 1       
+                # Update pending email                
+                pending.tried += 1
                 pending.processed = True
                 pending.process_time = timezone.now()
-                pending.save()
+                updated_pendings.append(pending)
                 
                 # Delete if tried more than 2 times
                 if pending.tried > 2:
@@ -167,14 +168,16 @@ def send_lead_mail():
             
     total_sent = len(mail_to_lead)  
     
+    MailQueue.objects.bulk_update(updated_pendings, fields=['tried', 'processed', 'process_time']) 
+    
     # Send emails in bulk
     send_custom_mass_mail((mail_to_lead), fail_silently=False) 
     
     # Delete queued emails with more than 2 tries or older than 90 days
     try:
-        MailQueue.objects.filter(id__in=deleted_queue_ids).delete()
-        MailQueue.objects.filter(tried__gt=2).delete()
-        MailQueue.objects.filter(process_time__lt=timezone.now() - timezone.timedelta(days=90)).delete()
+        cutoff_date = timezone.now() - timezone.timedelta(days=90)
+        combined_query = Q(id__in=deleted_queue_ids) | Q(tried__gt=2) | Q(process_time__lt=cutoff_date)
+        MailQueue.objects.filter(combined_query).delete()  
     except Exception as e:
         log.exception(f'There was a problem during deleting the queue: {e}')
 
@@ -194,7 +197,7 @@ def send_blog_mail():
     
     
     # Get the pending emails from the queue
-    pendings = BlogMailQueue.objects.filter(processed = False).order_by('-added_at')[:settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME] 
+    pendings = BlogMailQueue.objects.filter(processed = False).order_by('added_at')[:settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME] 
     
     # Get the current site's information  
     current_site = site_info()
@@ -202,7 +205,7 @@ def send_blog_mail():
           
     mail_to_lead = []
     deleted_queue_ids = []
-        
+    updated_pendings = []
     for pending in pendings: 
         try:
             # Find the corresponding lead   
@@ -224,10 +227,10 @@ def send_blog_mail():
                 mail_to_lead.append((subject, message, settings.DEFAULT_FROM_EMAIL, [pending.to]))                            
                 
                 # Update pending email
-                pending.tried += 1       
+                pending.tried += 1
                 pending.processed = True
                 pending.process_time = timezone.now()
-                pending.save()
+                updated_pendings.append(pending)
                 
                 # Delete if tried more than 2 times
                 if pending.tried > 2:
@@ -239,15 +242,17 @@ def send_blog_mail():
             log.info(f'There was a problem while creating bulk mail variabledue to {e}')
     
     total_sent = len(mail_to_lead)  
+    
+    BlogMailQueue.objects.bulk_update(updated_pendings, fields=['tried', 'processed', 'process_time']) 
      
     # Send emails in bulk 
     send_custom_mass_mail((mail_to_lead), fail_silently=False)    
     
     # Delete queued emails with more than 2 tries or older than 90 days
     try:
-        BlogMailQueue.objects.filter(id__in=deleted_queue_ids).delete()
-        BlogMailQueue.objects.filter(tried__gt=2).delete()
-        BlogMailQueue.objects.filter(process_time__lt=timezone.now() - timezone.timedelta(days=90)).delete()
+        cutoff_date = timezone.now() - timezone.timedelta(days=90)
+        combined_query = Q(id__in=deleted_queue_ids) | Q(tried__gt=2) | Q(process_time__lt=cutoff_date)
+        BlogMailQueue.objects.filter(combined_query).delete()  
     except Exception as e:
         log.exception(f'There was a problem during deleting the queue: {e}')
     
@@ -269,7 +274,7 @@ def send_report_queue():
     """
     
     # Get the pending emails from the queue
-    pendings = ReportMailQueue.objects.filter(processed = False).order_by('-added_at')[:settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME] 
+    pendings = ReportMailQueue.objects.filter(processed = False).order_by('added_at')[:settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME] 
     
     # Count the number of pending emails
     batch = pendings.count()  
@@ -282,7 +287,7 @@ def send_report_queue():
     
     mail_to_lead = []    
     deleted_queue_ids = []
-    
+    updated_pendings = []
     for pending in pendings: 
         try:
             # Render the email content using a template     
@@ -293,10 +298,10 @@ def send_report_queue():
             mail_to_lead.append((subject, mark_safe(message), settings.DEFAULT_FROM_EMAIL, [pending.to]))                            
             
             # Update pending email
-            pending.tried += 1       
+            pending.tried += 1
             pending.processed = True
             pending.process_time = timezone.now()
-            pending.save()
+            updated_pendings.append(pending)
             
             # Delete if tried more than 2 times
             if pending.tried > 2:
@@ -306,20 +311,90 @@ def send_report_queue():
             log.info(f'There was a problem while creating bulk mail variable due to {e}')
     
     total_sent = len(mail_to_lead)  
-      
+    ReportMailQueue.objects.bulk_update(updated_pendings, fields=['tried', 'processed', 'process_time']) 
+    
     # Send emails in bulk
     send_custom_mass_mail((mail_to_lead), fail_silently=False)
     
     # Delete queued emails with more than 2 tries or older than 90 days
     try:
-        ReportMailQueue.objects.filter(id__in=deleted_queue_ids).delete()
-        ReportMailQueue.objects.filter(tried__gt=2).delete()
-        ReportMailQueue.objects.filter(process_time__lt=timezone.now() - timezone.timedelta(days=90)).delete()
+        cutoff_date = timezone.now() - timezone.timedelta(days=90)
+        combined_query = Q(id__in=deleted_queue_ids) | Q(tried__gt=2) | Q(process_time__lt=cutoff_date)
+        ReportMailQueue.objects.filter(combined_query).delete()    
     except Exception as e:
         log.exception(f'There was a problem during deleting the queue: {e}')
 
     
     return total_sent 
+
+
+def send_new_report_notification():  
+    
+    """
+    Send notifications for new fuel reports to consumers.
+
+    This function retrieves pending email notifications from the queue,
+    constructs notification messages, and sends them to consumers. It also
+    handles updating the queue and deleting old queue entries.
+
+    Returns:
+        int: The total number of notifications sent.
+    """ 
+    
+    # Get the pending emails from the queue
+    pendings = ConsumerMailQueue.objects.filter(processed = False).order_by('added_at')[:settings.LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME] 
+    
+    # Get the current site's information
+    current_site = site_info()
+    from_email = settings.DEFAULT_FROM_EMAIL
+    
+    subject = 'New Fuel Submitted on "' + current_site.get('domain').upper() + '"!' 
+          
+    mail_to_send = []
+    deleted_queue_ids = []
+    updated_pendings = []
+    
+    try:
+        
+        for pending in pendings:    
+            # Construct the notification message
+            message = f"Dear {pending.to.upper()}, \n\n"
+            message += f"New fuel has been submitted or updated. You may learn more about the fuel by visiting the link below. \n\n"
+            message += f"{build_full_url(pending.report.get_absolute_url())} \n\n"
+            message += f"We believe this information will be valuable for your daily business operations. \n\n"
+            message += f"If you wish to stop receiving this notification, please adjust your account settings accordingly. \n\n"
+            message += f"Best Regards \n\n"
+            message += f"GFVP TEAM"
+            
+            mail_to_send.append((subject, message, from_email, [pending.to]))
+            
+            pending.tried += 1
+            pending.processed = True
+            pending.process_time = timezone.now()
+            updated_pendings.append(pending)
+            
+            if pending.tried > 2:
+                deleted_queue_ids.append(pending.id)        
+                
+        # Update the pending records in bulk     
+        ConsumerMailQueue.objects.bulk_update(updated_pendings, fields=['tried', 'processed', 'process_time'])
+        
+        # Send the notification emails
+        total_sent = len(mail_to_send)         
+        send_custom_mass_mail((mail_to_send), fail_silently=False)       
+
+        # Calculate the cutoff date for deleting old queue entries
+        cutoff_date = timezone.now() - timezone.timedelta(days=90)
+        combined_query = Q(id__in=deleted_queue_ids) | Q(tried__gt=2) | Q(process_time__lt=cutoff_date)
+        
+        # Delete old queue entries that meet the specified conditions
+        ConsumerMailQueue.objects.filter(combined_query).delete()      
+    except Exception as e:
+        # Handle exceptions and log warnings
+        log.warning(f'There was a problem in sending Consumer mail for: {e}')
+    
+    
+    return total_sent
 
 
 class SendQueueMail(CronJobBase):    
@@ -355,9 +430,16 @@ class SendQueueMail(CronJobBase):
             # Send report mails
             total_report_mails_sent = send_report_queue()
             log.info(f'{total_report_mails_sent} report mail(s) have been sent')
+            
+            total_consumer_mail_sent = send_new_report_notification()
+            log.info(f'{total_consumer_mail_sent} report mail(s) have been sent')
         
         except Exception as e:
             log.exception(f'An error occurred while sending queued mails: {e}')
+            
+            
+            
+
    
 
 class DeleteIncompleteReports(CronJobBase):
