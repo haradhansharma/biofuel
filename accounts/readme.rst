@@ -436,6 +436,62 @@ With these steps completed, your project will automatically create or update use
 Remember to run your project's migrations after making these changes to ensure that the database schema is updated accordingly.
 
 
+Automatic Notification Settings Creation
+========================================
+
+The `accounts` app includes a signal that automatically creates or updates notification settings associated with a user whenever a new user is registered or an existing user is saved. This functionality is achieved through the use of Django signals.
+
+Whenever a `User` instance is created or updated, the signal is triggered, and the `create_or_update_notification_settings` function is called. This function checks if the user is newly created or being updated and accordingly creates a new notification setting or updates the existing one.
+
+Usage
+-----
+
+To use this automatic notification settings creation feature in your Django project, follow these steps:
+
+1. Make sure the `accounts` app is installed in your project and properly configured.
+
+2. In your `accounts` app, create a file named `signals.py` if it doesn't already exist.
+
+3. Add the following code to your `signals.py` file:
+
+```python
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from .models import User, NotificationSettings
+
+@receiver(post_save, sender=User)
+def create_or_update_notification_settings(sender, instance, created, **kwargs):
+    """
+    Creates or updates a notification setting associated with the User model.
+    As it has been created after an existing user, we are checking for creating notification if it doesn't exist to avoid errors.
+
+    Args:
+        sender (Model): The model class that sent the signal (User in this case).
+        instance (User): The specific instance of the User model that was saved.
+        created (bool): Indicates whether a new instance was created or an existing one was saved.
+        **kwargs: Additional keyword arguments passed along with the signal.
+
+    Returns:
+        None
+    """
+    try:
+        notification_settings = instance.notificationsettings  # Attempt to access the related NotificationSettings
+    except NotificationSettings.DoesNotExist:
+        notification_settings = None
+
+    if created or notification_settings is None:
+        # Create a notification settings or update the existing one
+        notification_settings, created = NotificationSettings.objects.get_or_create(user=instance)
+
+    # Now, make sure that the instance.notificationsettings is set properly
+    if instance.pk != notification_settings.pk:
+        instance.notificationsettings = notification_settings
+        instance.save()
+
+
+
+
+
 
 Account Activation Token Generator
 ==================================

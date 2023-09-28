@@ -431,6 +431,7 @@ class SendQueueMail(CronJobBase):
             total_report_mails_sent = send_report_queue()
             log.info(f'{total_report_mails_sent} report mail(s) have been sent')
             
+            # Send new report mails to consumer
             total_consumer_mail_sent = send_new_report_notification()
             log.info(f'{total_consumer_mail_sent} report mail(s) have been sent')
         

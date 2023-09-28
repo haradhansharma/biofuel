@@ -1171,10 +1171,6 @@ For more details on each URL pattern and its corresponding view, please refer to
 
 
 
-
-
-
-
 Contributing
 ------------
 

@@ -336,6 +336,61 @@ Remember to set up proper error handling and logging mechanisms in your project 
 
 Feel free to adapt and integrate the `send_report_queue()` function into your CRM app as needed. If you encounter any issues or need further assistance, refer to the documentation or reach out to the development team for support.
 
+Sending New Fuel Report Notifications
+=====================================
+
+The `send_new_report_notification()` function is responsible for sending notifications to consumers for new fuel reports within the Lead CRM App.
+
+#### Function Overview
+
+This function handles the process of sending personalized email notifications to consumers based on new fuel report submissions. It performs the following tasks:
+
+1. Retrieves a batch of pending email notifications from the `ConsumerMailQueue` table.
+2. Constructs personalized notification messages for each recipient with information about the new fuel report.
+3. Sends the notification emails in bulk to the corresponding recipients.
+4. Updates the queue for processed notifications and handles cases where emails fail to send.
+5. Deletes old queue entries that have been tried more than twice or are older than 90 days.
+
+#### Usage Example
+
+To utilize the `send_new_report_notification()` function, follow these steps:
+
+1. Ensure you have the necessary imports at the beginning of your script:
+
+    ```python
+    from lead.models import ConsumerMailQueue
+    from lead.utils import site_info, build_full_url
+    from django.utils import timezone
+    from django.conf import settings
+    import logging
+    from django.db.models import Q
+    from lead.utils import send_custom_mass_mail
+    ```
+
+2. Call the `send_new_report_notification()` function:
+
+    ```python
+    total_sent = send_new_report_notification()
+    print(f"Total new fuel report notifications sent: {total_sent}")
+    ```
+
+#### Configuration and Customization
+
+Before using the `send_new_report_notification()` function, ensure you have the following configured correctly:
+
+- Make sure your `settings.py` includes configurations for email sending, such as `DEFAULT_FROM_EMAIL`.
+- Adjust the `LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME` setting to control the number of notifications sent in a batch.
+- Customize the notification content within the function as needed.
+- Adjust the logic inside the function to match your application's specific requirements.
+
+#### Cleanup and Error Handling
+
+The function handles cases where notifications fail to send and removes notifications from the queue if they have been tried more than twice or are older than 90 days.
+
+For any errors or exceptions encountered during the process, the function logs them using the `logging` module, ensuring you have appropriate logging configured.
+
+Remember to set up proper error handling and logging mechanisms in your project to handle unexpected scenarios.
+---
 
 
 ### Sending Queued Mails in Bulk using Cron Job
@@ -384,6 +439,10 @@ To use the `SendQueueMail` cron job, follow these steps:
                 # Send report mails
                 total_report_mails_sent = send_report_queue()
                 log.info(f'{total_report_mails_sent} report mail(s) have been sent')
+
+                # Send new report mails to consumer
+               total_consumer_mail_sent = send_new_report_notification()
+               log.info(f'{total_consumer_mail_sent} report mail(s) have been sent')
             
             except Exception as e:
                 log.exception(f'An error occurred while sending queued mails: {e}')

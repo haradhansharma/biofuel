@@ -1047,9 +1047,7 @@ def eva_index2(request):
         'box_timing': box_timing, 
         'stdoil_list' : stdoil_list,
         'site_info' : meta_data,          
-    }
-    
-    
+    }   
     
     return render(request, 'evaluation/new_index.html', context = context)
 

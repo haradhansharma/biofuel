@@ -182,11 +182,6 @@ class User(AbstractUser):
         return self._is_subscriber
         
 
-    # @property
-    # def selected_activities(self):        
-    #     if not hasattr(self, '_selected_activities'):
-    #         self._selected_activities = self.user_next_activity.all().prefetch_related('next_activity__quotnextactivity__related_questions')
-    #     return self._selected_activities
     
     
     @property
