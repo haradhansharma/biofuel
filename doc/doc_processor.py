@@ -81,6 +81,7 @@ def get_pending_sugestion():
     return count
 
 
+
 def comon_doc(request):   
     """
     Generates common data for rendering templates.
@@ -130,6 +131,7 @@ def comon_doc(request):
             'header_menus' : header_menus(request),
             'account_menus' : account_menus(request),
             'dashboard_menu' : dashboard_menu(request), 
+
        
             
     }

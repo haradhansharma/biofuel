@@ -90,6 +90,32 @@ Custom Filters and Tags Overview
       {{ question|get_merged_quotations_with_user:user }}
       ```
 
+11. **get_types_slug Template Filter**:
+
+    - The `get_types_slug` custom template filter is used to retrieve the slug of a UserType based on its type.
+    - It is designed to be used within Django templates to facilitate dynamic content rendering based on user types.
+    - This filter takes one argument:
+      - `type` (str): The type of UserType ('is_producer', 'is_expert', 'is_consumer', 'is_marine') for which you want to retrieve the slug.
+
+    - Usage Example:
+      ```html
+      <!-- In a Django template -->
+      {{ 'is_producer'|get_types_slug }}
+      ```
+
+    - This filter returns the slug of the UserType associated with the provided type, or `None` if the type is not recognized.
+
+    - **Parameters**:
+      - `type` (str): The type of UserType ('is_producer', 'is_expert', 'is_consumer', 'is_marine').
+
+    - **Returns**:
+      - `str` or `None`: The slug of the UserType associated with the provided type, or `None` if not found.
+
+    - **Note**:
+      - This filter can be used in Django templates to conditionally display content or generate links based on user types.
+      - It checks the provided type and returns the corresponding slug for the UserType, allowing you to tailor the template output based on user roles.
+
+
 Usage Instructions
 ------------------
 
@@ -1168,6 +1194,511 @@ Additional URL Patterns for the 'evaluation' App:
 9. `fuel-history/<str:last_reports>`: URL for the 'fuel_history' view with a dynamic last_reports parameter.
 
 For more details on each URL pattern and its corresponding view, please refer to the code and comments provided within `urls.py`.
+
+
+
+
+=========================
+Evaluation App Views (views.py)
+=========================
+
+This module contains view functions for handling various aspects of the evaluation process within the evaluation app.
+
+.. note::
+
+    This documentation provides an overview of the functions and their purposes, but it's recommended to refer to the source code for detailed implementation and usage.
+
+1. `set_evaluation` Function
+===========================
+
+   Set the evaluation for a given question and evaluator.
+
+   - Args:
+       - `question` (Question): The question being evaluated.
+       - `selected_option` (Option): The option selected by the evaluator.
+       - `evaluator` (User): The user performing the evaluation.
+
+   - Returns:
+       - None
+
+   - Comments:
+       - This function first attempts to remove any existing evaluation entry for the specified question and evaluator combination.
+       - If no prior evaluation entry is found, it logs a message to indicate this.
+       - Subsequently, it creates a new evaluation entry with the provided information and saves it to the database.
+
+   - Example Usage:
+     ```python
+     set_evaluation(question, selected_option, evaluator)
+     ```
+
+2. `set_eva_comments` Function
+==============================
+
+   Set or update an evaluation comment for a given question and evaluator.
+
+   - Args:
+       - `question` (Question): The question for which the comment is provided.
+       - `comment` (str): The comment provided by the evaluator.
+       - `evaluator` (User): The user providing the comment.
+
+   - Returns:
+       - None
+
+   - Comments:
+       - Check if an evaluation comment entry already exists for the same question and evaluator.
+       - Ensure that a new comment is provided (non-empty).
+       - If a previous comment entry exists, update it with the new comment.
+       - If no previous comment entry exists, create a new one with the provided information and save it to the database.
+
+   - Example Usage:
+     ```python
+     set_eva_comments(question, comment, evaluator)
+     ```
+
+3. `set_evastatment` Function
+============================
+
+   Set evaluation statements for a given selected option and evaluator.
+
+   - Args:
+       - `request`: The request object.
+       - `selected_option` (Option): The selected option being evaluated.
+       - `evaluator` (User): The user performing the evaluation.
+
+   - Returns:
+       - None
+
+   - Comments:
+       - Extract the question associated with the selected option.
+       - Delete previous records of non-assessment statements for the same option and evaluator.
+       - Retrieve labels associated with the question.
+       - For each label, create a new EvaLebelStatement entry for non-assessment.
+       - Delete previous records of assessment statements for the same label and evaluator.
+       - Calculate assessment statements based on answers and save them.
+
+   - Example Usage:
+     ```python
+     set_evastatment(request, selected_option, evaluator)
+     ```
+
+4. `get_eoi` Function
+=====================
+
+   Get a list of option IDs from a given list of evaluation statements.
+
+   - Args:
+       - `eva_statement` (list of EvaLebelStatement): A list of evaluation statements.
+
+   - Returns:
+       - list of int: A sorted list of unique option IDs found in the evaluation statements.
+
+   - Comments:
+       - Iterate through the list of evaluation statements.
+       - Check if each statement has a valid option ID and add it to the 'es_option_id' set.
+       - Return a sorted list of unique option IDs found in the evaluation statements.
+
+   - Example Usage:
+     ```python
+     eva_statements = get_evaluation_statements()
+     eoi = get_eoi(eva_statements)
+     ```
+
+5. `set_evastatement_of_logical_string` Function
+===============================================
+
+   Set evaluation statements based on logical strings for a given selected option and evaluator.
+
+   - Args:
+       - `request`: The request object.
+       - `selected_option` (Option): The selected option being evaluated.
+       - `evaluator` (User): The user performing the evaluation.
+
+   - Returns:
+       - None
+
+   - Comments:
+       - Review and revise the logical string.
+       - Collect saved logical strings from the admin backend.
+       - Create a list of selected options for each logical string.
+       - Get the common label for the evaluator.
+       - Delete any previous assessment records for the common label.
+       - Calculate assessment statements based on answers and save them.
+
+   - Example Usage:
+     ```python
+     set_evastatement_of_logical_string(request, selected_option, evaluator)
+     ```
+
+6. `option_add2` Function
+========================
+
+   Handle the submission of evaluation options and comments by authenticated users.
+
+   - Args:
+       - `request`: The HTTP request object.
+
+   - Returns:
+       - HttpResponseRedirect: Redirects the user to the appropriate page based on the evaluation progress.
+
+   - Comments:
+       - Check if the user is authenticated and has an associated evaluator session.
+       - Clear the session data to ensure a fresh start for the evaluation.
+       - Process the POST request containing the selected option, comments, and other parameters.
+       - Check if an option has been selected; otherwise, redirect with a warning.
+       - Set evaluation data for the selected option, including comments and assessment.
+       - Handle logic for requesting feedback, updating comments, and performing assessments.
+       - Determine the next question in the evaluation sequence and set it in the session.
+       - If there's no next question, mark the report as generated, create a history, and redirect to a thank-you page.
+
+   - Example Usage:
+     The function is typically used as a view for handling POST requests when users submit their evaluation choices and comments.
+
+
+
+**`question_dataset(request)`**
+
+Build a dataset of questions for display in the evaluation question form.
+
+This view function prepares a dataset of questions to be displayed in the evaluation question form.
+It marks questions with specific colors based on their status in the current report.
+
+Args:
+    request: The HTTP request object.
+
+Returns:
+    dict: A dictionary representing the dataset of questions organized by their parent questions.
+
+Comments:
+    - Get sorted questions of the current report.
+    - Mark all questions that are part of the current report.
+    - Identify the last question in the current report.
+    - Check for any unanswered questions before and after the last question.
+    - Mark questions as "Do Not Know" or "No" if applicable.
+    - Handle the status of parent questions and their child questions.
+
+Example Usage:
+The function is typically used to prepare the question dataset for rendering in the evaluation question form.
+
+**`get_vedio_urls(search_term)`**
+
+Retrieve YouTube video URLs related to a search term using the YouTube Data API.
+
+Args:
+    search_term (str): The search term to query for videos.
+
+Returns:
+    list: A list of YouTube video URLs as embed URLs.
+
+Comments:
+    - Constructs a search URL for the YouTube Data API.
+    - Sends a GET request to the API with the specified parameters.
+    - Parses the JSON response to extract video information.
+    - Constructs embed URLs for each video and adds them to the result list.
+
+Example Usage:
+video_urls = get_vedio_urls("Python programming tutorials")
+for url in video_urls:
+    print(url)
+
+**`vedio_urls(request, search_term)`**
+
+Retrieve YouTube video URLs related to a search term and store them in the database if not already saved.
+
+Args:
+    request: The HTTP request object.
+    search_term (str): The search term to query for videos.
+
+Returns:
+    HttpResponse: A rendered HTML template with the video URLs as context data.
+
+Comments:
+    - Check if video URLs for the given search term are already saved in the database.
+    - If saved URLs exist and are less than 7 days old, use them. Otherwise, update and save new URLs.
+    - If no saved URLs are found, fetch video URLs using the `get_vedio_urls` function and save them.
+    - Return the video URLs as context data for rendering in the 'eva_youtube.html' template.
+
+Example Usage:
+In a Django view, you can call this function to retrieve and display YouTube video URLs.
+
+**`std_oils_block(request, slug)`**
+
+Render a template for displaying standardized oils block for a specific question.
+
+Args:
+    request: The HTTP request object.
+    slug (str): The unique slug identifying the question.
+
+Returns:
+    HttpResponse: A rendered HTML template with the question as context data.
+
+Comments:
+    - Retrieve a specific question based on its unique slug.
+    - Render the 'std_oils_block.html' template with the question as context data.
+
+Example Usage:
+Use this function as a view to display standardized oils blocks for specific questions.
+
+**`quotation_block(request, slug)`**
+
+Render a template for displaying a quotation block for a specific question.
+
+Args:
+    request: The HTTP request object.
+    slug (str): The unique slug identifying the question.
+
+Returns:
+    HttpResponse: A rendered HTML template with the question and related information as context data.
+
+Comments:
+    - Retrieve a specific question based on its unique slug using the `get_all_questions` function.
+    - Determine the next activities (picked_na) related to the question using the `get_picked_na` function.
+    - Render the 'quotation_block.html' template with the question and next activities as context data.
+
+Example Usage:
+Use this function as a view to display a quotation block for a specific question.
+
+**`eva_question(request, evaluator_id, slug)`**
+
+Render the main interface for the evaluation process.
+
+Args:
+    request: The HTTP request object.
+    evaluator_id: The ID of the evaluator/report being evaluated.
+    slug: The unique slug identifying the question.
+
+Returns:
+    HttpResponse: A rendered HTML template with the evaluation interface.
+
+Comments:
+    - Ensure that the report generator is coming from the initial page.
+    - Check if there is an active, unfinished report for the user.
+    - Validate access permissions for editing reports.
+    - Verify if the parent question has been answered as "Yes" to allow access to child questions.
+    - Set the default selected option for the question.
+    - Prepare context data for rendering the evaluation interface.
+
+Example Usage:
+Use this function as a view to display the main evaluation interface during the evaluation process.
+
+
+
+eva_index2 View
+---------------
+
+This view renders the initial interface for data collection during the evaluation process.
+
+Args:
+    - request: The HTTP request object.
+
+Returns:
+    - HttpResponse: A rendered HTML template with the initial evaluation interface.
+
+Comments:
+    - Essential part of the evaluation process, where login is required.
+    - Collect initial data for the evaluation report.
+    - Redirect users to a previously submitted question or gather initial data.
+    - Check if a first question has been set by the admin.
+    - Handle form submissions for initializing a new evaluation report.
+    - Set labels for the new report.
+    - Handle meta data for SEO purposes.
+
+Example Usage:
+Use this function as a view to display the initial interface for data collection during the evaluation process.
+
+thanks View
+-----------
+
+This view renders the thank you page after completing the evaluation process.
+
+Args:
+    - request: The HTTP request object.
+
+Returns:
+    - HttpResponse: A rendered HTML template for the thank you page.
+
+Comments:
+    - Essential part where login is required.
+    - Check for the user's user type and last reports.
+    - Calculate and display results on the thank you page.
+    - Build report editing URLs for parents selected by the admin.
+    - Paginate and display reports.
+    - Handle meta data for SEO purposes.
+
+Example Usage:
+Use this function as a view to display the thank you page after completing the evaluation process.
+
+trafic_light_hori View
+-----------------------
+
+This view renders a horizontal traffic light evaluation page based on the last available report.
+
+Args:
+    - request: The HTTP request object.
+    - last_reports: The ID of the last report to be used for rendering.
+
+Returns:
+    - HttpResponse: A rendered HTML page displaying the horizontal traffic light evaluation.
+
+Note:
+This function retrieves data from the database, prepares it for rendering, and returns an HTML page with the evaluation results.
+
+fuel_history View
+----------------
+
+This view renders a fuel history chart based on the data from the last available report.
+
+Args:
+    - request: The HTTP request object.
+    - last_reports: The ID of the last report to be used for rendering.
+
+Returns:
+    - HttpResponse: A rendered HTML page displaying the fuel history chart.
+
+Note:
+This function retrieves historical fuel data from the database, prepares it for rendering, and returns an HTML page with the fuel history chart.
+
+
+report View
+-----------
+
+This view renders a report page based on the provided report slug.
+
+Args:
+    - request (HttpRequest): The HTTP request object.
+    - slug (str): The unique slug identifier for the report.
+
+Returns:
+    - HttpResponse: A rendered HTML page or PDF report displaying the report details.
+
+Comments:
+    - Essential part where login is required.
+    - Clears session data, as the report may have been marked as completed in the thank you page.
+    - Generates a PDF report, if applicable.
+    - Determines the status of next activities.
+
+Example Usage:
+Use this function as a view to display a report page based on the provided report slug.
+
+create_notification_to_consumer Function
+---------------------------------------
+
+This function creates notifications for consumers regarding a report.
+
+Args:
+    - report: The report for which notifications are to be created.
+
+Returns:
+    - None
+
+Comments:
+    - Retrieves a list of consumer emails.
+    - Creates ConsumerMailQueue instances.
+    - Bulk inserts the instances into the database.
+
+Example Usage:
+Call this function to create notifications for consumers regarding a report.
+
+nreport View
+------------
+
+This view renders a new report creation/editing page based on the provided report slug.
+
+Args:
+    - request (HttpRequest): The HTTP request object.
+    - slug (str): The unique slug identifier for the report.
+
+Returns:
+    - HttpResponse: A rendered HTML page displaying the report creation/editing form.
+
+Comments:
+    - Essential part where login is required.
+    - Clears session data.
+    - Handles report creation or editing.
+    - Generates notifications for consumers when the 'confirm' parameter is present in the request.
+    - Sets metadata for the page.
+
+Example Usage:
+Use this function as a view to display a new report creation/editing page based on the provided report slug.
+
+
+
+
+nreport_pdf View
+----------------
+
+This view generates a PDF report based on ReportLab for a new evaluation report.
+
+Args:
+    - request (HttpRequest): The HTTP request object.
+    - slug (str): The unique slug identifier for the report.
+
+Returns:
+    - FileResponse: An HTTP response with the generated PDF report.
+
+Comments:
+    - Uses the ReportLab library to create a PDF report.
+    - Sets document metadata, margins, and page size.
+    - Generates the content (Story) for the PDF report.
+
+Example Usage:
+Use this function as a view to generate a PDF report for a new evaluation report.
+
+stdoils View
+------------
+
+This view renders a list of standard oils based on the selected biofuel.
+
+Args:
+    - request (HttpRequest): The HTTP request object.
+
+Returns:
+    - HttpResponse: A rendered HTML page displaying a list of standard oils.
+
+Comments:
+    - Retrieves a list of standard oils filtered by the selected biofuel ID.
+    - Renders the list in the 'std_oils.html' template.
+
+Example Usage:
+Use this function as a view to display a list of standard oils based on the selected biofuel.
+
+get_glossary View
+-----------------
+
+This view renders the glossary page with a list of glossary items.
+
+Args:
+    - request (HttpRequest): The HTTP request object.
+
+Returns:
+    - HttpResponse: A rendered HTML page displaying a glossary with a list of glossary items.
+
+Comments:
+    - Retrieves a list of glossary items using 'get_all_glosaries()'.
+    - Renders the list in the 'glossary_template.html' template.
+
+Example Usage:
+Use this function as a view to display a glossary page with a list of glossary items.
+
+edit_report View
+----------------
+
+This view allows the creator of a report to edit its details.
+
+Args:
+    - request (HttpRequest): The HTTP request object.
+    - slug (str): The unique slug identifier for the report to be edited.
+
+Returns:
+    - HttpResponse: A rendered HTML page displaying the report edit form.
+
+Comments:
+    - Restricted to report creators.
+    - Allows report creators to edit the details of a specific report.
+    - Uses the 'EvaluatorEditForm' to handle form submission and update the report's information.
+
+Example Usage:
+Use this function as a view to allow report creators to edit report details.
+
 
 
 

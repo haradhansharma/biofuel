@@ -1,5 +1,5 @@
 {% extends "includes/g_base.html" %}
-
+{% load custom_tags %}
  
     
     {% block header %}
@@ -62,30 +62,31 @@
                                                             </span>
                                                         </h5>
                                                     </div>
-                                                    <div class="col-auto">
-                                                        <div class="text-info d-block oveflow-hidden">
+                                                    <div class="col-12 col-lg-6">
+                                                        <div class="row d-flex jsutify-content-center align-items-center">
                                                             {% if request.user.is_authenticated %}
                                                             {% if request.user.is_producer or request.user.is_staff or  request.user.is_superuser %}
                                                             <a href="{% url 'evaluation:evaluation2' %}"
-                                                                class="me-2">Begin Evaluating</a>
+                                                                class="col-lg-6 d-flex"><div class="flex-fill p-2">Begin Evaluating</div></a>
                                                             {% endif %}
                                                             {% if request.user.is_marine or request.user.is_staff or  request.user.is_superuser %}
                                                             <a href="{% url 'home:questionsint' %}"
-                                                                class="me-2">Questions</a>
+                                                                class="col-lg-6 d-flex"><div class="flex-fill p-2">Questions</div></a>
                                                             {% endif %}
 
                                                             {% if request.user.is_expert or request.user.is_staff or  request.user.is_superuser %}
                                                             <a href="{% url 'home:quotations' %}"
-                                                                class="me-2">Quotations
-                                                            </a>
+                                                                class="col-lg-6 d-flex"><div class="flex-fill p-2">Quotations
+                                                            </div></a>
                                                             {% endif %}
+                                                            
                                                             {% if request.user.is_consumer or request.user.is_staff or  request.user.is_superuser %}
-                                                            <a href="{% url 'types' request.user.usertype.slug %}"
-                                                                class="me-2">Fuel Consumers
-                                                            </a>
-                                                            <a href="{% url 'types' producer_slug %}" 
-                                                                class="me-2">Fuel Producers
-                                                            </a>
+                                                            <a href="{% url 'types' 'is_consumer'|get_types_slug %}"
+                                                                class="col-lg-6 d-flex"><div class="flex-fill p-2">Fuel Consumers
+                                                            </div></a>
+                                                            <a href="{% url 'types' 'is_producer'|get_types_slug %}" 
+                                                                class="col-lg-6 d-flex"><div class="flex-fill p-2">Fuel Producers
+                                                            </div></a>
                                                             {% endif %}
                                                             {% endif %}
                                                         </div>

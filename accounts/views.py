@@ -378,9 +378,8 @@ def userpage(request):
     log.info(f'Userpage accessed by_____________ {request.user}')
     
     # Clear the session data to ensure a clean state when the user logs in.
-    null_session(request)   #This is essential where user loggedin
-    
-    producer_slug = UserType.objects.filter(Q(name__icontains='producer') | Q(slug__icontains='producer')).first().slug
+    null_session(request)   #This is essential where user loggedin    
+ 
  
     
     user = request.user
@@ -461,7 +460,7 @@ def userpage(request):
             'reports': reports,       
             'last_report_button_text' : 'Get Last Report',
             'username' : user.username,   
-            'producer_slug' : producer_slug
+  
             
         }
     else:
@@ -476,7 +475,7 @@ def userpage(request):
             'dashboard' : 'Dashboard',
             'change_pass' : 'Change Password',
             'homepage' : 'Home Page',
-            'producer_slug' : producer_slug         
+        
         } 
         
     # Prepare meta data for the page.

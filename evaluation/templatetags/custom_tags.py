@@ -165,4 +165,35 @@ def get_merged_quotations_with_user(ques, user):
         return quotations
     return []
 
+@register.filter(name='get_types_slug') 
+def get_types_slug(type):
+    """
+    Custom template filter to retrieve the slug of a UserType based on its type.
+
+    Args:
+        type (str): The type of UserType ('is_producer', 'is_expert', 'is_consumer', 'is_marine').
+
+    Returns:
+        str or None: The slug of the UserType associated with the provided type, or None if not found.
+
+    Note:
+        This custom template filter helps retrieve the slug of a UserType based on the provided type.
+        It checks the type and returns the corresponding slug, or None if the type is not recognized.
+    """
+    from accounts.models import UserType
+    
+    # Check the provided type and retrieve the corresponding UserType's slug.
+    if type == 'is_producer':
+        slug = UserType.objects.filter(is_producer = True).first().slug
+    elif type == 'is_expert':
+        slug = UserType.objects.filter(is_expert = True).first().slug
+    elif type == 'is_consumer':
+        slug = UserType.objects.filter(is_consumer = True).first().slug
+    elif type == 'is_marine':
+        slug = UserType.objects.filter(is_marine = True).first().slug  
+    else:
+        slug = None
+
+    return slug
+
 
