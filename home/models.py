@@ -6,16 +6,30 @@ from evaluation.models import Question, NextActivities
 from django.core.validators import FileExtensionValidator
 from django.conf import settings
 
+
+# Define the User model based on the project's AUTH_USER_MODEL setting.
 User = settings.AUTH_USER_MODEL
 
 
 class PriceUnit(models.Model):
+    """
+    Model representing price units.
+
+    Attributes:
+        name (str): The name of the price unit (e.g., USD, EUR).
+    """
     name = models.CharField(max_length=10)
     
     def __str__(self):
         return self.name
     
 class TimeUnit(models.Model):
+    """
+    Model representing time units.
+
+    Attributes:
+        name (str): The name of the time unit (e.g., minutes, hours).
+    """
     name = models.CharField(max_length=10)
     
     def __str__(self):
@@ -23,12 +37,24 @@ class TimeUnit(models.Model):
     
     
 class WeightUnit(models.Model):
+    """
+    Model representing weight units.
+
+    Attributes:
+        name (str): The name of the weight unit (e.g., kg, lb).
+    """
     name = models.CharField(max_length=10)
     
     def __str__(self):
         return self.name
     
 class QuotationDocType(models.Model):
+    """
+    Model representing quotation document types.
+
+    Attributes:
+        name (str): The name of the document type (e.g., PDF, Word).
+    """
     name = models.CharField(max_length=152)
     
     def __str__(self):
@@ -37,6 +63,29 @@ class QuotationDocType(models.Model):
 
  
 class Quotation(models.Model):     
+    """
+    Model representing a quotation for testing services.
+
+    Attributes:
+        service_provider (User): The user who provides the quotation.
+        show_alternate_email (EmailField): Alternate email address for the quotation (optional).
+        show_alternate_business (CharField): Alternate business name for the quotation (optional).
+        show_alternate_phone (CharField): Alternate phone number for the quotation (optional).
+        price (DecimalField): The quotation's price.
+        price_unit (PriceUnit): The unit of the price.
+        needy_time (IntegerField): The time needed for the test.
+        needy_time_unit (TimeUnit): The unit of time needed for the test.
+        sample_amount (IntegerField): The sample amount needed for the test.
+        sample_amount_unit (WeightUnit): The unit of weight for the sample amount.
+        require_documents (ManyToManyField): Documents needed for the test.
+        factory_pickup (BooleanField): Indicates if the sample will be collected from the factory.
+        test_for (Question): The question for which the test is conducted.
+        related_questions (ManyToManyField): Other questions tested within the quotation.
+        quotation_format (FileField): Uploaded quotation file (PDF only).
+        next_activities (NextActivities): Next activities related to the quotation (optional).
+        display_site_address (BooleanField): Indicates if the site address should be displayed.
+        comments (TextField): Additional comments for the quotation.
+    """
     service_provider = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quotationserviceprovider', db_index=True)   
     show_alternate_email = models.EmailField(help_text='You can show alternate email address in quotation.', null=True, blank=True)
     show_alternate_business = models.CharField(help_text='You can show alternate email address in quotation.', max_length = 50, null=True, blank=True)    
@@ -81,17 +130,32 @@ class Quotation(models.Model):
     
     @property
     def get_quot_url(self):
+        """
+        Get the URL to add a new quotation for the corresponding question.
+        
+        Returns:
+            str: The URL for adding a new quotation.
+        """
         return reverse('home:add_quatation', args=[str(self.test_for.slug)])
     
     @property
     def get_business_name(self):
+        """
+        Get the business name for the quotation.
+        
+        Returns:
+            str: The business name to display.
+        """
         if self.display_site_address:
+            # Use site information
             business_name = site_info().get('name')
         else:
             if self.show_alternate_business:
+                # Use the alternate business name if provided
                 business_name = self.show_alternate_business
             else:
                 if self.service_provider.orgonization:
+                    # Use the organization name of the service provider
                     business_name = self.service_provider.orgonization
                 else:
                     business_name = 'Business Unknown'
@@ -100,13 +164,22 @@ class Quotation(models.Model):
     
     @property
     def get_phone(self):
+        """
+        Get the phone number for the quotation.
+        
+        Returns:
+            str: The phone number to display.
+        """
         if self.display_site_address:
+            # Use site information
             phone = site_info().get('phone')
         else:
             if self.show_alternate_phone:
+                # Use the alternate phone number if provided
                 phone = self.show_alternate_phone
             else:
                 if self.service_provider.phone:
+                    # Use the phone number of the service provider
                     phone = self.service_provider.phone
                 else:
                     phone = 'Phone Unknown'
@@ -115,20 +188,35 @@ class Quotation(models.Model):
     
     @property
     def get_email(self):
+        """
+        Get the email address for the quotation.
+        
+        Returns:
+            str: The email address to display.
+        """
         if self.display_site_address:
+            # Use site information
             email = site_info().get('email')
         else:
             if self.show_alternate_email:
+                # Use the alternate email address if provided
                 email = self.show_alternate_email
             else:
                 if self.service_provider.email:
+                    # Use the email address of the service provider
                     email = self.service_provider.email
                 else:
                     email = 'email Unknown'
         
         return email
     
-    def get_absolute_url(self):        
+    def get_absolute_url(self):       
+        """
+        Get the absolute URL for the quotation report.
+
+        Returns:
+            str: The absolute URL for the quotation report.
+        """ 
         return reverse('home:quotation_report', kwargs={'question': str(self.test_for.slug), 'quotation': int(self.id) })      
     
      
