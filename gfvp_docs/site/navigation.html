@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Biofuel Evaluation Process">
+        
         <meta name="author" content="Haradhan Sharma">
         
         <link rel="shortcut icon" href="img/favicon.ico">
-        <title>GFVP Docs</title>
+        <title>Navigation - GFVP Docs</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/base.css" rel="stylesheet">
@@ -23,7 +23,7 @@
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
-    <body class="homepage">
+    <body>
         <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-success">
             <div class="container">
                 <a class="navbar-brand" href="index.html">GFVP Docs</a>
@@ -36,7 +36,7 @@
                 <div id="navbar-collapse" class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem active">
+                            <li class="navitem">
                                 <a href="index.html" class="nav-link">Home</a>
                             </li>
                             <li class="navitem">
@@ -69,7 +69,7 @@
                             <li class="navitem">
                                 <a href="home.html" class="nav-link">Home And Dash</a>
                             </li>
-                            <li class="navitem">
+                            <li class="navitem active">
                                 <a href="navigation.html" class="nav-link">Navigation</a>
                             </li>
                         </ul>
@@ -81,17 +81,17 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" class="nav-link disabled">
+                                <a rel="prev" href="home.html" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="accounts.html" class="nav-link">
+                                <a rel="next" class="nav-link disabled">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/haradhansharma/biofuel/tree/v24123/edit/master/docs/index.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/haradhansharma/biofuel/tree/v24123/edit/master/docs/navigation.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -111,29 +111,13 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#gfvp_-_green_fuel_validation_platform" class="nav-link">GFVP - Green Fuel Validation Platform</a>
+            <li class="nav-item" data-level="1"><a href="#navigation_app" class="nav-link">Navigation App</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#table_of_contents" class="nav-link">Table of Contents</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#project_overview" class="nav-link">Project Overview</a>
+            <li class="nav-item" data-level="2"><a href="#purpose" class="nav-link">Purpose</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#project_structure" class="nav-link">Project Structure</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#technology_stack" class="nav-link">Technology Stack</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#contributors" class="nav-link">Contributors</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#installation" class="nav-link">Installation</a>
+            <li class="nav-item" data-level="2"><a href="#key_features" class="nav-link">Key Features</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -141,15 +125,21 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#mkdocs_commands" class="nav-link">Mkdocs Commands</a>
+            <li class="nav-item" data-level="2"><a href="#example_usage" class="nav-link">Example Usage</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#documentation" class="nav-link">Documentation</a>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#viewspy" class="nav-link">views.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#license" class="nav-link">License</a>
+            
+            <li class="nav-item" data-level="1"><a href="#templatehtml" class="nav-link">template.html</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#support_and_contributions" class="nav-link">Support and Contributions</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -160,164 +150,51 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="gfvp_-_green_fuel_validation_platform">GFVP - Green Fuel Validation Platform<a class="headerlink" href="#gfvp_-_green_fuel_validation_platform" title="Permanent link">&para;</a></h1>
-<pre><code>## Solo Developer:
-    Haradhan Sharma
-    Email: haradhan.sharma@gmail.com
-    Website: [hrdnsh.com](http://hrdnsh.com)
-</code></pre>
-<h2 id="table_of_contents">Table of Contents<a class="headerlink" href="#table_of_contents" title="Permanent link">&para;</a></h2>
-<ol>
-<li><a href="#project-overview">Project Overview</a></li>
-<li><a href="#project-structure">Project Structure</a></li>
-<li><a href="#technology-stack">Technology Stack</a></li>
-<li><a href="#contributors">Contributors</a></li>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#usage">Usage</a></li>
-<li><a href="#documentation">Documentation</a></li>
-<li><a href="#license">License</a></li>
-</ol>
-<hr />
-<h2 id="project_overview">Project Overview<a class="headerlink" href="#project_overview" title="Permanent link">&para;</a></h2>
-<p>GFVP (Green Fuel Validation Platform) is a web application built using Django 4.0.1 and various frontend technologies. It serves as a platform for validating and managing green fuel-related data. The application allows different types of users to interact with the system, and it's designed to support various features for managing data related to green fuels.</p>
-<hr />
-<h2 id="project_structure">Project Structure<a class="headerlink" href="#project_structure" title="Permanent link">&para;</a></h2>
-<p><strong>The project follows a well-organized directory structure:</strong></p>
-<pre><code>root/
-    accounts -&gt; app
-    blog -&gt; app
-    crm -&gt; app
-    doc -&gt; app
-    evaluation -&gt; app
-    feedback -&gt; app
-    gfvp -&gt; project
-    gfvp_docs -&gt; mkdocs directory
-    glossary -&gt; app
-    guide -&gt; app
-    home -&gt; app
-    navigation -&gt; app
-    logs
-    static -&gt; static folder
-    upload -&gt; media folder
-    templates -&gt; templates for apps and project
-    .env
-    .gitignore
-    gfvp.dot
-    gfvp.png -&gt;database schema
-    manage.py -&gt;project manager
-    mkdocs.yml -&gt;mkdocs configuration
-    requirements.txt
-    robots.txt
-</code></pre>
-<p>Ensure that the necessary Python packages specified in <code>requirements.txt</code> are installed for the project to run successfully.</p>
-<hr />
-<h2 id="technology_stack">Technology Stack<a class="headerlink" href="#technology_stack" title="Permanent link">&para;</a></h2>
+<h1 id="navigation_app">Navigation App<a class="headerlink" href="#navigation_app" title="Permanent link">&para;</a></h1>
+<p>The <strong>Navigation App</strong> is a lightweight Django app designed to generate navigation menus and provide menu items for various parts of your website based on user roles and permissions.</p>
+<h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
+<p>This app simplifies the process of generating dynamic navigation menus in your Django web application. It provides functions to create lists of menu items for different parts of your website, making it easy to manage what users see in their navigation menu.</p>
+<h2 id="key_features">Key Features<a class="headerlink" href="#key_features" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Python 3.10</li>
-<li>Django 4.0.1</li>
-<li>ReportLab</li>
-<li>Panda</li>
-<li>Numpy</li>
-<li>xhtml2pdf</li>
-<li>Material Admin</li>
-<li>Bootstrap 5 with Volt theme</li>
-<li>Chartist.js</li>
-<li>AOS.js</li>
-<li>HTMX</li>
-<li>jQuery</li>
-<li>Font Awesome</li>
-<li>Youtube API</li>
-<li>IPinfo API</li>
+<li>Dynamic menu generation based on user roles and permissions.</li>
+<li>Provides functions for generating dashboard, header, and account-related menus.</li>
+<li>Flexible and easy-to-use menu items structure.</li>
+<li>Helps maintain a clean and organized navigation structure.</li>
 </ul>
-<h2 id="contributors">Contributors<a class="headerlink" href="#contributors" title="Permanent link">&para;</a></h2>
-<pre><code>1. Business logic and instructions provided by:
-    1. Krishna Hara Chakrabarti
-    2. Jessica Hofman
-2. Contributed to user guide
-    1. Pragya Chudal
-</code></pre>
-<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
-<p>Clone the repository to your local machine. <br />
-<code>git clone &lt;repository_url&gt;</code></p>
-</li>
-<li>
-<p>Create a virtual environment (optional but recommended).  <br />
-<code>python -m venv venv</code></p>
-</li>
-<li>
-<p>Activate the virtual environment.  </p>
-<p><code>// On Windows
-venv\Scripts\activate</code></p>
-<p><code>// On macOS and Linux
-source venv/bin/activate</code></p>
-</li>
-<li>
-<p>Install the required dependencies. 
-    <code>pip install -r requirements.txt</code></p>
-</li>
-<li>
-<p>Create a <code>.env</code> file in the project root and configure any environment-specific settings.</p>
-</li>
-<li>
-<p>Apply database migrations.<br />
-<code>python manage.py migrate</code></p>
-</li>
-<li>
-<p>Start the development server.<br />
-<code>python manage.py runserver</code></p>
-</li>
-</ul>
-<p>The application should now be accessible at http://localhost:8000/.</p>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
-<p><strong>Genarate .dot file and database schema</strong></p>
-<ul>
+<ol>
 <li>
-<p>First, make sure you have django-extensions installed. If it's not already in your <code>requirements.txt</code>, you can add it:</p>
-<p><code>django-extensions==3.2.1</code></p>
+<p><strong>Installation</strong>: Install the Navigation app by including it in your Django project. You can do this by adding <code>'navigation'</code> to your <code>INSTALLED_APPS</code> in your Django project's settings.</p>
 </li>
 <li>
-<p>Then, run the following command to generate a graph_models.dot file:</p>
-<p><code>python manage.py graph_models -a -o gfvp.dot</code></p>
+<p><strong>Integration</strong>: You can integrate the Navigation app by using the provided functions to generate menu items. The app supports dynamic menu generation based on user roles, making it simple to customize the menus for different user groups.</p>
 </li>
 <li>
-<p>To generate a PNG image from the <code>.dot</code> file, you can use Graphviz. If you don't have Graphviz installed, you can add it to your <code>requirements.txt</code>:</p>
-<p><code>graphviz==0.17</code></p>
+<p><strong>Function Usage</strong>: To use the app's functions, import them into your views or templates. The provided functions allow you to generate menus for your dashboard, header, and account-related sections.</p>
 </li>
 <li>
-<p>After installing Graphviz, you can use the dot command to convert the .dot file to a PNG image:</p>
-<p><code>dot -Tpng gfvp.dot -o gfvp.png</code></p>
+<p><strong>Customization</strong>: You can customize the menu items' appearance and behavior as needed for your specific web application. You can modify the menu structure, add or remove menu items, and apply your own styles.</p>
 </li>
+</ol>
+<h2 id="example_usage">Example Usage<a class="headerlink" href="#example_usage" title="Permanent link">&para;</a></h2>
+<p>Here's a quick example of how to use the Navigation app in your Django project:</p>
+<p>```python</p>
+<h1 id="viewspy">views.py<a class="headerlink" href="#viewspy" title="Permanent link">&para;</a></h1>
+<p>from navigation.menu import dashboard_menu</p>
+<p>def dashboard(request):
+    # Generate the dashboard menu items
+    menu_items = dashboard_menu(request)
+    # ... your view logic ...</p>
+<h1 id="templatehtml">template.html<a class="headerlink" href="#templatehtml" title="Permanent link">&para;</a></h1>
+<p>{% load navigation_tags %}</p>
+<ul class="menu">
+    {% for item in menu_items %}
+        <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+    {% endfor %}
 </ul>
-<h2 id="mkdocs_commands">Mkdocs Commands<a class="headerlink" href="#mkdocs_commands" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Configure <code>mkdocs.yml</code>.</li>
-<li>Add <code>xxxx.md</code> in <code>gfvp_docs/docs</code></li>
-<li>run <code>mkdocs build</code> command to build the documentation site.</li>
-<li><code>mkdocs -h</code> - Print help message and exit.</li>
-</ul>
-<h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
-<p>Documentation for each app can be found in their respective <code>readme.md</code> files:</p>
-<ul>
-<li><a href="/docs/accounts.html">Accounts App</a></li>
-<li><a href="/docs/blog.html">Blog App</a></li>
-<li><a href="/docs/crm.html">CRM App</a></li>
-<li><a href="/docs/doc.html">Doc App</a></li>
-<li><a href="/docs/evaluation.html">Evaluation App</a></li>
-<li><a href="/docs/feedback.html">Feedback App</a></li>
-<li><a href="/docs/gfvp.html">GFVP Project</a></li>
-<li><a href="/docs/glossary.html">Glossary App</a></li>
-<li><a href="/docs/guide.html">Guide App</a></li>
-<li><a href="/docs/home.html">Home App</a></li>
-<li><a href="/docs/navigation.html">Navigation App</a></li>
-</ul>
-<p>Additional documentation for the project can be found in the code comments.</p>
-<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p>Copyright © 2023 Haradhan Sharma</p>
-<p>This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.</p>
-</blockquote></div>
+
+<h2 id="support_and_contributions">Support and Contributions<a class="headerlink" href="#support_and_contributions" title="Permanent link">&para;</a></h2>
+<p>If you encounter any issues, have suggestions, or want to contribute to the Navigation app, please visit the GitHub repository and submit your feedback or pull requests.</p></div>
             </div>
         </div>
 
@@ -396,8 +273,3 @@ source venv/bin/activate</code></p>
 
     </body>
 </html>
-
-<!--
-MkDocs version : 1.4.2
-Build Date UTC : 2023-10-16 10:59:34.083838+00:00
--->

@@ -42,11 +42,11 @@
                             <li class="navitem">
                                 <a href="accounts.html" class="nav-link">Accounts</a>
                             </li>
-                            <li class="navitem active">
-                                <a href="crm.html" class="nav-link">CRM</a>
-                            </li>
                             <li class="navitem">
                                 <a href="blog.html" class="nav-link">Blog</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="crm.html" class="nav-link">CRM</a>
                             </li>
                             <li class="navitem">
                                 <a href="doc.html" class="nav-link">Doc</a>
@@ -55,10 +55,22 @@
                                 <a href="evaluation.html" class="nav-link">Evaluation</a>
                             </li>
                             <li class="navitem">
-                                <a href="guide.html" class="nav-link">Guide</a>
+                                <a href="feedback.html" class="nav-link">Feedback</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="gfvp.html" class="nav-link">Project</a>
                             </li>
                             <li class="navitem">
                                 <a href="glossary.html" class="nav-link">Glossary</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="guide.html" class="nav-link">User Guide</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="home.html" class="nav-link">Home And Dash</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="navigation.html" class="nav-link">Navigation</a>
                             </li>
                         </ul>
 
@@ -69,17 +81,17 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="accounts.html" class="nav-link">
+                                <a rel="prev" href="blog.html" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="blog.html" class="nav-link">
+                                <a rel="next" href="doc.html" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/haradhansharma/biofuel/blob/main/docs/crm.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/haradhansharma/biofuel/tree/v24123/edit/master/docs/crm.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -98,12 +110,880 @@
     
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#introduction" class="nav-link">Introduction</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#purpose" class="nav-link">Purpose</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#contents" class="nav-link">Contents</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#usage" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#the_formspy_file" class="nav-link">The forms.py File:</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#contents_1" class="nav-link">Contents</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#usage_1" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#the_lead_mail_jobspy_file" class="nav-link">The lead_mail_jobs.py File:</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#usage_2" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#sending_new_fuel_report_notifications" class="nav-link">Sending New Fuel Report Notifications</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#remember_to_set_up_proper_error_handling_and_logging_mechanisms_in_your_project_to_handle_unexpected_scenarios" class="nav-link">Remember to set up proper error handling and logging mechanisms in your project to handle unexpected scenarios.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#call_the_function_to_send_new_report_notifications" class="nav-link">Call the function to send new report notifications</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#unsubscribe_function" class="nav-link">Unsubscribe Function</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#purpose_1" class="nav-link">Purpose</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#functionality" class="nav-link">Functionality</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#usage_4" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#parameters" class="nav-link">Parameters</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#returns" class="nav-link">Returns</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#example" class="nav-link">Example</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#subscribrequest_kwargs" class="nav-link">subscrib(request, **kwargs)</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#arguments" class="nav-link">Arguments</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#functionality_1" class="nav-link">Functionality</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#usage_5" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#contributions" class="nav-link">Contributions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-</div>
+<p>=============================
+Django CRM App - admin.py
+=============================</p>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>Welcome to the Django CRM App! This README provides an overview of the <code>admin.py</code> file, explaining its role within the project. The <code>admin.py</code> file is an essential part of the app's functionality, as it customizes the Django admin interface for specific models.</p>
+<h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
+<p>The <code>admin.py</code> File:
+~~~~~~~~~~~~~~~~~~~~</p>
+<p>The <code>admin.py</code> file in this app is responsible for configuring how certain models are displayed and managed within the Django admin panel. It leverages the Django admin site framework to provide an intuitive and user-friendly way for administrators to interact with the app's data.</p>
+<h2 id="contents">Contents<a class="headerlink" href="#contents" title="Permanent link">&para;</a></h2>
+<p>The <code>admin.py</code> file contains the following sections:</p>
+<ol>
+<li>
+<p>Model Registrations: The file uses the <code>admin.site.register()</code> function and decorator-based registration (<code>@admin.register(ModelName)</code>) to associate specific models with the admin site.</p>
+</li>
+<li>
+<p>Custom Admin Classes: Two custom admin classes, <code>MailQueueAdmin</code> and <code>BlogMailQueueAdmin</code>, are defined. These classes inherit from <code>admin.ModelAdmin</code> and customize the presentation and behavior of their respective models within the admin interface.</p>
+</li>
+<li>
+<p><code>list_display</code> Attribute: Both custom admin classes define a <code>list_display</code> attribute. This attribute determines which fields of the model are shown in the list view of the admin interface.</p>
+</li>
+</ol>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<p>To add or modify the behavior of models in the Django admin panel:</p>
+<ol>
+<li>
+<p>Open the <code>admin.py</code> file located in your CRM app's directory.</p>
+</li>
+<li>
+<p>Locate the relevant model's admin class or create a new one if needed.</p>
+</li>
+<li>
+<p>Customize the <code>list_display</code> attribute to specify which fields should appear in the list view of the admin interface.</p>
+</li>
+<li>
+<p>Utilize other attributes and methods available in <code>admin.ModelAdmin</code> to further tailor the admin panel's behavior to your needs.</p>
+</li>
+</ol>
+<h1 id="the_formspy_file">The <code>forms.py</code> File:<a class="headerlink" href="#the_formspy_file" title="Permanent link">&para;</a></h1>
+<p>The <code>forms.py</code> file is responsible for defining custom form classes that facilitate user interactions with the Django CRM App. These forms are designed to collect and process data submitted by users through the app's interface.</p>
+<h2 id="contents_1">Contents<a class="headerlink" href="#contents_1" title="Permanent link">&para;</a></h2>
+<p>The <code>forms.py</code> file contains the following form classes:</p>
+<ol>
+<li><code>UploadLead</code> Form:</li>
+<li>Purpose: Allows users to upload lead data as a file.</li>
+<li>Form Field: <code>lead_upload</code> (FileField) for handling file uploads.</li>
+<li>
+<p>Usage: Users can submit lead data files for processing within the app.</p>
+</li>
+<li>
+<p><code>SubscriberForm</code> Form:</p>
+</li>
+<li>Purpose: Collects information from users who wish to subscribe.</li>
+<li>Form Fields: <code>name</code> (CharField) for the subscriber's name, and <code>email</code> (EmailField) for the subscriber's email.</li>
+<li>Usage: Users can provide their name and email to subscribe to updates from the app.</li>
+</ol>
+<h2 id="usage_1">Usage<a class="headerlink" href="#usage_1" title="Permanent link">&para;</a></h2>
+<p>To utilize the forms defined in <code>forms.py</code> within your Django CRM App:</p>
+<ol>
+<li>
+<p>Open the <code>forms.py</code> file located in your app's directory.</p>
+</li>
+<li>
+<p>Review the available form classes, such as <code>UploadLead</code> and <code>SubscriberForm</code>.</p>
+</li>
+<li>
+<p>Integrate the desired form into your app's views or templates as needed.</p>
+</li>
+<li>
+<p>Leverage the fields and attributes provided by each form class to customize the form's appearance and behavior.</p>
+</li>
+</ol>
+<h1 id="the_lead_mail_jobspy_file">The <code>lead_mail_jobs.py</code> File:<a class="headerlink" href="#the_lead_mail_jobspy_file" title="Permanent link">&para;</a></h1>
+<p>Lead CRM App is a Django application designed to help manage customer leads and streamline email communication.</p>
+<h2 id="usage_2">Usage<a class="headerlink" href="#usage_2" title="Permanent link">&para;</a></h2>
+<h3 id="email_queue_functions">Email Queue Functions<a class="headerlink" href="#email_queue_functions" title="Permanent link">&para;</a></h3>
+<p>The <code>lead_mail_jobs.py</code> module provides several functions related to email queue management. These functions can be useful for handling email communication within your CRM app.</p>
+<ol>
+<li>
+<p><code>last_process_time()</code></p>
+<p>Returns the time of the most recent email processing.</p>
+<p>```python
+from lead_mail_jobs import last_process_time</p>
+<p>last_time = last_process_time()
+if last_time:
+    print("Last email processing time:", last_time)
+```</p>
+</li>
+<li>
+<p><code>total_mail_sent()</code></p>
+<p>Returns the total number of emails that have been processed.</p>
+<p>```python
+from lead_mail_jobs import total_mail_sent</p>
+<p>total_sent = total_mail_sent()
+print("Total emails sent:", total_sent)
+```</p>
+</li>
+<li>
+<p><code>pending_queue_count()</code></p>
+<p>Returns the number of emails pending in the queue.</p>
+<p>```python
+from lead_mail_jobs import pending_queue_count</p>
+<p>pending_count = pending_queue_count()
+print("Pending emails in the queue:", pending_count)
+```</p>
+</li>
+<li>
+<p><code>send_custom_mass_mail(datatuple, fail_silently=False, auth_user=None, auth_password=None, connection=None)</code></p>
+<p>Sends a batch of custom HTML emails using the provided data.</p>
+<p>Args:
+  - <code>datatuple</code>: A list of tuples where each tuple contains subject, message, sender, and recipient information.
+  - <code>fail_silently</code>: If <code>True</code>, exceptions during sending will be suppressed. Default is <code>False</code>.
+  - <code>auth_user</code>: The username for email server authentication. Default is <code>None</code>.
+  - <code>auth_password</code>: The password for email server authentication. Default is <code>None</code>.
+  - <code>connection</code>: An existing email connection. If not provided, a new connection will be created.</p>
+<p>Returns:
+  - <code>int</code>: The number of successfully sent emails.</p>
+<p>```python
+from lead_mail_jobs import send_custom_mass_mail</p>
+<p>email_data = [
+    ("Subject 1", "<html><body>Message 1</body></html>", "sender@example.com", "recipient1@example.com"),
+    ("Subject 2", "<html><body>Message 2</body></html>", "sender@example.com", "recipient2@example.com"),
+    # ...
+]</p>
+<p>sent_count = send_custom_mass_mail(email_data)
+print("Total emails sent:", sent_count)
+```</p>
+</li>
+</ol>
+<h3 id="sending_lead_emails">Sending Lead Emails<a class="headerlink" href="#sending_lead_emails" title="Permanent link">&para;</a></h3>
+<p>The <code>send_lead_mail()</code> function in the <code>lead_mail_jobs.py</code> module is responsible for sending lead emails from the queue within the Lead CRM App.</p>
+<h4 id="function_overview">Function Overview<a class="headerlink" href="#function_overview" title="Permanent link">&para;</a></h4>
+<p>This function performs the following tasks:</p>
+<ol>
+<li>Checks if it's time to send lead emails based on the last execution time.</li>
+<li>Retrieves a batch of pending emails from the <code>MailQueue</code> table.</li>
+<li>Constructs personalized email messages for each lead.</li>
+<li>Sends the emails in bulk to the corresponding recipients.</li>
+<li>Updates the queue for processed emails and handles problematic cases.</li>
+<li>Deletes emails that have been tried more than twice or are older than 90 days.</li>
+</ol>
+<h4 id="usage_example">Usage Example<a class="headerlink" href="#usage_example" title="Permanent link">&para;</a></h4>
+<p>To use the <code>send_lead_mail()</code> function, follow these steps:</p>
+<ol>
+<li>
+<p>Ensure you have imported necessary modules and models:</p>
+<p><code>python
+from lead_mail_jobs import send_lead_mail
+from lead.models import Lead, MailQueue
+from django.contrib.sites.models import Site
+from django.template.loader import render_to_string
+from django.utils import timezone
+from django.utils.safestring import mark_safe
+from django.conf import settings
+import logging</code></p>
+</li>
+<li>
+<p>Call the <code>send_lead_mail()</code> function:</p>
+<p><code>python
+total_sent = send_lead_mail()
+print(f"Total lead emails sent: {total_sent}")</code></p>
+</li>
+</ol>
+<h4 id="configuration_and_customization">Configuration and Customization<a class="headerlink" href="#configuration_and_customization" title="Permanent link">&para;</a></h4>
+<p>Before using the <code>send_lead_mail()</code> function, ensure you have the following set up correctly:</p>
+<ul>
+<li>Make sure your <code>settings.py</code> includes configurations for email sending, such as <code>DEFAULT_FROM_EMAIL</code>.</li>
+<li>Adjust the <code>LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME</code> setting to control the number of emails sent in a batch.</li>
+<li>Customize the email content by modifying the template file <code>emails/crm_initial_mail.html</code>.</li>
+<li>Customize the subject line of the emails by modifying the <code>subject</code> variable.</li>
+</ul>
+<h4 id="cleanup_and_error_handling">Cleanup and Error Handling<a class="headerlink" href="#cleanup_and_error_handling" title="Permanent link">&para;</a></h4>
+<p>The function handles cases where emails fail to send, and it removes emails from the queue if they have been tried more than twice or are older than 90 days.</p>
+<p>For any errors or exceptions encountered during the process, the function logs them using the <code>logging</code> module, ensuring you have appropriate logging configured.</p>
+<p>Remember to set up proper error handling and logging mechanisms in your project to handle unexpected scenarios.</p>
+<hr />
+<p>Feel free to adapt and integrate the <code>send_lead_mail()</code> function to your CRM app's requirements and workflows. If you encounter any issues or need further assistance, refer to the documentation or reach out to the development team for support.</p>
+<h3 id="sending_blog-related_emails">Sending Blog-related Emails<a class="headerlink" href="#sending_blog-related_emails" title="Permanent link">&para;</a></h3>
+<p>The <code>send_blog_mail()</code> function within the <code>lead_mail_jobs.py</code> module is responsible for sending blog-related emails from the queue within the Lead CRM App.</p>
+<h4 id="function_overview_1">Function Overview<a class="headerlink" href="#function_overview_1" title="Permanent link">&para;</a></h4>
+<p>This function handles the process of sending personalized emails to recipients based on blog posts. It performs the following tasks:</p>
+<ol>
+<li>Checks if it's time to send blog-related emails based on the last execution time.</li>
+<li>Retrieves a batch of pending emails from the <code>BlogMailQueue</code> table.</li>
+<li>Constructs personalized email messages for each recipient using blog post information.</li>
+<li>Sends the emails in bulk to the corresponding recipients.</li>
+<li>Updates the queue for processed emails and handles problematic cases.</li>
+<li>Deletes emails that have been tried more than twice or are older than 90 days.</li>
+</ol>
+<h4 id="usage_example_1">Usage Example<a class="headerlink" href="#usage_example_1" title="Permanent link">&para;</a></h4>
+<p>To utilize the <code>send_blog_mail()</code> function, follow these steps:</p>
+<ol>
+<li>
+<p>Ensure you have the necessary imports at the beginning of your script:</p>
+<p><code>python
+from lead_mail_jobs import send_blog_mail
+from lead.models import Lead, BlogMailQueue, BlogPost
+from lead.utils import site_info
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.utils import timezone
+from django.utils.safestring import mark_safe
+from django.conf import settings
+from django.db.models import Count
+import logging</code></p>
+</li>
+<li>
+<p>Call the <code>send_blog_mail()</code> function:</p>
+<p><code>python
+total_sent = send_blog_mail()
+print(f"Total blog-related emails sent: {total_sent}")</code></p>
+</li>
+</ol>
+<h4 id="configuration_and_customization_1">Configuration and Customization<a class="headerlink" href="#configuration_and_customization_1" title="Permanent link">&para;</a></h4>
+<p>Before using the <code>send_blog_mail()</code> function, ensure you have the following configured correctly:</p>
+<ul>
+<li>Make sure your <code>settings.py</code> includes configurations for email sending, such as <code>DEFAULT_FROM_EMAIL</code>.</li>
+<li>Adjust the <code>LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME</code> setting to control the number of emails sent in a batch.</li>
+<li>Customize the email content by modifying the template file <code>emails/crm_blog_mail.html</code>.</li>
+<li>Customize the subject line of the emails by modifying the <code>subject</code> variable.</li>
+<li>Adjust the logic inside the function to match your application's specific requirements.</li>
+</ul>
+<h4 id="cleanup_and_error_handling_1">Cleanup and Error Handling<a class="headerlink" href="#cleanup_and_error_handling_1" title="Permanent link">&para;</a></h4>
+<p>The function handles cases where emails fail to send and removes emails from the queue if they have been tried more than twice or are older than 90 days.</p>
+<p>For any errors or exceptions encountered during the process, the function logs them using the <code>logging</code> module, ensuring you have appropriate logging configured.</p>
+<p>Remember to set up proper error handling and logging mechanisms in your project to handle unexpected scenarios.</p>
+<hr />
+<p>Feel free to adapt and integrate the <code>send_blog_mail()</code> function into your CRM app as needed. If you encounter any issues or need further assistance, refer to the documentation or reach out to the development team for support.</p>
+<h3 id="sending_report-related_emails">Sending Report-related Emails<a class="headerlink" href="#sending_report-related_emails" title="Permanent link">&para;</a></h3>
+<p>The <code>send_report_queue()</code> function within the <code>lead_mail_jobs.py</code> module is responsible for sending report-related emails from the queue within the Lead CRM App.</p>
+<h4 id="function_overview_2">Function Overview<a class="headerlink" href="#function_overview_2" title="Permanent link">&para;</a></h4>
+<p>This function handles the process of sending personalized emails to recipients based on report updates. It performs the following tasks:</p>
+<ol>
+<li>Checks if it's time to send report-related emails based on the last execution time.</li>
+<li>Retrieves a batch of pending emails from the <code>ReportMailQueue</code> table.</li>
+<li>Constructs personalized email messages for each recipient using report update information.</li>
+<li>Sends the emails in bulk to the corresponding recipients.</li>
+<li>Updates the queue for processed emails and handles problematic cases.</li>
+<li>Deletes emails that have been tried more than twice or are older than 90 days.</li>
+</ol>
+<h4 id="usage_example_2">Usage Example<a class="headerlink" href="#usage_example_2" title="Permanent link">&para;</a></h4>
+<p>To utilize the <code>send_report_queue()</code> function, follow these steps:</p>
+<ol>
+<li>
+<p>Ensure you have the necessary imports at the beginning of your script:</p>
+<p><code>python
+from lead_mail_jobs import send_report_queue
+from lead.models import ReportMailQueue
+from lead.utils import site_info
+from django.template.loader import render_to_string
+from django.utils import timezone
+from django.utils.safestring import mark_safe
+from django.conf import settings
+import logging</code></p>
+</li>
+<li>
+<p>Call the <code>send_report_queue()</code> function:</p>
+<p><code>python
+total_sent = send_report_queue()
+print(f"Total report-related emails sent: {total_sent}")</code></p>
+</li>
+</ol>
+<h4 id="configuration_and_customization_2">Configuration and Customization<a class="headerlink" href="#configuration_and_customization_2" title="Permanent link">&para;</a></h4>
+<p>Before using the <code>send_report_queue()</code> function, ensure you have the following configured correctly:</p>
+<ul>
+<li>Make sure your <code>settings.py</code> includes configurations for email sending, such as <code>DEFAULT_FROM_EMAIL</code>.</li>
+<li>Adjust the <code>LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME</code> setting to control the number of emails sent in a batch.</li>
+<li>Customize the email content by modifying the template file <code>emails/feedback_update.html</code>.</li>
+<li>Adjust the logic inside the function to match your application's specific requirements.</li>
+</ul>
+<h4 id="cleanup_and_error_handling_2">Cleanup and Error Handling<a class="headerlink" href="#cleanup_and_error_handling_2" title="Permanent link">&para;</a></h4>
+<p>The function handles cases where emails fail to send and removes emails from the queue if they have been tried more than twice or are older than 90 days.</p>
+<p>For any errors or exceptions encountered during the process, the function logs them using the <code>logging</code> module, ensuring you have appropriate logging configured.</p>
+<p>Remember to set up proper error handling and logging mechanisms in your project to handle unexpected scenarios.</p>
+<hr />
+<p>Feel free to adapt and integrate the <code>send_report_queue()</code> function into your CRM app as needed. If you encounter any issues or need further assistance, refer to the documentation or reach out to the development team for support.</p>
+<h1 id="sending_new_fuel_report_notifications">Sending New Fuel Report Notifications<a class="headerlink" href="#sending_new_fuel_report_notifications" title="Permanent link">&para;</a></h1>
+<p>The <code>send_new_report_notification()</code> function is responsible for sending notifications to consumers for new fuel reports within the Lead CRM App.</p>
+<h4 id="function_overview_3">Function Overview<a class="headerlink" href="#function_overview_3" title="Permanent link">&para;</a></h4>
+<p>This function handles the process of sending personalized email notifications to consumers based on new fuel report submissions. It performs the following tasks:</p>
+<ol>
+<li>Retrieves a batch of pending email notifications from the <code>ConsumerMailQueue</code> table.</li>
+<li>Constructs personalized notification messages for each recipient with information about the new fuel report.</li>
+<li>Sends the notification emails in bulk to the corresponding recipients.</li>
+<li>Updates the queue for processed notifications and handles cases where emails fail to send.</li>
+<li>Deletes old queue entries that have been tried more than twice or are older than 90 days.</li>
+</ol>
+<h4 id="usage_example_3">Usage Example<a class="headerlink" href="#usage_example_3" title="Permanent link">&para;</a></h4>
+<p>To utilize the <code>send_new_report_notification()</code> function, follow these steps:</p>
+<ol>
+<li>
+<p>Ensure you have the necessary imports at the beginning of your script:</p>
+<p><code>python
+from lead.models import ConsumerMailQueue
+from lead.utils import site_info, build_full_url
+from django.utils import timezone
+from django.conf import settings
+import logging
+from django.db.models import Q
+from lead.utils import send_custom_mass_mail</code></p>
+</li>
+<li>
+<p>Call the <code>send_new_report_notification()</code> function:</p>
+<p><code>python
+total_sent = send_new_report_notification()
+print(f"Total new fuel report notifications sent: {total_sent}")</code></p>
+</li>
+</ol>
+<h4 id="configuration_and_customization_3">Configuration and Customization<a class="headerlink" href="#configuration_and_customization_3" title="Permanent link">&para;</a></h4>
+<p>Before using the <code>send_new_report_notification()</code> function, ensure you have the following configured correctly:</p>
+<ul>
+<li>Make sure your <code>settings.py</code> includes configurations for email sending, such as <code>DEFAULT_FROM_EMAIL</code>.</li>
+<li>Adjust the <code>LEAD_MAIL_SEND_FROM_QUEUE_AT_A_TIME</code> setting to control the number of notifications sent in a batch.</li>
+<li>Customize the notification content within the function as needed.</li>
+<li>Adjust the logic inside the function to match your application's specific requirements.</li>
+</ul>
+<h4 id="cleanup_and_error_handling_3">Cleanup and Error Handling<a class="headerlink" href="#cleanup_and_error_handling_3" title="Permanent link">&para;</a></h4>
+<p>The function handles cases where notifications fail to send and removes notifications from the queue if they have been tried more than twice or are older than 90 days.</p>
+<p>For any errors or exceptions encountered during the process, the function logs them using the <code>logging</code> module, ensuring you have appropriate logging configured.</p>
+<h2 id="remember_to_set_up_proper_error_handling_and_logging_mechanisms_in_your_project_to_handle_unexpected_scenarios">Remember to set up proper error handling and logging mechanisms in your project to handle unexpected scenarios.<a class="headerlink" href="#remember_to_set_up_proper_error_handling_and_logging_mechanisms_in_your_project_to_handle_unexpected_scenarios" title="Permanent link">&para;</a></h2>
+<h3 id="sending_queued_mails_in_bulk_using_cron_job">Sending Queued Mails in Bulk using Cron Job<a class="headerlink" href="#sending_queued_mails_in_bulk_using_cron_job" title="Permanent link">&para;</a></h3>
+<p>The <code>SendQueueMail</code> class extends the <code>CronJobBase</code> class from Django's <code>django_cron</code> module. This cron job is responsible for sending various types of queued mails in bulk at scheduled intervals.</p>
+<h4 id="cron_job_overview">Cron Job Overview<a class="headerlink" href="#cron_job_overview" title="Permanent link">&para;</a></h4>
+<p>The <code>SendQueueMail</code> cron job handles the bulk sending of different types of queued mails, including lead mails, blog mails, and report mails. It ensures that queued mails are efficiently dispatched to their recipients while minimizing load and potential issues.</p>
+<h4 id="usage_example_4">Usage Example<a class="headerlink" href="#usage_example_4" title="Permanent link">&para;</a></h4>
+<p>To use the <code>SendQueueMail</code> cron job, follow these steps:</p>
+<ol>
+<li>
+<p>Import the necessary modules at the beginning of your script:</p>
+<p><code>python
+from django_cron import CronJobBase, Schedule
+from .lead_mail_jobs import send_lead_mail
+from .lead_mail_jobs import send_blog_mail
+from .lead_mail_jobs import send_report_queue
+import logging</code></p>
+</li>
+<li>
+<p>Define your <code>SendQueueMail</code> class, ensuring it extends <code>CronJobBase</code>:</p>
+<p>```python
+class SendQueueMail(CronJobBase):
+    RUN_EVERY_MINS = 5
+    RETRY_AFTER_FAILURE_MINS = 1
+    MIN_NUM_FAILURES = 2  <br />
+    ALLOW_PARALLEL_RUNS = True
+    schedule = Schedule(run_every_mins=RUN_EVERY_MINS, retry_after_failure_mins=RETRY_AFTER_FAILURE_MINS)
+    code = 'crm.send_queue_mail'</p>
+<pre><code>def do(self):
+    try:
+        # Send lead mails
+        total_lead_mails_sent = send_lead_mail()
+        log.info(f'{total_lead_mails_sent} lead mail(s) have been sent')
+
+        # Send blog mails
+        total_blog_mails_sent = send_blog_mail()
+        log.info(f'{total_blog_mails_sent} blog mail(s) have been sent')
+
+        # Send report mails
+        total_report_mails_sent = send_report_queue()
+        log.info(f'{total_report_mails_sent} report mail(s) have been sent')
+
+        # Send new report mails to consumer
+       total_consumer_mail_sent = send_new_report_notification()
+       log.info(f'{total_consumer_mail_sent} report mail(s) have been sent')
+
+    except Exception as e:
+        log.exception(f'An error occurred while sending queued mails: {e}')
+</code></pre>
+<p>```</p>
+</li>
+<li>
+<p>Ensure you have the required logging configured to handle exceptions and logs effectively.</p>
+</li>
+</ol>
+<h4 id="configuration_and_customization_4">Configuration and Customization<a class="headerlink" href="#configuration_and_customization_4" title="Permanent link">&para;</a></h4>
+<p>The <code>SendQueueMail</code> cron job class can be customized to suit your application's requirements. You can adjust the <code>RUN_EVERY_MINS</code> value to set the frequency of the cron job execution. Additionally, you can modify the <code>do()</code> method to include any other types of queued mails or additional processing logic.</p>
+<h4 id="error_handling">Error Handling<a class="headerlink" href="#error_handling" title="Permanent link">&para;</a></h4>
+<p>The cron job employs robust error handling mechanisms. In case of any exceptions during the execution of the cron job, it logs the error and provides details for troubleshooting.</p>
+<hr />
+<p>Feel free to incorporate the <code>SendQueueMail</code> cron job class into your CRM app's workflow to ensure efficient and timely delivery of queued mails. If you encounter any issues or need further assistance, refer to the documentation or reach out to the development team for support.</p>
+<h3 id="sending_new_report_notifications">Sending New Report Notifications<a class="headerlink" href="#sending_new_report_notifications" title="Permanent link">&para;</a></h3>
+<p>The <code>send_new_report_notification()</code> function within the <code>your_module.py</code> module is responsible for sending notifications to consumers about new fuel reports within your application.</p>
+<h4 id="function_overview_4">Function Overview<a class="headerlink" href="#function_overview_4" title="Permanent link">&para;</a></h4>
+<p>This function retrieves pending email notifications from the queue, constructs notification messages, and sends them to consumers. It also handles updating the queue and deleting old queue entries. Here's a brief overview of what it does:</p>
+<ol>
+<li>
+<p><strong>Retrieve Pending Emails</strong>: The function fetches pending email notifications from the queue that haven't been processed yet.</p>
+</li>
+<li>
+<p><strong>Construct Messages</strong>: It constructs individual notification messages for each pending email, including information about the new fuel report and a link to it.</p>
+</li>
+<li>
+<p><strong>Update Queue</strong>: The function updates the pending email records by incrementing the "tried" count, marking them as processed, and recording the process time.</p>
+</li>
+<li>
+<p><strong>Send Emails</strong>: It sends the constructed notification emails to the respective consumers.</p>
+</li>
+<li>
+<p><strong>Delete Old Entries</strong>: The function identifies and deletes old queue entries that meet specific conditions (e.g., tried more than twice or older than 90 days).</p>
+</li>
+</ol>
+<h4 id="usage_3">Usage<a class="headerlink" href="#usage_3" title="Permanent link">&para;</a></h4>
+<p>You can call this function as needed within your Django project, typically as part of a scheduled task using Django's built-in cron-like scheduler or a third-party package like <code>django-cron</code>. It helps ensure that consumers are notified about new fuel reports efficiently.</p>
+<p>```python
+from your_module import send_new_report_notification</p>
+<h1 id="call_the_function_to_send_new_report_notifications">Call the function to send new report notifications<a class="headerlink" href="#call_the_function_to_send_new_report_notifications" title="Permanent link">&para;</a></h1>
+<p>total_sent = send_new_report_notification()</p>
+<hr />
+<h3 id="deleting_incomplete_reports_using_cron_job">Deleting Incomplete Reports using Cron Job<a class="headerlink" href="#deleting_incomplete_reports_using_cron_job" title="Permanent link">&para;</a></h3>
+<p>The <code>DeleteIncompleteReports</code> class extends the <code>CronJobBase</code> class from Django's <code>django_cron</code> module. This cron job is responsible for periodically deleting incomplete reports from the system.</p>
+<h4 id="cron_job_overview_1">Cron Job Overview<a class="headerlink" href="#cron_job_overview_1" title="Permanent link">&para;</a></h4>
+<p>The <code>DeleteIncompleteReports</code> cron job ensures that incomplete reports are regularly cleaned up from the system to maintain data accuracy and prevent unnecessary clutter. It uses the <code>clear_evaluator</code> utility function to identify and remove incomplete reports.</p>
+<h4 id="usage_example_5">Usage Example<a class="headerlink" href="#usage_example_5" title="Permanent link">&para;</a></h4>
+<p>To use the <code>DeleteIncompleteReports</code> cron job, follow these steps:</p>
+<ol>
+<li>
+<p>Import the necessary modules at the beginning of your script:</p>
+<p><code>python
+from django_cron import CronJobBase, Schedule
+from .report_utilities import clear_evaluator  # Import the appropriate utility function
+import logging</code></p>
+</li>
+<li>
+<p>Define your <code>DeleteIncompleteReports</code> class, ensuring it extends <code>CronJobBase</code>:</p>
+<p>```python
+class DeleteIncompleteReports(CronJobBase):
+    RUN_EVERY_MINS = 5
+    RETRY_AFTER_FAILURE_MINS = 1
+    MIN_NUM_FAILURES = 2  <br />
+    ALLOW_PARALLEL_RUNS = True
+    schedule = Schedule(run_every_mins=RUN_EVERY_MINS, retry_after_failure_mins=RETRY_AFTER_FAILURE_MINS)
+    code = 'crm.delete_incomplete_reports'</p>
+<pre><code>def do(self):
+    try:
+        deleted_count = clear_evaluator()
+        log.info(f'{deleted_count} incomplete report(s) have been deleted')
+    except Exception as e:
+        log.exception(f'An error occurred while deleting incomplete reports: {e}')
+</code></pre>
+<p>```</p>
+</li>
+<li>
+<p>Ensure you have the required logging configured to handle exceptions and logs effectively.</p>
+</li>
+</ol>
+<h4 id="configuration_and_customization_5">Configuration and Customization<a class="headerlink" href="#configuration_and_customization_5" title="Permanent link">&para;</a></h4>
+<p>The <code>DeleteIncompleteReports</code> cron job class can be customized to suit your application's requirements. You can adjust the <code>RUN_EVERY_MINS</code> value to set the frequency of the cron job execution. Additionally, you can modify the <code>do()</code> method to include any other cleanup logic.</p>
+<h4 id="error_handling_1">Error Handling<a class="headerlink" href="#error_handling_1" title="Permanent link">&para;</a></h4>
+<p>The cron job employs robust error handling mechanisms. In case of any exceptions during the execution of the cron job, it logs the error and provides details for troubleshooting.</p>
+<hr />
+<p>Utilize the <code>DeleteIncompleteReports</code> cron job class to automatically maintain a clean and accurate system by regularly removing incomplete reports. If you encounter any issues or need further assistance, refer to the documentation or reach out to the development team for support.</p>
+<h3 id="url_patterns_in_the_crm_app">URL Patterns in the CRM App<a class="headerlink" href="#url_patterns_in_the_crm_app" title="Permanent link">&para;</a></h3>
+<p>The <code>urls.py</code> file in the CRM app defines URL patterns that map specific URLs to their corresponding views. This allows users to access different parts of the CRM application through their web browser.</p>
+<h4 id="url_patterns_overview">URL Patterns Overview<a class="headerlink" href="#url_patterns_overview" title="Permanent link">&para;</a></h4>
+<p>The URL patterns are defined using Django's <code>path()</code> function, which maps a URL to a view function. Each URL pattern has a unique identifier called the <code>name</code>, which can be used to generate URLs in templates.</p>
+<h4 id="url_definitions">URL Definitions<a class="headerlink" href="#url_definitions" title="Permanent link">&para;</a></h4>
+<p>The <code>urls.py</code> file includes the following URL patterns:</p>
+<ol>
+<li>
+<p><strong>Leads View</strong> (<code>leads</code>):</p>
+<ul>
+<li>URL: <code>/crm/leads</code></li>
+<li>View: <code>leads</code> function</li>
+<li>Purpose: Displays content related to leads in the CRM.</li>
+</ul>
+</li>
+<li>
+<p><strong>Unsubscribe View</strong> (<code>unsubscrib</code>):</p>
+<ul>
+<li>URL: <code>/crm/unsubscrib/&lt;email&gt;/&lt;code&gt;</code></li>
+<li>View: <code>unsubscrib</code> function</li>
+<li>Parameters: <code>email</code> (email address of the subscriber), <code>code</code> (unsubscribe code)</li>
+<li>Purpose: Handles email unsubscription for a specific email address.</li>
+</ul>
+</li>
+<li>
+<p><strong>Subscribe View</strong> (<code>subscrib</code>):</p>
+<ul>
+<li>URL: <code>/crm/subscrib/&lt;str:email&gt;</code></li>
+<li>View: <code>subscrib</code> function</li>
+<li>Parameter: <code>email</code> (email address of the subscriber)</li>
+<li>Purpose: Handles email subscription for a specific email address.</li>
+</ul>
+</li>
+<li>
+<p><strong>Subscription View</strong> (<code>subscription</code>):</p>
+<ul>
+<li>URL: <code>/crm/subscription</code></li>
+<li>View: <code>subscription</code> function</li>
+<li>Purpose: Displays content related to email subscription.</li>
+</ul>
+</li>
+</ol>
+<h4 id="usage_example_6">Usage Example<a class="headerlink" href="#usage_example_6" title="Permanent link">&para;</a></h4>
+<p>To access the different parts of the CRM application, users can use the defined URLs. For example:
+- To view leads: <code>/crm/leads</code>
+- To unsubscribe: <code>/crm/unsubscrib/user@example.com/abcdef123456</code>
+- To subscribe: <code>/crm/subscrib/user@example.com</code>
+- To manage subscriptions: <code>/crm/subscription</code></p>
+<h4 id="customization_and_extension">Customization and Extension<a class="headerlink" href="#customization_and_extension" title="Permanent link">&para;</a></h4>
+<p>You can customize the URL patterns to match your application's requirements. Add new URL patterns and map them to appropriate views as needed. Make sure to update the <code>views.py</code> file with the corresponding view functions.</p>
+<h4 id="url_naming_and_templates">URL Naming and Templates<a class="headerlink" href="#url_naming_and_templates" title="Permanent link">&para;</a></h4>
+<p>Utilize the <code>name</code> parameter in URL patterns to generate URLs dynamically in templates using the <code>{% url %}</code> template tag. This ensures consistent and accurate URL generation throughout your application.</p>
+<hr />
+<p>The URL patterns defined in the <code>urls.py</code> file enable users to access various features and functionalities of the CRM app. If you encounter any issues or need further assistance, refer to the documentation or reach out to the development team for support.</p>
+<h3 id="models_in_the_crm_app">Models in the CRM App<a class="headerlink" href="#models_in_the_crm_app" title="Permanent link">&para;</a></h3>
+<p>The <code>models.py</code> file in the CRM app defines the database models used to store and manage various types of data within the application. These models represent key entities and relationships in the CRM system.</p>
+<h4 id="model_overview">Model Overview<a class="headerlink" href="#model_overview" title="Permanent link">&para;</a></h4>
+<p>The <code>models.py</code> file includes the following models:</p>
+<ol>
+<li>
+<p><strong>Lead Model</strong>:</p>
+<ul>
+<li>Represents leads in the CRM.</li>
+<li>Fields: <code>lead</code>, <code>email_address</code>, <code>phone</code>, <code>address_1</code>, <code>address_2</code>, <code>city</code>, <code>country</code>, <code>subscribed</code>, <code>confirm_code</code>.</li>
+<li>Purpose: Stores lead information such as name, email address, contact details, address, and subscription status.</li>
+</ul>
+</li>
+<li>
+<p><strong>MailQueue Model</strong>:</p>
+<ul>
+<li>Represents queued emails in the CRM.</li>
+<li>Fields: <code>to</code>, <code>added_at</code>, <code>processed</code>, <code>process_time</code>, <code>tried</code>.</li>
+<li>Purpose: Stores information about emails in the queue, including recipient, timestamp, processing status, and retry count.</li>
+</ul>
+</li>
+<li>
+<p><strong>BlogMailQueue Model</strong>:</p>
+<ul>
+<li>Represents queued emails related to blog posts.</li>
+<li>Fields: <code>to</code>, <code>blog</code>, <code>added_at</code>, <code>processed</code>, <code>process_time</code>, <code>tried</code>.</li>
+<li>Purpose: Stores information about emails in the queue related to blog posts, including recipient, associated blog post, and processing details.</li>
+</ul>
+</li>
+</ol>
+<h4 id="model_details">Model Details<a class="headerlink" href="#model_details" title="Permanent link">&para;</a></h4>
+<p>Each model defines its fields, data types, and relationships. The models capture important information about leads, queued emails, and blog-related emails.</p>
+<h4 id="usage_example_7">Usage Example<a class="headerlink" href="#usage_example_7" title="Permanent link">&para;</a></h4>
+<p>To work with the models, you can use Django's Object-Relational Mapping (ORM) features. Here's an example of how you might create a new lead:</p>
+<p>```python
+   from crm.models import Lead</p>
+<p>new_lead = Lead.objects.create(
+       lead='John Doe',
+       email_address='john@example.com',
+       phone='123-456-7890',
+       city='New York',
+       country='US',
+       subscribed=True
+   )
+   ```</p>
+<h4 id="customization_and_extension_1">Customization and Extension<a class="headerlink" href="#customization_and_extension_1" title="Permanent link">&para;</a></h4>
+<p>You can customize the models to match your application's requirements. Add new fields or methods to capture additional data or functionality as needed.</p>
+<h4 id="database_synchronization">Database Synchronization<a class="headerlink" href="#database_synchronization" title="Permanent link">&para;</a></h4>
+<p>After defining or modifying models, make sure to run database migrations using the <code>makemigrations</code> and <code>migrate</code> commands to keep your database schema up-to-date.</p>
+<hr />
+<p>The models defined in the <code>models.py</code> file enable structured storage and management of leads, queued emails, and blog-related email queues. Refer to the documentation for details on using and customizing these models, and feel free to reach out to the development team for assistance.</p>
+<h3 id="helper_function_get_iprequest">Helper Function: <code>get_ip(request)</code><a class="headerlink" href="#helper_function_get_iprequest" title="Permanent link">&para;</a></h3>
+<p>The <code>get_ip</code> function in the <code>views.py</code> file is a utility function designed to retrieve the IP address of a user from an incoming HTTP request. This function is particularly useful for tracking user IP addresses in your application for various purposes, such as analytics, security, and customization.</p>
+<h4 id="function_overview_5">Function Overview<a class="headerlink" href="#function_overview_5" title="Permanent link">&para;</a></h4>
+<p>The <code>get_ip</code> function attempts to extract the user's IP address from various headers present in the HTTP request. It prioritizes headers known to contain the real client IP address, and if none of those headers are present, it falls back to using the <code>REMOTE_ADDR</code> field from the request's <code>META</code> dictionary.</p>
+<h4 id="function_signature">Function Signature<a class="headerlink" href="#function_signature" title="Permanent link">&para;</a></h4>
+<p>```python
+   def get_ip(request: HttpRequest) -&gt; str:
+       """
+       Get the user's IP address from the request.</p>
+<pre><code>   Args:
+       request (HttpRequest): The HTTP request object.
+
+   Returns:
+       str: The user's IP address.
+   """
+</code></pre>
+<p>```</p>
+<h4 id="header_priority_and_fallback">Header Priority and Fallback<a class="headerlink" href="#header_priority_and_fallback" title="Permanent link">&para;</a></h4>
+<p>The function iterates through multiple headers, including <code>HTTP_X_FORWARDED_FOR</code>, <code>HTTP_CLIENT_IP</code>, <code>HTTP_X_REAL_IP</code>, and more, to ensure it captures the actual client IP. If none of these headers contain a valid IP, the function resorts to using the <code>REMOTE_ADDR</code> field, which typically stores the user's IP address.</p>
+<h4 id="usage_example_8">Usage Example<a class="headerlink" href="#usage_example_8" title="Permanent link">&para;</a></h4>
+<p>You can use the <code>get_ip</code> function in your views to track and record the IP addresses of users interacting with your application. For example:</p>
+<p><code>python
+   def my_view(request):
+    user_ip = get_ip(request)
+    # Process and record user IP as neededr: The user's IP address.
+       """</code></p>
+<h4 id="customization_and_extensions">Customization and Extensions<a class="headerlink" href="#customization_and_extensions" title="Permanent link">&para;</a></h4>
+<p>Feel free to modify the get_ip function to suit your application's specific requirements. You can add additional header checks or adapt the function to work with different proxy configurations if necessary.</p>
+<hr />
+<p>The get_ip function simplifies the process of obtaining the user's IP address from an HTTP request, offering flexibility and ease for IP-related operations within your CRM application. Refer to the documentation for more details on its implementation and usage.</p>
+<h3 id="function_get_location_inforequest">Function: <code>get_location_info(request)</code><a class="headerlink" href="#function_get_location_inforequest" title="Permanent link">&para;</a></h3>
+<p>The <code>get_location_info</code> function in the <code>views.py</code> file retrieves location information based on the user's IP address. This function utilizes the user's IP address, obtained through the <code>get_ip</code> function, to query the IPinfo database. The function then extracts details such as the user's city, region, country, and more.</p>
+<h4 id="function_overview_6">Function Overview<a class="headerlink" href="#function_overview_6" title="Permanent link">&para;</a></h4>
+<p>The <code>get_location_info</code> function takes an HTTP request object as an argument. It uses the <code>get_ip</code> function to retrieve the user's IP address, and then constructs an API URL using the IP address and an API token provided in the settings. The function sends an HTTP request to the IPinfo API and processes the response JSON to extract relevant location data.</p>
+<h4 id="function_signature_1">Function Signature<a class="headerlink" href="#function_signature_1" title="Permanent link">&para;</a></h4>
+<p>```python
+   def get_location_info(request: HttpRequest) -&gt; dict:
+       """
+       Get location information based on the user's IP address.</p>
+<pre><code>   Args:
+       request (HttpRequest): The HTTP request object.
+
+   Returns:
+       dict: Location-related information obtained from the IPinfo database.
+   """
+</code></pre>
+<p>```</p>
+<h4 id="api_response_handling">API Response Handling<a class="headerlink" href="#api_response_handling" title="Permanent link">&para;</a></h4>
+<p>The function checks the HTTP response status code to ensure a successful API call (HTTP status code 200, IPINFO.io token is require). If the response code is 200, the function parses the JSON response and updates the data dictionary with location information. If the response code is not 200, the function logs an error.</p>
+<h4 id="usage_example_9">Usage Example<a class="headerlink" href="#usage_example_9" title="Permanent link">&para;</a></h4>
+<p>You can use the get_location_info function to enhance user experiences based on their geographical location:</p>
+<p><code>python
+   def my_view(request):
+    location_data = get_location_info(request)
+    # Process and utilize location data as needed</code></p>
+<h4 id="customization_and_extensions_1">Customization and Extensions<a class="headerlink" href="#customization_and_extensions_1" title="Permanent link">&para;</a></h4>
+<p>The function relies on the get_ip function to retrieve IP addresses. To customize or extend functionality, consider modifying the API request URL or handling additional API response details.</p>
+<hr />
+<p>The get_location_info function provides a convenient way to obtain user location information based on their IP address, enabling personalized experiences and insights in your CRM application. Refer to the documentation for more details on its implementation and utilization.</p>
+<h3 id="function_subscriptionrequest">Function: <code>subscription(request)</code><a class="headerlink" href="#function_subscriptionrequest" title="Permanent link">&para;</a></h3>
+<p>The <code>subscription</code> function in the <code>views.py</code> file handles user subscription requests for newsletters. This function validates the provided name and email address, performs checks on existing subscriptions, sends confirmation emails, and returns appropriate responses to the user.</p>
+<h4 id="function_overview_7">Function Overview<a class="headerlink" href="#function_overview_7" title="Permanent link">&para;</a></h4>
+<p>The <code>subscription</code> function takes an HTTP request object as an argument. It primarily processes POST requests containing subscription form data. The function follows these steps:
+1. Validates the form data submitted by the user.
+2. Checks if the provided email address already exists in the <code>Lead</code> database.
+3. Sends a confirmation email for subscription or informs the user if the email is already subscribed.
+4. Creates a new <code>Lead</code> entry and sends a confirmation email if the email is not found in the database.</p>
+<h4 id="function_signature_2">Function Signature<a class="headerlink" href="#function_signature_2" title="Permanent link">&para;</a></h4>
+<p>```python
+   def subscription(request: HttpRequest) -&gt; HttpResponse:
+       """
+       Process subscription requests and send confirmation emails.</p>
+<pre><code>   Args:
+       request (HttpRequest): The HTTP request object.
+
+   Returns:
+       HttpResponse: A response indicating the result of the subscription attempt.
+   """
+</code></pre>
+<p>```</p>
+<h4 id="subscription_workflow">Subscription Workflow<a class="headerlink" href="#subscription_workflow" title="Permanent link">&para;</a></h4>
+<p>When a user submits the subscription form, the function checks if the submitted data is valid.
+1. If the email address already exists in the Lead database:
+2. If the email is subscribed, an error message is returned, indicating that the email is already subscribed.
+3. If the email is not subscribed, a confirmation email is sent to the user.
+4. If the email address is not found in the database, a new Lead entry is created with the provided name, email address, and location information. A confirmation email is then sent.</p>
+<h4 id="usage_example_10">Usage Example<a class="headerlink" href="#usage_example_10" title="Permanent link">&para;</a></h4>
+<p>You can use the subscription function to handle user subscription requests in your views:</p>
+<p><code>python
+   def my_view(request):
+    if request.method == 'POST':
+        return subscription(request)
+    else:
+        # Handle GET requests or other logic</code></p>
+<h4 id="customization_and_extensions_2">Customization and Extensions<a class="headerlink" href="#customization_and_extensions_2" title="Permanent link">&para;</a></h4>
+<p>This function relies on the Lead model and the SubscriberForm form for data management and validation. You can customize the email templates, modify the subscription workflow, or integrate additional functionality as per your application's requirements.</p>
+<hr />
+<p>The subscription function streamlines the subscription process for newsletters, providing a user-friendly experience by sending confirmation emails and managing user data. Refer to the documentation for more details on its implementation and utilization.</p>
+<h3 id="function_leadsrequest">Function: <code>leads(request)</code><a class="headerlink" href="#function_leadsrequest" title="Permanent link">&para;</a></h3>
+<p>The <code>leads</code> function in the <code>views.py</code> file handles the display and management of leads within the CRM system. It allows for lead deletion, adding leads to the mail queue for later sending, and uploading leads through a CSV file. The function also implements lead pagination and provides associated documentation.</p>
+<h4 id="function_overview_8">Function Overview<a class="headerlink" href="#function_overview_8" title="Permanent link">&para;</a></h4>
+<p>The <code>leads</code> function requires user authentication and staff permissions to access. It processes both GET and POST requests and offers the following features:
+   - Displaying and managing leads in the CRM system.
+   - Deleting selected leads.
+   - Adding selected leads to the mail queue for sending later.
+   - Uploading leads through a CSV file.</p>
+<h4 id="function_signature_3">Function Signature<a class="headerlink" href="#function_signature_3" title="Permanent link">&para;</a></h4>
+<p>```python
+  @login_required
+  @staff_member_required
+  def leads(request: HttpRequest) -&gt; HttpResponse:
+      """
+      Display and manage leads for the CRM.</p>
+<pre><code>  Args:
+      request (HttpRequest): The HTTP request object.
+
+  Returns:
+      HttpResponse: A rendered HTML template with lead data and related information.
+  """
+</code></pre>
+<p>```</p>
+<h4 id="lead_management_workflow">Lead Management Workflow<a class="headerlink" href="#lead_management_workflow" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Display the list of leads paginated in groups of 50 per page.</li>
+<li>
+<p>Process POST requests:</p>
+</li>
+<li>
+<p>Delete selected leads using bulk delete.</p>
+</li>
+<li>Add selected leads to the mail queue for later sending.</li>
+<li>Upload leads from a CSV file, processing and validating each entry.</li>
+</ol>
+<p>##### Lead Management Features</p>
+<pre><code> - Deleting Leads: Selecting leads and clicking the "Delete" button removes the selected leads from the CRM.
+ - Adding to Mail Queue: Selecting leads and clicking the "Mail Lead" button adds them to the mail queue for later sending. Only subscribed leads are added.
+ - Uploading Leads: Uploading a CSV file containing lead information adds the leads to the CRM. Errors during upload are reported.
+</code></pre>
+<p>##### Pagination and Meta Information</p>
+<p>The function uses pagination to display leads, with 50 leads per page. It also provides meta information for the page, such as title, description, tag, and robots directives.</p>
+<p>##### Customization and Extensions</p>
+<p>This function interacts with the Lead model, supporting lead management and data storage. You can customize templates, modify lead management workflows, and integrate additional features based on your application's requirements.</p>
+<hr />
+<p>The <code>leads</code> function offers a comprehensive interface for lead management within the CRM. It empowers users to manage leads, perform bulk actions, and upload leads through CSV files. Refer to the documentation for more details on its implementation and utilization.</p>
+<h1 id="unsubscribe_function">Unsubscribe Function<a class="headerlink" href="#unsubscribe_function" title="Permanent link">&para;</a></h1>
+<p>This function handles the process of unsubscribing a lead from receiving further CRM emails. When users click on the unsubscribe link sent in emails, they are directed to this view to complete the unsubscription process.</p>
+<h2 id="purpose_1">Purpose<a class="headerlink" href="#purpose_1" title="Permanent link">&para;</a></h2>
+<p>The purpose of this view is to allow users to opt-out of receiving CRM emails by unsubscribing. It verifies the provided email and confirmation code against the <code>Lead</code> model to ensure the legitimacy of the unsubscription request.</p>
+<h2 id="functionality">Functionality<a class="headerlink" href="#functionality" title="Permanent link">&para;</a></h2>
+<p>When a user accesses the unsubscribe link with their email and confirmation code, the function performs the following steps:</p>
+<ol>
+<li>Extracts the email and confirmation code from the URL parameters.</li>
+<li>Attempts to locate a lead in the <code>Lead</code> model with the provided email and code.</li>
+<li>If a valid lead is found, it sets the <code>subscribed</code> field of the lead to <code>False</code>, marking them as unsubscribed.</li>
+<li>Logs the action, indicating that the lead has been successfully unsubscribed.</li>
+<li>If the provided email or code is invalid, it displays a warning message and redirects the user to the home page.</li>
+</ol>
+<h2 id="usage_4">Usage<a class="headerlink" href="#usage_4" title="Permanent link">&para;</a></h2>
+<p>To unsubscribe from CRM emails, users can click on the unsubscribe link provided in the emails they receive. They will be directed to this view, where the provided email and code will be verified, and their subscription status will be updated accordingly.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>request</code> (HttpRequest): The HTTP request object.</li>
+<li><code>**kwargs</code>: Keyword arguments containing 'email' and 'code' from the URL.</li>
+</ul>
+<h2 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>HttpResponse</code>: A rendered HTML template confirming the unsubscribed status for the lead, or an error message if the email or code is invalid.</li>
+</ul>
+<h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
+<p>```python
+  # Unsubscribe link in email:
+  # http://example.com/crm/unsubscrib/john@example.com/abc123</p>
+<p># URL Parameters: email='john@example.com', code='abc123'
+  def unsubscrib(request, **kwargs):
+      # ... (Function implementation)</p>
+<p>```</p>
+<h1 id="subscribrequest_kwargs">subscrib(request, **kwargs)<a class="headerlink" href="#subscribrequest_kwargs" title="Permanent link">&para;</a></h1>
+<p>This view handles the confirmation of a lead's subscription to the CRM system. It is accessed via a confirmation link sent in subscription emails.</p>
+<h2 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>request</code> (HttpRequest): The HTTP request object.</li>
+<li><code>**kwargs</code>: Keyword arguments containing the 'email' parameter from the URL.</li>
+</ul>
+<h2 id="functionality_1">Functionality<a class="headerlink" href="#functionality_1" title="Permanent link">&para;</a></h2>
+<p>When a lead clicks on the subscription confirmation link sent to their email, this function is triggered. It confirms their subscription to the CRM system by updating the 'subscribed' field of the lead's record in the database.</p>
+<p>If the lead's email is successfully confirmed, a success template is displayed to acknowledge the subscription. If the email is not found or any errors occur, an appropriate error message is displayed.</p>
+<h2 id="usage_5">Usage<a class="headerlink" href="#usage_5" title="Permanent link">&para;</a></h2>
+<p>```python
+  def subscrib(request, **kwargs):
+      """
+      Confirm Subscription Function</p>
+<pre><code>  This view handles the confirmation of a lead's subscription to the CRM. It is accessed via a confirmation link sent in emails.
+
+  Args:
+      request (HttpRequest): The HTTP request object.
+      **kwargs: Keyword arguments containing 'email' from the URL.
+
+  Returns:
+      HttpResponse: A rendered HTML template confirming the subscription status for the lead or an error message if the email is invalid.
+  """
+  # ... (implementation details)
+</code></pre>
+<p>```</p>
+<h2 id="contributions">Contributions<a class="headerlink" href="#contributions" title="Permanent link">&para;</a></h2>
+<p>If you're a developer working on this project, feel free to expand or modify the <code>admin.py</code> file to meet the evolving requirements of the CRM app. Don't forget to maintain clear code documentation, such as comments and docstrings, to help future developers understand your changes.</p>
+<p>By working collaboratively, we can enhance the app's functionality and user experience while maintaining code quality.</p>
+<p>For additional information or assistance, please refer to the project documentation or reach out to the development team.</p>
+<p>Happy coding!</p></div>
             </div>
         </div>
 

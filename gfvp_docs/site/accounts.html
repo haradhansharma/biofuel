@@ -43,10 +43,10 @@
                                 <a href="accounts.html" class="nav-link">Accounts</a>
                             </li>
                             <li class="navitem">
-                                <a href="crm.html" class="nav-link">CRM</a>
+                                <a href="blog.html" class="nav-link">Blog</a>
                             </li>
                             <li class="navitem">
-                                <a href="blog.html" class="nav-link">Blog</a>
+                                <a href="crm.html" class="nav-link">CRM</a>
                             </li>
                             <li class="navitem">
                                 <a href="doc.html" class="nav-link">Doc</a>
@@ -55,10 +55,22 @@
                                 <a href="evaluation.html" class="nav-link">Evaluation</a>
                             </li>
                             <li class="navitem">
-                                <a href="guide.html" class="nav-link">Guide</a>
+                                <a href="feedback.html" class="nav-link">Feedback</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="gfvp.html" class="nav-link">Project</a>
                             </li>
                             <li class="navitem">
                                 <a href="glossary.html" class="nav-link">Glossary</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="guide.html" class="nav-link">User Guide</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="home.html" class="nav-link">Home And Dash</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="navigation.html" class="nav-link">Navigation</a>
                             </li>
                         </ul>
 
@@ -74,12 +86,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="crm.html" class="nav-link">
+                                <a rel="next" href="blog.html" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/haradhansharma/biofuel/blob/main/docs/accounts.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/haradhansharma/biofuel/tree/v24123/edit/master/docs/accounts.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -99,8 +111,387 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#welcome_to_accounts_apps_technical_docs" class="nav-link">Welcome to Accounts app's Technical Docs</a>
+            <li class="nav-item" data-level="1"><a href="#custom_django_admin_configuration_for_accounts_app" class="nav-link">Custom Django Admin Configuration for Accounts App</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#setup" class="nav-link">Setup</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#features" class="nav-link">Features</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#custom_actions" class="nav-link">Custom Actions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#usertype_management" class="nav-link">UserType Management</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#optimized_django_user_type_decorators" class="nav-link">Optimized Django User Type Decorators</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#overview_1" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#installation" class="nav-link">Installation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#usage" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#user_type_decorators" class="nav-link">User Type Decorators</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#report_creator_decorator" class="nav-link">Report Creator Decorator</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#custom_usercreationform_for_admin" class="nav-link">Custom UserCreationForm for Admin</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#usage_1" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#customization" class="nav-link">Customization</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#usercreationformfront_for_user_registration" class="nav-link">UserCreationFormFront for user registration</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#usage_2" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#custom_fields" class="nav-link">Custom Fields</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#custom_widgets" class="nav-link">Custom Widgets</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#validation_and_email_verification" class="nav-link">Validation and Email Verification</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#email_verification_flow" class="nav-link">Email Verification Flow</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#custom_userchangeform_for_self-account_data_editing" class="nav-link">Custom UserChangeForm for Self-Account Data Editing</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#introduction" class="nav-link">Introduction</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#usage_3" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#fields_and_widgets" class="nav-link">Fields and Widgets</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#meta_class" class="nav-link">Meta Class</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#loginform_class_in_account_app" class="nav-link">LoginForm Class in Account App</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#overview_2" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#features_1" class="nav-link">Features</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#additional_details" class="nav-link">Additional Details</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#usage_4" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#notes" class="nav-link">Notes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#helper_of_accounts_app" class="nav-link">Helper of Accounts APP</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#custom_username_validator" class="nav-link">Custom Username Validator</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#permission_check_function" class="nav-link">Permission Check Function</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#email_function" class="nav-link">Email Function</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#automatic_profile_creation" class="nav-link">Automatic Profile Creation</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#usage_5" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#automatic_notification_settings_creation" class="nav-link">Automatic Notification Settings Creation</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#usage_6" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#account_activation_token_generator" class="nav-link">Account Activation Token Generator</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#usage_7" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#url_configuration" class="nav-link">URL Configuration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#custom_login_view" class="nav-link">Custom Login View</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#features_2" class="nav-link">Features</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#usage_8" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#example_usage" class="nav-link">Example Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#context_data" class="nav-link">Context Data</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#signup_view" class="nav-link">Signup View</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#features_3" class="nav-link">Features</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#installation_1" class="nav-link">Installation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#activate_user_account" class="nav-link">Activate User Account</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#creating_lead" class="nav-link">Creating Lead</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating_newsletter_subscription" class="nav-link">Creating Newsletter Subscription</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#usage_9" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#user_profile_page_view" class="nav-link">User Profile Page View</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#usage_10" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#functionality" class="nav-link">Functionality</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#documentation" class="nav-link">Documentation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#usage_recommendations" class="nav-link">Usage Recommendations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#note" class="nav-link">Note</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#username_check_function" class="nav-link">Username Check Function</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#function_signature" class="nav-link">Function Signature</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#function_parameters" class="nav-link">Function Parameters</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#function_behavior" class="nav-link">Function Behavior</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#usage_example" class="nav-link">Usage Example</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#check_email_view_function" class="nav-link">check_email View Function</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#partner_service_view_function" class="nav-link">partner_service View Function</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#description" class="nav-link">Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#parameters" class="nav-link">Parameters</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#returns" class="nav-link">Returns</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#functionality_1" class="nav-link">Functionality</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#usage_11" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#commit_service_view" class="nav-link">Commit Service View</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#functionality_2" class="nav-link">Functionality</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#permissions" class="nav-link">Permissions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#ethical_operation" class="nav-link">Ethical Operation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#usage_12" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#requirements" class="nav-link">Requirements</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#delete_service_view" class="nav-link">Delete Service View</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#usage_13" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#parameters_1" class="nav-link">Parameters</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#returns_1" class="nav-link">Returns</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#behavior" class="nav-link">Behavior</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#example_usage_1" class="nav-link">Example Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#dependencies" class="nav-link">Dependencies</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#see_also" class="nav-link">See Also</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#expert_required_decorator" class="nav-link">expert_required Decorator</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#contributions" class="nav-link">Contributions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#license" class="nav-link">License</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#credits" class="nav-link">Credits</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -108,72 +499,959 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="welcome_to_accounts_apps_technical_docs">Welcome to Accounts app's Technical Docs<a class="headerlink" href="#welcome_to_accounts_apps_technical_docs" title="Permanent link">&para;</a></h1>
-<p>Here I will mention the important points of Account App. These points will help a Django developer get an idea of the project.</p>
-<hr />
-<h3 id="about_modelspy">About <code>models.py</code><a class="headerlink" href="#about_modelspy" title="Permanent link">&para;</a></h3>
-<hr />
-<h4 id="class_usertypemodelsmodel_have_4_booleanfield"><code>class UserType(models.Model)</code> have 4 BooleanField:<a class="headerlink" href="#class_usertypemodelsmodel_have_4_booleanfield" title="Permanent link">&para;</a></h4>
+<h1 id="custom_django_admin_configuration_for_accounts_app">Custom Django Admin Configuration for Accounts App<a class="headerlink" href="#custom_django_admin_configuration_for_accounts_app" title="Permanent link">&para;</a></h1>
+<p>This apps contains a custom Django admin configuration for managing user accounts and related models in an application. The admin configuration enhances the default Django admin interface by adding custom actions, custom fields, and filtering options.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>The provided code extends the Django admin interface to manage user accounts, user profiles, and other related models. It includes custom actions for activating and deactivating user accounts, as well as sending emails to specific user groups. The customizations are designed to provide a more efficient way of managing users within the Django admin dashboard.</p>
+<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
+<p>To use this custom admin configuration in your Django project, follow these steps:</p>
+<ol>
+<li>Copy the provided code to your Django project's admin.py file or a dedicated admin.py file within your app.</li>
+<li>Make sure you have the required models, forms, and templates as referenced in the code.</li>
+<li>Register the required models using the <code>admin.site.register()</code> function.</li>
+<li>Customize the custom actions, filters, and other admin settings to match your project's requirements.</li>
+<li>Run your Django development server and navigate to the admin dashboard to see the changes.</li>
+</ol>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>is_marine</code></li>
-<li><code>is_producer</code></li>
-<li><code>is_expert</code></li>
-<li><code>is_consumer</code></li>
+<li>Customized user list view with additional fields such as user type, expertise, phone number, and email verification status.</li>
+<li>Filtering users based on user type, activity status, staff status, expertise, and email verification status.</li>
+<li>Searching for users based on email, phone, organization, username, expertise, and email verification status.</li>
+<li>Inline editing of user profiles within the user admin page.</li>
+<li>Ordering users by their date of joining.</li>
+<li>Custom actions for activating and deactivating user accounts.</li>
+<li>Custom action for sending emails to selected marine experts for feedback updates.</li>
+<li>Management of user types with customizable display fields and filtering options.</li>
 </ul>
-<p>indicates the types of user of the site.</p>
-<hr />
-<p>This is the first paragraph of the document.</p>
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-<th>Third Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-</tbody>
-</table>
-<pre><code>Fenced code blocks are like Standard
-Markdown’s regular code blocks, except that
-they’re not indented and instead rely on
-start and end fence lines to delimit the
-code block.
+<h2 id="custom_actions">Custom Actions<a class="headerlink" href="#custom_actions" title="Permanent link">&para;</a></h2>
+<h3 id="activate_account_and_send_mail">Activate Account and Send Mail<a class="headerlink" href="#activate_account_and_send_mail" title="Permanent link">&para;</a></h3>
+<p>This action allows admin users to activate selected user accounts and send activation emails to the users. Admins can select multiple users and trigger the action to activate their accounts.</p>
+<h3 id="deactivate_account">Deactivate Account<a class="headerlink" href="#deactivate_account" title="Permanent link">&para;</a></h3>
+<p>This action enables admin users to deactivate selected user accounts. Similar to the previous action, admin users can select multiple users and deactivate their accounts.</p>
+<h3 id="send_mail_to_expert">Send Mail to Expert<a class="headerlink" href="#send_mail_to_expert" title="Permanent link">&para;</a></h3>
+<p>Admin users can use this action to send courtesy emails to selected marine experts for feedback updates. The action is restricted to marine experts only. An email template is used for composing the emails.</p>
+<h2 id="usertype_management">UserType Management<a class="headerlink" href="#usertype_management" title="Permanent link">&para;</a></h2>
+<p>The custom admin configuration also provides enhanced management for user types:</p>
+<ul>
+<li>Displaying user type fields in the admin list view.</li>
+<li>Filtering user types based on their names.</li>
+<li>Searching for user types using their names.</li>
+<li>Automatically populating the <code>slug</code> field based on the <code>name</code> field.</li>
+</ul>
+<h1 id="optimized_django_user_type_decorators">Optimized Django User Type Decorators<a class="headerlink" href="#optimized_django_user_type_decorators" title="Permanent link">&para;</a></h1>
+<h2 id="overview_1">Overview<a class="headerlink" href="#overview_1" title="Permanent link">&para;</a></h2>
+<p>This repository provides optimized decorators for controlling access to Django views based on user types, as well as a decorator for report creator access control. These decorators simplify the process of restricting access to specific user types or report creators, enhancing the security and usability of your Django application.</p>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Copy the provided optimized decorators code to a suitable location within your Django project, such as a utility module.</li>
+<li>Import the decorators wherever you need to control access based on user types or report creator permissions.</li>
+</ol>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Import the required decorators in your views or viewsets:</li>
+</ol>
+<p>.. code-block:: python</p>
+<pre><code>  from your_project.utils.decorators import expert_required, producer_required, consumer_required, marine_required, report_creator_required
 </code></pre>
-<pre><code class="language-python">def fn():
-    pass
+<ol>
+<li>Apply the decorators to your views or viewsets where access control is needed:</li>
+</ol>
+<p>.. code-block:: python</p>
+<pre><code>  @expert_required
+  def expert_view(request, ...):
+      # Your view logic here
+      ...
+
+  @report_creator_required
+  def report_edit_view(request, slug, ...):
+      # Your view logic here
+      ...
 </code></pre>
-<table>
-<thead>
-<tr>
-<th align="left">Fruit(left)</th>
-<th align="center">Emoji(center)</th>
-<th align="right">Taste(right)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">Mango is the king of Fruits</td>
-<td align="center">:mango:</td>
-<td align="right">Sweet, and I love it</td>
-</tr>
-<tr>
-<td align="left">Lemon is good for health</td>
-<td align="center">:lemon:</td>
-<td align="right">Sour, mix it in the water</td>
-</tr>
-</tbody>
-</table></div>
+<h2 id="user_type_decorators">User Type Decorators<a class="headerlink" href="#user_type_decorators" title="Permanent link">&para;</a></h2>
+<p>The following user type decorators are available:</p>
+<ul>
+<li><code>expert_required</code>: Requires the user to be an expert, staff member, or superuser.</li>
+<li><code>producer_required</code>: Requires the user to be a producer, staff member, or superuser.</li>
+<li><code>consumer_required</code>: Requires the user to be a consumer, staff member, or superuser.</li>
+<li><code>marine_required</code>: Requires the user to be a marine user, staff member, or superuser.</li>
+</ul>
+<h2 id="report_creator_decorator">Report Creator Decorator<a class="headerlink" href="#report_creator_decorator" title="Permanent link">&para;</a></h2>
+<p>The <code>report_creator_required</code> decorator restricts access to views based on the report creator or staff/superuser. This is particularly useful for views related to report editing or management.</p>
+<h1 id="custom_usercreationform_for_admin">Custom UserCreationForm for Admin<a class="headerlink" href="#custom_usercreationform_for_admin" title="Permanent link">&para;</a></h1>
+<p>The <code>UserCreationForm</code> class provided in this app is a customized version of Django's default <code>UserCreationForm</code>. It extends the functionality of the default form to include additional fields and customization options.</p>
+<h2 id="usage_1">Usage<a class="headerlink" href="#usage_1" title="Permanent link">&para;</a></h2>
+<p>The <code>UserCreationForm</code> can be used for creating new user accounts with extended fields. It adds the following features:</p>
+<ul>
+<li>Additional fields: The form includes custom fields such as <code>usertype</code>, <code>experts_in</code>, and <code>term_agree</code>.</li>
+<li>Customized appearance: The form's appearance on the admin page is customized using the <code>UserAdmin.add_fieldsets</code> attribute.</li>
+<li>Compatibility with UserAdmin: The form is compatible with the Django <code>UserAdmin</code> interface.</li>
+</ul>
+<h2 id="customization">Customization<a class="headerlink" href="#customization" title="Permanent link">&para;</a></h2>
+<p>The <code>UserCreationForm</code> is designed to enhance the default user registration process. It inherits from Django's <code>UserCreationForm</code> and extends its functionality:</p>
+<ul>
+<li>The <code>__init__</code> method initializes the form instance.</li>
+<li>The <code>UserAdmin.add_form</code> is set to use the Django's default <code>UserCreationForm</code>.</li>
+<li>The <code>UserAdmin.add_fieldsets</code> are updated to include the additional fields and customize the appearance.</li>
+</ul>
+<p>To use this form in your project, simply import it and use it for user registration with the extended fields.</p>
+<p>.. code-block:: python</p>
+<pre><code>from django.contrib.auth.forms import UserCreationForm as UserCreationFormDjango
+from .forms import UserCreationForm  # Import the custom form
+from django.contrib.auth.admin import UserAdmin
+
+# Set the UserAdmin's add_form to use the custom UserCreationForm
+UserAdmin.add_form = UserCreationFormDjango
+</code></pre>
+<h1 id="usercreationformfront_for_user_registration">UserCreationFormFront for user registration<a class="headerlink" href="#usercreationformfront_for_user_registration" title="Permanent link">&para;</a></h1>
+<p>The <code>UserCreationFormFront</code> class is a custom user creation form specifically designed for the frontend registration page of your Django project's account app. This form extends the <code>UserCreationFormDjango</code> class.</p>
+<h2 id="usage_2">Usage<a class="headerlink" href="#usage_2" title="Permanent link">&para;</a></h2>
+<p>This form includes various custom fields with HTML attributes to enhance user experience during registration. It also implements validations for username, email, and other fields. Additionally, it integrates with Google reCAPTCHA for added security.</p>
+<h2 id="custom_fields">Custom Fields<a class="headerlink" href="#custom_fields" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>username</code>: A field for the username with a placeholder and real-time username availability check using AJAX.</li>
+<li><code>email</code>: An email field with a placeholder and real-time email availability check using AJAX.</li>
+<li><code>password1</code>: A password field for the user's password.</li>
+<li><code>password2</code>: A field to confirm the password.</li>
+<li><code>term_agree</code>: A checkbox for agreeing to terms and conditions.</li>
+<li><code>newsletter_subscription</code>: A checkbox to subscribe to the newsletter.</li>
+</ul>
+<h2 id="custom_widgets">Custom Widgets<a class="headerlink" href="#custom_widgets" title="Permanent link">&para;</a></h2>
+<p>The form uses various custom widgets for improved user interactions:</p>
+<ul>
+<li><code>usertype</code>: A dropdown widget for selecting the user type with AJAX-based data loading.</li>
+<li><code>experts_in</code>: A dropdown widget for selecting areas of expertise.</li>
+<li><code>orgonization</code>: A text input widget for the user's organization.</li>
+<li><code>is_public</code>: A checkbox widget for specifying whether the user's profile is public.</li>
+</ul>
+<h2 id="validation_and_email_verification">Validation and Email Verification<a class="headerlink" href="#validation_and_email_verification" title="Permanent link">&para;</a></h2>
+<p>The <code>UserCreationFormFront</code> class contains methods for custom field validation:</p>
+<ul>
+<li><code>clean_username()</code>: Validates the username to disallow spaces.</li>
+<li><code>clean_experts_in()</code>: Validates the <code>experts_in</code> field based on the user type.</li>
+<li><code>clean()</code>: Implements a custom clean method for handling various validations and email verifications during registration.</li>
+</ul>
+<h2 id="email_verification_flow">Email Verification Flow<a class="headerlink" href="#email_verification_flow" title="Permanent link">&para;</a></h2>
+<p>The form handles email verification during registration:</p>
+<ul>
+<li>If the provided email is not registered, the user can proceed with registration.</li>
+<li>If the email is already registered but not verified, a verification email is sent to the user for confirmation.</li>
+<li>If the email is verified but the account is not activated, the user receives a courtesy email and a message regarding activation status.</li>
+</ul>
+<p>Please note that this README provides a summary of the <code>UserCreationFormFront</code> class and its functionalities. For detailed implementation and integration instructions, refer to the associated source code and documentation within your Django project's <code>account</code> app.</p>
+<h1 id="custom_userchangeform_for_self-account_data_editing">Custom UserChangeForm for Self-Account Data Editing<a class="headerlink" href="#custom_userchangeform_for_self-account_data_editing" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>The <code>UserChangeForm</code> Class
+~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
+<p>The <code>UserChangeForm</code> class provided in this module is a custom form derived from Django's <code>UserChangeForm</code>. Its purpose is to extend the functionality of the default form to allow users to edit their own account data. This form is primarily used within the settings and password change sections of the dashboard.</p>
+<h2 id="usage_3">Usage<a class="headerlink" href="#usage_3" title="Permanent link">&para;</a></h2>
+<p>To make use of the <code>UserChangeForm</code>, adhere to the following steps:</p>
+<ol>
+<li>Import the form into your views or forms module:</li>
+</ol>
+<p>.. code-block:: python</p>
+<pre><code>   from path.to.UserChangeForm import UserChangeForm
+</code></pre>
+<ol>
+<li>In your view or form class, create an instance of the <code>UserChangeForm</code>:</li>
+</ol>
+<p>.. code-block:: python</p>
+<pre><code>   user_change_form = UserChangeForm(instance=request.user)
+</code></pre>
+<ol>
+<li>Render the form within your template:</li>
+</ol>
+<p>.. code-block:: html</p>
+<pre><code>   &lt;form method="post"&gt;
+       {% csrf_token %}
+       {{ user_change_form.as_p }}
+       &lt;button type="submit"&gt;Save Changes&lt;/button&gt;
+   &lt;/form&gt;
+</code></pre>
+<h2 id="fields_and_widgets">Fields and Widgets<a class="headerlink" href="#fields_and_widgets" title="Permanent link">&para;</a></h2>
+<p>The <code>UserChangeForm</code> inherits the fields and widgets of the default <code>UserChangeForm</code> provided by Django. However, this implementation extends these fields with additional customization, specifically:</p>
+<ul>
+<li><strong>Email:</strong> The email field is tailored to use the <code>forms.EmailInput</code> widget. This results in an email input field that has the <code>form-control</code> class and an <code>aria-label</code> attribute, thereby enhancing accessibility.</li>
+</ul>
+<p>.. code-block:: python</p>
+<pre><code>   widgets = {
+       'email': forms.EmailInput(attrs={'class': 'form-control', 'aria-label': 'email'}),
+   }
+</code></pre>
+<h2 id="meta_class">Meta Class<a class="headerlink" href="#meta_class" title="Permanent link">&para;</a></h2>
+<p>The <code>Meta</code> class within the <code>UserChangeForm</code> specifies the model to be utilized and the fields to be included in the form. In this case, the form is configured to operate with the user model returned by <code>get_user_model()</code> and encompasses all fields.</p>
+<p>.. code-block:: python</p>
+<pre><code>   class Meta:
+       model = get_user_model()
+       fields = '__all__'
+</code></pre>
+<h1 id="loginform_class_in_account_app"><code>LoginForm</code> Class in Account App<a class="headerlink" href="#loginform_class_in_account_app" title="Permanent link">&para;</a></h1>
+<h2 id="overview_2">Overview<a class="headerlink" href="#overview_2" title="Permanent link">&para;</a></h2>
+<p>The <code>LoginForm</code> class is a custom login form designed for the Django project's <code>account</code> app. This form extends the default <code>AuthenticationForm</code> provided by Django, adding additional fields, custom validations, and integrating reCAPTCHA for enhanced security.</p>
+<h2 id="features_1">Features<a class="headerlink" href="#features_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>Customized Fields:</strong> The <code>LoginForm</code> customizes the default Django form fields, adding HTML attributes to improve user experience. The <code>username</code> and <code>password</code> fields are styled using the <code>form-control</code> CSS class.</p>
+</li>
+<li>
+<p><strong>Remember Me Option:</strong> A "Remember Me" checkbox allows users to choose whether to remember their login for 30 days, as per the site settings. This feature enhances user convenience.</p>
+</li>
+<li>
+<p><strong>reCAPTCHA Integration:</strong> The form includes a Google reCAPTCHA field to prevent automated bot submissions. The reCAPTCHA is displayed as a checkbox for user interaction.</p>
+</li>
+</ul>
+<h2 id="additional_details">Additional Details<a class="headerlink" href="#additional_details" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>Meta Class:</strong> The <code>Meta</code> class within the <code>LoginForm</code> specifies the model and fields used in the form. The fields included in the form are <code>username</code>, <code>password</code>, and <code>remember_me</code>.</p>
+</li>
+<li>
+<p><strong>Custom Validation:</strong> The <code>clean</code> method of the <code>LoginForm</code> class implements custom validation and checks. It ensures that the reCAPTCHA is completed and verifies the provided email and password.</p>
+</li>
+<li>
+<p>If the reCAPTCHA is not completed, a validation error is raised, requiring the user to complete the CAPTCHA.</p>
+</li>
+<li>
+<p>If the provided email and password are valid, the form checks if the email exists in the system. If the email does not exist, an error message is displayed.</p>
+</li>
+<li>
+<p>If the email exists but is not verified, the user is sent an email verification link for verification. A warning message is also displayed to the user.</p>
+</li>
+<li>
+<p>If the email is verified but not activated, different actions are taken based on the user's type (expert, marine, etc.). For certain user types, the user is notified that their account is awaiting approval. For others, an activation email is resent.</p>
+</li>
+<li>
+<p>If the email is verified and activated, the user is authenticated using their email and password. If the authentication fails, an error message is shown.</p>
+</li>
+</ul>
+<h2 id="usage_4">Usage<a class="headerlink" href="#usage_4" title="Permanent link">&para;</a></h2>
+<p>To utilize the <code>LoginForm</code> class, follow these steps:</p>
+<ol>
+<li>
+<p>Import the <code>LoginForm</code> class into the appropriate module:</p>
+<p>.. code-block:: python</p>
+<p>from account.forms import LoginForm</p>
+</li>
+<li>
+<p>Use the <code>LoginForm</code> class in your views, passing it to your template context for rendering:</p>
+<p>.. code-block:: python</p>
+<p>def login_view(request):
+       # ...
+       form = LoginForm(request, ...)
+       # ...</p>
+</li>
+<li>
+<p>Render the form in your template using Django template tags:</p>
+<p>.. code-block:: html</p>
+<p><form method="post">
+       {% csrf_token %}
+       {{ form.as_p }}
+       <button type="submit">Login</button>
+   </form></p>
+</li>
+</ol>
+<h2 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>Ensure that the necessary Django imports and configurations are set up before using the <code>LoginForm</code> class.</p>
+</li>
+<li>
+<p>Modify the form template as needed to match your project's styling and design.</p>
+</li>
+<li>
+<p>The form relies on reCAPTCHA. Make sure to set up reCAPTCHA keys in your project settings for the CAPTCHA field to function properly.</p>
+</li>
+</ul>
+<p>For further assistance or customization, refer to the Django documentation and comments within the code.</p>
+<h1 id="helper_of_accounts_app">Helper of Accounts APP<a class="headerlink" href="#helper_of_accounts_app" title="Permanent link">&para;</a></h1>
+<p>This is a brief description of the My App project.</p>
+<h2 id="custom_username_validator">Custom Username Validator<a class="headerlink" href="#custom_username_validator" title="Permanent link">&para;</a></h2>
+<p>.. code-block:: python</p>
+<pre><code>class CustomsernameValidator(UnicodeUsernameValidator, ASCIIUsernameValidator):
+    """
+    Custom username validator that allows only letters, numbers, and periods.
+    """
+
+    ...
+</code></pre>
+<h2 id="permission_check_function">Permission Check Function<a class="headerlink" href="#permission_check_function" title="Permanent link">&para;</a></h2>
+<p>The following function is abandoned and not currently in use:</p>
+<p>.. code-block:: python</p>
+<pre><code>def check_type(request, slug):
+    """
+    Checks if the current user has the permission to access the requested resource.
+
+    Args:
+        request (django.http.HttpRequest): The HTTP request object.
+        slug (str): The slug of the user type.
+
+    Raises:
+        PermissionDenied: If the current user does not have the permission to access the requested resource.
+    """
+
+    ...
+</code></pre>
+<h2 id="email_function">Email Function<a class="headerlink" href="#email_function" title="Permanent link">&para;</a></h2>
+<p>The following function sends an email to all admins:</p>
+<p>.. code-block:: python</p>
+<pre><code>def send_admin_mail(subject, message):
+    """
+    Sends an email to all admins.
+
+    Args:
+        subject (str): The email subject.
+        message (str): The email message.
+    """
+
+    ...
+</code></pre>
+<h1 id="automatic_profile_creation">Automatic Profile Creation<a class="headerlink" href="#automatic_profile_creation" title="Permanent link">&para;</a></h1>
+<p>The <code>accounts</code> app includes a signal that automatically creates or updates user profiles whenever a new user is registered or an existing user is saved. This functionality is achieved through the use of Django signals.</p>
+<p>Whenever a <code>User</code> instance is created, the signal is triggered, and the <code>create_or_update_user_profile</code> function is called. This function checks if the user is newly created or being updated and accordingly creates a new profile or updates the existing one.</p>
+<h2 id="usage_5">Usage<a class="headerlink" href="#usage_5" title="Permanent link">&para;</a></h2>
+<p>To use this automatic profile creation feature in your Django project, follow these steps:</p>
+<ol>
+<li>
+<p>Make sure the <code>accounts</code> app is installed in your project and properly configured.</p>
+</li>
+<li>
+<p>In your <code>accounts</code> app, create a file named <code>signals.py</code> if it doesn't already exist.</p>
+</li>
+<li>
+<p>Add the following code to your <code>signals.py</code> file:</p>
+</li>
+</ol>
+<p>.. code-block:: python    </p>
+<pre><code>@receiver(post_save, sender=User)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    ...
+</code></pre>
+<ol>
+<li>
+<p>In the above code, make sure to replace <code>'models'</code> with the correct import path to your <code>Profile</code> model if it's in a different module or app.</p>
+</li>
+<li>
+<p>In your project's <code>settings.py</code> file, add the <code>'accounts.signals'</code> module to the <code>INSTALLED_APPS</code> list to ensure that the signal is properly connected.</p>
+</li>
+<li>
+<p>You can uncomment the <code>post_save.connect(create_or_update_user_profile, sender=User)</code> line in the <code>signals.py</code> file or connect the signal in your preferred way.</p>
+</li>
+</ol>
+<p>With these steps completed, your project will automatically create or update user profiles whenever a new user is registered or an existing user is saved.</p>
+<p>Remember to run your project's migrations after making these changes to ensure that the database schema is updated accordingly.</p>
+<h1 id="automatic_notification_settings_creation">Automatic Notification Settings Creation<a class="headerlink" href="#automatic_notification_settings_creation" title="Permanent link">&para;</a></h1>
+<p>The <code>accounts</code> app includes a signal that automatically creates or updates notification settings associated with a user whenever a new user is registered or an existing user is saved. This functionality is achieved through the use of Django signals.</p>
+<p>Whenever a <code>User</code> instance is created or updated, the signal is triggered, and the <code>create_or_update_notification_settings</code> function is called. This function checks if the user is newly created or being updated and accordingly creates a new notification setting or updates the existing one.</p>
+<h2 id="usage_6">Usage<a class="headerlink" href="#usage_6" title="Permanent link">&para;</a></h2>
+<p>To use this automatic notification settings creation feature in your Django project, follow these steps:</p>
+<ol>
+<li>
+<p>Make sure the <code>accounts</code> app is installed in your project and properly configured.</p>
+</li>
+<li>
+<p>In your <code>accounts</code> app, create a file named <code>signals.py</code> if it doesn't already exist.</p>
+</li>
+<li>
+<p>Add the following code to your <code>signals.py</code> file:</p>
+</li>
+</ol>
+<p>```python
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from .models import User, NotificationSettings</p>
+<p>@receiver(post_save, sender=User)
+def create_or_update_notification_settings(sender, instance, created, **kwargs):
+    """
+    Creates or updates a notification setting associated with the User model.
+    As it has been created after an existing user, we are checking for creating notification if it doesn't exist to avoid errors.</p>
+<pre><code>Args:
+    sender (Model): The model class that sent the signal (User in this case).
+    instance (User): The specific instance of the User model that was saved.
+    created (bool): Indicates whether a new instance was created or an existing one was saved.
+    **kwargs: Additional keyword arguments passed along with the signal.
+
+Returns:
+    None
+"""
+try:
+    notification_settings = instance.notificationsettings  # Attempt to access the related NotificationSettings
+except NotificationSettings.DoesNotExist:
+    notification_settings = None
+
+if created or notification_settings is None:
+    # Create a notification settings or update the existing one
+    notification_settings, created = NotificationSettings.objects.get_or_create(user=instance)
+
+# Now, make sure that the instance.notificationsettings is set properly
+if instance.pk != notification_settings.pk:
+    instance.notificationsettings = notification_settings
+    instance.save()
+</code></pre>
+<h1 id="account_activation_token_generator">Account Activation Token Generator<a class="headerlink" href="#account_activation_token_generator" title="Permanent link">&para;</a></h1>
+<p>Accounts app includes a custom token generator, <code>AccountActivationTokenGenerator</code>, which is used to generate tokens for email validation during user signup. This token generator extends Django's built-in <code>PasswordResetTokenGenerator</code> to add activation-related information.</p>
+<h2 id="usage_7">Usage<a class="headerlink" href="#usage_7" title="Permanent link">&para;</a></h2>
+<p>To use the <code>AccountActivationTokenGenerator</code> for email validation during user signup, follow these steps:</p>
+<ol>
+<li>
+<p>Make sure the <code>accounts</code> app is installed in your project and properly configured.</p>
+</li>
+<li>
+<p>In your project's <code>settings.py</code> file, ensure that the <code>'accounts'</code> app is included in the <code>INSTALLED_APPS</code> list.</p>
+</li>
+<li>
+<p>In your <code>accounts</code> app, create a file named <code>tokens.py</code> if it doesn't already exist.</p>
+</li>
+<li>
+<p>Add the following code to your <code>tokens.py</code> file:</p>
+</li>
+</ol>
+<p>.. code-block:: python    </p>
+<pre><code>class AccountActivationTokenGenerator(PasswordResetTokenGenerator):
+    def _make_hash_value(self, user, timestamp):
+        ...
+
+account_activation_token = AccountActivationTokenGenerator()
+</code></pre>
+<ol>
+<li>
+<p>In the above code, <code>AccountActivationTokenGenerator</code> extends Django's <code>PasswordResetTokenGenerator</code> and includes custom logic for generating tokens with user activation information.</p>
+</li>
+<li>
+<p>The <code>account_activation_token</code> instance of the <code>AccountActivationTokenGenerator</code> class can be used to generate tokens for user email validation during signup.</p>
+</li>
+</ol>
+<h1 id="url_configuration">URL Configuration<a class="headerlink" href="#url_configuration" title="Permanent link">&para;</a></h1>
+<p>Here's an overview of the URL patterns defined in the <code>urls.py</code> file of the <code>accounts</code> app:</p>
+<ol>
+<li>
+<p>User Signup:
+    URL: <code>/signup/</code>
+    View: <code>views.signup</code>
+    Description: The endpoint for user registration. Renders the signup form and handles form submission.</p>
+</li>
+<li>
+<p>User Login:
+    URL: <code>/login/</code>
+    View: <code>views.CustomLoginView</code>
+    Description: The endpoint for user login. Uses a custom login view to manage authentication and redirection.</p>
+</li>
+<li>
+<p>User Profile:
+    URL: <code>/my-profile/</code>
+    View: <code>views.userpage</code>
+    Description: The endpoint for the user's profile page. Displays the user's profile information and related details.</p>
+</li>
+<li>
+<p>User Activation:
+    URL: <code>/activate/&lt;uidb64&gt;/&lt;token&gt;/</code>
+    View: <code>views.activate</code>
+    Description: The endpoint for user account activation via token. Activates a user's account using the provided token.</p>
+</li>
+<li>
+<p>Check Username Availability:
+    URL: <code>/check-username/</code>
+    View: <code>views.check_username</code>
+    Description: Endpoint to check the availability of a chosen username during registration.</p>
+</li>
+<li>
+<p>Check Email Availability:
+    URL: <code>/check-email/</code>
+    View: <code>views.check_email</code>
+    Description: Endpoint to check the availability of a chosen email address during registration.</p>
+</li>
+<li>
+<p>Commit User Service:
+    URL: <code>/&lt;str:user_id&gt;/&lt;str:na_id&gt;/commit-service/</code>
+    View: <code>views.commit_service</code>
+    Description: Endpoint to commit a service associated with a user's profile.</p>
+</li>
+<li>
+<p>Delete User Service:
+    URL: <code>/&lt;str:user_id&gt;/&lt;str:na_id&gt;/delete-service/</code>
+    View: <code>views.delete_service</code>
+    Description: Endpoint to delete a service associated with a user's profile.</p>
+</li>
+</ol>
+<h1 id="custom_login_view">Custom Login View<a class="headerlink" href="#custom_login_view" title="Permanent link">&para;</a></h1>
+<p>.. note::
+   This section describes the custom login view implemented in this project.</p>
+<pre><code>The project includes a custom login view called ``CustomLoginView``, which is built upon Django's built-in ``LoginView`` class. This custom view allows for fine-grained control over the login process and introduces additional features.
+</code></pre>
+<h2 id="features_2">Features<a class="headerlink" href="#features_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Uses a custom login form (<code>LoginForm</code>) to collect user credentials.</li>
+<li>Sets a custom URL for redirection after a successful login.</li>
+<li>Handles the 'remember me' functionality to control session duration.</li>
+</ul>
+<h2 id="usage_8">Usage<a class="headerlink" href="#usage_8" title="Permanent link">&para;</a></h2>
+<p>To use the custom login view in your project, follow these steps:</p>
+<ol>
+<li>Ensure that you have the necessary prerequisites and Django set up.</li>
+<li>Copy the <code>CustomLoginView</code> class from the provided source code.</li>
+<li>Import the necessary modules and classes in your project, including the custom form (<code>LoginForm</code>).</li>
+</ol>
+<h2 id="example_usage">Example Usage<a class="headerlink" href="#example_usage" title="Permanent link">&para;</a></h2>
+<p>Below is an example of how you might use the <code>CustomLoginView</code> in your Django project's <code>views.py</code>:</p>
+<p>.. code-block:: python</p>
+<pre><code>from django.urls import reverse_lazy
+from custom_login_app.forms import LoginForm  # Import the custom LoginForm
+from custom_login_app.views import CustomLoginView  # Import the CustomLoginView
+
+class MyCustomLoginView(CustomLoginView):
+    form_class = LoginForm  # Use the custom LoginForm
+    next_page = reverse_lazy('accounts:user_link')  # Set a custom redirection URL
+</code></pre>
+<h2 id="context_data">Context Data<a class="headerlink" href="#context_data" title="Permanent link">&para;</a></h2>
+<p>The custom login view also provides additional context data to enhance the rendering of the login page. This includes meta information such as title, description, tags, and robots.</p>
+<h1 id="signup_view">Signup View<a class="headerlink" href="#signup_view" title="Permanent link">&para;</a></h1>
+<p>The <code>signup</code> view function is responsible for handling user signup and registration. It provides a user-friendly interface for users to create accounts on the website. The view supports various user types and expert subtypes.</p>
+<p>.. code-block:: python</p>
+<pre><code>def signup(request):
+    """
+    View function for user signup.
+
+    This view handles the signup procedure for different user types and experts' subtypes.
+    The process involves segregating users based on their selected user type or expert subtype.
+    Users who have already selected a user type during their session are directed to the signup form.
+    If anyone attempts to signup without selecting a user type, they are redirected to choose one.
+    Expert users only need to select the "Expert" user type during signup.
+
+    :param request: The HTTP request object.
+    :type request: HttpRequest
+    :return: The rendered signup page or redirection to appropriate pages.
+    :rtype: HttpResponse
+    """
+</code></pre>
+<h2 id="features_3">Features<a class="headerlink" href="#features_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>User Type Segregation: Users are directed to select their user type or expert subtype before proceeding with registration. This segregation ensures accurate registration and user role assignment.</p>
+</li>
+<li>
+<p>Email Confirmation: After submitting the signup form, users receive an email confirmation containing an activation link. This link is used to verify the user's email address and complete the registration process.</p>
+</li>
+<li>
+<p>Interactive Frontend: The frontend of the signup page is interactive, guiding users through the registration process. The form is pre-filled with default values, ensuring a seamless user experience.</p>
+</li>
+</ul>
+<h2 id="installation_1">Installation<a class="headerlink" href="#installation_1" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Install the required Python packages using pip:</li>
+</ol>
+<p>.. code-block:: bash</p>
+<pre><code>   pip install -r requirements.txt
+</code></pre>
+<ol>
+<li>Add the <code>account</code> app to your Django project's settings:</li>
+</ol>
+<p>.. code-block:: python</p>
+<pre><code>   INSTALLED_APPS = [
+       # ...
+       'account',
+       # ...
+   ]
+</code></pre>
+<ol>
+<li>Include the app's URLs in your project's URL configuration:</li>
+</ol>
+<p>.. code-block:: python</p>
+<pre><code>   from django.urls import path
+   from account.views import signup
+
+   urlpatterns = [
+       # ...
+       path('signup/', signup, name='signup'),
+       # ...
+   ]
+</code></pre>
+<h1 id="activate_user_account">Activate User Account<a class="headerlink" href="#activate_user_account" title="Permanent link">&para;</a></h1>
+<p>The <code>accounts</code> app provides functionality for user account activation and related actions after the signup process.</p>
+<p>The <code>activate</code> function in this app is responsible for activating a user's account using the provided activation link. The following actions are performed during the activation process:</p>
+<ol>
+<li>Preparation of data for the site.</li>
+<li>Verification of the activation URL and decoding of the user ID.</li>
+<li>
+<p>If the activation link is valid, the user's account is marked as email verified.</p>
+<p>a. If the user is an expert or marine, the account is activated manually by the site admin, and the user is notified to wait for approval.
+b. If the user is not an expert, the account is activated automatically, and an account activation email is sent.</p>
+</li>
+<li>
+<p>User data is saved, considering different approval policies based on user type.</p>
+</li>
+</ol>
+<h2 id="creating_lead">Creating Lead<a class="headerlink" href="#creating_lead" title="Permanent link">&para;</a></h2>
+<p>After the activation process, the app performs the following actions:</p>
+<ol>
+<li>Retrieves location information from the HTTP request.</li>
+<li>Creates a lead using the user's full name, email address, city, and country information.</li>
+</ol>
+<h2 id="creating_newsletter_subscription">Creating Newsletter Subscription<a class="headerlink" href="#creating_newsletter_subscription" title="Permanent link">&para;</a></h2>
+<p>The app also handles newsletter subscriptions:</p>
+<ol>
+<li>If the user has opted to receive the newsletter during signup, the app checks whether the user's email already exists in the CRM.</li>
+<li>If the email exists, the subscription status is updated to <code>True</code>.</li>
+<li>If the email does not exist, a new lead is created with the user's information, and the subscription status is set to <code>True</code>.</li>
+</ol>
+<h2 id="usage_9">Usage<a class="headerlink" href="#usage_9" title="Permanent link">&para;</a></h2>
+<p>To use the <code>activate</code> function, pass the required arguments:</p>
+<ul>
+<li><code>request</code> (HttpRequest): The HTTP request object.</li>
+<li><code>uidb64</code> (str): The base64-encoded user ID.</li>
+<li><code>token</code> (str): The activation token.</li>
+</ul>
+<p>The function will redirect to appropriate views based on the activation result.</p>
+<p>Make sure to configure your project's URLs and templates accordingly to handle the activation process and related notifications.</p>
+<p>Note: This readme provides a summary of the <code>activate</code> function's functionality. Please refer to the source code for complete implementation details.</p>
+<h1 id="user_profile_page_view">User Profile Page View<a class="headerlink" href="#user_profile_page_view" title="Permanent link">&para;</a></h1>
+<p>This Django view function displays a user's profile page, providing information about their reports and activities.</p>
+<h2 id="usage_10">Usage<a class="headerlink" href="#usage_10" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Decorator Usage:
+    This view function is decorated with <code>@login_required</code> to ensure that only authenticated users can access it.</p>
+</li>
+<li>
+<p>Input:</p>
+<ul>
+<li><code>request</code> (HttpRequest): The HTTP request object sent by the client.</li>
+</ul>
+</li>
+<li>
+<p>Output:</p>
+<ul>
+<li><code>HttpResponse</code>: The rendered user profile page with relevant user data.</li>
+</ul>
+</li>
+</ol>
+<h2 id="functionality">Functionality<a class="headerlink" href="#functionality" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>When a user accesses their profile page, the following steps are performed:</p>
+</li>
+<li>
+<p>Clear the session data to ensure a clean state when the user logs in.</p>
+</li>
+<li>
+<p>Retrieve the user from the request.</p>
+</li>
+<li>
+<p>Check if a report slug is provided in the query parameters. If so, attempt to retrieve the corresponding report.</p>
+</li>
+<li>
+<p>If no report slug is provided, retrieve the most recent report created by the user.</p>
+</li>
+<li>
+<p>If a report is found, generate label-wise data from the report.</p>
+</li>
+<li>
+<p>Calculate statistics based on the label data:</p>
+<ul>
+<li><code>ans_ques</code>: Total answered questions</li>
+<li><code>dont_know_ans</code>: Number of questions not answered</li>
+<li><code>pos_ans</code>: Total positive answers</li>
+<li><code>positive_percent</code>: Percentage of positive answers</li>
+<li><code>dont_know_percent</code>: Percentage of unanswered questions</li>
+</ul>
+</li>
+<li>
+<p>Retrieve the first parent question for the evaluation. If not found, display an error message.</p>
+</li>
+<li>
+<p>Get all reports with the last answer related to the first parent question.</p>
+</li>
+<li>
+<p>Paginate the reports for display.</p>
+</li>
+<li>
+<p>Construct a URL for a button linked to the last report.</p>
+</li>
+<li>
+<p>Prepare the context for rendering the user profile page.</p>
+</li>
+<li>
+<p>If no reports are found for the user:</p>
+</li>
+<li>
+<p>Display links to various sections that users can explore.</p>
+</li>
+<li>
+<p>Meta data is prepared for the page, including title, description, tags, and image.</p>
+</li>
+<li>
+<p>The context is updated with the prepared meta data.</p>
+</li>
+<li>
+<p>Finally, the view renders the user profile page with the provided context.</p>
+</li>
+</ul>
+<h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>The function is documented using docstrings, explaining its purpose, inputs, and outputs.</p>
+</li>
+<li>
+<p>Comments within the code provide additional explanations about specific code sections and their functionality.</p>
+</li>
+<li>
+<p>Various sections of the code are explained in detail to provide better understanding.</p>
+</li>
+<li>
+<p>Comments and explanations are provided for context variables and calculations.</p>
+</li>
+</ul>
+<h2 id="usage_recommendations">Usage Recommendations<a class="headerlink" href="#usage_recommendations" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>This view function should be used within a Django application where user profiles and reports are managed.</p>
+</li>
+<li>
+<p>Developers should ensure that the required models and utilities are imported and configured properly before using this function.</p>
+</li>
+<li>
+<p>To maintain security, ensure that the <code>@login_required</code> decorator is applied to this view function to restrict access to authenticated users only.</p>
+</li>
+<li>
+<p>Developers can modify the context variables and calculations to customize the content and presentation of the user profile page as per their project requirements.</p>
+</li>
+</ul>
+<h2 id="note">Note<a class="headerlink" href="#note" title="Permanent link">&para;</a></h2>
+<ul>
+<li>This documentation is provided as an explanatory guide and may need to be adapted based on the specific use case and context of the project.</li>
+</ul>
+<h1 id="username_check_function">Username Check Function<a class="headerlink" href="#username_check_function" title="Permanent link">&para;</a></h1>
+<p>Check the availability and validity of a username in a signup form.</p>
+<p>This function takes a POST request containing a 'username' parameter
+and checks if the provided username is valid and available for registration.</p>
+<h2 id="function_signature">Function Signature<a class="headerlink" href="#function_signature" title="Permanent link">&para;</a></h2>
+<p>.. code-block:: python</p>
+<pre><code>def check_username(request):
+    """
+    Check the availability and validity of a username in a signup form.
+
+    Args:
+        request (HttpRequest): A POST request containing the 'username' parameter.
+
+    Returns:
+        HttpResponse: A response indicating whether the username is valid and available.
+            - If the username contains spaces, returns a danger message.
+            - If the username already exists in the User model, returns a danger message.
+            - If the username is valid and available, returns a success message.
+    """
+</code></pre>
+<h2 id="function_parameters">Function Parameters<a class="headerlink" href="#function_parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>request</code> (HttpRequest):
+    A POST request containing the 'username' parameter.</li>
+</ul>
+<h2 id="function_behavior">Function Behavior<a class="headerlink" href="#function_behavior" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Retrieve the username from the POST request.</li>
+<li>Check for spaces in the username.</li>
+<li>If spaces are found, return a danger message.</li>
+<li>Check if the username already exists in the User model.</li>
+<li>If the username already exists, return a danger message.</li>
+<li>If the username is valid and available, return a success message.</li>
+</ol>
+<h2 id="usage_example">Usage Example<a class="headerlink" href="#usage_example" title="Permanent link">&para;</a></h2>
+<p>.. code-block:: python</p>
+<pre><code>from django.http import HttpRequest, HttpResponse
+from myapp.models import User  # Replace with actual import
+
+def check_username(request):
+    # Your implementation here
+</code></pre>
+<h1 id="check_email_view_function">check_email View Function<a class="headerlink" href="#check_email_view_function" title="Permanent link">&para;</a></h1>
+<p>Checks the validity and availability of an email address provided in a sign-up form.</p>
+<p>This function takes a POST request containing an email address from a sign-up form
+   and performs the following checks:</p>
+<ol>
+<li>Validates the email format using Django's <code>django.core.validators.validate_email</code> function.</li>
+<li>Checks if the email address already exists in the User model.</li>
+</ol>
+<p>If the email is valid and not already taken, it returns a success message. If the
+   email is invalid, already taken, or an exception occurs during validation, it returns
+   an appropriate error message.</p>
+<p>:param HttpRequest request: The HTTP request containing the email in the POST data.
+   :return: A response indicating the validity and availability of the email.
+   :rtype: HttpResponse</p>
+<p>:raises: None</p>
+<p>Example::</p>
+<pre><code>   from django.core.validators import validate_email
+
+   email = request.POST.get('email')
+   try:
+       validate_email(email)
+       if User.objects.filter(email=email).exists():
+           return HttpResponse('&lt;span class="text-danger"&gt;This email already exists!&lt;/span&gt;')
+       else:
+           return HttpResponse('&lt;span class="text-success"&gt;This email available!&lt;/span&gt;')
+   except:
+       return HttpResponse('&lt;span class="text-danger"&gt;Type a valid email address!&lt;/span&gt;')
+</code></pre>
+<h1 id="partner_service_view_function">partner_service View Function<a class="headerlink" href="#partner_service_view_function" title="Permanent link">&para;</a></h1>
+<p>.. code-block:: python</p>
+<pre><code>@login_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def partner_service(request, pk):
+    """
+    Display the personalized service page for a partner user.
+
+    This view displays the personalized service page for a visiting partner user. It retrieves the necessary information
+    such as next activities and selected activities to be displayed on the page. It also handles visibility permissions
+    based on the user's role (expert, staff, superuser). Additionally, it generates meta data for SEO purposes.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        pk (int): The primary key of the visiting user.
+
+    Returns:
+        HttpResponse: Rendered HTML template displaying the service page.
+    """
+    # To avoid circular reference
+    from evaluation.models import NextActivities
+</code></pre>
+<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">&para;</a></h2>
+<p>The <code>partner_service</code> view function is responsible for displaying a personalized service page for visiting partner users. It retrieves essential information such as next activities and selected activities to be shown on the page. This view also handles visibility permissions based on the user's role (expert, staff, superuser) and generates metadata for SEO purposes.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>request</code> (HttpRequest): The HTTP request object.</li>
+<li><code>pk</code> (int): The primary key of the visiting user.</li>
+</ul>
+<h2 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h2>
+<p>HttpResponse: Rendered HTML template displaying the service page.</p>
+<h2 id="functionality_1">Functionality<a class="headerlink" href="#functionality_1" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Retrieves the visiting user based on the provided primary key.</li>
+<li>Retrieves the currently logged-in user.</li>
+<li>Retrieves all next activities with prefetch for related 'quotnextactivity'.</li>
+<li>Gets the selected activities of the visiting user.</li>
+<li>Notifies the admin if there are no next activities and the current user is an expert.</li>
+<li>Determines whether the visiting user's role allows visibility of certain blocks.</li>
+<li>Creates a dictionary containing context data to be passed to the template.</li>
+<li>Generates metadata for SEO and page information.</li>
+<li>Updates the context with the generated metadata.</li>
+<li>Renders the template with the provided context.</li>
+</ol>
+<h2 id="usage_11">Usage<a class="headerlink" href="#usage_11" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Apply <code>@login_required</code> and caching decorators to the view function.</li>
+<li>Call the <code>partner_service</code> function with the <code>request</code> and <code>pk</code> parameters to display the personalized service page for a partner user.</li>
+</ol>
+<p>Note: Make sure to handle imports, mail sending, and any other dependencies properly for the view to work correctly in your project.</p>
+<h1 id="commit_service_view">Commit Service View<a class="headerlink" href="#commit_service_view" title="Permanent link">&para;</a></h1>
+<p>The <code>commit_service</code> view function is responsible for handling the process of users committing to a service, specifically related to next activities. This view enforces user authentication and certain permissions to ensure the ethical use of the application.</p>
+<h2 id="functionality_2">Functionality<a class="headerlink" href="#functionality_2" title="Permanent link">&para;</a></h2>
+<p>The <code>commit_service</code> view follows a step-by-step process to achieve its goals:</p>
+<ol>
+<li>User Authentication and Permissions</li>
+<li>
+<p>The user is required to be logged in. If not, an error message is returned indicating the unauthenticated operation as unethical.</p>
+</li>
+<li>
+<p>Fetching Data</p>
+</li>
+<li>
+<p>The function retrieves a list of active next activities, along with their associated details. This data is fetched using the <code>NextActivities</code> model.</p>
+</li>
+<li>
+<p>Verification of User and Next Activity</p>
+</li>
+<li>The function verifies that the provided <code>user_id</code> corresponds to the currently logged-in user. If not, an error message is returned as the operation would be considered unethical.</li>
+<li>
+<p>It also verifies the existence and validity of the provided <code>na_id</code> by querying the <code>NextActivities</code> model. If the next activity doesn't exist, an error message is returned.</p>
+</li>
+<li>
+<p>Recording User's Commitment</p>
+</li>
+<li>
+<p>The function checks whether the user has already committed to the specified next activity. If not, a new record is created in the <code>UsersNextActivity</code> model to associate the user with the next activity.</p>
+</li>
+<li>
+<p>Preparing Data for Rendering</p>
+</li>
+<li>Based on the user's permissions, the <code>block_visible</code> flag is determined. If the user is an expert, staff, or superuser, the flag is set to <code>True</code> to indicate that certain blocks should be visible.</li>
+<li>
+<p>Data including the visiting user, current user, list of next activities, next activities in which the user has already committed, and the <code>block_visible</code> flag are organized to be passed to the template.</p>
+</li>
+<li>
+<p>Rendering the Template</p>
+</li>
+<li>The final step involves rendering the <code>commit_service.html</code> template with the prepared context data.</li>
+</ol>
+<h2 id="permissions">Permissions<a class="headerlink" href="#permissions" title="Permanent link">&para;</a></h2>
+<p>The function enforces the following permissions:
+- The user must be logged in.
+- The user must have the <code>expert_required</code> decorator, indicating they have a certain level of expertise to perform the action.</p>
+<h2 id="ethical_operation">Ethical Operation<a class="headerlink" href="#ethical_operation" title="Permanent link">&para;</a></h2>
+<p>The view ensures ethical operation by checking user authentication, permissions, and the validity of the provided data. Any deviation from these criteria results in error messages that indicate an unethical operation.</p>
+<h2 id="usage_12">Usage<a class="headerlink" href="#usage_12" title="Permanent link">&para;</a></h2>
+<p>To use the <code>commit_service</code> view, provide the <code>user_id</code> and <code>na_id</code> as URL parameters. For instance, to commit a service for user with ID 123 and next activity ID 456:</p>
+<p>Make sure to include the required URL patterns in your project's URL configuration to map to the <code>commit_service</code> view.</p>
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Django: This view relies on the Django framework for web application development.</li>
+<li>Models and Decorators: This view assumes the existence of models such as <code>NextActivities</code>, <code>UsersNextActivity</code>, and decorators like <code>login_required</code> and <code>expert_required</code>.</li>
+</ul>
+<p>Please note that this documentation assumes familiarity with Django concepts and practices. If you encounter any issues or have questions, consult the Django documentation or seek assistance from experienced developers.</p>
+<h1 id="delete_service_view">Delete Service View<a class="headerlink" href="#delete_service_view" title="Permanent link">&para;</a></h1>
+<p>This view function enables expert users to delete a specific Next Activity associated with a visiting user.</p>
+<h2 id="usage_13">Usage<a class="headerlink" href="#usage_13" title="Permanent link">&para;</a></h2>
+<p>To use this view, ensure that the user is logged in and has expert privileges. The function is decorated with the <code>@login_required</code> and <code>@expert_required</code> decorators to ensure the required permissions are met.</p>
+<h2 id="parameters_1">Parameters<a class="headerlink" href="#parameters_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>request</code> (HttpRequest): The HTTP request object.</li>
+<li><code>user_id</code> (str): The ID of the visiting user.</li>
+<li><code>na_id</code> (str): The ID of the Next Activity to be deleted.</li>
+</ul>
+<h2 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h2>
+<p><code>HttpResponse</code>: A rendered HTML response displaying the result of the operation.</p>
+<h2 id="behavior">Behavior<a class="headerlink" href="#behavior" title="Permanent link">&para;</a></h2>
+<ol>
+<li>If the <code>user_id</code> is 'None', a message is returned indicating unethical operation due to not being logged in.</li>
+<li>Otherwise, the function retrieves the visiting user's details and validates their access permissions.</li>
+<li>The function fetches the list of active Next Activities and their related quotnextactivity objects.</li>
+<li>It checks if the current user has the permission to delete Next Activities. If not, a message about unethical operation is returned.</li>
+<li>The target Next Activity to be deleted is fetched, and if not found, an unethical operation message is returned.</li>
+<li>The target Next Activity is deleted.</li>
+<li>The visibility of a certain block is determined based on the current user's role (expert, staff, or superuser).</li>
+<li>Data is prepared to be sent to the template, including visiting user details, current user details, available next activities, next activities associated with the visiting user, and block visibility status.</li>
+<li>The context is updated with the prepared data.</li>
+<li>The template <code>registration/commit_service.html</code> is rendered using the context, and the HTML response is returned.</li>
+</ol>
+<p>Please note that the decorators and exception handling are in place to ensure that only authorized users can perform this action, and the function takes care of various edge cases to prevent unethical operations.</p>
+<h2 id="example_usage_1">Example Usage<a class="headerlink" href="#example_usage_1" title="Permanent link">&para;</a></h2>
+<p>Assuming a logged-in expert user with appropriate permissions, the URL might look like this::</p>
+<pre><code>/delete-service/&lt;user_id&gt;/&lt;na_id&gt;/
+</code></pre>
+<p>where <code>&lt;user_id&gt;</code> and <code>&lt;na_id&gt;</code> should be replaced with the appropriate values.</p>
+<h2 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">&para;</a></h2>
+<ul>
+<li>This function depends on the Django framework and specific models and decorators within the application.</li>
+</ul>
+<h2 id="see_also">See Also<a class="headerlink" href="#see_also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>Django Documentation &lt;https://docs.djangoproject.com/en/stable/&gt;</code>_</li>
+<li><code>Django Login Required &lt;https://docs.djangoproject.com/en/stable/topics/auth/default/#the-login-required-decorator&gt;</code>_</li>
+<li><code>Custom Decorators in Django &lt;https://djangocentral.com/creating-custom-decorators-in-django/&gt;</code>_</li>
+</ul>
+<h2 id="expert_required_decorator"><code>expert_required</code> Decorator<a class="headerlink" href="#expert_required_decorator" title="Permanent link">&para;</a></h2>
+<p>The <code>@expert_required</code> decorator is a custom decorator that checks whether the current user is an expert or has appropriate permissions before allowing access to the view. It can be defined as follows:</p>
+<p>.. code-block:: python</p>
+<pre><code>def expert_required(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if request.user.is_authenticated and (request.user.is_expert or request.user.is_staff or request.user.is_superuser):
+            return view_func(request, *args, **kwargs)
+        else:
+            return HttpResponse('You do not have permission to access this page.')
+    return _wrapped_view
+</code></pre>
+<h2 id="contributions">Contributions<a class="headerlink" href="#contributions" title="Permanent link">&para;</a></h2>
+<p>Contributions to enhance or expand this custom Django admin configuration are welcome. Feel free to submit pull requests with improvements, bug fixes, or additional features.</p>
+<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
+<p>This code is provided under the <a href="LICENSE">MIT License</a>.</p>
+<h2 id="credits">Credits<a class="headerlink" href="#credits" title="Permanent link">&para;</a></h2>
+<p>This app is developed by <a href="https://github.com/haradhansharma">Haradhan Sharma</a>.</p>
+<p>For more information, visit the <a href="https://www.gf-vp.com">GF-VP website</a>.</p></div>
             </div>
         </div>
 

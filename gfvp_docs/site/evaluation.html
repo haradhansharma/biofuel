@@ -43,10 +43,10 @@
                                 <a href="accounts.html" class="nav-link">Accounts</a>
                             </li>
                             <li class="navitem">
-                                <a href="crm.html" class="nav-link">CRM</a>
+                                <a href="blog.html" class="nav-link">Blog</a>
                             </li>
                             <li class="navitem">
-                                <a href="blog.html" class="nav-link">Blog</a>
+                                <a href="crm.html" class="nav-link">CRM</a>
                             </li>
                             <li class="navitem">
                                 <a href="doc.html" class="nav-link">Doc</a>
@@ -55,10 +55,22 @@
                                 <a href="evaluation.html" class="nav-link">Evaluation</a>
                             </li>
                             <li class="navitem">
-                                <a href="guide.html" class="nav-link">Guide</a>
+                                <a href="feedback.html" class="nav-link">Feedback</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="gfvp.html" class="nav-link">Project</a>
                             </li>
                             <li class="navitem">
                                 <a href="glossary.html" class="nav-link">Glossary</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="guide.html" class="nav-link">User Guide</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="home.html" class="nav-link">Home And Dash</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="navigation.html" class="nav-link">Navigation</a>
                             </li>
                         </ul>
 
@@ -74,12 +86,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="guide.html" class="nav-link">
+                                <a rel="next" href="feedback.html" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/haradhansharma/biofuel/blob/main/docs/evaluation.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/haradhansharma/biofuel/tree/v24123/edit/master/docs/evaluation.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -99,33 +111,167 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#welcome_to_the_evaluation_docs" class="nav-link">Welcome to The evaluation DOCS</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#apps_layout" class="nav-link">Apps layout</a>
+            <li class="nav-item" data-level="2"><a href="#introduction" class="nav-link">Introduction</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#custom_template_tags" class="nav-link">Custom template Tags</a>
+            
+            <li class="nav-item" data-level="2"><a href="#custom_filters_and_tags_overview" class="nav-link">Custom Filters and Tags Overview</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#evaluation_admin" class="nav-link">Evaluation Admin</a>
+            
+            <li class="nav-item" data-level="2"><a href="#usage_instructions" class="nav-link">Usage Instructions</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#app" class="nav-link">APP</a>
+            
+            <li class="nav-item" data-level="2"><a href="#initialization" class="nav-link">Initialization</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#form" class="nav-link">Form</a>
+            
+            <li class="nav-item" data-level="2"><a href="#attributes" class="nav-link">Attributes</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#helper" class="nav-link">Helper</a>
+            
+            <li class="nav-item" data-level="2"><a href="#methods" class="nav-link">Methods</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#model" class="nav-link">Model</a>
+            
+            <li class="nav-item" data-level="2"><a href="#usage" class="nav-link">Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#example_usage" class="nav-link">Example Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#gfvpsitemap" class="nav-link">GfvpSitemap</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#usersitemap" class="nav-link">UserSitemap</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#usertypesitemap" class="nav-link">UserTypeSitemap</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#blogsitemap" class="nav-link">BlogSitemap</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#htmlreportsitemap" class="nav-link">HtmlReportSitemap</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#sitemaps_configuration" class="nav-link">Sitemaps Configuration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#url_patterns" class="nav-link">URL Patterns</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#core_url_patterns" class="nav-link">Core URL Patterns:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#additional_url_patterns_for_the_evaluation_app" class="nav-link">Additional URL Patterns for the 'evaluation' App:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#1_set_evaluation_function" class="nav-link">1. set_evaluation Function</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#2_set_eva_comments_function" class="nav-link">2. set_eva_comments Function</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#3_set_evastatment_function" class="nav-link">3. set_evastatment Function</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#4_get_eoi_function" class="nav-link">4. get_eoi Function</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#5_set_evastatement_of_logical_string_function" class="nav-link">5. set_evastatement_of_logical_string Function</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#6_option_add2_function" class="nav-link">6. option_add2 Function</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#eva_index2_view" class="nav-link">eva_index2 View</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#thanks_view" class="nav-link">thanks View</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#trafic_light_hori_view" class="nav-link">trafic_light_hori View</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#fuel_history_view" class="nav-link">fuel_history View</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#report_view" class="nav-link">report View</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#create_notification_to_consumer_function" class="nav-link">create_notification_to_consumer Function</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#nreport_view" class="nav-link">nreport View</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#nreport_pdf_view" class="nav-link">nreport_pdf View</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#stdoils_view" class="nav-link">stdoils View</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#get_glossary_view" class="nav-link">get_glossary View</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#edit_report_view" class="nav-link">edit_report View</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#contributing" class="nav-link">Contributing</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#license" class="nav-link">License</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -136,128 +282,1721 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="welcome_to_the_evaluation_docs">Welcome to The evaluation DOCS<a class="headerlink" href="#welcome_to_the_evaluation_docs" title="Permanent link">&para;</a></h1>
-<h2 id="apps_layout">Apps layout<a class="headerlink" href="#apps_layout" title="Permanent link">&para;</a></h2>
-<pre><code>Web Root        # The main folder of the web project.
-    evaluation/
-        templatestags #Written django's custom template tag to serve in the template
-        admin.py
-        apps.py
-        forms.py
-        helper.py  
-        middleware # Custom Django's midleware  
-        models.py
-        nreport_class.py # Custom algorthm to build traffic-light overview
-        signals.py
-        tests.py
-        urls.py
-        views.py
-        ...
-</code></pre>
-<h2 id="custom_template_tags">Custom template Tags<a class="headerlink" href="#custom_template_tags" title="Permanent link">&para;</a></h2>
+<p>======================================================
+README for 'custom_tags.py' in the 'templatetags' Directory of the 'Evaluation' App
+======================================================</p>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>The 'custom_tags.py' module in the 'templatetags' directory of the 'Evaluation' app contains custom template filters and tags that extend the functionality of Django templates. These filters and tags are designed to enhance template rendering and provide additional features for template-based operations. This README provides an overview of the custom filters and tags available in this module.</p>
+<h2 id="custom_filters_and_tags_overview">Custom Filters and Tags Overview<a class="headerlink" href="#custom_filters_and_tags_overview" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>brek_after_two Filter</strong>:</p>
 <ul>
-<li><code>{% load custom_tags %}</code> - To load Custom template tags in the HTML file</li>
-<li><code>{{ question.sort_order | brek_after_two}}</code> - To break line after first two word of the questions's sort order. It is not used now.</li>
-<li><code>get_verbose_name(instance, field_name)</code> - It is using to build quotation report in function base view. It takes model instance and field name as parameter and return the verbose name of the field. It can be used in the template as well acroding tot he django's document.</li>
-<li><code>in_quot(quote, user)</code> - This tag returns the quotations created by the user as service provider. Example use case: <code>{% if child.get_quotations|in_quot:user %}</code> to get all quotation of the user.</li>
+<li>This custom filter inserts a line break into text after a specified number of characters.</li>
+<li>Usage Example:
+  <code>html
+  {{ text|brek_after_two:10 }}</code></li>
 </ul>
-<h2 id="evaluation_admin">Evaluation Admin<a class="headerlink" href="#evaluation_admin" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p>Every class and features in the <code>admin.py</code> based on django's regular facility. Some exceptional in our case are mentoning here:</p>
-</blockquote>
-<pre><code>class Media:
-    css = {
-        'all': (
-            '/static/css/fancy.css',
-        )
-    }
+</li>
+<li>
+<p><strong>get_verbose_name Tag</strong>:</p>
+<ul>
+<li>This custom template tag retrieves the verbose name of a field in a model.</li>
+<li>Usage Example:
+  <code>html
+  {% get_verbose_name instance field_name %}</code></li>
+</ul>
+</li>
+<li>
+<p><strong>in_quot Filter</strong>:</p>
+<ul>
+<li>This filter filters quotes based on a specific user, returning only quotes associated with that user.</li>
+<li>Usage Example:
+  <code>html
+  {{ quotes|in_quot:user }}</code></li>
+</ul>
+</li>
+<li>
+<p><strong>offchars Filter</strong>:</p>
+<ul>
+<li>This filter returns characters from the end of a string, excluding the specified number of characters from the beginning.</li>
+<li>Usage Example:
+  <code>html
+  {{ text|offchars:5 }}</code></li>
+</ul>
+</li>
+<li>
+<p><strong>onnchars Filter</strong>:</p>
+<ul>
+<li>This filter returns characters from the beginning of a string, excluding the specified number of characters from the end.</li>
+<li>Usage Example:
+  <code>html
+  {{ text|onnchars:5 }}</code></li>
+</ul>
+</li>
+<li>
+<p><strong>listobj_for_paginator Filter</strong>:</p>
+<ul>
+<li>This filter paginates a list of objects and returns a paginated Page object.</li>
+<li>Usage Example:
+  <code>html
+  {{ object_list|listobj_for_paginator:request }}</code></li>
+</ul>
+</li>
+<li>
+<p><strong>get_options Filter</strong>:</p>
+<ul>
+<li>This filter retrieves options associated with a question and returns them as a list.</li>
+<li>Usage Example:
+  <code>html
+  {{ question|get_options }}</code></li>
+</ul>
+</li>
+<li>
+<p><strong>get_quotations_user Filter</strong>:</p>
+<ul>
+<li>This filter retrieves quotations related to a question for a specific user and returns them as a list.</li>
+<li>Usage Example:
+  <code>html
+  {{ question|get_quotations_user:user }}</code></li>
+</ul>
+</li>
+<li>
+<p><strong>get_related_quotations_user Filter</strong>:</p>
+<ul>
+<li>This filter retrieves related quotations for a question for a specific user and returns them as a list.</li>
+<li>Usage Example:
+  <code>html
+  {{ question|get_related_quotations_user:user }}</code></li>
+</ul>
+</li>
+<li>
+<p><strong>get_merged_quotations_with_user Filter</strong>:</p>
+<ul>
+<li>This filter retrieves merged quotations for a question with a specific user and returns them as a list.</li>
+<li>Usage Example:
+  <code>html
+  {{ question|get_merged_quotations_with_user:user }}</code></li>
+</ul>
+</li>
+<li>
+<p><strong>get_types_slug Template Filter</strong>:</p>
+<ul>
+<li>The <code>get_types_slug</code> custom template filter is used to retrieve the slug of a UserType based on its type.</li>
+<li>It is designed to be used within Django templates to facilitate dynamic content rendering based on user types.</li>
+<li>This filter takes one argument:</li>
+<li>
+<p><code>type</code> (str): The type of UserType ('is_producer', 'is_expert', 'is_consumer', 'is_marine') for which you want to retrieve the slug.</p>
+</li>
+<li>
+<p>Usage Example:
+  <code>html
+  &lt;!-- In a Django template --&gt;
+  {{ 'is_producer'|get_types_slug }}</code></p>
+</li>
+<li>
+<p>This filter returns the slug of the UserType associated with the provided type, or <code>None</code> if the type is not recognized.</p>
+</li>
+<li>
+<p><strong>Parameters</strong>:</p>
+</li>
+<li>
+<p><code>type</code> (str): The type of UserType ('is_producer', 'is_expert', 'is_consumer', 'is_marine').</p>
+</li>
+<li>
+<p><strong>Returns</strong>:</p>
+</li>
+<li>
+<p><code>str</code> or <code>None</code>: The slug of the UserType associated with the provided type, or <code>None</code> if not found.</p>
+</li>
+<li>
+<p><strong>Note</strong>:</p>
+</li>
+<li>This filter can be used in Django templates to conditionally display content or generate links based on user types.</li>
+<li>It checks the provided type and returns the corresponding slug for the UserType, allowing you to tailor the template output based on user roles.</li>
+</ul>
+</li>
+</ol>
+<h2 id="usage_instructions">Usage Instructions<a class="headerlink" href="#usage_instructions" title="Permanent link">&para;</a></h2>
+<p>To use the custom filters and tags defined in 'custom_tags.py' within your Django templates, follow these steps:</p>
+<ol>
+<li>
+<p>Import the necessary tags and filters in your template using <code>{% load custom_tags %}</code>.</p>
+</li>
+<li>
+<p>Use the custom filters and tags as shown in the usage examples above within your template code.</p>
+</li>
+</ol>
+<p>Ensure that you include appropriate error handling and context variables in your templates when using these custom filters and tags.</p>
+<p>=========================
+Evaluation App - admin.py
+=========================</p>
+<p>This README provides an overview of the admin.py file for the Evaluation app. The admin.py file contains the Django admin configurations for various models within the app.</p>
+<p><strong>Admin Configurations</strong></p>
+<ol>
+<li><strong>QuestionAdmin</strong></li>
+<li>Displays a list of questions with sorting and filtering options.</li>
+<li>Includes inlines for Labels and Options related to questions.</li>
+<li>Custom CSS styling is applied to the admin view.</li>
+<li>Custom change list template to display error notes about question configurations.</li>
+<li>
+<p>Custom changelist_view method to add context data about questions with incomplete configurations.</p>
+</li>
+<li>
+<p><strong>OptionAdmin</strong></p>
+</li>
+<li>Displays a list of options with filtering options.</li>
+<li>
+<p>Inherits from ExportActionMixin to provide export functionality.</p>
+</li>
+<li>
+<p><strong>BiofuelAdmin</strong></p>
+</li>
+<li>
+<p>Provides inlines for StdOils.</p>
+</li>
+<li>
+<p><strong>EvaLebelStatementAdmin</strong></p>
+</li>
+<li>
+<p>Displays a list of evaluation label statements with filtering options.</p>
+</li>
+<li>
+<p><strong>StdOilsAdmin</strong></p>
+</li>
+<li>Displays a list of standard oils with inlines for StandaredCharts.</li>
+<li>
+<p>Custom CSS styling is applied to the admin view.</p>
+</li>
+<li>
+<p><strong>SuggestionsAdmin</strong></p>
+</li>
+<li>Displays a list of suggestions with filtering and search options.</li>
+<li>
+<p>Provides readonly_fields for certain fields.</p>
+</li>
+<li>
+<p><strong>LogicalStringAdmin</strong></p>
+</li>
+<li>Displays a list of logical strings with inlines for LsLabels.</li>
+<li>Custom change list template to display error notes about logical string configurations.</li>
+<li>
+<p>Custom changelist_view method to add context data about logical strings with incomplete configurations.</p>
+</li>
+<li>
+<p><strong>EvaluatorAdmin</strong></p>
+</li>
+<li>Displays a list of evaluators with filtering options.</li>
+<li>Provides actions to generate updated reports and notify creators.</li>
+<li>Custom check_and_notify method to execute the custom action.</li>
+<li>
+<p>Provides readonly_fields for certain fields.</p>
+</li>
+<li>
+<p><strong>StandaredChartAdmin</strong></p>
+</li>
+<li>Displays a list of standard charts with filtering and editing options.</li>
+<li>
+<p>Custom CSS styling is applied to the admin view.</p>
+</li>
+<li>
+<p><strong>NextActivitiesAdmin</strong></p>
+<ul>
+<li>Provides an action to duplicate selected activities.</li>
+<li>Provides readonly_fields for certain fields.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Please Note</strong>: The code comments and docstrings in admin.py provide further details about the functionality and purpose of each admin class.</p>
+<p>If you have any questions or need additional information, please refer to the comments in the code or feel free to ask for assistance.</p>
+<p>====================
+Evaluation App - apps.py
+====================</p>
+<p>This README provides an overview of the apps.py file for the Evaluation app. The apps.py file contains the configuration settings for the 'evaluation' app.</p>
+<p><strong>App Configuration</strong></p>
+<ul>
+<li><code>default_auto_field</code>: Specifies the name of the default auto-generated primary key field.</li>
+<li><code>name</code>: Specifies the name of the app.</li>
+</ul>
+<p><strong>ready() Method</strong></p>
+<p>The <code>ready()</code> method is executed when the app is ready to function within the Django project. In this method, the <code>evaluation.signals</code> module is imported, allowing the app to utilize signals for event handling.</p>
+<p><strong>Example Usage</strong></p>
+<p>To use this AppConfig in your Django project, add it to the 'INSTALLED_APPS' list in your project's settings.py file. This configuration ensures that the 'evaluation' app is integrated into your project and that its signals are loaded and available for use.</p>
+<p><code>python
+  INSTALLED_APPS = [
+      ...
+      'evaluation',
+      ...
+  ]</code></p>
+<p>========================
+Evaluation App - middleware.py
+========================</p>
+<p>This README provides an overview of the middleware.py file for the Evaluation app. The middleware.py file contains the <code>EvaMiddleware</code> class, which is responsible for handling specific requests and sessions within the app.</p>
+<p><strong>Middleware Overview</strong></p>
+<p>Middleware in Django is used to process requests and responses globally before they reach the view or after they leave the view. This custom middleware class, <code>EvaMiddleware</code>, performs specific actions based on conditions before allowing a request to proceed to the view.</p>
+<p><strong>Middleware Functionality</strong></p>
+<ul>
+<li>
+<p><strong>Initialization</strong>: The <code>__init__</code> method initializes the middleware with the provided <code>get_response</code> function.</p>
+</li>
+<li>
+<p><strong>Request Handling</strong>: The <code>__call__</code> method is the main method of the middleware, called for each incoming request. It checks conditions and manages sessions before allowing the request to proceed to the view.</p>
+</li>
+</ul>
+<p><strong>Usage</strong></p>
+<p>To use this middleware, add it to the <code>MIDDLEWARE</code> list in your Django project's <code>settings.py</code> file as follows:</p>
+<p><code>python
+  MIDDLEWARE = [
+      ...
+      'evaluation.middleware.EvaMiddleware',
+      ...
+  ]</code></p>
+<p><strong>Conditions Checked</strong></p>
+<p>The middleware checks the following conditions before processing a request:</p>
+<ol>
+<li>If the 'evaluator' key is present in the request session.</li>
+<li>Whether a specific setting ('CNN') is enabled in the project's settings.</li>
+</ol>
+<p><strong>Customization</strong></p>
+<p>Do not customize the <code>EvaMiddleware</code> class. It can cause in the evaluation process and report genaration.</p>
+<p>========================
+Evaluation App - forms.py
+========================</p>
+<p>This README provides an overview of the forms.py file for the Evaluation app. The forms.py file contains the <code>EvaluatorForm</code> class, which is a Django form used for creating and updating Evaluator instances.</p>
+<p><strong>Form Overview</strong></p>
+<p>Forms in Django are used to handle user input and validation. The <code>EvaluatorForm</code> class is designed to work with the Evaluator model and provides a structured way to create and update Evaluator objects.</p>
+<p><strong>Form Functionality</strong></p>
+<ul>
+<li>
+<p><strong>Meta Class</strong>: The inner <code>Meta</code> class defines metadata for the form, including the model and form fields. It also customizes labels for form fields.</p>
+</li>
+<li>
+<p><strong>Custom Validation</strong>: The <code>clean</code> method is a custom form validation method that ensures the 'biofuel' selection is mandatory. If 'biofuel' is not selected, a validation error is raised.</p>
+</li>
+</ul>
+<p><strong>Form Fields</strong></p>
+<p>The <code>EvaluatorForm</code> includes the following fields:
+- 'name': Name of the evaluator.
+- 'email': Email address of the evaluator.
+- 'phone': Phone number of the evaluator.
+- 'organization': Organization to which the evaluator belongs.
+- 'biofuel': A dropdown field to select a fuel type.</p>
+<p><strong>Form Widgets and Labels</strong></p>
+<p>Form fields are customized with widgets to control their appearance in the HTML form. Custom labels are defined to provide clear field descriptions.</p>
+<p><strong>Usage</strong></p>
+<p>Developers can use this form in their views to create and update Evaluator instances. After binding the form to request data, validation can be performed, and Evaluator instances can be saved or updated based on user input.</p>
+<p><strong>Customization</strong></p>
+<p>Developers can customize this form to suit their app's specific needs by modifying form fields, widgets, labels, or adding additional validation logic.</p>
+<p>If you have any questions or need further clarification, please refer to the comments in the code or feel free to ask for assistance.</p>
+<p>========================
+Evaluation App - helper.py
+========================</p>
+<p>This README provides an overview of the helper.py file in the Evaluation app. The helper.py file contains various functions that retrieve and cache data from the database to improve performance on subsequent calls.</p>
+<p><strong>Function Overview</strong></p>
+<p>The helper functions in helper.py are designed to efficiently fetch and cache specific data from the database. Each function focuses on retrieving a specific set of data related to Questions, StdOils, or Glossary.</p>
+<p><strong>Function Details</strong></p>
+<ul>
+<li>
+<p><strong><code>get_all_questions()</code></strong>: </p>
+<ul>
+<li>This function retrieves and caches all Question instances from the database.</li>
+<li>It first checks the cache for the presence of cached questions to avoid unnecessary database queries.</li>
+<li>If the cached data is not available, it fetches all Question instances, including related data, and caches the result for future use.</li>
+<li>The cached data is stored for 3600 seconds (1 hour) to balance data freshness and query performance.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>get_all_stdoils()</code></strong>:</p>
+<ul>
+<li>This function retrieves and caches all StdOils instances from the database.</li>
+<li>Similar to <code>get_all_questions()</code>, it checks for cached data and fetches StdOils instances with related data if not already cached.</li>
+<li>The cached data is also stored for 3600 seconds.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>get_all_glossaries()</code></strong>:</p>
+<ul>
+<li>This function retrieves and caches all Glossary instances from the database.</li>
+<li>Like the previous functions, it checks the cache for existing data and fetches Glossary instances if needed.</li>
+<li>Cached data is stored for 3600 seconds.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>get_all_definedlabel()</code></strong>:</p>
+<ul>
+<li>This function retrieves and caches all DifinedLabel instances from the database.</li>
+<li>It follows a similar pattern as previous functions, checking for cached data and fetching DifinedLabel instances if not already cached.</li>
+<li>Cached data is stored for 3600 seconds.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>get_all_reports_with_last_answer(request, first_of_parent)</code></strong>:</p>
+<ul>
+<li>This function retrieves and caches reports (evaluators) with their last answered questions.</li>
+<li>It accepts two arguments: <code>request</code> (the HTTP request object) and <code>first_of_parent</code> (the first question of the parent questionnaire).</li>
+<li>The function distinguishes between superusers or staff and regular users when fetching reports.</li>
+<li>For each report, it determines the last answered question and stores its slug.</li>
+<li>Cached data is stored for 3600 seconds.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>get_biofuel()</code></strong>:</p>
+<ul>
+<li>This function retrieves and caches all Biofuel instances from the database.</li>
+<li>Similar to other functions, it checks for cached data and fetches Biofuel instances if needed.</li>
+<li>Cached data is stored for 3600 seconds.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>get_options_of_ques(question)</code></strong>:</p>
+<ul>
+<li>This function retrieves and caches all options related to a specific question.</li>
+<li>It accepts a <code>question</code> argument (the question for which options are retrieved).</li>
+<li>Cached data is stored using a key based on the question's ID and is stored for 3600 seconds.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>get_sugestions_of_ques(question)</code></strong>:</p>
+<ul>
+<li>This function retrieves and caches all suggestions related to a specific question.</li>
+<li>It accepts a <code>question</code> argument (the question for which suggestions are retrieved).</li>
+<li>Suggestions are ordered by creation date.</li>
+<li>Cached data is stored using a key based on the question's ID and is stored for 3600 seconds.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>active_sessions()</code></strong>:</p>
+<ul>
+<li>This function retrieves evaluator IDs from active sessions in the past 24 hours.</li>
+<li>It uses Django's <code>Session</code> model to fetch sessions that have not expired within the last 24 hours.</li>
+<li>Active evaluator IDs are stored in a set to ensure uniqueness.</li>
+<li>The function returns a list of evaluator IDs.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>clear_evaluator()</code></strong>:</p>
+<ul>
+<li>This function clears incomplete evaluators and their related data from the database.</li>
+<li>It is designed to run as a scheduled background task (e.g., via a CRON job) to maintain a clean database.</li>
+<li>Incomplete evaluators are those that were initialized but have no associated data and have not generated a report.</li>
+<li>The function fetches incomplete evaluators, checks if they are active in sessions, and deletes them along with their related data.</li>
+<li>The deletion sequence is carefully managed to avoid foreign key constraints.</li>
+<li>The function returns the total number of incomplete evaluators deleted during the process.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>get_current_evaluator(request, evaluator_id=None)</code></strong>:</p>
+<ul>
+<li>This function retrieves the current evaluator object based on the provided <code>evaluator_id</code> or the <code>evaluator_id</code> stored in the user's session.</li>
+<li>It is assumed that the middleware ensures 'evaluator' exists in the session.</li>
+<li>Developers can use this function to retrieve the current evaluator or a specific evaluator by ID.</li>
+<li>If no evaluator is found, it logs a debug message indicating the issue.</li>
+</ul>
+</li>
+</ul>
+<p>Below provides detailed information on the <code>EvaLebelStatementAnalyzer</code> class in the Evaluation app's helper.py file. The class is responsible for analyzing evaluation statements related to EvaLebel and generating assessment statements based on various criteria related to EvaLebel evaluations.</p>
+<p><strong>Class Details</strong></p>
+<ul>
+<li><strong><code>EvaLebelStatementAnalyzer</code></strong>:<ul>
+<li>A class for analyzing evaluation statements related to EvaLebel.</li>
+<li>Provides methods for generating assessment statements based on various criteria.</li>
+<li>Accepts two arguments during initialization: <code>evalebel</code> (an instance of EvaLebel representing the evaluation label) and <code>evaluator</code> (an instance representing the evaluator).</li>
+</ul>
+</li>
+</ul>
+<p><strong>Methods</strong></p>
+<ul>
+<li>
+<p><strong><code>get_statement_count(values_key, **filter_kwargs)</code></strong>:</p>
+<ul>
+<li>Get the count of distinct statements based on filtering criteria.</li>
+<li>Accepts a <code>values_key</code> for grouping and counting and additional filter criteria as keyword arguments.</li>
+<li>Returns the count of distinct statements based on the filter criteria.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>get_dont_know_statement(label_name, value_count)</code></strong>:</p>
+<ul>
+<li>Generate a statement based on the value count for "don't know" evaluations.</li>
+<li>Accepts <code>label_name</code> (the name of the evaluation label) and <code>value_count</code> (the count of "don't know" evaluations).</li>
+<li>Returns a statement describing the assessment based on the value count.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>get_positive_statement(label_name, value_count)</code></strong>:</p>
+<ul>
+<li>Generate a statement based on the value count for positive evaluations.</li>
+<li>Accepts <code>label_name</code> (the name of the evaluation label) and <code>value_count</code> (the count of positive evaluations).</li>
+<li>Returns a statement describing the assessment based on the value count.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>ans_to_the_label()</code></strong>:</p>
+<ul>
+<li>Get the count of answers related to the evaluation label.</li>
+<li>Returns the count of answers related to the evaluation label.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>calculate_percentage(ans_to_the_lavel)</code></strong>:</p>
+<ul>
+<li>Calculate the percentage based on answers related to the evaluation label.</li>
+<li>Accepts <code>ans_to_the_label</code> (the count of answers related to the evaluation label).</li>
+<li>Returns the percentage calculated based on the given count.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>label_assessment_for_donot_know()</code></strong>:</p>
+<ul>
+<li>Generate an assessment statement for "don't know" evaluations related to the label.</li>
+<li>Returns an assessment statement based on "don't know" evaluations.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>label_assessment_for_positive()</code></strong>:</p>
+<ul>
+<li>Generate an assessment statement for positive evaluations related to the label.</li>
+<li>Returns an assessment statement based on positive evaluations.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>ans_ques()</code></strong>:</p>
+<ul>
+<li>Get the count of answerable questions.</li>
+<li>Returns the count of answerable questions.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>calculate_overall_percent(ans)</code></strong>:</p>
+<ul>
+<li>Calculate the overall percentage based on the given count.</li>
+<li>Accepts <code>ans</code> (the count used to calculate the overall percentage).</li>
+<li>Returns the overall percentage calculated based on the given count.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>overall_assessment_for_donot_know()</code></strong>:</p>
+<ul>
+<li>Generate an overall assessment statement for "don't know" evaluations.</li>
+<li>Returns an overall assessment statement based on "don't know" evaluations.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>overall_assessment_for_positive()</code></strong>:</p>
+<ul>
+<li>Generate an overall assessment statement for positive evaluations.</li>
+<li>Returns an overall assessment statement based on positive evaluations.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Usage and Customization</strong></p>
+<p>The <code>EvaLebelStatementAnalyzer</code> class is designed to analyze and generate assessment statements for EvaLebel evaluations. Developers can use its methods to provide valuable insights and feedback to evaluators.</p>
+<p>Each method has specific functionality and can be customized as needed to tailor assessment statements based on different criteria and scenarios.</p>
+<p>For more information about the usage of these methods and customizations, please refer to the code comments or reach out for further assistance.</p>
+<p>Below README focusing on a class named <code>LabelWiseData</code>. This class is designed to handle various data calculations and retrievals related to label-wise evaluation.</p>
+<p><strong>Class Details</strong></p>
+<ul>
+<li>
+<p><strong><code>LabelWiseData</code></strong>:</p>
+<ul>
+<li>This class is designed to perform label-wise data calculations and retrievals.</li>
+<li>The class is initialized with an <code>evaluator</code>, which can be obtained from the session or URL.</li>
+</ul>
+<p><strong>Properties</strong>:</p>
+<ul>
+<li><strong><code>answered_question_id_list</code></strong>: Gets a list of unique answered question IDs.</li>
+<li><strong><code>total_active_questions</code></strong>: Gets the total count of active questions with four labels.</li>
+<li><strong><code>answered_percent</code></strong>: Calculates the percentage of answered questions out of total active questions.</li>
+<li><strong><code>total_positive_answer</code></strong>: Gets the total count of positive answers.</li>
+<li><strong><code>total_nagetive_answer</code></strong>: Gets the total count of negative answers.</li>
+<li><strong><code>overview_green</code></strong>: Calculates the percentage of positive answers out of total active questions.</li>
+<li><strong><code>overview_red</code></strong>: Calculates the percentage of negative answers out of total active questions.</li>
+<li><strong><code>overview_grey</code></strong>: Calculates the percentage of answers that are neither positive nor negative out of total active questions.</li>
+</ul>
+<p><strong>Methods</strong>:</p>
+<ul>
+<li>
+<p><strong><code>total_result()</code></strong>: Gets the overall results in a dictionary format, considering green, grey, and red as stackable bars.</p>
+</li>
+<li>
+<p><strong><code>label_wise_positive_answered(label)</code></strong>: Gets the count of positive answers for a specific label.</p>
+</li>
+<li>
+<p><strong><code>label_wise_nagetive_answered(label)</code></strong>: Gets the count of negative answers for a specific label.</p>
+</li>
+<li>
+<p><strong><code>label_wise_result()</code></strong>: Gets label-wise results in a dictionary format.</p>
+</li>
+<li>
+<p><strong><code>picked_labels_dict()</code></strong>: Gets a dictionary containing picked labels' results and the overall result.</p>
+</li>
+<li>
+<p><strong><code>packed_labels()</code></strong>: Creates a DataFrame from the picked labels' results. It's used to extract rows for use in JS's series.</p>
+</li>
+<li>
+<p><strong><code>label_data_history()</code></strong>: Gets historical label data as a list of dictionaries.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Usage and Customization</strong></p>
+<p>The <code>LabelWiseData</code> class is a powerful tool for calculating and retrieving label-wise evaluation data. Developers can use the properties and methods provided by this class to perform various data calculations, such as percentages, counts, and historical data.</p>
+<p>While the class is designed for general use, developers can customize its behavior or extend its functionality to meet specific requirements. This flexibility allows for a wide range of data analysis and reporting possibilities.</p>
+<p>For more details about how to use these properties and methods effectively, please refer to the code comments or reach out for further assistance.</p>
+<p>Below README  focusing on the <code>nreport_context</code> function and its purpose in generating comprehensive PDF report contexts for evaluators.</p>
+<p><strong>Function Details</strong></p>
+<ul>
+<li><strong><code>nreport_context(request, slug)</code></strong>:<ul>
+<li>This function generates a comprehensive PDF report context for a given evaluator.</li>
+<li>It accepts two arguments: <code>request</code> (the HTTP request object) and <code>slug</code> (the unique identifier of the evaluator).</li>
+<li>The function performs various tasks to prepare the context for generating a report PDF:<ul>
+<li>Clears the <code>evaluator</code> session variable to allow editing the report.</li>
+<li>Clears unnecessary session variables for completed reports.</li>
+<li>Retrieves the evaluator report using the provided slug.</li>
+<li>Creates a <code>LabelWiseData</code> instance for the evaluator.</li>
+<li>Generates data for the PDF report, including label data and label data history.</li>
+<li>Retrieves evaluation data for the evaluator.</li>
+<li>Retrieves evaluator labels and statements.</li>
+<li>Retrieves ordered next activities for the evaluator.</li>
+<li>Calculates the percentage of answered questions for the report.</li>
+<li>Determines the status of next activities (completed, not completed, not started, or unknown).</li>
+<li>Prepares the report context dictionary, including evaluation data, labels, statements, next activities, and more.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Usage and Customization</strong></p>
+<p>The <code>nreport_context</code> function is a critical component for generating PDF reports for evaluators in the Evaluation app. Developers can use this function to create comprehensive report contexts tailored to their specific requirements.</p>
+<p>The function is designed to retrieve data, perform calculations, and organize it into a context dictionary that can be passed to PDF generation functions or templates.</p>
+<p>While the provided code is a substantial part of the PDF report generation process, developers can further customize and extend it to meet their specific reporting needs. The code includes comments to help developers understand each step of the process.</p>
+<p>For more details about how this function works, please refer to the code comments or reach out for further assistance.</p>
+<p>This README provides an overview of the last two functions in the helper.py file of the Evaluation app.</p>
+<p><strong>Function Details</strong></p>
+<ul>
+<li>
+<p><strong><code>get_sugested_questions(request)</code></strong>:</p>
+<ul>
+<li>This function retrieves suggested questions submitted by the current user.</li>
+<li>It accepts a <code>request</code> argument, which contains user information.</li>
+<li>The function filters Suggestions objects based on the current user, type 'question,' and no associated question.</li>
+<li>The resulting QuerySet contains suggested questions submitted by the user.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>get_picked_na(question)</code></strong>:</p>
+<ul>
+<li>This function retrieves active next activities that involve a specific question.</li>
+<li>It accepts a <code>question</code> argument (the Question object to check for inclusion in next activities).</li>
+<li>The function first retrieves all active NextActivities objects.</li>
+<li>It then iterates through these next activities and checks if the specified question is involved.</li>
+<li>The function returns a list of active NextActivities objects that include the specified question.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Usage and Customization</strong></p>
+<p>Developers can use these functions to retrieve and work with suggested questions and active next activities involving specific questions.</p>
+<ul>
+<li>
+<p><code>get_sugested_questions(request)</code>: Developers can call this function to retrieve suggested questions submitted by the current user. It is useful for managing user-generated content.</p>
+</li>
+<li>
+<p><code>get_picked_na(question)</code>: This function helps developers find active next activities related to a particular question. It can be useful for determining the flow of activities based on user responses.</p>
+</li>
+</ul>
+<p>Customization of these functions may be required to meet specific project requirements. Developers can refer to code comments for more details on how these functions work.</p>
+<p>For any further assistance or information on using these functions, please consult the code comments or contact the development team.</p>
+<p>=======================
+Evaluation App - signals.py
+=======================</p>
+<p>This README provides comprehensive information about the signals.py module in the Evaluation app, including the purpose of the signals, their usage, and customization options.</p>
+<p><strong>Signals Overview</strong></p>
+<p>The signals.py module contains custom signals and signal handlers used to perform specific actions during database transactions. Signals are a way to allow certain senders to notify a set of receivers that an action has taken place. In this context, the signals are used for database-related actions and provide flexibility in managing data changes.</p>
+<p><strong>Signal: on_transaction_commit(func)</strong></p>
+<ul>
+<li>This custom signal is implemented as a decorator (<code>on_transaction_commit</code>) that wraps a function.</li>
+<li>Purpose: To execute a function after a database transaction is committed, ensuring that the function runs only when changes to the database are finalized.</li>
+<li>Args:<ul>
+<li><code>func</code> (callable): The function to be executed after the transaction is committed.</li>
+</ul>
+</li>
+<li>Usage: The decorator <code>@on_transaction_commit</code> can be applied to functions that need to run after database transactions.</li>
+<li>Customization: Developers can use this decorator to create functions that respond to specific database changes once they are confirmed.</li>
+</ul>
+<p><strong>Signal: delete_option_sets(sender, instance, </strong>kwargs)**</p>
+<ul>
+<li>This signal handler is executed when a <code>LogicalString</code> instance is deleted.</li>
+<li>Purpose: To delete associated <code>OptionSet</code> objects when a <code>LogicalString</code> is deleted, ensuring proper data cleanup.</li>
+<li>Args:<ul>
+<li><code>sender</code>: The sender of the signal (<code>LogicalString</code>).</li>
+<li><code>instance</code>: The instance of the <code>LogicalString</code> being deleted.</li>
+<li><code>**kwargs</code>: Additional keyword arguments.</li>
+</ul>
+</li>
+<li>Usage: This signal handler is automatically triggered when a <code>LogicalString</code> is deleted, and it takes care of deleting related <code>OptionSet</code> instances.</li>
+<li>Customization: Developers can customize this signal handler to perform additional actions or validations during <code>LogicalString</code> deletion.</li>
+</ul>
+<p><strong>Signal: recreate_option_sets(sender, instance, </strong>kwargs)**</p>
+<ul>
+<li>This signal handler is executed when a <code>LogicalString</code> instance is saved or updated.</li>
+<li>Purpose: To recreate <code>OptionSet</code> objects based on changes in <code>LogicalString</code>, ensuring that the two are synchronized.</li>
+<li>Args:<ul>
+<li><code>sender</code>: The sender of the signal (<code>LogicalString</code>).</li>
+<li><code>instance</code>: The instance of the <code>LogicalString</code> being saved.</li>
+<li><code>**kwargs</code>: Additional keyword arguments.</li>
+</ul>
+</li>
+<li>Usage: This signal handler is automatically triggered when a <code>LogicalString</code> is saved or updated. It collects saved logical strings, compares them with existing <code>OptionSet</code> instances, and ensures synchronization.</li>
+<li>Customization: Developers can modify this signal handler to include additional logic or conditions based on project requirements.</li>
+</ul>
+<p><strong>Signal: add_question_to_the_oil(sender, instance, created, </strong>kwargs)**</p>
+<ul>
+<li>This signal handler is executed when a new <code>OliList</code> instance is created.</li>
+<li>Purpose: To assign all active questions to the newly created oil, ensuring that questions are associated with the oil from the beginning.</li>
+<li>Args:<ul>
+<li><code>sender</code>: The sender of the signal (<code>OliList</code>).</li>
+<li><code>instance</code>: The instance of the <code>OliList</code> being saved.</li>
+<li><code>created</code> (bool): True if a new object is created, False if an existing one is saved.</li>
+<li><code>**kwargs</code>: Additional keyword arguments.</li>
+</ul>
+</li>
+<li>Usage: This signal handler is triggered when a new oil is created. It fetches all active questions and associates them with the oil using <code>StandaredChart</code> instances.</li>
+<li>Customization: Developers can customize this signal handler to include additional logic or conditions when associating questions with oils.</li>
+</ul>
+<p><strong>Signal: on_option_change(sender, instance, </strong>kwargs)**</p>
+<ul>
+<li>This signal handler is executed before saving an <code>Option</code> instance.</li>
+<li>Purpose: To detect changes in <code>Option</code> objects and notify evaluators accordingly.</li>
+<li>Args:<ul>
+<li><code>sender</code>: The sender of the signal (<code>Option</code>).</li>
+<li><code>instance</code>: The instance of the <code>Option</code> being saved.</li>
+<li><code>**kwargs</code>: Additional keyword arguments.</li>
+</ul>
+</li>
+<li>Usage: This signal handler is triggered when an <code>Option</code> is about to be saved. It checks for changes in the <code>Option</code> fields and updates the <code>feedback_updated</code> status for relevant evaluators.</li>
+<li>Customization: Developers can modify this signal handler to include additional checks, notifications, or conditions based on project requirements.</li>
+</ul>
+<p><strong>Signal: add_to_the_user_next(sender, instance, created, </strong>kwargs)**</p>
+<ul>
+<li>This signal handler is executed when a new <code>NextActivities</code> instance is created.</li>
+<li>Purpose: To add a <code>NextActivity</code> to a user's list of upcoming activities and send email notifications.</li>
+<li>Args:<ul>
+<li><code>sender</code>: The sender of the signal (<code>NextActivities</code>).</li>
+<li><code>instance</code>: The instance of the <code>NextActivities</code> being saved.</li>
+<li><code>created</code> (bool): True if a new object is created, False if an existing one is saved.</li>
+<li><code>**kwargs</code>: Additional keyword arguments.</li>
+</ul>
+</li>
+<li>Usage: This signal handler is triggered when a new <code>NextActivities</code> instance is created. It adds the activity to the user's list of upcoming activities and sends email notifications to the creator and other users involved.</li>
+<li>Customization: Developers can customize this signal handler to include additional notification methods, content, or recipients as needed.</li>
+</ul>
+<p><strong>Signal Usage and Customization</strong></p>
+<p>Developers can use these signals and signal handlers to automate actions, maintain data consistency, and respond to database changes effectively. By understanding the purpose and behavior of each signal, developers can customize them to meet specific project needs.</p>
+<p>For further details on the usage, customization, and integration of these signals in your project, consult the code comments or reach out to the development team for assistance.</p>
+<p>=======================
+Evaluation App - models.py
+=======================</p>
+<p>This README provides comprehensive information about the <code>models.py</code> module in the Evaluation app, including the purpose of the defined models and any custom validators used.</p>
+<p><strong>Custom Validator: get_common_status(value)</strong></p>
+<ul>
+<li>This custom validator is used to ensure that there is only one common status entry in <code>DefinedLabel</code> objects.</li>
+<li>Purpose: To validate that only one <code>DefinedLabel</code> object can have the <code>common_status</code> field set to <code>True</code>.</li>
+<li>Args:<ul>
+<li><code>value</code>: The value to check (usually 1 for common status).</li>
+</ul>
+</li>
+<li>Raises:<ul>
+<li><code>ValidationError</code>: Raised if there is already a common status defined.</li>
+</ul>
+</li>
+<li>Usage: This validator is applied to the <code>common_status</code> field of <code>DefinedLabel</code> models to prevent the creation of multiple common status entries.</li>
+<li>Customization: Developers can use this validator to enforce specific constraints on the <code>common_status</code> field as needed.</li>
+</ul>
+<p><strong>Model: DefinedLabel</strong></p>
+<ul>
+<li>This model serves as a database connector for labels used site-wide.</li>
+<li>Labels are used in reports and question settings in the admin.</li>
+<li>Only one common status can exist.</li>
+<li>Fields:<ul>
+<li><code>name</code>: A character field for the label's name (max length: 252).</li>
+<li><code>label</code>: A character field for additional label information (max length: 252, default: '').</li>
+<li><code>adj</code>: A character field for label adjustments (max length: 252, default: '').</li>
+<li><code>common_status</code>: A boolean field indicating whether this label is a common status, with a custom validator to ensure uniqueness.</li>
+<li><code>sort_order</code>: A character field for sorting the labels (max length: 3, default: 0).</li>
+</ul>
+</li>
+<li>Usage: This model is used to define labels that are used throughout the application. It enforces the uniqueness of common status labels.</li>
+<li>Customization: Developers can extend this model or modify its fields to suit specific project requirements.</li>
+</ul>
+<p><strong>Function: generate_uuid()</strong></p>
+<ul>
+<li>This function generates a hexadecimal code for slug URLs, currently used only on questions.</li>
+<li>Purpose: To generate a unique identifier for slug URLs.</li>
+<li>Usage: This function can be used wherever unique slugs are required, such as in question URLs.</li>
+<li>Customization: Developers can customize this function or its usage based on project needs.</li>
+</ul>
+<p>For further details on the usage, customization, and integration of these models and validators in your project, consult the code comments or reach out to the development team for assistance.</p>
+<p><strong>Model: Question</strong></p>
+<ul>
+<li>This model serves as a database connection for questions within the Evaluation app.</li>
+<li>Key Features:<ul>
+<li><code>slug</code>: A unique character field (max length: 40) generated using <code>generate_uuid()</code> for slug URLs. Not editable.</li>
+<li><code>name</code>: A character field for the question's name (max length: 252).</li>
+<li><code>chapter_name</code>: A character field for the chapter name associated with the question (max length: 252, nullable).</li>
+<li><code>parent_question</code>: A foreign key reference to another <code>Question</code> instance, representing the parent question (self-referential, nullable).</li>
+<li><code>sort_order</code>: An integer field used for sorting questions (default: 1).</li>
+<li><code>description</code>: A text field for the question's description.</li>
+<li><code>is_active</code>: A boolean field indicating the question's active status (default: False).</li>
+<li><code>is_door</code>: A boolean field indicating whether the question is a "door" question (default: False).</li>
+<li><code>chart_title</code>: A character field for the chart title associated with the question (max length: 252, nullable).</li>
+<li><code>create_date</code>: A datetime field indicating the creation date (auto-generated, nullable).</li>
+<li><code>update_date</code>: A datetime field indicating the last update date (auto-generated, nullable).</li>
+</ul>
+</li>
+</ul>
+<p><strong>Model Functions and Properties:</strong></p>
+<ul>
+<li>
+<p><code>get_absolute_url()</code>: Get the URL for browsing an individual question for editing (not used in the evaluation procedure).</p>
+</li>
+<li>
+<p><code>add_quatation</code>: Get the URL for adding a quotation to the question.</p>
+</li>
+<li>
+<p><code>labels</code>: Get labels related to this question.</p>
+</li>
+<li>
+<p><code>get_related_quotations</code>: Get related quotations for this question.</p>
+</li>
+<li>
+<p><code>get_quotations</code>: Get quotations associated with this question.</p>
+</li>
+<li>
+<p><code>get_merged_quotations</code>: Get merged quotations, including related and associated quotations.</p>
+</li>
+<li>
+<p><code>get_options</code>: Get options for this question.</p>
+</li>
+<li>
+<p><code>get_stdoils</code>: Get standard oils associated with this question.</p>
+</li>
+<li>
+<p><code>have_4labels()</code>: Check if the question has at least 4 labels.</p>
+</li>
+<li>
+<p><code>problem_in_option</code>: Check for problems in question options.</p>
+</li>
+<li>
+<p><code>not_is_door_nor_have_parent</code>: Check if the question is neither a door nor has a parent.</p>
+</li>
+<li>
+<p><code>get_sugestions()</code>: Get suggestions related to this question.</p>
+</li>
+</ul>
+<p><strong>Additional Notes:</strong></p>
+<ul>
+<li>The <code>Question</code> model is used to represent questions and their properties within the Evaluation app.</li>
+<li>It provides various methods and properties to access related data and perform checks on question attributes.</li>
+</ul>
+<p>For further details on the usage, customization, and integration of this model and its associated functions in your project, consult the code comments or reach out to the development team for assistance.</p>
+<p><strong>Model: Label</strong></p>
+<ul>
+<li>This model serves as a database connection for labels.</li>
+<li>Key Features:<ul>
+<li><code>name</code>: A foreign key reference to a <code>DifinedLabel</code> instance using <code>on_delete=models.PROTECT</code>, limiting choices to those with <code>common_status</code> set to <code>False</code>.</li>
+<li><code>question</code>: A foreign key reference to a <code>Question</code> instance using <code>on_delete=models.CASCADE</code>.</li>
+<li><code>value</code>: A character field (max length: 1) that follows business logic.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Model: Option</strong></p>
+<ul>
+<li>This model serves as a database connection for options.</li>
+<li>Key Features:<ul>
+<li><code>name</code>: A character field (max length: 252) for the option's name.</li>
+<li><code>yes_status</code>: A boolean field indicating whether the option represents 'Yes' (default: False).</li>
+<li><code>dont_know</code>: A boolean field indicating whether the option represents 'Don't Know' (default: False).</li>
+<li><code>question</code>: A foreign key reference to a <code>Question</code> instance using <code>on_delete=models.CASCADE</code>.</li>
+<li><code>next_question</code>: A foreign key reference to a <code>Question</code> instance (nullable) representing the next question during the evaluation process.</li>
+<li><code>statement</code>: A text field (nullable) for a statement printed under the label in the report and question page.</li>
+<li><code>next_step</code>: A text field (nullable) for the next step printed under the label based on business logic in report and question forms.</li>
+<li><code>overall</code>: A character field (max length: 1, default: 0) used to determine if the statement should be added to the summary.</li>
+<li><code>positive</code>: A character field (max length: 1, default: 0) used to calculate assessment under the label in the report and question form.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Model: LogicalString</strong></p>
+<ul>
+<li>This model serves as a database connection for logical statements based on selected options.</li>
+<li>Key Features:<ul>
+<li><code>options</code>: A many-to-many relationship with <code>Option</code> instances.</li>
+<li><code>text</code>: A text field (nullable) that acts as the statement.</li>
+<li><code>overall</code>: A character field (max length: 1, default: 0) used to determine if the statement should be added to the summary.</li>
+<li><code>positive</code>: A character field (max length: 1, default: 0) used to calculate assessment under the label in reports and question forms.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Additional Notes:</strong></p>
+<ul>
+<li>The <code>Label</code>, <code>Option</code>, and <code>LogicalString</code> models are used to manage labels, options, and logical statements within the Evaluation app.</li>
+<li>These models have various fields and properties that are used to configure how labels, options, and statements are used in the evaluation process.</li>
+</ul>
+<p>For further details on the usage, customization, and integration of these models in your project, consult the code comments or reach out to the development team for assistance.</p>
+<p><strong>Model: OptionSet</strong></p>
+<ul>
+<li>This model is automatically generated during evaluation by the user and is not displayed in the admin side.</li>
+<li>Key Features:<ul>
+<li><code>option_list</code>: A character field (max length: 252) that is unique and indexed, representing a list of options.</li>
+<li><code>text</code>: A text field for additional information.</li>
+<li><code>positive</code>: A character field (max length: 1, default: 0) used for positive assessments.</li>
+<li><code>overall</code>: A character field (max length: 1, default: 0) used for overall assessments.</li>
+<li><code>ls_id</code>: A character field (max length: 252, default: 0) for logical string identification.</li>
+<li><code>create_date</code>: A datetime field indicating the creation date (auto-generated, nullable).</li>
+<li><code>update_date</code>: A datetime field indicating the last update date (auto-generated, nullable).</li>
+</ul>
+</li>
+</ul>
+<p><strong>Model: Lslabel</strong></p>
+<ul>
+<li>This model represents labels for logical strings to be selected during the setup of logical strings.</li>
+<li>Key Features:<ul>
+<li><code>name</code>: A foreign key reference to a <code>DifinedLabel</code> instance using <code>on_delete=models.PROTECT</code>, limiting choices to those with <code>common_status</code> set to <code>False</code>.</li>
+<li><code>logical_string</code>: A foreign key reference to a <code>LogicalString</code> instance using <code>on_delete=models.CASCADE</code>.</li>
+<li><code>value</code>: A character field (max length: 1, default: 0) following business logic.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Model: Biofuel</strong></p>
+<ul>
+<li>This model represents the biofuel selected by the user on the initial page of evaluation.</li>
+<li>Key Features:<ul>
+<li><code>name</code>: A character field (max length: 252) representing the biofuel name.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Model: Evaluator</strong></p>
+<ul>
+<li>This model is automatically generated during evaluation by the user and should not be edited or modified from the admin side.</li>
+<li>Key Features:<ul>
+<li><code>slug</code>: A UUID field (auto-generated, unique, not editable, indexed) used for identification.</li>
+<li><code>creator</code>: A foreign key reference to a user using <code>on_delete=models.SET_NULL</code> (nullable).</li>
+<li><code>name</code>: A character field (max length: 252) representing the evaluator's name.</li>
+<li><code>email</code>: An email field for the evaluator's email address.</li>
+<li><code>phone</code>: A character field (max length: 16, nullable) for the evaluator's phone number.</li>
+<li><code>organization</code>: A character field (max length: 252, nullable) for the evaluator's organization.</li>
+<li><code>biofuel</code>: A foreign key reference to a <code>Biofuel</code> instance using <code>on_delete=models.SET_NULL</code> (nullable).</li>
+<li><code>stdoil_key</code>: A character field (max length: 20, nullable, indexed) representing a standard oil key.</li>
+<li><code>create_date</code>: A datetime field indicating the creation date (auto-generated, nullable).</li>
+<li><code>update_date</code>: A datetime field indicating the last update date (auto-generated, nullable).</li>
+<li><code>report_generated</code>: A boolean field (default: False) indicating whether a report has been generated.</li>
+<li><code>feedback_updated</code>: A boolean field (default: False) indicating whether feedback has been updated.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Model: Evaluation</strong></p>
+<ul>
+<li>This model is automatically generated during evaluation by the user and is not displayed in the admin side.</li>
+<li>Key Features:<ul>
+<li><code>evaluator</code>: A foreign key reference to an <code>Evaluator</code> instance using <code>on_delete=models.RESTRICT</code>.</li>
+<li><code>option</code>: A foreign key reference to an <code>Option</code> instance using <code>on_delete=models.RESTRICT</code>.</li>
+<li><code>question</code>: A foreign key reference to a <code>Question</code> instance using <code>on_delete=models.RESTRICT</code> (nullable).</li>
+</ul>
+</li>
+</ul>
+<p><strong>Model: EvaComments</strong></p>
+<ul>
+<li>This model is automatically generated during evaluation by the user and is not displayed in the admin side.</li>
+<li>Key Features:<ul>
+<li><code>evaluator</code>: A foreign key reference to an <code>Evaluator</code> instance using <code>on_delete=models.RESTRICT</code>.</li>
+<li><code>question</code>: A foreign key reference to a <code>Question</code> instance using <code>on_delete=models.RESTRICT</code>.</li>
+<li><code>comments</code>: A text field (max length: 600) for comments.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Additional Notes:</strong></p>
+<ul>
+<li>These models are used for various aspects of the evaluation process within the Evaluation app.</li>
+<li>They are automatically generated during the evaluation and should not be modified directly through the admin interface.</li>
+</ul>
+<p>For further details on the usage, customization, and integration of these models in your project, consult the code comments or reach out to the development team for assistance.</p>
+<p><strong>Model: EvaLabel</strong></p>
+<ul>
+<li>This model is automatically generated during evaluation by the user and is not displayed in the admin side.</li>
+<li>Key Features:<ul>
+<li><code>label</code>: A foreign key reference to a <code>DifinedLabel</code> instance using <code>on_delete=models.PROTECT</code>.</li>
+<li><code>evaluator</code>: A foreign key reference to an <code>Evaluator</code> instance using <code>on_delete=models.RESTRICT</code>.</li>
+<li><code>sort_order</code>: A character field (max length: 3, default: 0).</li>
+<li><code>create_date</code>: A datetime field indicating the creation date (auto-generated, nullable).</li>
+</ul>
+</li>
+</ul>
+<p><strong>Model: EvaLabelStatement</strong></p>
+<ul>
+<li>This model is automatically generated during evaluation by the user and is not displayed in the admin side.</li>
+<li>Key Features:<ul>
+<li><code>evalebel</code>: A foreign key reference to an <code>EvaLabel</code> instance using <code>on_delete=models.PROTECT</code>.</li>
+<li><code>question</code>: A foreign key reference to a <code>Question</code> instance using <code>on_delete=models.PROTECT</code> (nullable).</li>
+<li><code>option_id</code>: A character field (max length: 252, nullable).</li>
+<li><code>statement</code>: A text field for statements (nullable).</li>
+<li><code>next_step</code>: A text field for the next step (nullable).</li>
+<li><code>positive</code>: A character field (max length: 1, default: 0) for positive assessments.</li>
+<li><code>dont_know</code>: A boolean field (default: False) indicating 'Don't Know'.</li>
+<li><code>assessment</code>: A boolean field (default: False).</li>
+<li><code>next_activity</code>: A boolean field (default: False).</li>
+<li><code>evaluator</code>: A foreign key reference to an <code>Evaluator</code> instance using <code>on_delete=models.RESTRICT</code> (nullable).</li>
+<li><code>create_date</code>: A datetime field indicating the creation date (auto-generated, nullable).</li>
+<li><code>update_date</code>: A datetime field indicating the last update date (auto-generated, nullable).</li>
+</ul>
+</li>
+</ul>
+<p><strong>Model: NextActivities</strong></p>
+<ul>
+<li>This model represents the main parameters for next activities.</li>
+<li>Key Features:<ul>
+<li><code>name_and_standard</code>: A character field (max length: 250) representing the name and standard.</li>
+<li><code>short_description</code>: A text field (max length: 152) for a brief description.</li>
+<li><code>descriptions</code>: A text field for detailed descriptions.</li>
+<li><code>url</code>: A URL field (nullable).</li>
+<li><code>priority</code>: A character field (max length: 2) for specifying the sort order.</li>
+<li><code>related_questions</code>: A many-to-many relationship with <code>Question</code> instances for related questions (limit choices to those with <code>is_active</code> set to <code>True</code>).</li>
+<li><code>compulsory_questions</code>: A many-to-many relationship with <code>Question</code> instances for compulsory questions (limit choices to those with <code>is_active</code> set to <code>True</code>).</li>
+<li><code>related_percent</code>: An integer field (default: 90).</li>
+<li><code>compulsory_percent</code>: An integer field (default: 100).</li>
+<li><code>is_active</code>: A boolean field (default: True) for publishing.</li>
+<li><code>same_tried_by</code>: A JSON field (nullable).</li>
+<li><code>created_by</code>: A foreign key reference to the user who created this instance using <code>on_delete=models.CASCADE</code>.</li>
+<li><code>create_date</code>: A datetime field indicating the creation date (auto-generated, nullable).</li>
+<li><code>update_date</code>: A datetime field indicating the last update date (auto-generated, nullable).</li>
+</ul>
+</li>
+</ul>
+<p><strong>Additional Notes:</strong></p>
+<ul>
+<li>These models are used for various aspects of the evaluation process within the Evaluation app.</li>
+<li>They are automatically generated during the evaluation and should not be modified directly through the admin interface.</li>
+</ul>
+<p>For further details on the usage, customization, and integration of these models in your project, consult the code comments or reach out to the development team for assistance.</p>
+<p><strong>Model: EvaluatorActivities</strong></p>
+<ul>
+<li>This model represents Evaluator Activities.</li>
+<li>Attributes:<ul>
+<li><code>evaluator</code> (ForeignKey): A reference to the associated evaluator using <code>on_delete=models.CASCADE</code>.</li>
+<li><code>next_activity</code> (ForeignKey): A reference to the next activity related to the evaluator using <code>on_delete=models.CASCADE</code>.</li>
+<li><code>related_percent</code> (IntegerField): Related percentage.</li>
+<li><code>compulsory_percent</code> (IntegerField): Compulsory percentage.</li>
+<li><code>is_active</code> (BooleanField): Indicates whether the activity is active or not.</li>
+<li><code>create_date</code> (DateTimeField): Date and time of creation (auto-generated, nullable).</li>
+<li><code>update_date</code> (DateTimeField): Date and time of the last update (auto-generated, nullable).</li>
+</ul>
+</li>
+<li>Methods:<ul>
+<li><code>__str__()</code>: Returns a string representation of the next activity's name and standard.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Model: OliList</strong></p>
+<ul>
+<li>This model represents Defined Oils.</li>
+<li>Attributes:<ul>
+<li><code>name</code> (CharField): The name of the defined oil (unique).</li>
+<li><code>key</code> (CharField): A unique key generated based on the name.</li>
+</ul>
+</li>
+<li>Methods:<ul>
+<li><code>__str__()</code>: Returns the name of the defined oil.</li>
+<li><code>save()</code>: Overrides the default save method to generate and save the key based on the name.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Model: StdOils</strong></p>
+<ul>
+<li>This model represents Standard Oils.</li>
+<li>Attributes:<ul>
+<li><code>select_oil</code> (ForeignKey): A reference to the selected oil from <code>OliList</code> using <code>on_delete=models.CASCADE</code>.</li>
+<li><code>biofuel</code> (ForeignKey): A reference to the associated biofuel (nullable).</li>
+</ul>
+</li>
+<li>Methods:<ul>
+<li><code>__str__()</code>: Returns the name of the selected oil.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Model: StandaredChart</strong></p>
+<ul>
+<li>This model represents Standard Charts.</li>
+<li>Attributes:<ul>
+<li><code>oil</code> (ForeignKey): A reference to the associated standard oil using <code>on_delete=models.CASCADE</code>.</li>
+<li><code>question</code> (ForeignKey): A reference to the associated question using <code>on_delete=models.CASCADE</code> (limit choices to those with <code>is_active</code> set to <code>True</code>).</li>
+<li><code>unit</code> (ForeignKey): A reference to the associated weight unit (nullable).</li>
+<li><code>value</code> (CharField): The value for the chart (nullable).</li>
+<li><code>link</code> (URLField): A URL link (nullable).</li>
+<li><code>option</code> (ChainedForeignKey): A reference to the associated option (nullable).</li>
+</ul>
+</li>
+<li>Methods:<ul>
+<li><code>oil_key()</code>: Returns the lowercase key of the associated standard oil.</li>
+<li><code>__str__()</code>: Returns the name of the associated standard oil.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Additional Notes:</strong></p>
+<ul>
+<li>These models are used to represent various aspects of the evaluation process and standard chart information within the Evaluation app.</li>
+<li>Ensure that you follow the specific constraints and relationships defined in these models to maintain data integrity and functionality.</li>
+<li>Refer to the model methods for additional functionality and customization options.</li>
+</ul>
+<p><strong>Model: Youtube_data</strong></p>
+<ul>
+<li>This model is used to store YouTube data for specific search terms.</li>
+<li>Attributes:<ul>
+<li><code>term</code> (TextField): The search term for YouTube data.</li>
+<li><code>urls</code> (TextField): URLs related to the search term.</li>
+<li><code>create_date</code> (DateTimeField): Date and time of creation (auto-generated, nullable).</li>
+<li><code>update_date</code> (DateTimeField): Date and time of the last update (auto-generated, nullable).</li>
+</ul>
+</li>
+<li>Methods:<ul>
+<li><code>__str__()</code>: Returns the search term as a string.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Model: LabelDataHistory</strong></p>
+<ul>
+<li>This model is used to store Label Data History.</li>
+<li>Attributes:<ul>
+<li><code>evaluator</code> (ForeignKey): A reference to the associated evaluator using <code>on_delete=models.CASCADE</code>.</li>
+<li><code>items</code> (TextField): History of labeled items (limited to 250 characters).</li>
+<li><code>created</code> (DateTimeField): Date and time of creation (auto-generated, nullable).</li>
+</ul>
+</li>
+<li>Methods:<ul>
+<li><code>__str__()</code>: Returns the items history as a string.</li>
+</ul>
+</li>
+<li>Meta:<ul>
+<li><code>verbose_name</code>: 'Label Data History'</li>
+<li><code>verbose_name_plural</code>: 'Label Data Histories'</li>
+</ul>
+</li>
+</ul>
+<p><strong>Model: ReportMailQueue</strong></p>
+<ul>
+<li>This model is used to queue report mail sending tasks.</li>
+<li>Attributes:<ul>
+<li><code>to</code> (CharField): Email address of the recipient.</li>
+<li><code>from_report</code> (ForeignKey): The sender (Evaluator) of the report using <code>on_delete=models.CASCADE</code>.</li>
+<li><code>new_report</code> (ForeignKey): The report being sent using <code>on_delete=models.CASCADE</code>.</li>
+<li><code>added_at</code> (DateTimeField): Date and time when the report was added to the queue (auto-generated).</li>
+<li><code>processed</code> (BooleanField): Indicates whether the task has been processed.</li>
+<li><code>process_time</code> (DateTimeField): Date and time of processing (auto-generated).</li>
+<li><code>tried</code> (IntegerField): Number of attempts to send the report.</li>
+</ul>
+</li>
+<li>Methods:<ul>
+<li><code>__str__()</code>: Returns the recipient's email address as a string.</li>
+</ul>
+</li>
+<li>Note: The mail queues will be executed by crontab and are created during the saving of BlogPost.</li>
+</ul>
+<p><strong>Model: Suggestions</strong></p>
+<ul>
+<li>This model is used to store user suggestions.</li>
+<li>Attributes:<ul>
+<li><code>question</code> (ForeignKey): A reference to the associated question (nullable).</li>
+<li><code>su_type</code> (CharField): Type of suggestion ('question' or 'option').</li>
+<li><code>title</code> (CharField): Title of the suggestion.</li>
+<li><code>statement</code> (TextField): The suggestion statement.</li>
+<li><code>suggested_by</code> (ForeignKey to User): The user who suggested the idea.</li>
+<li><code>parent</code> (ForeignKey to self): The parent suggestion (nullable, used for replies).</li>
+<li><code>related_qs</code> (ForeignKey to self): Related suggestion (nullable, for cross-reference).</li>
+<li><code>comitted</code> (BooleanField): Indicates whether the suggestion has been committed.</li>
+<li><code>created</code> (DateTimeField): Date and time of creation (auto-generated).</li>
+<li><code>updated</code> (DateTimeField): Date and time of the last update (auto-generated).</li>
+</ul>
+</li>
+<li>Methods:<ul>
+<li><code>__str__()</code>: Returns the title of the suggestion.</li>
+</ul>
+</li>
+<li>Meta:<ul>
+<li><code>verbose_name</code>: 'Suggestion'</li>
+</ul>
+</li>
+<li>Note: The 'question' field is nullable, allowing suggestions without an associated question.</li>
+</ul>
+<p>=========================================================
+ReportPDFData Class of nreport_class.py of EVALUATION APP
+=========================================================</p>
+<p>The <code>ReportPDFData</code> class is an essential part of the Evaluation APP, responsible for generating PDF reports based on evaluation data. This class initializes various styles and settings for formatting the PDF report, draws images and content on the pages, and organizes different sections of the report.</p>
+<h2 id="initialization">Initialization<a class="headerlink" href="#initialization" title="Permanent link">&para;</a></h2>
+<p>To create a <code>ReportPDFData</code> object, you need to provide two parameters: <code>request</code> and <code>slug</code>. These parameters are required for constructing the report.</p>
+<ul>
+<li><code>request</code>: The Django request object.</li>
+<li><code>slug</code>: The slug for the Evaluator object.</li>
+</ul>
+<h2 id="attributes">Attributes<a class="headerlink" href="#attributes" title="Permanent link">&para;</a></h2>
+<p>This class has several attributes used for styling and formatting the report:</p>
+<ul>
+<li><code>pagesize</code>: The page size (A4 by default).</li>
+<li><code>PH</code> and <code>PW</code>: Page height and width.</li>
+<li><code>M</code>: Margin size.</li>
+<li><code>styles</code>: Sample styles for text formatting.</li>
+<li><code>title</code>, <code>t_additional</code>, <code>author</code>, <code>creator</code>, and <code>producer</code>: Information about the report.</li>
+<li><code>stylesN</code>, <code>stylesH1</code>, <code>stylesH2</code>, <code>stylesH3</code>, <code>stylesH4</code>, <code>stylesH5</code>, <code>stylesH6</code>, <code>stylesT</code>, <code>stylesB</code>: Styles for different text elements.</li>
+<li><code>stylesB.alignment</code>: Text alignment.</li>
+<li>Custom paragraph styles like <code>TitleR</code>, <code>SectionT</code>, <code>LeftIndent</code>, and <code>Footer</code>.</li>
+<li><code>stylesTR</code>, <code>SectionT</code>, <code>LeftIndent</code>, <code>Footer</code>: References to the custom paragraph styles.</li>
+<li><code>title_font_size</code>: Font size for report titles.</li>
+</ul>
+<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
+<p>This class contains various methods to generate different parts of the PDF report, including:</p>
+<ul>
+<li><code>report_initial(c, doc)</code>: Draws an initial image on the report's first page.</li>
+<li><code>top_string(c, doc)</code>: Adds a top string with the project title to the report.</li>
+<li>Methods to create horizontal lines with different widths: <code>uline</code>, <code>uline34</code>, <code>uline100</code>, <code>ulineDG100</code>, and <code>ulineG100</code>.</li>
+<li><code>first_page(c, doc)</code>: Generates the content for the first page of the report.</li>
+<li><code>later_page(c, doc)</code>: Generates the content for pages after the first page of the report.</li>
+<li><code>wrapped_pdf()</code>: Generates the content of the wrapped PDF report.</li>
+<li><code>basic_summary()</code>: Generates the basic summary section of the report.</li>
+<li><code>desclimar_and_content()</code>: Generates the disclaimer and content section of the report.</li>
+<li><code>grape_status()</code>: Generates the grape status section of the report.</li>
+<li><code>points_status()</code>: Generates the points status section of the report.</li>
+<li><code>todos()</code>: Generates the list of todos section of the report.</li>
+<li><code>summary_statement()</code>: Generates the summary statement section of the report.</li>
+<li><code>question_specific_feedback()</code>: Generates the question-specific feedback section of the report.</li>
+<li><code>details_of_activities()</code>: Generates the details of activities section of the report.</li>
+<li><code>biofuel_history()</code>: Generates the biofuel history section of the report.</li>
+</ul>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<p>To use the <code>ReportPDFData</code> class, you need to initialize an instance with the required parameters and then call the appropriate methods to generate the report content. The resulting content can be added to a PDF document.</p>
+<h2 id="example_usage">Example Usage<a class="headerlink" href="#example_usage" title="Permanent link">&para;</a></h2>
+<p>```python
+  # Initialize the ReportPDFData object
+  report_data = ReportPDFData(request, slug)</p>
+<p># Create a PDF document
+  pdf_doc = SimpleDocTemplate("evaluation_report.pdf")</p>
+<p># Generate the report content
+  report_content = report_data.wrapped_pdf()</p>
+<p># Build the PDF document with the report content
+  pdf_doc.build(report_content)</p>
+<p>```</p>
+<p>=====================================
+sitemaps.py - Evaluation APP Sitemaps
+=====================================</p>
+<p>This module defines sitemaps for the Evaluation APP within the GFVP (Green Fuel Validation Platform) website. Sitemaps are used to inform search engines about the structure and hierarchy of your site's URLs, helping improve SEO and discoverability.</p>
+<h2 id="gfvpsitemap">GfvpSitemap<a class="headerlink" href="#gfvpsitemap" title="Permanent link">&para;</a></h2>
+<p>:class:<code>GfvpSitemap</code> is the main sitemap for the GFVP website. It includes various important URLs for the website.</p>
+<p>Attributes:
+    - <code>priority</code> (float): The priority of this sitemap in relation to others (0.0 to 1.0).
+    - <code>changefreq</code> (str): The expected change frequency of URLs in this sitemap.</p>
+<p>Methods:
+    - <code>items()</code>: Define the list of URLs to include in the sitemap.
+    - <code>location(item)</code>: Generate the URL for a given item using its name.</p>
+<h2 id="usersitemap">UserSitemap<a class="headerlink" href="#usersitemap" title="Permanent link">&para;</a></h2>
+<p>:class:<code>UserSitemap</code> is responsible for sitemapping user profiles on the GFVP website. It includes user profiles who are active and have verified email addresses.</p>
+<p>Attributes:
+    - <code>changefreq</code> (str): The expected change frequency of URLs in this sitemap.
+    - <code>priority</code> (float): The priority of this sitemap in relation to others (0.0 to 1.0).</p>
+<p>Methods:
+    - <code>items()</code>: Retrieve the list of active users with verified email addresses.
+    - <code>lastmod(obj)</code>: Determine the last modification date for a user profile.
+    - <code>location(obj)</code>: Generate the URL for a user's profile.</p>
+<h2 id="usertypesitemap">UserTypeSitemap<a class="headerlink" href="#usertypesitemap" title="Permanent link">&para;</a></h2>
+<p>:class:<code>UserTypeSitemap</code> is responsible for sitemapping user types on the GFVP website. It includes active user types.</p>
+<p>Attributes:
+    - <code>changefreq</code> (str): The expected change frequency of URLs in this sitemap.
+    - <code>priority</code> (float): The priority of this sitemap in relation to others (0.0 to 1.0).</p>
+<p>Methods:
+    - <code>items()</code>: Retrieve the list of active user types.
+    - <code>lastmod(obj)</code>: Determine the last modification date for a user type.
+    - <code>location(obj)</code>: Generate the URL for a user type page.</p>
+<h2 id="blogsitemap">BlogSitemap<a class="headerlink" href="#blogsitemap" title="Permanent link">&para;</a></h2>
+<p>:class:<code>BlogSitemap</code> is responsible for sitemapping blog posts on the GFVP website. It includes published blog posts.</p>
+<p>Attributes:
+    - <code>changefreq</code> (str): The expected change frequency of URLs in this sitemap.
+    - <code>priority</code> (float): The priority of this sitemap in relation to others (0.0 to 1.0).</p>
+<p>Methods:
+    - <code>items()</code>: Retrieve the list of published blog posts.
+    - <code>lastmod(obj)</code>: Determine the last modification date for a blog post.
+    - <code>location(obj)</code>: Generate the URL for a blog post.</p>
+<h2 id="htmlreportsitemap">HtmlReportSitemap<a class="headerlink" href="#htmlreportsitemap" title="Permanent link">&para;</a></h2>
+<p>:class:<code>HtmlReportSitemap</code> is responsible for sitemapping generated evaluation reports on the GFVP website. It includes evaluation reports with verified email addresses.</p>
+<p>Attributes:
+    - <code>changefreq</code> (str): The expected change frequency of URLs in this sitemap.
+    - <code>priority</code> (float): The priority of this sitemap in relation to others (0.0 to 1.0).</p>
+<p>Methods:
+    - <code>items()</code>: Retrieve the list of generated evaluation reports.
+    - <code>lastmod(obj)</code>: Determine the last modification date for an evaluation report.
+    - <code>location(obj)</code>: Generate the URL for an evaluation report.</p>
+<p>For detailed information on each sitemap class, their methods, and attributes, please refer to the code comments and docstrings provided within <code>sitemaps.py</code>.</p>
+<p>=============================
+urls.py - Evaluation APP URLs
+=============================</p>
+<p>This module defines the URL patterns for the Evaluation APP within the GFVP (Green Fuel Validation Platform) website. It also includes the configuration of sitemaps for various sections of the website.</p>
+<h2 id="sitemaps_configuration">Sitemaps Configuration<a class="headerlink" href="#sitemaps_configuration" title="Permanent link">&para;</a></h2>
+<p>The following sitemaps are configured for different sections of the website:</p>
+<ul>
+<li><code>static</code>: Sitemap for static URLs</li>
+<li><code>active_users</code>: Sitemap for active user profiles</li>
+<li><code>user_types</code>: Sitemap for user types</li>
+<li><code>blog_list</code>: Sitemap for blog posts</li>
+<li><code>HtmlReportitemap</code>: Sitemap for HTML reports</li>
+</ul>
+<h2 id="url_patterns">URL Patterns<a class="headerlink" href="#url_patterns" title="Permanent link">&para;</a></h2>
+<p>The URL patterns are organized into two main sections: core patterns and additional patterns for the 'evaluation' app.</p>
+<h2 id="core_url_patterns">Core URL Patterns:<a class="headerlink" href="#core_url_patterns" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>evaluation/thanks/</code>: URL for the 'thanks' view.</li>
+<li><code>evaluation/report/&lt;str:slug&gt;</code>: URL for the 'report' view with a dynamic slug parameter.</li>
+<li><code>evaluation/nreport/&lt;str:slug&gt;</code>: URL for the 'nreport' view with a dynamic slug parameter.</li>
+<li><code>evaluation/nreport_pdf/&lt;str:slug&gt;</code>: URL for the 'nreport_pdf' view with a dynamic slug parameter.</li>
+<li><code>get-glossary/</code>: URL for the 'get_glossary' view.</li>
+<li><code>sitemap.xml/</code>: URL for the sitemap view, which uses Django's sitemap framework to generate sitemaps for search engines.</li>
+</ol>
+<h2 id="additional_url_patterns_for_the_evaluation_app">Additional URL Patterns for the 'evaluation' App:<a class="headerlink" href="#additional_url_patterns_for_the_evaluation_app" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>evaluation2/</code>: URL for the 'eva_index2' view.</li>
+<li><code>evaluation2/option_add/</code>: URL for the 'option_add2' view.</li>
+<li><code>evaluation2/&lt;int:evaluator_id&gt;/&lt;str:slug&gt;</code>: URL for the 'eva_question' view with dynamic parameters.</li>
+<li><code>evaluation/stdoils/</code>: URL for the 'stdoils' view.</li>
+<li><code>vedio_urls/&lt;str:search_term&gt;</code>: URL for the 'vedio_urls' view with a dynamic search_term parameter.</li>
+<li><code>std_oils_block/&lt;str:slug&gt;</code>: URL for the 'std_oils_block' view with a dynamic slug parameter.</li>
+<li><code>quotation_block/&lt;str:slug&gt;</code>: URL for the 'quotation_block' view with a dynamic slug parameter.</li>
+<li><code>traficlighthori/&lt;str:last_reports&gt;</code>: URL for the 'trafic_light_hori' view with a dynamic last_reports parameter.</li>
+<li><code>fuel-history/&lt;str:last_reports&gt;</code>: URL for the 'fuel_history' view with a dynamic last_reports parameter.</li>
+</ol>
+<p>For more details on each URL pattern and its corresponding view, please refer to the code and comments provided within <code>urls.py</code>.</p>
+<p>=========================
+Evaluation App Views (views.py)
+=========================</p>
+<p>This module contains view functions for handling various aspects of the evaluation process within the evaluation app.</p>
+<p>.. note::</p>
+<pre><code>This documentation provides an overview of the functions and their purposes, but it's recommended to refer to the source code for detailed implementation and usage.
 </code></pre>
-<blockquote>
-<p>Adding custom css using above code in admin class </p>
-</blockquote>
-<pre><code>change_list_template = 'admin/question_list.html'
-def changelist_view(self, request, extra_context=None):        
-    questions = Question.objects.filter(is_active = True)
-    label_pending_in_question = [q.sort_order for q in questions if not q.have_4labels]  
-    problem_in_options =   [q.sort_order for q in questions if not q.problem_in_option]       
-    extra_context = extra_context or {}
-    extra_context['label_pending_in_question'] = label_pending_in_question
-    extra_context['problem_in_options'] = problem_in_options        
-    return super().changelist_view(request, extra_context=extra_context)
-</code></pre>
-<blockquote>
-<p>Adding error note using above by oerriding instance and method in the admin class of question.</p>
-</blockquote>
-<pre><code>@admin.action(description='Genarate updated report and notify to the creator')
-def check_and_notify(self, request, queryset):
-    from .views import set_evastatment, set_evastatement_of_logical_string
-    ........
-    .........
-    ReportMailQueue.objects.create(
-            to = i.email,
-            from_report = i,
-            new_report = copy_evaluator,
-        )
-</code></pre>
-<blockquote>
-<p>Above method are adding action in Evaluator(Evaluator is the alternative coding name of human readable Report). The action should be called by admin on "Pening" marked report. Pending mark also a custom adition in admin interface which is described in the <code>models.py</code> in this documentation.</p>
-<p>Each call in above method create mail queue to send mail on next cronjob execution.</p>
-</blockquote>
-<pre><code>class NextActivitiesAdmin(admin.ModelAdmin):  
-    @admin.action(description='Duplicate Selected Activities')
-    def duplicate_event(modeladmin, request, queryset):
-        for object in queryset:
-            ..........         
-    actions = [duplicate_event]
-admin.site.register(NextActivities, NextActivitiesAdmin)
-</code></pre>
-<blockquote>
-<p>Above aditional method in class creating a additional action to clone the selected objects in the <code>NextActivities</code> model in the admin side.</p>
-</blockquote>
-<h2 id="app">APP<a class="headerlink" href="#app" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p>App is a configuration file of evaluation app provided by Django. Here <code>signals.py</code> has been registered using below code. </p>
-</blockquote>
-<pre><code>def ready(self):
-    import evaluation.signals
-</code></pre>
-<blockquote>
-<p>Do not change anything in this file.</p>
-</blockquote>
-<h2 id="form">Form<a class="headerlink" href="#form" title="Permanent link">&para;</a></h2>
-<p><code>forms.py</code> inheriting the default django's <code>ModelForm</code> class for evaluation initialization based on our CSS library. We are using <code>bootstrap 5</code>. Implemented <code>HTMX</code> to find out fuel grade based on selected biofuel.</p>
-<h2 id="helper">Helper<a class="headerlink" href="#helper" title="Permanent link">&para;</a></h2>
-<p>Helper playing a vast role in the evaluation application</p>
-<pre><code>    def active_sessions():
-        '''
-        we will collect all active session's evaluator id of before past 24 hours
-        it returns list
-        '''
-
-        return list(s_evs)
-</code></pre>
-<p>The above <code>active_session</code> function collect all active sessions before 24 hours and it is calling through <code>cronjob</code> inside below function.</p>
-<pre><code>    def clear_evaluator():
-        '''
-        IT IS RUNNING BY CRON JOB
-        we will remove all wastage report which just initialized but have no data and which is not qualified to show in the profile page.
-        It returns total deleted report in a call.
-        It is created to call by CRONJOB but can be called from anywhere.
-
-        '''
-
-        return total_deleted
-</code></pre>
-<p>The <code>clear_evaluator</code> works as per <code>code cooments</code> mentioned inside the function.</p>
-<p><code>from evaluation.helper import get_current_evaluator</code> provide the current evaluator objects to use in anywhere. It taks one parameter is <code>request</code>. needless to say that evaluator is <strong>result</strong> of evaluation process, which can be called as <strong>report</strong> as well. It is a bit confusing. But after developing basement and database here some diferent types of advise so that I had to adjust. In this planform have some manymore like that. But will be explained.</p>
-<blockquote>
-<p><code>label_assesment_for_donot_know</code>, <code>label_assesment_for_positive</code>, <code>overall_assesment_for_donot_know</code>, <code>overall_assesment_for_positive</code> These methods commit some assesments indivisually for answere type in the <strong>evalautor</strong> as statement. All these like manual assesment and never using anywhere other then report genaration so that no DRF thingking were here.</p>
-<p>The functions can be wrapped into the class and can be optimized as well, but as we are under development stage and many more to develop yet so it will be later. Some of method called inside these methods can be called from <code>LabelWiseData</code> class below as well.</p>
-</blockquote>
-<p><code>from evaluation.helper import OilComparision</code>'s <code>packed_labels</code> returns  <code>pandas</code> dataframe of Related Fuel grade. <code>picked_labels_dict</code> return the dictionery of labels. Here have many other methods to use. The class takes compulsary parameter named <code>oil</code>. The dataframe currently using in the <code>chartistjs</code> to show in the evaluation form and t use in further advise.</p>
-<p><code>from evaluation.helper import LabelWiseData</code>'s <code>packed_labels</code> return <code>pandas</code> dataframe of biofuel and <code>label_data_history</code> returns the dataframe of the history of biofuel reports in various stage. <code>picked_labels_dict</code> return the dictionery of labels. Here have many more methods to use. The class takes compulsary parameter named <code>evaluator</code>. </p>
-<p><code>nreport_context</code> function of helper is returning the context for HTML evaluation report. It takes <code>request</code> and <code>slug</code> parameter as compulsary. The function directly call from the <code>view</code> function of the HTML report.</p>
-<h2 id="model">Model<a class="headerlink" href="#model" title="Permanent link">&para;</a></h2></div>
+<h1 id="1_set_evaluation_function">1. <code>set_evaluation</code> Function<a class="headerlink" href="#1_set_evaluation_function" title="Permanent link">&para;</a></h1>
+<p>Set the evaluation for a given question and evaluator.</p>
+<ul>
+<li>
+<p>Args:</p>
+<ul>
+<li><code>question</code> (Question): The question being evaluated.</li>
+<li><code>selected_option</code> (Option): The option selected by the evaluator.</li>
+<li><code>evaluator</code> (User): The user performing the evaluation.</li>
+</ul>
+</li>
+<li>
+<p>Returns:</p>
+<ul>
+<li>None</li>
+</ul>
+</li>
+<li>
+<p>Comments:</p>
+<ul>
+<li>This function first attempts to remove any existing evaluation entry for the specified question and evaluator combination.</li>
+<li>If no prior evaluation entry is found, it logs a message to indicate this.</li>
+<li>Subsequently, it creates a new evaluation entry with the provided information and saves it to the database.</li>
+</ul>
+</li>
+<li>
+<p>Example Usage:
+     <code>python
+     set_evaluation(question, selected_option, evaluator)</code></p>
+</li>
+</ul>
+<h1 id="2_set_eva_comments_function">2. <code>set_eva_comments</code> Function<a class="headerlink" href="#2_set_eva_comments_function" title="Permanent link">&para;</a></h1>
+<p>Set or update an evaluation comment for a given question and evaluator.</p>
+<ul>
+<li>
+<p>Args:</p>
+<ul>
+<li><code>question</code> (Question): The question for which the comment is provided.</li>
+<li><code>comment</code> (str): The comment provided by the evaluator.</li>
+<li><code>evaluator</code> (User): The user providing the comment.</li>
+</ul>
+</li>
+<li>
+<p>Returns:</p>
+<ul>
+<li>None</li>
+</ul>
+</li>
+<li>
+<p>Comments:</p>
+<ul>
+<li>Check if an evaluation comment entry already exists for the same question and evaluator.</li>
+<li>Ensure that a new comment is provided (non-empty).</li>
+<li>If a previous comment entry exists, update it with the new comment.</li>
+<li>If no previous comment entry exists, create a new one with the provided information and save it to the database.</li>
+</ul>
+</li>
+<li>
+<p>Example Usage:
+     <code>python
+     set_eva_comments(question, comment, evaluator)</code></p>
+</li>
+</ul>
+<h1 id="3_set_evastatment_function">3. <code>set_evastatment</code> Function<a class="headerlink" href="#3_set_evastatment_function" title="Permanent link">&para;</a></h1>
+<p>Set evaluation statements for a given selected option and evaluator.</p>
+<ul>
+<li>
+<p>Args:</p>
+<ul>
+<li><code>request</code>: The request object.</li>
+<li><code>selected_option</code> (Option): The selected option being evaluated.</li>
+<li><code>evaluator</code> (User): The user performing the evaluation.</li>
+</ul>
+</li>
+<li>
+<p>Returns:</p>
+<ul>
+<li>None</li>
+</ul>
+</li>
+<li>
+<p>Comments:</p>
+<ul>
+<li>Extract the question associated with the selected option.</li>
+<li>Delete previous records of non-assessment statements for the same option and evaluator.</li>
+<li>Retrieve labels associated with the question.</li>
+<li>For each label, create a new EvaLebelStatement entry for non-assessment.</li>
+<li>Delete previous records of assessment statements for the same label and evaluator.</li>
+<li>Calculate assessment statements based on answers and save them.</li>
+</ul>
+</li>
+<li>
+<p>Example Usage:
+     <code>python
+     set_evastatment(request, selected_option, evaluator)</code></p>
+</li>
+</ul>
+<h1 id="4_get_eoi_function">4. <code>get_eoi</code> Function<a class="headerlink" href="#4_get_eoi_function" title="Permanent link">&para;</a></h1>
+<p>Get a list of option IDs from a given list of evaluation statements.</p>
+<ul>
+<li>
+<p>Args:</p>
+<ul>
+<li><code>eva_statement</code> (list of EvaLebelStatement): A list of evaluation statements.</li>
+</ul>
+</li>
+<li>
+<p>Returns:</p>
+<ul>
+<li>list of int: A sorted list of unique option IDs found in the evaluation statements.</li>
+</ul>
+</li>
+<li>
+<p>Comments:</p>
+<ul>
+<li>Iterate through the list of evaluation statements.</li>
+<li>Check if each statement has a valid option ID and add it to the 'es_option_id' set.</li>
+<li>Return a sorted list of unique option IDs found in the evaluation statements.</li>
+</ul>
+</li>
+<li>
+<p>Example Usage:
+     <code>python
+     eva_statements = get_evaluation_statements()
+     eoi = get_eoi(eva_statements)</code></p>
+</li>
+</ul>
+<h1 id="5_set_evastatement_of_logical_string_function">5. <code>set_evastatement_of_logical_string</code> Function<a class="headerlink" href="#5_set_evastatement_of_logical_string_function" title="Permanent link">&para;</a></h1>
+<p>Set evaluation statements based on logical strings for a given selected option and evaluator.</p>
+<ul>
+<li>
+<p>Args:</p>
+<ul>
+<li><code>request</code>: The request object.</li>
+<li><code>selected_option</code> (Option): The selected option being evaluated.</li>
+<li><code>evaluator</code> (User): The user performing the evaluation.</li>
+</ul>
+</li>
+<li>
+<p>Returns:</p>
+<ul>
+<li>None</li>
+</ul>
+</li>
+<li>
+<p>Comments:</p>
+<ul>
+<li>Review and revise the logical string.</li>
+<li>Collect saved logical strings from the admin backend.</li>
+<li>Create a list of selected options for each logical string.</li>
+<li>Get the common label for the evaluator.</li>
+<li>Delete any previous assessment records for the common label.</li>
+<li>Calculate assessment statements based on answers and save them.</li>
+</ul>
+</li>
+<li>
+<p>Example Usage:
+     <code>python
+     set_evastatement_of_logical_string(request, selected_option, evaluator)</code></p>
+</li>
+</ul>
+<h1 id="6_option_add2_function">6. <code>option_add2</code> Function<a class="headerlink" href="#6_option_add2_function" title="Permanent link">&para;</a></h1>
+<p>Handle the submission of evaluation options and comments by authenticated users.</p>
+<ul>
+<li>
+<p>Args:</p>
+<ul>
+<li><code>request</code>: The HTTP request object.</li>
+</ul>
+</li>
+<li>
+<p>Returns:</p>
+<ul>
+<li>HttpResponseRedirect: Redirects the user to the appropriate page based on the evaluation progress.</li>
+</ul>
+</li>
+<li>
+<p>Comments:</p>
+<ul>
+<li>Check if the user is authenticated and has an associated evaluator session.</li>
+<li>Clear the session data to ensure a fresh start for the evaluation.</li>
+<li>Process the POST request containing the selected option, comments, and other parameters.</li>
+<li>Check if an option has been selected; otherwise, redirect with a warning.</li>
+<li>Set evaluation data for the selected option, including comments and assessment.</li>
+<li>Handle logic for requesting feedback, updating comments, and performing assessments.</li>
+<li>Determine the next question in the evaluation sequence and set it in the session.</li>
+<li>If there's no next question, mark the report as generated, create a history, and redirect to a thank-you page.</li>
+</ul>
+</li>
+<li>
+<p>Example Usage:
+     The function is typically used as a view for handling POST requests when users submit their evaluation choices and comments.</p>
+</li>
+</ul>
+<p><strong><code>question_dataset(request)</code></strong></p>
+<p>Build a dataset of questions for display in the evaluation question form.</p>
+<p>This view function prepares a dataset of questions to be displayed in the evaluation question form.
+It marks questions with specific colors based on their status in the current report.</p>
+<p>Args:
+    request: The HTTP request object.</p>
+<p>Returns:
+    dict: A dictionary representing the dataset of questions organized by their parent questions.</p>
+<p>Comments:
+    - Get sorted questions of the current report.
+    - Mark all questions that are part of the current report.
+    - Identify the last question in the current report.
+    - Check for any unanswered questions before and after the last question.
+    - Mark questions as "Do Not Know" or "No" if applicable.
+    - Handle the status of parent questions and their child questions.</p>
+<p>Example Usage:
+The function is typically used to prepare the question dataset for rendering in the evaluation question form.</p>
+<p><strong><code>get_vedio_urls(search_term)</code></strong></p>
+<p>Retrieve YouTube video URLs related to a search term using the YouTube Data API.</p>
+<p>Args:
+    search_term (str): The search term to query for videos.</p>
+<p>Returns:
+    list: A list of YouTube video URLs as embed URLs.</p>
+<p>Comments:
+    - Constructs a search URL for the YouTube Data API.
+    - Sends a GET request to the API with the specified parameters.
+    - Parses the JSON response to extract video information.
+    - Constructs embed URLs for each video and adds them to the result list.</p>
+<p>Example Usage:
+video_urls = get_vedio_urls("Python programming tutorials")
+for url in video_urls:
+    print(url)</p>
+<p><strong><code>vedio_urls(request, search_term)</code></strong></p>
+<p>Retrieve YouTube video URLs related to a search term and store them in the database if not already saved.</p>
+<p>Args:
+    request: The HTTP request object.
+    search_term (str): The search term to query for videos.</p>
+<p>Returns:
+    HttpResponse: A rendered HTML template with the video URLs as context data.</p>
+<p>Comments:
+    - Check if video URLs for the given search term are already saved in the database.
+    - If saved URLs exist and are less than 7 days old, use them. Otherwise, update and save new URLs.
+    - If no saved URLs are found, fetch video URLs using the <code>get_vedio_urls</code> function and save them.
+    - Return the video URLs as context data for rendering in the 'eva_youtube.html' template.</p>
+<p>Example Usage:
+In a Django view, you can call this function to retrieve and display YouTube video URLs.</p>
+<p><strong><code>std_oils_block(request, slug)</code></strong></p>
+<p>Render a template for displaying standardized oils block for a specific question.</p>
+<p>Args:
+    request: The HTTP request object.
+    slug (str): The unique slug identifying the question.</p>
+<p>Returns:
+    HttpResponse: A rendered HTML template with the question as context data.</p>
+<p>Comments:
+    - Retrieve a specific question based on its unique slug.
+    - Render the 'std_oils_block.html' template with the question as context data.</p>
+<p>Example Usage:
+Use this function as a view to display standardized oils blocks for specific questions.</p>
+<p><strong><code>quotation_block(request, slug)</code></strong></p>
+<p>Render a template for displaying a quotation block for a specific question.</p>
+<p>Args:
+    request: The HTTP request object.
+    slug (str): The unique slug identifying the question.</p>
+<p>Returns:
+    HttpResponse: A rendered HTML template with the question and related information as context data.</p>
+<p>Comments:
+    - Retrieve a specific question based on its unique slug using the <code>get_all_questions</code> function.
+    - Determine the next activities (picked_na) related to the question using the <code>get_picked_na</code> function.
+    - Render the 'quotation_block.html' template with the question and next activities as context data.</p>
+<p>Example Usage:
+Use this function as a view to display a quotation block for a specific question.</p>
+<p><strong><code>eva_question(request, evaluator_id, slug)</code></strong></p>
+<p>Render the main interface for the evaluation process.</p>
+<p>Args:
+    request: The HTTP request object.
+    evaluator_id: The ID of the evaluator/report being evaluated.
+    slug: The unique slug identifying the question.</p>
+<p>Returns:
+    HttpResponse: A rendered HTML template with the evaluation interface.</p>
+<p>Comments:
+    - Ensure that the report generator is coming from the initial page.
+    - Check if there is an active, unfinished report for the user.
+    - Validate access permissions for editing reports.
+    - Verify if the parent question has been answered as "Yes" to allow access to child questions.
+    - Set the default selected option for the question.
+    - Prepare context data for rendering the evaluation interface.</p>
+<p>Example Usage:
+Use this function as a view to display the main evaluation interface during the evaluation process.</p>
+<h2 id="eva_index2_view">eva_index2 View<a class="headerlink" href="#eva_index2_view" title="Permanent link">&para;</a></h2>
+<p>This view renders the initial interface for data collection during the evaluation process.</p>
+<p>Args:
+    - request: The HTTP request object.</p>
+<p>Returns:
+    - HttpResponse: A rendered HTML template with the initial evaluation interface.</p>
+<p>Comments:
+    - Essential part of the evaluation process, where login is required.
+    - Collect initial data for the evaluation report.
+    - Redirect users to a previously submitted question or gather initial data.
+    - Check if a first question has been set by the admin.
+    - Handle form submissions for initializing a new evaluation report.
+    - Set labels for the new report.
+    - Handle meta data for SEO purposes.</p>
+<p>Example Usage:
+Use this function as a view to display the initial interface for data collection during the evaluation process.</p>
+<h2 id="thanks_view">thanks View<a class="headerlink" href="#thanks_view" title="Permanent link">&para;</a></h2>
+<p>This view renders the thank you page after completing the evaluation process.</p>
+<p>Args:
+    - request: The HTTP request object.</p>
+<p>Returns:
+    - HttpResponse: A rendered HTML template for the thank you page.</p>
+<p>Comments:
+    - Essential part where login is required.
+    - Check for the user's user type and last reports.
+    - Calculate and display results on the thank you page.
+    - Build report editing URLs for parents selected by the admin.
+    - Paginate and display reports.
+    - Handle meta data for SEO purposes.</p>
+<p>Example Usage:
+Use this function as a view to display the thank you page after completing the evaluation process.</p>
+<h2 id="trafic_light_hori_view">trafic_light_hori View<a class="headerlink" href="#trafic_light_hori_view" title="Permanent link">&para;</a></h2>
+<p>This view renders a horizontal traffic light evaluation page based on the last available report.</p>
+<p>Args:
+    - request: The HTTP request object.
+    - last_reports: The ID of the last report to be used for rendering.</p>
+<p>Returns:
+    - HttpResponse: A rendered HTML page displaying the horizontal traffic light evaluation.</p>
+<p>Note:
+This function retrieves data from the database, prepares it for rendering, and returns an HTML page with the evaluation results.</p>
+<h2 id="fuel_history_view">fuel_history View<a class="headerlink" href="#fuel_history_view" title="Permanent link">&para;</a></h2>
+<p>This view renders a fuel history chart based on the data from the last available report.</p>
+<p>Args:
+    - request: The HTTP request object.
+    - last_reports: The ID of the last report to be used for rendering.</p>
+<p>Returns:
+    - HttpResponse: A rendered HTML page displaying the fuel history chart.</p>
+<p>Note:
+This function retrieves historical fuel data from the database, prepares it for rendering, and returns an HTML page with the fuel history chart.</p>
+<h2 id="report_view">report View<a class="headerlink" href="#report_view" title="Permanent link">&para;</a></h2>
+<p>This view renders a report page based on the provided report slug.</p>
+<p>Args:
+    - request (HttpRequest): The HTTP request object.
+    - slug (str): The unique slug identifier for the report.</p>
+<p>Returns:
+    - HttpResponse: A rendered HTML page or PDF report displaying the report details.</p>
+<p>Comments:
+    - Essential part where login is required.
+    - Clears session data, as the report may have been marked as completed in the thank you page.
+    - Generates a PDF report, if applicable.
+    - Determines the status of next activities.</p>
+<p>Example Usage:
+Use this function as a view to display a report page based on the provided report slug.</p>
+<h2 id="create_notification_to_consumer_function">create_notification_to_consumer Function<a class="headerlink" href="#create_notification_to_consumer_function" title="Permanent link">&para;</a></h2>
+<p>This function creates notifications for consumers regarding a report.</p>
+<p>Args:
+    - report: The report for which notifications are to be created.</p>
+<p>Returns:
+    - None</p>
+<p>Comments:
+    - Retrieves a list of consumer emails.
+    - Creates ConsumerMailQueue instances.
+    - Bulk inserts the instances into the database.</p>
+<p>Example Usage:
+Call this function to create notifications for consumers regarding a report.</p>
+<h2 id="nreport_view">nreport View<a class="headerlink" href="#nreport_view" title="Permanent link">&para;</a></h2>
+<p>This view renders a new report creation/editing page based on the provided report slug.</p>
+<p>Args:
+    - request (HttpRequest): The HTTP request object.
+    - slug (str): The unique slug identifier for the report.</p>
+<p>Returns:
+    - HttpResponse: A rendered HTML page displaying the report creation/editing form.</p>
+<p>Comments:
+    - Essential part where login is required.
+    - Clears session data.
+    - Handles report creation or editing.
+    - Generates notifications for consumers when the 'confirm' parameter is present in the request.
+    - Sets metadata for the page.</p>
+<p>Example Usage:
+Use this function as a view to display a new report creation/editing page based on the provided report slug.</p>
+<h2 id="nreport_pdf_view">nreport_pdf View<a class="headerlink" href="#nreport_pdf_view" title="Permanent link">&para;</a></h2>
+<p>This view generates a PDF report based on ReportLab for a new evaluation report.</p>
+<p>Args:
+    - request (HttpRequest): The HTTP request object.
+    - slug (str): The unique slug identifier for the report.</p>
+<p>Returns:
+    - FileResponse: An HTTP response with the generated PDF report.</p>
+<p>Comments:
+    - Uses the ReportLab library to create a PDF report.
+    - Sets document metadata, margins, and page size.
+    - Generates the content (Story) for the PDF report.</p>
+<p>Example Usage:
+Use this function as a view to generate a PDF report for a new evaluation report.</p>
+<h2 id="stdoils_view">stdoils View<a class="headerlink" href="#stdoils_view" title="Permanent link">&para;</a></h2>
+<p>This view renders a list of standard oils based on the selected biofuel.</p>
+<p>Args:
+    - request (HttpRequest): The HTTP request object.</p>
+<p>Returns:
+    - HttpResponse: A rendered HTML page displaying a list of standard oils.</p>
+<p>Comments:
+    - Retrieves a list of standard oils filtered by the selected biofuel ID.
+    - Renders the list in the 'std_oils.html' template.</p>
+<p>Example Usage:
+Use this function as a view to display a list of standard oils based on the selected biofuel.</p>
+<h2 id="get_glossary_view">get_glossary View<a class="headerlink" href="#get_glossary_view" title="Permanent link">&para;</a></h2>
+<p>This view renders the glossary page with a list of glossary items.</p>
+<p>Args:
+    - request (HttpRequest): The HTTP request object.</p>
+<p>Returns:
+    - HttpResponse: A rendered HTML page displaying a glossary with a list of glossary items.</p>
+<p>Comments:
+    - Retrieves a list of glossary items using 'get_all_glosaries()'.
+    - Renders the list in the 'glossary_template.html' template.</p>
+<p>Example Usage:
+Use this function as a view to display a glossary page with a list of glossary items.</p>
+<h2 id="edit_report_view">edit_report View<a class="headerlink" href="#edit_report_view" title="Permanent link">&para;</a></h2>
+<p>This view allows the creator of a report to edit its details.</p>
+<p>Args:
+    - request (HttpRequest): The HTTP request object.
+    - slug (str): The unique slug identifier for the report to be edited.</p>
+<p>Returns:
+    - HttpResponse: A rendered HTML page displaying the report edit form.</p>
+<p>Comments:
+    - Restricted to report creators.
+    - Allows report creators to edit the details of a specific report.
+    - Uses the 'EvaluatorEditForm' to handle form submission and update the report's information.</p>
+<p>Example Usage:
+Use this function as a view to allow report creators to edit report details.</p>
+<h2 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">&para;</a></h2>
+<p>Contributions to the 'Evaluation' app are welcome! If you'd like to contribute, please review the contribution guidelines in the project's repository.</p>
+<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
+<p>This module is distributed under the [Insert License Here] license. See the <code>LICENSE</code> file for more information.</p></div>
             </div>
         </div>
 

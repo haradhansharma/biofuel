@@ -43,10 +43,10 @@
                                 <a href="accounts.html" class="nav-link">Accounts</a>
                             </li>
                             <li class="navitem">
-                                <a href="crm.html" class="nav-link">CRM</a>
+                                <a href="blog.html" class="nav-link">Blog</a>
                             </li>
                             <li class="navitem">
-                                <a href="blog.html" class="nav-link">Blog</a>
+                                <a href="crm.html" class="nav-link">CRM</a>
                             </li>
                             <li class="navitem active">
                                 <a href="doc.html" class="nav-link">Doc</a>
@@ -55,10 +55,22 @@
                                 <a href="evaluation.html" class="nav-link">Evaluation</a>
                             </li>
                             <li class="navitem">
-                                <a href="guide.html" class="nav-link">Guide</a>
+                                <a href="feedback.html" class="nav-link">Feedback</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="gfvp.html" class="nav-link">Project</a>
                             </li>
                             <li class="navitem">
                                 <a href="glossary.html" class="nav-link">Glossary</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="guide.html" class="nav-link">User Guide</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="home.html" class="nav-link">Home And Dash</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="navigation.html" class="nav-link">Navigation</a>
                             </li>
                         </ul>
 
@@ -69,7 +81,7 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="blog.html" class="nav-link">
+                                <a rel="prev" href="crm.html" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
@@ -79,7 +91,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/haradhansharma/biofuel/blob/main/docs/doc.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/haradhansharma/biofuel/tree/v24123/edit/master/docs/doc.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -98,12 +110,258 @@
     
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#introduction" class="nav-link">Introduction</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#adminpy_overview" class="nav-link">admin.py Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#getting_started" class="nav-link">Getting Started</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#introduction_1" class="nav-link">Introduction</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#functions_overview" class="nav-link">Functions Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#usage_instructions" class="nav-link">Usage Instructions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#introduction_2" class="nav-link">Introduction</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#models_overview" class="nav-link">Models Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#usage_instructions_1" class="nav-link">Usage Instructions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#contributing" class="nav-link">Contributing</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#license" class="nav-link">License</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-</div>
+<p>=======================================
+README for the 'doc' Django App
+=======================================</p>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>The 'doc' app is a Django application designed to manage and organize documents and related content. This README provides an overview of the app and explains the structure and functionality of the <code>admin.py</code> file.</p>
+<h2 id="adminpy_overview"><code>admin.py</code> Overview<a class="headerlink" href="#adminpy_overview" title="Permanent link">&para;</a></h2>
+<p>The <code>admin.py</code> file within the 'doc' app is essential for customizing the admin interface of the Django application. It extends the default admin behavior for models and provides a more tailored experience for managing content.</p>
+<p>Below is an explanation of the key components in <code>admin.py</code>:</p>
+<ol>
+<li>
+<p><strong>Model Registration</strong>:</p>
+</li>
+<li>
+<p>We register the 'Acordion' model with the admin site using <code>admin.site.register(Acordion)</code>. This enables administrators to manage 'Acordion' objects through the Django admin panel.</p>
+</li>
+<li>
+<p><strong>Inline Admin Class</strong>:</p>
+</li>
+<li>
+<p>We define an inline admin class, <code>ExtendSiteOfSite</code>, which inherits from <code>admin.StackedInline</code>. This class allows for the management of 'ExSite' objects within the 'Site' admin page. The <code>can_delete</code> attribute is set to <code>False</code>, preventing the deletion of 'ExSite' instances from the 'Site' admin interface.</p>
+</li>
+<li>
+<p><strong>Customized 'Site' Admin</strong>:</p>
+</li>
+<li>
+<p>The <code>SiteAdmin</code> class customizes the admin interface for the 'Site' model. It specifies the fields to be displayed in the list view using <code>list_display</code> and enables search functionality by defining the fields in <code>search_fields</code>. Additionally, it includes the <code>ExtendSiteOfSite</code> inline admin class, providing a comprehensive view of 'Site' and its related 'ExSite' instances.</p>
+</li>
+<li>
+<p><strong>Unregister and Re-register</strong>:</p>
+</li>
+<li>
+<p>To apply the customizations, we unregister the default 'Site' admin using <code>admin.site.unregister(Site)</code> and then re-register it with our custom <code>SiteAdmin</code> class using <code>admin.site.register(Site, SiteAdmin)</code>.</p>
+</li>
+</ol>
+<p>With these configurations in <code>admin.py</code>, administrators can efficiently manage 'Acordion', 'Site', and their related 'ExSite' objects, ensuring a smooth user experience while interacting with document-related content within the Django admin panel.</p>
+<p>Please refer to the respective model files and other parts of the application for more detailed information on their functionalities and relationships.</p>
+<h2 id="getting_started">Getting Started<a class="headerlink" href="#getting_started" title="Permanent link">&para;</a></h2>
+<p>To get started with the 'doc' app, follow these steps:</p>
+<ol>
+<li>
+<p>Install the app in your Django project.</p>
+</li>
+<li>
+<p>Configure the app's models, views, and templates as needed for your specific document management requirements.</p>
+</li>
+<li>
+<p>Customize the 'admin.py' file to suit your admin interface preferences, as demonstrated in this README.</p>
+</li>
+<li>
+<p>Run migrations to apply database changes: <code>python manage.py makemigrations</code> and <code>python manage.py migrate</code>.</p>
+</li>
+<li>
+<p>Create superuser accounts to access the admin panel: <code>python manage.py createsuperuser</code>.</p>
+</li>
+<li>
+<p>Start the development server: <code>python manage.py runserver</code>.</p>
+</li>
+<li>
+<p>Access the Django admin panel, where you can manage 'Acordion', 'Site', and 'ExSite' objects with the customizations provided in <code>admin.py</code>.</p>
+</li>
+</ol>
+<p>==============================================
+README for 'doc_processor.py' in the 'doc' App
+==============================================</p>
+<h2 id="introduction_1">Introduction<a class="headerlink" href="#introduction_1" title="Permanent link">&para;</a></h2>
+<p>The 'doc_processor.py' module in the 'doc' app is a crucial component responsible for processing common data and site information used throughout the application. This README provides an overview of the functions and their purposes within this module.</p>
+<h2 id="functions_overview">Functions Overview<a class="headerlink" href="#functions_overview" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>site_info()</strong>:</p>
+</li>
+<li>
+<p>This function retrieves and caches site information such as name, domain, meta information, logos, contact details, and more.</p>
+</li>
+<li>It enhances performance by caching the retrieved information.</li>
+<li>
+<p>Usage:
+       <code>python
+       site_information = site_info()</code></p>
+</li>
+<li>
+<p><strong>get_pending_suggestion()</strong>:</p>
+</li>
+<li>
+<p>Retrieves and caches the count of pending suggestions from the 'Suggestions' model.</p>
+</li>
+<li>This function is used to optimize performance by caching the count for future use.</li>
+<li>
+<p>Usage:
+       <code>python
+       pending_suggestion_count = get_pending_suggestion()</code></p>
+</li>
+<li>
+<p><strong>common_doc(request)</strong>:</p>
+</li>
+<li>
+<p>Generates common data required for rendering templates, including text translations, site information, menus, and subscription forms.</p>
+</li>
+<li>Accepts an <code>HttpRequest</code> object as input to cater to request-specific data.</li>
+<li>Usage:
+       <code>python
+       common_data = common_doc(request)</code></li>
+</ol>
+<h2 id="usage_instructions">Usage Instructions<a class="headerlink" href="#usage_instructions" title="Permanent link">&para;</a></h2>
+<p>To utilize the 'doc_processor.py' module in your 'doc' app, follow these steps:</p>
+<ol>
+<li>
+<p>Import the necessary functions into your views or other modules where common data is required.</p>
+</li>
+<li>
+<p>Use the functions as outlined in their respective descriptions above.</p>
+</li>
+</ol>
+<p>For example, to access site information and common data:</p>
+<p>```python
+   from doc_processor import site_info, common_doc</p>
+<p># Access site information
+   site_information = site_info()</p>
+<p># Access common data for rendering templates
+   common_data = common_doc(request)
+   ```</p>
+<p>============================================
+README for 'models.py' in the 'doc' App
+============================================</p>
+<h2 id="introduction_2">Introduction<a class="headerlink" href="#introduction_2" title="Permanent link">&para;</a></h2>
+<p>The <code>models.py</code> module within the 'doc' app defines the database models used to store and manage data related to site information and accordion elements. This README provides an overview of the models and their attributes.</p>
+<h2 id="models_overview">Models Overview<a class="headerlink" href="#models_overview" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>ExSite</strong>:</p>
+<ul>
+<li>Represents extended site information associated with a Django Site.</li>
+<li>Stores metadata, logos, contact details, and social media links for the site.</li>
+<li>Attributes:<ul>
+<li><code>site</code> (OneToOneField): Relationship with the Django Site model.</li>
+<li><code>site_meta</code> (CharField): Meta information for the site.</li>
+<li><code>site_description</code> (TextField): A longer description for the site.</li>
+<li><code>site_meta_tag</code> (CharField): Meta tag for the site.</li>
+<li><code>site_favicon</code> (ImageField): Site favicon image.</li>
+<li><code>site_logo</code> (ImageField): Site logo image.</li>
+<li><code>slogan</code> (CharField): A short slogan or tagline for the site.</li>
+<li><code>og_image</code> (ImageField): Open Graph image for social sharing.</li>
+<li><code>mask_icon</code> (FileField): SVG file for mask icon.</li>
+<li><code>phone</code> (CharField): Contact phone number.</li>
+<li><code>email</code> (EmailField): Contact email address.</li>
+<li><code>location</code> (CharField): Physical location or address.</li>
+<li><code>facebook_link</code> (URLField): Facebook profile URL.</li>
+<li><code>twitter_link</code> (URLField): Twitter profile URL.</li>
+<li><code>linkedin_link</code> (URLField): LinkedIn profile URL.</li>
+<li><code>qualified_ans_range</code> (IntegerField): A numeric value representing a qualification range.</li>
+</ul>
+</li>
+<li>Managers:<ul>
+<li><code>objects</code> (models.Manager): The default manager.</li>
+<li><code>on_site</code> (CurrentSiteManager): Manager for filtering by the current site.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Acordion</strong>:</p>
+<ul>
+<li>Represents an accordion element with a button and description.</li>
+<li>Contains a button with text and a description and allows associating the accordion with an installed app.</li>
+<li>Attributes:<ul>
+<li><code>button_text</code> (CharField): Text displayed on the button.</li>
+<li><code>button_des</code> (TextField): Description or content associated with the accordion element.</li>
+<li><code>apps</code> (CharField): Choice field for associating the accordion with an installed app.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="usage_instructions_1">Usage Instructions<a class="headerlink" href="#usage_instructions_1" title="Permanent link">&para;</a></h2>
+<p>To utilize the models defined in <code>models.py</code> within your 'doc' app, follow these steps:</p>
+<ol>
+<li>
+<p>Create migrations and apply them to your database using the <code>makemigrations</code> and <code>migrate</code> management commands.</p>
+</li>
+<li>
+<p>Use the models in your application's views, forms, or other modules as needed. For example, you can create, retrieve, update, or delete instances of <code>ExSite</code> or <code>Acordion</code> in your views.</p>
+</li>
+<li>
+<p>Customize the models and their attributes as per your project's requirements. You can add new fields or methods to extend their functionality.</p>
+</li>
+</ol>
+<p>For detailed information on working with Django models, please refer to the official Django documentation.</p>
+<p>For further information and detailed documentation, consult the project's documentation or the source code.</p>
+<h2 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">&para;</a></h2>
+<p>Contributions to the 'doc' app are welcome! If you'd like to contribute, please review the contribution guidelines in the project's repository.</p>
+<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
+<p>This app is distributed under the [Insert License Here] license. See the <code>LICENSE</code> file for more information.</p></div>
             </div>
         </div>
 

@@ -7,190 +7,167 @@ authors:
 date: 2023-01-24
 
 ---
-# Welcome to GFVP Technical Docs
 
 
-## About Project Technologies
-* It is a `Python39-Django's` project.
-* Using `Bootstrap5` based `Volt` template partially.
-* `HTMX` JS library implemented for interactivity.
-* `MySql` as database.
-* Project running on the VPS.
-* `requirements.txt` explaining the package requirements to run the project.
+# GFVP - Green Fuel Validation Platform
+    ## Solo Developer:
+        Haradhan Sharma
+        Email: haradhan.sharma@gmail.com
+        Website: [hrdnsh.com](http://hrdnsh.com)
 
-## Business Logic and Developper
+## Table of Contents
+1. [Project Overview](#project-overview)
+2. [Project Structure](#project-structure)
+3. [Technology Stack](#technology-stack)
+4. [Contributors](#contributors)
+5. [Installation](#installation)
+6. [Usage](#usage)
+7. [Documentation](#documentation)
+8. [License](#license)
 
-* Business logic and design idea provided by Krishna Hara Chakrabarti
-* Sole developer [Haradhan Sharma](https://hrdnsh.com)
+---
+## Project Overview
 
-## Requirements
+GFVP (Green Fuel Validation Platform) is a web application built using Django 4.0.1 and various frontend technologies. It serves as a platform for validating and managing green fuel-related data. The application allows different types of users to interact with the system, and it's designed to support various features for managing data related to green fuels.
+***
+## Project Structure
 
-* All python and Django library listed in the `requirements.txt`
-* `Bootstrap 5` has been used as CSS librry
-* `HTMX` Implemented
-* `chartist.js` used to genarate Graphicale chart i the website.
-* `aos.js` for animation. using form CDN.
-* `mkdocs` for technicale documentation.
+**The project follows a well-organized directory structure:**
 
-
-## Project layout
-    accounts            # Django app to control user accounts. Described at (/docs/accounts.html)
-    blog                # Django app to control Blog functionality. Described at (/docs/blog.html)
-    crm                 # Django app to control minimalist CRM side width. Described at (/docs/crm.html)
-    doc                 # Django app to manage common data site width. Described at (/docs/doc.html)
-    evaluation          # Django app to control evaluation procedure and reports. Described at (/docs/evaluation.html)
-    gfvp                # Main Django Project
-    gfvp_docs           # mkdocs framework to wrie technicale documentation. Described at (https://www.mkdocs.org)
-    glossary            # Django app to control glossary feature. Described at (/docs/glossary.html)
-    guide               # Django app to manage genarel documetation about site feature and usecase. Described at (/docs/guide.html)
-    home                # Django app to manage some general sction. Describe at (/docs/index.html)
-    static              # Django's static root directory
-    templates           # Main Template directory of the project
-    manage.py           # Django Project file
-    mkdocs.yml          # The configuration file of mkdocs
-    my_project.dot      # About project layout
-    my_project.png      # Grahical databse schema of the project.
-    requirements        # Dependencies are listed here.
-
-
-## Necessary Information
-* The project can be deploy at linux and windows both
-* To know about features and user guide visit [Guide](https://gf-vp.com/guide).
-* If `git pull` command instruct to stash due to migration file ended with `alter_lead_confirm.py` and `alter_accordion_apps.py` just delete those file from target and recall `git pull`
-* `.so` is essential for linux environment and `.pyd` is essential for windows of the evaluation app
-* `.so` is essential for linux environment and `.pyd` is essential for windows of the **gfvp** project folder.
+    root/
+        accounts -> app
+        blog -> app
+        crm -> app
+        doc -> app
+        evaluation -> app
+        feedback -> app
+        gfvp -> project
+        gfvp_docs -> mkdocs directory
+        glossary -> app
+        guide -> app
+        home -> app
+        navigation -> app
+        logs
+        static -> static folder
+        upload -> media folder
+        templates -> templates for apps and project
+        .env
+        .gitignore
+        gfvp.dot
+        gfvp.png ->database schema
+        manage.py ->project manager
+        mkdocs.yml ->mkdocs configuration
+        requirements.txt
+        robots.txt
 
 
+Ensure that the necessary Python packages specified in `requirements.txt` are installed for the project to run successfully.
+___
+## Technology Stack
 
+- Python 3.10
+- Django 4.0.1
+- ReportLab
+- Panda
+- Numpy
+- xhtml2pdf
+- Material Admin
+- Bootstrap 5 with Volt theme
+- Chartist.js
+- AOS.js
+- HTMX
+- jQuery
+- Font Awesome
+- Youtube API
+- IPinfo API
+
+## Contributors
+
+    
+    1. Business logic and instructions provided by:
+        1. Krishna Hara Chakrabarti
+        2. Jessica Hofman
+    2. Contributed to user guide
+        1. Pragya Chudal
+   
+
+## Installation
+
+- Clone the repository to your local machine.   
+    `git clone <repository_url>`
+
+- Create a virtual environment (optional but recommended).    
+    `python -m venv venv`
+
+- Activate the virtual environment.  
+
+    `// On Windows
+    venv\Scripts\activate`
+
+    `// On macOS and Linux
+    source venv/bin/activate`
+
+- Install the required dependencies. 
+    `pip install -r requirements.txt`
+
+- Create a `.env` file in the project root and configure any environment-specific settings.
+- Apply database migrations.  
+    `python manage.py migrate`
+
+- Start the development server.  
+    `python manage.py runserver`
+
+The application should now be accessible at http://localhost:8000/.
+
+## Usage
+
+__Genarate .dot file and database schema__
+
+* First, make sure you have django-extensions installed. If it's not already in your `requirements.txt`, you can add it:
+
+    ``django-extensions==3.2.1``
+
+* Then, run the following command to generate a graph_models.dot file:
+
+    ``python manage.py graph_models -a -o gfvp.dot``
+
+* To generate a PNG image from the `.dot` file, you can use Graphviz. If you don't have Graphviz installed, you can add it to your `requirements.txt`:
+
+    ``graphviz==0.17``
+
+* After installing Graphviz, you can use the dot command to convert the .dot file to a PNG image:
+
+    ``dot -Tpng gfvp.dot -o gfvp.png``
 
 ## Mkdocs Commands 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
+* Configure `mkdocs.yml`.
+* Add `xxxx.md` in `gfvp_docs/docs`
+* run `mkdocs build` command to build the documentation site.
 * `mkdocs -h` - Print help message and exit.
 
 
+## Documentation
+
+Documentation for each app can be found in their respective `readme.md` files:
+
+- [Accounts App](/docs/accounts.html)
+- [Blog App](/docs/blog.html)
+- [CRM App](/docs/crm.html)
+- [Doc App](/docs/doc.html)
+- [Evaluation App](/docs/evaluation.html)
+- [Feedback App](/docs/feedback.html)
+- [GFVP Project](/docs/gfvp.html)
+- [Glossary App](/docs/glossary.html)
+- [Guide App](/docs/guide.html)
+- [Home App](/docs/home.html)
+- [Navigation App](/docs/navigation.html)
+
+Additional documentation for the project can be found in the code comments.
+
+## License
+
+> Copyright © 2023 Haradhan Sharma
+
+> This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 
-
-
-# Heading level 1 
-## Heading level 1
-### Heading level 1
-#### Heading level 1
-##### Heading level 1
-###### Heading level 1
-
-I just love **bold text**.
-I just love __bold text__.
-Love**is**bold
-
-> Dorothy followed her through many of the beautiful rooms in her castle.
-
-
-> Dorothy followed her through many of the beautiful rooms in her castle.
->
-> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
-
-
-> Dorothy followed her through many of the beautiful rooms in her castle.
->
->> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
-
-
-
-> #### The quarterly results look great!
->
-> - Revenue was off the chart.
-> - Profits were higher than ever.
->
->  *Everything* is going according to **plan**.
-
-
-1. First item
-2. Second item
-3. Third item
-    1. Indented item
-    2. Indented item
-4. Fourth item
-
-
-- First item
-- Second item
-- Third item
-    - Indented item
-    - Indented item
-- Fourth item
-
-* This is the first list item.
-* Here's the second list item.
-
-    I need to add another paragraph below the second list item.
-
-* And here's the third list item.
-
-
-* This is the first list item.
-* Here's the second list item.
-
-    > A blockquote would look great below the second list item.
-
-* And here's the third list item.
-
-
-At the command prompt, type `nano`.
-
-
-``Use `code` in your Markdown file.``
-
-
-***
-
----
-
-_________________
-
-
-My favorite search engine is [Duck Duck Go](https://duckduckgo.com).
-
-My favorite search engine is [Duck Duck Go](https://duckduckgo.com "The best search engine for privacy").
-
-
-I love supporting the **[EFF](https://eff.org)**.
-This is the *[Markdown Guide](https://www.markdownguide.org)*.
-See the section on [`code`](#code).
-
-![The San Juan Mountains are beautiful!](/assets/images/san-juan-mountains.jpg "San Juan Mountains")
-
-
-[![An old rock in the desert](/assets/images/shiprock.jpg "Shiprock, New Mexico by Beau Rogers")](https://www.flickr.com/photos/beaurogers/31833779864/in/photolist-Qv3rFw-34mt9F-a9Cmfy-5Ha3Zi-9msKdv-o3hgjr-hWpUte-4WMsJ1-KUQ8N-deshUb-vssBD-6CQci6-8AFCiD-zsJWT-nNfsgB-dPDwZJ-bn9JGn-5HtSXY-6CUhAL-a4UTXB-ugPum-KUPSo-fBLNm-6CUmpy-4WMsc9-8a7D3T-83KJev-6CQ2bK-nNusHJ-a78rQH-nw3NvT-7aq2qf-8wwBso-3nNceh-ugSKP-4mh4kh-bbeeqH-a7biME-q3PtTf-brFpgb-cg38zw-bXMZc-nJPELD-f58Lmo-bXMYG-bz8AAi-bxNtNT-bXMYi-bXMY6-bXMYv)
-
-
-| Syntax      | Description | Test Text     |
-| :---        |    :----:   |          ---: |
-| Header      | Title       | Here's this   |
-| Paragraph   | Text        | And more      |
-
-
-```
-{
-  "firstName": "John",
-  "lastName": "Smith",
-  "age": 25
-}
-```
-
-
-```json
-{
-  "firstName": "John",
-  "lastName": "Smith",
-  "age": 25
-}
-```
-
-http://www.example.com
-
-`http://www.example.com`
-
-This **word** is bold. This <em>word</em> is italic.

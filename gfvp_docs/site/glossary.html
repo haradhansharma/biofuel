@@ -43,10 +43,10 @@
                                 <a href="accounts.html" class="nav-link">Accounts</a>
                             </li>
                             <li class="navitem">
-                                <a href="crm.html" class="nav-link">CRM</a>
+                                <a href="blog.html" class="nav-link">Blog</a>
                             </li>
                             <li class="navitem">
-                                <a href="blog.html" class="nav-link">Blog</a>
+                                <a href="crm.html" class="nav-link">CRM</a>
                             </li>
                             <li class="navitem">
                                 <a href="doc.html" class="nav-link">Doc</a>
@@ -55,10 +55,22 @@
                                 <a href="evaluation.html" class="nav-link">Evaluation</a>
                             </li>
                             <li class="navitem">
-                                <a href="guide.html" class="nav-link">Guide</a>
+                                <a href="feedback.html" class="nav-link">Feedback</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="gfvp.html" class="nav-link">Project</a>
                             </li>
                             <li class="navitem active">
                                 <a href="glossary.html" class="nav-link">Glossary</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="guide.html" class="nav-link">User Guide</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="home.html" class="nav-link">Home And Dash</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="navigation.html" class="nav-link">Navigation</a>
                             </li>
                         </ul>
 
@@ -69,17 +81,17 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="guide.html" class="nav-link">
+                                <a rel="prev" href="gfvp.html" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" class="nav-link disabled">
+                                <a rel="next" href="guide.html" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/haradhansharma/biofuel/blob/main/docs/glossary.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/haradhansharma/biofuel/tree/v24123/edit/master/docs/glossary.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -98,12 +110,408 @@
     
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#glossary_app" class="nav-link">Glossary App</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#introduction" class="nav-link">Introduction</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#features" class="nav-link">Features</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#installation" class="nav-link">Installation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#contact" class="nav-link">Contact</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#admin_configuration_adminpy" class="nav-link">Admin Configuration (admin.py)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#import_necessary_modules_and_classes_from_django" class="nav-link">Import necessary modules and classes from Django.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#_1" class="nav-link">...</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#define_an_inline_class_for_relatedlinks_to_be_used_within_the_glossaryadmin" class="nav-link">Define an inline class for RelatedLinks to be used within the GlossaryAdmin.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#_2" class="nav-link">...</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#define_the_admin_class_for_the_glossary_model" class="nav-link">Define the admin class for the Glossary model.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#register_the_glossaryadmin_class_with_the_django_admin_site_for_the_glossary_model" class="nav-link">Register the GlossaryAdmin class with the Django admin site for the Glossary model.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#define_the_admin_class_for_the_grequests_model" class="nav-link">Define the admin class for the GRequests model.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#register_the_grequestsadmin_class_with_the_django_admin_site_for_the_grequests_model" class="nav-link">Register the GRequestsAdmin class with the Django admin site for the GRequests model.</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#appconfig_apppy" class="nav-link">AppConfig (app.py)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#import_necessary_modules_from_django" class="nav-link">Import necessary modules from Django.</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#glossary_app_models" class="nav-link">Glossary App Models</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#signalspy" class="nav-link">signals.py</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#import_necessary_modules_for_working_with_django_signals" class="nav-link">Import necessary modules for working with Django signals.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#import_models_and_other_dependencies_from_the_current_app" class="nav-link">Import models and other dependencies from the current app.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#import_logging_module_for_creating_log_entries" class="nav-link">Import logging module for creating log entries.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#get_a_logger_instance_named_log" class="nav-link">Get a logger instance named 'log'.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#define_a_receiver_function_to_be_triggered_after_saving_a_grequests_instance" class="nav-link">Define a receiver function to be triggered after saving a GRequests instance.</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#url_configuration_urlspy" class="nav-link">URL Configuration (urls.py)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#import_necessary_modules_and_views_from_the_glossary_app" class="nav-link">Import necessary modules and views from the Glossary app.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#_3" class="nav-link">...</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#define_the_app_name_for_url_namespace" class="nav-link">Define the app name for URL namespace.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#define_url_patterns_for_the_glossary_app" class="nav-link">Define URL patterns for the 'glossary' app.</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#views_viewspy" class="nav-link">Views (views.py)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#paginate_by_100_uncomment_to_enable_pagination_with_a_specific_number_of_entries_per_page" class="nav-link">paginate_by = 100  # Uncomment to enable pagination with a specific number of entries per page.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-</div>
+<h1 id="glossary_app">Glossary App<a class="headerlink" href="#glossary_app" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>The Glossary app is a Django application designed to manage and display glossary entries and user-submitted glossary requests within the Green Fuel Validation Platform project.</p>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Display a list of glossary entries.</li>
+<li>Allow users to submit glossary requests.</li>
+<li>Custom Django admin settings for managing glossary entries and requests.</li>
+<li>...</li>
+</ul>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Clone the repository or download the project files.</li>
+<li>Install the required dependencies using <code>pip install -r requirements.txt</code>.</li>
+<li>Add 'glossary' to the <code>INSTALLED_APPS</code> list in your project's settings.</li>
+<li>Run migrations to create the database tables: <code>python manage.py migrate</code>.</li>
+</ol>
+<h2 id="contact">Contact<a class="headerlink" href="#contact" title="Permanent link">&para;</a></h2>
+<p>If you have any questions or need further assistance, please contact [haradhan.sharma@gmail.com].</p>
+<hr />
+<h2 id="admin_configuration_adminpy">Admin Configuration (admin.py)<a class="headerlink" href="#admin_configuration_adminpy" title="Permanent link">&para;</a></h2>
+<p>In the <code>admin.py</code> file of the Glossary app, we configure the Django admin interface for managing glossary entries and requests. Here's an overview of what's done in this file:</p>
+<p>```python</p>
+<h1 id="import_necessary_modules_and_classes_from_django">Import necessary modules and classes from Django.<a class="headerlink" href="#import_necessary_modules_and_classes_from_django" title="Permanent link">&para;</a></h1>
+<h1 id="_1">...<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h1 id="define_an_inline_class_for_relatedlinks_to_be_used_within_the_glossaryadmin">Define an inline class for RelatedLinks to be used within the GlossaryAdmin.<a class="headerlink" href="#define_an_inline_class_for_relatedlinks_to_be_used_within_the_glossaryadmin" title="Permanent link">&para;</a></h1>
+<h1 id="_2">...<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<h1 id="define_the_admin_class_for_the_glossary_model">Define the admin class for the Glossary model.<a class="headerlink" href="#define_the_admin_class_for_the_glossary_model" title="Permanent link">&para;</a></h1>
+<p>class GlossaryAdmin(admin.ModelAdmin):
+    """
+    Custom admin settings for the Glossary model.
+    """
+    # Specify the model this admin class is associated with.
+    # ...</p>
+<pre><code># Define the list of fields to be displayed in the admin list view.
+# ...
+
+# Define fields that can be searched in the admin list view.
+# ...
+
+# Include the RelatedLinksInline class as an inline form.
+# ...
+</code></pre>
+<h1 id="register_the_glossaryadmin_class_with_the_django_admin_site_for_the_glossary_model">Register the GlossaryAdmin class with the Django admin site for the Glossary model.<a class="headerlink" href="#register_the_glossaryadmin_class_with_the_django_admin_site_for_the_glossary_model" title="Permanent link">&para;</a></h1>
+<p>admin.site.register(Glossary, GlossaryAdmin)</p>
+<h1 id="define_the_admin_class_for_the_grequests_model">Define the admin class for the GRequests model.<a class="headerlink" href="#define_the_admin_class_for_the_grequests_model" title="Permanent link">&para;</a></h1>
+<p>class GRequestsAdmin(admin.ModelAdmin):
+    """
+    Custom admin settings for the GRequests model.
+    """
+    # Specify the form to be used for this admin class.
+    # ...</p>
+<pre><code># Specify the model this admin class is associated with.
+# ...
+
+# Define the list of fields to be displayed in the admin list view.
+# ...
+</code></pre>
+<h1 id="register_the_grequestsadmin_class_with_the_django_admin_site_for_the_grequests_model">Register the GRequestsAdmin class with the Django admin site for the GRequests model.<a class="headerlink" href="#register_the_grequestsadmin_class_with_the_django_admin_site_for_the_grequests_model" title="Permanent link">&para;</a></h1>
+<p>admin.site.register(GRequests, GRequestsAdmin)</p>
+<h2 id="appconfig_apppy">AppConfig (app.py)<a class="headerlink" href="#appconfig_apppy" title="Permanent link">&para;</a></h2>
+<p>The <code>AppConfig</code> in the <code>app.py</code> file of the Glossary app provides configuration settings for the app within the Django project. Here's an overview of what's defined in this configuration:</p>
+<p>```python</p>
+<h1 id="import_necessary_modules_from_django">Import necessary modules from Django.<a class="headerlink" href="#import_necessary_modules_from_django" title="Permanent link">&para;</a></h1>
+<p>from django.apps import AppConfig</p>
+<p>class GlossaryConfig(AppConfig):
+    """
+    AppConfig for the 'glossary' app.</p>
+<pre><code>This class defines configuration settings for the 'glossary' app.
+"""
+
+# Specify the default auto field for this app's models.
+default_auto_field = 'django.db.models.BigAutoField'
+
+# Set the name of the app. This should match the name of the app's directory.
+name = 'glossary'
+
+def ready(self):
+    """
+    Override the ready() method to import signals when the app is ready.
+
+    This method is called when the application is loaded, and it provides
+    an opportunity to perform initialization tasks. In this case, we are
+    importing signals defined in the 'glossary.signals' module to ensure
+    they are registered and ready to be used.
+    """
+    import glossary.signals
+</code></pre>
+<p><strong><code>forms.py</code> - Glossary App Forms</strong></p>
+<p>The <code>forms.py</code> file in the Glossary app defines the forms used for submitting and changing GRequests, including custom validation for certain fields.</p>
+<h3 id="grequestschangeform">GRequestsChangeForm<a class="headerlink" href="#grequestschangeform" title="Permanent link">&para;</a></h3>
+<p>The <code>GRequestsChangeForm</code> is used for changing GRequests model data. It includes custom validation for the 'description' field to ensure it is not empty.</p>
+<p>```python
+class GRequestsChangeForm(forms.ModelForm):
+    """
+    Form for changing GRequests model data.</p>
+<pre><code>This form is used for changing the data of the GRequests model. It includes a custom
+validation for the 'description' field to ensure it is not empty.
+
+Attributes:
+    Meta: A nested class defining metadata options for the form.
+"""
+
+class Meta:
+    model = GRequests
+    fields = '__all__'
+
+def clean(self, *args, **kwargs):
+    """
+    Custom clean method for validating the 'description' field.
+
+    This method checks if the 'description' field is empty and raises a
+    forms.ValidationError if it is.
+
+    Args:
+        *args: Additional positional arguments.
+        **kwargs: Additional keyword arguments.
+
+    Returns:
+        dict: A cleaned data dictionary.
+    """
+    description = self.cleaned_data.get('description')
+
+    if description == '':
+        raise forms.ValidationError("Description Required")
+
+    return super(GRequestsChangeForm, self).clean(*args, **kwargs)
+</code></pre>
+<h2 id="glossary_app_models">Glossary App Models<a class="headerlink" href="#glossary_app_models" title="Permanent link">&para;</a></h2>
+<h3 id="glossary">Glossary<a class="headerlink" href="#glossary" title="Permanent link">&para;</a></h3>
+<p>The <code>Glossary</code> model represents glossary entries in the system. It stores information about each entry, including its title, description, and automatically generated slug and anchor fields.</p>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>created</code> (DateTimeField): The date and time when the entry was created (auto-generated).</li>
+<li><code>modified</code> (DateTimeField): The date and time when the entry was last modified (auto-generated).</li>
+<li><code>title</code> (CharField): The title of the glossary entry.</li>
+<li><code>slug</code> (SlugField): A unique slug based on the title (auto-generated).</li>
+<li><code>anchor</code> (SlugField): A non-unique slug derived from the first character of the title (auto-generated).</li>
+<li><code>description</code> (TextField): The description or definition of the glossary entry.</li>
+</ul>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__str__</code>: A string representation of the glossary entry, using its title.</li>
+<li><code>save</code>: Custom save method to generate the slug and anchor fields based on the title.</li>
+</ul>
+<p><strong>Meta:</strong></p>
+<ul>
+<li><code>ordering</code> (list): Default ordering for glossary entries, first by title, then by modification date.</li>
+</ul>
+<h3 id="relatedlinks">RelatedLinks<a class="headerlink" href="#relatedlinks" title="Permanent link">&para;</a></h3>
+<p>The <code>RelatedLinks</code> model represents related links for glossary entries. It stores information about related links associated with glossary entries, including their title, URL link, and a foreign key reference to the related glossary entry.</p>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>title</code> (CharField): The title of the related link.</li>
+<li><code>link</code> (URLField): The URL link.</li>
+<li><code>glossary</code> (ForeignKey): A foreign key reference to the related glossary entry.</li>
+</ul>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__str__</code>: A string representation of the related link, including the associated glossary entry's title.</li>
+</ul>
+<h3 id="grequests">GRequests<a class="headerlink" href="#grequests" title="Permanent link">&para;</a></h3>
+<p>The <code>GRequests</code> model represents user-submitted requests for glossary entries. It stores information about G Requests, including their title and an optional description.</p>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>created</code> (DateTimeField): The date and time when the G Request was created (auto-generated).</li>
+<li><code>modified</code> (DateTimeField): The date and time when the G Request was last modified (auto-generated).</li>
+<li><code>title</code> (CharField): The title of the G Request.</li>
+<li><code>description</code> (TextField, optional): Additional description or details of the request.</li>
+</ul>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__str__</code>: A string representation of the G Request, using its title.</li>
+</ul>
+<p><strong>Meta:</strong></p>
+<ul>
+<li><code>verbose_name</code> (str): The singular name for this model in the admin interface.</li>
+<li><code>verbose_name_plural</code> (str): The plural name for this model in the admin interface.</li>
+</ul>
+<h1 id="signalspy">signals.py<a class="headerlink" href="#signalspy" title="Permanent link">&para;</a></h1>
+<p>In the <code>signals.py</code> file of the Glossary app, we define and configure signal receivers that respond to specific events in the application. In particular, we have a receiver function that gets triggered after a <code>GRequests</code> instance is saved. Here's an overview of what's done in this file:</p>
+<p>```python</p>
+<h1 id="import_necessary_modules_for_working_with_django_signals">Import necessary modules for working with Django signals.<a class="headerlink" href="#import_necessary_modules_for_working_with_django_signals" title="Permanent link">&para;</a></h1>
+<p>from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver</p>
+<h1 id="import_models_and_other_dependencies_from_the_current_app">Import models and other dependencies from the current app.<a class="headerlink" href="#import_models_and_other_dependencies_from_the_current_app" title="Permanent link">&para;</a></h1>
+<p>from .models import *</p>
+<h1 id="import_logging_module_for_creating_log_entries">Import logging module for creating log entries.<a class="headerlink" href="#import_logging_module_for_creating_log_entries" title="Permanent link">&para;</a></h1>
+<p>import logging</p>
+<h1 id="get_a_logger_instance_named_log">Get a logger instance named 'log'.<a class="headerlink" href="#get_a_logger_instance_named_log" title="Permanent link">&para;</a></h1>
+<p>log = logging.getLogger('log')</p>
+<h1 id="define_a_receiver_function_to_be_triggered_after_saving_a_grequests_instance">Define a receiver function to be triggered after saving a GRequests instance.<a class="headerlink" href="#define_a_receiver_function_to_be_triggered_after_saving_a_grequests_instance" title="Permanent link">&para;</a></h1>
+<p>@receiver(post_save, sender=GRequests)
+def make_glossary(sender, instance, created, <em>args, </em>*kwargs):
+    """
+    Receiver function triggered after saving a GRequests instance.</p>
+<pre><code>This function is a signal receiver that gets triggered after a GRequests
+instance is saved. It checks if the instance is newly created (created=True),
+and if not, it creates a Glossary entry based on the GRequests instance and
+then deletes the GRequests instance.
+
+Args:
+    sender: The sender of the signal.
+    instance: The instance of the GRequests model.
+    created (bool): Indicates whether the GRequests instance was newly created.
+    *args: Additional positional arguments.
+    **kwargs: Additional keyword arguments.
+"""
+if created:
+    # If the GRequests instance is newly created, do nothing.
+    pass   
+else: 
+    # If the GRequests instance is not newly created, create a Glossary entry.
+    log.info('Glossary created from request________________')   
+    Glossary.objects.create(title = instance.title, description = instance.description)
+
+    # Delete the GRequests instance since it's now been converted to a Glossary entry.
+    instance.delete()
+</code></pre>
+<h2 id="url_configuration_urlspy">URL Configuration (urls.py)<a class="headerlink" href="#url_configuration_urlspy" title="Permanent link">&para;</a></h2>
+<p>In the <code>urls.py</code> file of the Glossary app, we define the URL patterns for accessing the app's views. Here's an overview of the URL configuration:</p>
+<p>```python</p>
+<h1 id="import_necessary_modules_and_views_from_the_glossary_app">Import necessary modules and views from the Glossary app.<a class="headerlink" href="#import_necessary_modules_and_views_from_the_glossary_app" title="Permanent link">&para;</a></h1>
+<h1 id="_3">...<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
+<h1 id="define_the_app_name_for_url_namespace">Define the app name for URL namespace.<a class="headerlink" href="#define_the_app_name_for_url_namespace" title="Permanent link">&para;</a></h1>
+<p>app_name = 'glossary'</p>
+<h1 id="define_url_patterns_for_the_glossary_app">Define URL patterns for the 'glossary' app.<a class="headerlink" href="#define_url_patterns_for_the_glossary_app" title="Permanent link">&para;</a></h1>
+<p>urlpatterns = [
+    # Define a URL pattern for the glossary list view.
+    path('', views.Glist.as_view(), name='g_list'),  <br />
+]</p>
+<h2 id="views_viewspy">Views (views.py)<a class="headerlink" href="#views_viewspy" title="Permanent link">&para;</a></h2>
+<p>In the <code>views.py</code> file of the Glossary app, we define view functions and classes responsible for rendering glossary-related web pages, handling user requests, and providing additional context data. Here's an overview of the views and their functionality:</p>
+<h3 id="glist_class-based_view">Glist (Class-based View)<a class="headerlink" href="#glist_class-based_view" title="Permanent link">&para;</a></h3>
+<p>The <code>Glist</code> class-based view is responsible for displaying the glossary list, handling glossary request submissions, and providing additional context data. Here's a breakdown of its attributes and methods:</p>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>model (Glossary)</code>: The model to query for glossary entries.</li>
+<li><code>paginate_by (int, optional)</code>: Uncomment to enable pagination with a specific number of entries per page.</li>
+</ul>
+<p><strong>Methods:</strong></p>
+<ul>
+<li>
+<p><code>get_context_data(**kwargs)</code>: Overrides the base class method to provide additional context data for rendering the glossary list view. It includes a form for submitting glossary requests and meta information.</p>
+</li>
+<li>
+<p><code>post(request, *args, **kwargs)</code>: Handles POST requests for submitting glossary requests. It validates the request form, saves the request if it's valid, and provides feedback to the user via messages.</p>
+</li>
+</ul>
+<p>The <code>Glist</code> view plays a crucial role in managing glossary entries and user interactions with the glossary section of the application.</p>
+<p>By using this view, users can view glossary entries, submit requests for new glossary entries, and receive feedback on their submissions.</p>
+<p>This view also incorporates meta information for SEO purposes, enhancing the user experience.</p>
+<p>Keep in mind that pagination can be enabled by uncommenting the <code>paginate_by</code> attribute and specifying the desired number of entries per page.</p>
+<p>```python
+model = Glossary</p>
+<h1 id="paginate_by_100_uncomment_to_enable_pagination_with_a_specific_number_of_entries_per_page">paginate_by = 100  # Uncomment to enable pagination with a specific number of entries per page.<a class="headerlink" href="#paginate_by_100_uncomment_to_enable_pagination_with_a_specific_number_of_entries_per_page" title="Permanent link">&para;</a></h1></div>
             </div>
         </div>
 

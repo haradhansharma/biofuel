@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Haradhan Sharma">
+        
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <title>Home And Dash - GFVP Docs</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/rust.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/python.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-success">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">GFVP Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="index.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="accounts.html" class="nav-link">Accounts</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="blog.html" class="nav-link">Blog</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="crm.html" class="nav-link">CRM</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="doc.html" class="nav-link">Doc</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="evaluation.html" class="nav-link">Evaluation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="feedback.html" class="nav-link">Feedback</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="gfvp.html" class="nav-link">Project</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="glossary.html" class="nav-link">Glossary</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="guide.html" class="nav-link">User Guide</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="home.html" class="nav-link">Home And Dash</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="navigation.html" class="nav-link">Navigation</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="guide.html" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="navigation.html" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/haradhansharma/biofuel/tree/v24123/edit/master/docs/home.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#description" class="nav-link">Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#components" class="nav-link">Components</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#-_helperpy_this_module_may_include_any_utility_functions_or_helpers_used_across_the_home_app_to_streamline_common_tasks_or_logic" class="nav-link">- helper.py: This module may include any utility functions or helpers used across the "home" app to streamline common tasks or logic.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#adminpy" class="nav-link">admin.py</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#formspy" class="nav-link">forms.py</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#helperpy" class="nav-link">helper.py</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#modelspy" class="nav-link">models.py</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#viewspy" class="nav-link">views.py</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#contributing" class="nav-link">Contributing</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#license" class="nav-link">License</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p>==================================
+Home App - Django Project Skeleton
+==================================</p>
+<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">&para;</a></h2>
+<p>The "home" app is an integral part of the Django project. It includes various components that are essential for the functionality of the project. This readme provides an overview of the key components within the "home" app.</p>
+<h2 id="components">Components<a class="headerlink" href="#components" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><code>admin.py</code>: This module contains configurations for Django's admin interface, allowing administrators to manage data associated with the "home" app.</p>
+</li>
+<li>
+<p><code>forms.py</code>: The forms module includes form classes used for user input validation and data submission within the app.</p>
+</li>
+<li>
+<p><code>models.py</code>: In this module, the database models are defined, which represent the data structures and relationships for the "home" app.</p>
+</li>
+<li>
+<p><code>views.py</code>: The views module contains view functions that handle user requests, process data, and render templates.</p>
+</li>
+</ul>
+<h2 id="-_helperpy_this_module_may_include_any_utility_functions_or_helpers_used_across_the_home_app_to_streamline_common_tasks_or_logic">- <code>helper.py</code>: This module may include any utility functions or helpers used across the "home" app to streamline common tasks or logic.<a class="headerlink" href="#-_helperpy_this_module_may_include_any_utility_functions_or_helpers_used_across_the_home_app_to_streamline_common_tasks_or_logic" title="Permanent link">&para;</a></h2>
+<h1 id="adminpy">admin.py<a class="headerlink" href="#adminpy" title="Permanent link">&para;</a></h1>
+<ul>
+<li>
+<p><code>admin.py</code>: This module contains configurations for Django's admin interface, allowing administrators to manage data associated with the "home" app. In this file, various models are registered with the Django admin site to provide an interface for administrators to manage data. The following models are registered:</p>
+<ul>
+<li>
+<p><code>PriceUnit</code>: Registered with the Django admin site to manage price units.</p>
+</li>
+<li>
+<p><code>WeightUnit</code>: Registered with the Django admin site to manage weight units.</p>
+</li>
+<li>
+<p><code>TimeUnit</code>: Registered with the Django admin site to manage time units.</p>
+</li>
+<li>
+<p><code>QuotationDocType</code>: Registered with the Django admin site to manage quotation document types.</p>
+</li>
+<li>
+<p><code>Quotation</code>: Registered with the Django admin site to manage quotations.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>These registrations enable administrators to create, edit, and delete records related to these models using the Django admin interface.</p>
+<h1 id="formspy">forms.py<a class="headerlink" href="#formspy" title="Permanent link">&para;</a></h1>
+<p>This <code>forms.py</code> file defines custom form classes for various aspects of a web application. These form classes are designed to provide a more tailored and user-friendly experience for creating and editing user profiles, updating company logos, and managing questions.</p>
+<ol>
+<li><code>PasswordChangeForm</code></li>
+</ol>
+<hr />
+<p>The <code>PasswordChangeForm</code> is a custom form for changing a user's password. It enhances the default Django <code>PasswordChangeForm</code> by updating the widget attributes to improve user experience. Specifically, it sets the autocomplete values for old and new passwords and assigns CSS classes for styling.</p>
+<ol>
+<li><code>UserForm</code></li>
+</ol>
+<hr />
+<p>The <code>UserForm</code> is used for creating and editing user profiles. It is based on the Django <code>ModelForm</code> and is associated with the <code>User</code> model. The form fields are customized with placeholders, CSS classes, and ARIA labels to make the user interface more user-friendly.</p>
+<ol>
+<li><code>CompanyLogoForm</code></li>
+</ol>
+<hr />
+<p>The <code>CompanyLogoForm</code> is designed for updating company logos in user profiles. It is also based on the <code>ModelForm</code> and is associated with the <code>Profile</code> model. It customizes the widget for the <code>company_logo</code> field, providing a user-friendly way to update the company's logo.</p>
+<ol>
+<li><code>ProfileForm</code></li>
+</ol>
+<hr />
+<p>The <code>ProfileForm</code> is used for creating and editing user profiles. It is similar to the <code>UserForm</code> but focuses on fields related to a user's personal profile, such as about information, location, and establishment date. The form fields are customized with placeholders, CSS classes, and ARIA labels for improved user experience.</p>
+<ol>
+<li><code>QuestionForm</code></li>
+</ol>
+<hr />
+<p>The <code>QuestionForm</code> is employed for creating and editing questions. It is associated with the <code>Question</code> model and customizes the widget for the <code>name</code> field. It also provides a more user-friendly experience by adding placeholders, CSS classes, and ARIA labels to the form fields.</p>
+<ol>
+<li><code>OptionForm</code></li>
+</ol>
+<hr />
+<p>The <code>OptionForm</code> is used for creating and editing options. It is associated with the <code>Option</code> model and customizes the widget for the 'name' and 'statement' fields. These fields have placeholders, CSS classes, and ARIA labels for a better user interface.</p>
+<ol>
+<li><code>QuotationForm</code></li>
+</ol>
+<hr />
+<p>The <code>QuotationForm</code> is designed for creating and editing quotations. It is associated with the <code>Quotation</code> model and provides extensive customization for various fields. These customizations include input styling, CSS classes, and ARIA labels for fields like price, time, unit, document requirements, and more. Additionally, it handles file uploads for quotation formats.</p>
+<ol>
+<li><code>NextActivitiesOnQuotation</code></li>
+</ol>
+<hr />
+<p>The <code>NextActivitiesOnQuotation</code> form is intended for updating next activities on quotations. It is associated with the <code>Quotation</code> model and customizes the widget for the 'next_activities' field with styling and a select input.</p>
+<ol>
+<li><code>SuggestionForm</code></li>
+</ol>
+<hr />
+<p>The <code>SuggestionForm</code> allows the creation and editing of suggestions. It is associated with the <code>Suggestions</code> model and provides customization for fields like suggestion type, title, and statement. The form includes select inputs, text inputs, and text areas with appropriate attributes to enhance user interaction.</p>
+<ol>
+<li><code>QuesSugestionForm</code></li>
+</ol>
+<hr />
+<p>The <code>QuesSugestionForm</code> is a custom form for creating and editing question suggestions. It is associated with the <code>Suggestions</code> model and includes a special constructor (<code>__init__</code>) that populates choices for the 'related_qs' field based on a custom function. The form also customizes the widget for 'su_type,' 'title,' 'statement,' and 'related_qs' fields. It provides select inputs, text inputs, and text areas, along with appropriate placeholders and attributes. This form enhances the user experience in creating and editing question suggestions.</p>
+<ol>
+<li><code>NextActivitiesForm</code></li>
+</ol>
+<hr />
+<p>The <code>NextActivitiesForm</code> is used for creating and editing next activities. It is associated with the <code>NextActivities</code> model and includes a constructor to handle the 'request' object. The form customizes the widget for various fields, including 'related_questions,' 'compulsory_questions,' 'name_and_standared,' 'priority,' and others. It provides input styling, placeholders, and attributes for an improved user experience. The form also includes a custom <code>save</code> method that checks for the existence of instances with the same selected IDs and, if found, takes specific actions such as updating user IDs and sending notifications to the admin.</p>
+<p>Developers can use these forms as part of the application's functionality for creating, editing, and managing options, quotations, and suggestions. Ensure that these forms are integrated into your Django project as needed and referenced in associated views and templates.</p>
+<p>For more information on using these forms and their integration into your Django project, please refer to the associated views and templates in your application.</p>
+<h1 id="helperpy">helper.py<a class="headerlink" href="#helperpy" title="Permanent link">&para;</a></h1>
+<p>The <code>helper.py</code> module contains a set of custom helper methods aimed at assisting with data calculation and retrieval. These methods offer valuable functionality for calculating the total number of reports, the total number of reports created by the current user, and counting the number of users under each label.</p>
+<ol>
+<li><code>total_reports(request)</code></li>
+</ol>
+<hr />
+<p>The <code>total_reports</code> method calculates the total number of reports in the database. It queries the <code>Evaluator</code> model and counts all instances. This count is useful for generating statistics and insights regarding the reports within your application.</p>
+<ol>
+<li><code>total_this_user_report(request)</code></li>
+</ol>
+<hr />
+<p>The <code>total_this_user_report</code> method calculates the total number of reports created by the current user. It filters the <code>Evaluator</code> model by the creator attribute, which is set to the current user, and counts the instances. This count helps users monitor and manage their own reports.</p>
+<ol>
+<li><code>users_under_each_label(request)</code></li>
+</ol>
+<hr />
+<p>The <code>users_under_each_label</code> method counts the number of users associated with each label. It retrieves a list of labels by calling <code>get_all_definedlabel()</code> and filters out labels marked as common. To optimize database queries, it prefetches related users for each label. The method constructs a dictionary where the keys represent label names, and the values indicate the count of users under each label. This information is valuable for analyzing user distribution based on labels.</p>
+<ol>
+<li><code>reports_under_each_biofuel(request)</code></li>
+</ol>
+<hr />
+<p>The <code>reports_under_each_biofuel</code> method counts the number of reports under each biofuel category. It retrieves the biofuel categories and calculates the count of reports associated with each category. The results are stored in a dictionary where the keys represent biofuel names, and the values represent the count of reports under each biofuel category. This information is valuable for understanding the distribution of reports based on biofuel types.</p>
+<ol>
+<li><code>weeks_results(request)</code></li>
+</ol>
+<hr />
+<p>The <code>weeks_results</code> method retrieves the number of reports generated in the last year and formats the results. It calculates the date one year ago from the current date, filters reports created in the last year, and aggregates the report counts by month/year. The results are formatted into a dictionary where keys are formatted date strings (month/year), and values represent the report counts. This information is useful for tracking report generation trends over time.</p>
+<ol>
+<li><code>all_reports(request)</code></li>
+</ol>
+<hr />
+<p>The <code>all_reports</code> method retrieves and filters reports based on user roles and calculates additional statistics. It checks the user's role, and if they are a staff member or superuser, all reports are shown. For regular users, only their reports are displayed. The method calculates the number of answered, positive, and "don't know" responses for each report, providing insights into response patterns. The results are paginated, with 10 reports per page, and additional statistics are included in each report's information. This method streamlines report management, making it easier to access and analyze data.</p>
+<ol>
+<li><code>typewise_user(request)</code></li>
+</ol>
+<hr />
+<pre><code>The `typewise_user` method fetches all user types, each of which represents a specific classification or role for users in your application. To optimize database queries, it prefetches related users for each user type. The method returns a dictionary where the keys are user type objects, and the values are lists of associated users, limited to the first 4 users for each type. This limitation helps provide a concise overview of user types and their members.
+</code></pre>
+<p>This method is beneficial for various purposes, including generating user statistics, understanding user role distributions, and facilitating user management.
+These helper methods simplify data processing and statistics generation within your application. Developers can leverage these methods in various scenarios, such as generating reports, user management, or label-based analytics. Integration into your views or other application components is essential to maximize the benefits of these methods.</p>
+<p>For detailed information on using these methods and their integration into your Django project, please refer to the associated views and templates in your application. These methods serve as essential components for data analysis and user management.</p>
+<h1 id="modelspy">models.py<a class="headerlink" href="#modelspy" title="Permanent link">&para;</a></h1>
+<p>This section of <code>models.py</code> introduces several essential models designed to represent various attributes within the application, such as price units, time units, weight units, and quotation document types. These models serve as fundamental components for managing and categorizing data. Here's a detailed explanation:</p>
+<ol>
+<li><code>User</code> Model</li>
+</ol>
+<hr />
+<p>The <code>User</code> model is dynamically defined based on the project's <code>AUTH_USER_MODEL</code> setting. It represents the user entities within your application. This model stores user-related information and is used for user authentication and management. The specific fields and attributes associated with the <code>User</code> model are determined by your project's settings.</p>
+<ol>
+<li><code>PriceUnit</code> Model</li>
+</ol>
+<hr />
+<p>The <code>PriceUnit</code> model represents different price units used in the application, such as currency symbols (e.g., USD, EUR). Each instance of this model corresponds to a specific price unit. The <code>name</code> attribute stores the name of the price unit. This model simplifies the handling of price-related data.</p>
+<ol>
+<li><code>TimeUnit</code> Model</li>
+</ol>
+<hr />
+<p>The <code>TimeUnit</code> model represents time units, such as minutes and hours. Each instance of this model corresponds to a specific time unit. The <code>name</code> attribute stores the name of the time unit. This model is valuable for dealing with time-related calculations and data presentation.</p>
+<ol>
+<li><code>WeightUnit</code> Model</li>
+</ol>
+<hr />
+<p>The <code>WeightUnit</code> model represents various weight units, such as kilograms (kg) and pounds (lb). Each instance of this model corresponds to a specific weight unit. The <code>name</code> attribute stores the name of the weight unit. This model simplifies the handling of weight-related data.</p>
+<ol>
+<li><code>QuotationDocType</code> Model</li>
+</ol>
+<hr />
+<p>The <code>QuotationDocType</code> model represents different document types that can be associated with quotations. Examples of document types include PDF and Word documents. Each instance of this model corresponds to a specific document type. The <code>name</code> attribute stores the name of the document type. This model categorizes and manages document types associated with quotations.</p>
+<ol>
+<li><code>Quotation</code> Model</li>
+</ol>
+<hr />
+<p>The <code>Quotation</code> model represents a quotation for testing services. It stores essential information related to the quotation and is used to manage quotations provided by service providers. Below are the attributes and their descriptions associated with the <code>Quotation</code> model:</p>
+<ol>
+<li>
+<p><code>service_provider</code> (ForeignKey to User)</p>
+<ul>
+<li>Represents the user who provides the quotation.</li>
+</ul>
+</li>
+<li>
+<p><code>show_alternate_email</code> (EmailField, optional)</p>
+<ul>
+<li>Represents an alternate email address for the quotation (optional).</li>
+</ul>
+</li>
+<li>
+<p><code>show_alternate_business</code> (CharField, optional)</p>
+<ul>
+<li>Represents an alternate business name for the quotation (optional).</li>
+</ul>
+</li>
+<li>
+<p><code>show_alternate_phone</code> (CharField, optional)</p>
+<ul>
+<li>Represents an alternate phone number for the quotation (optional).</li>
+</ul>
+</li>
+<li>
+<p><code>price</code> (DecimalField)</p>
+<ul>
+<li>Stores the quotation's price. Users should provide the price for the service.</li>
+</ul>
+</li>
+<li>
+<p><code>price_unit</code> (ForeignKey to PriceUnit)</p>
+<ul>
+<li>Represents the unit of the price. Users can choose from available pricing units.</li>
+</ul>
+</li>
+<li>
+<p><code>needy_time</code> (IntegerField)</p>
+<ul>
+<li>Indicates the time needed for the test to be conducted.</li>
+</ul>
+</li>
+<li>
+<p><code>needy_time_unit</code> (ForeignKey to TimeUnit)</p>
+<ul>
+<li>Represents the unit of time needed for the test.</li>
+</ul>
+</li>
+<li>
+<p><code>sample_amount</code> (IntegerField)</p>
+<ul>
+<li>Stores the amount of sample needed for the test.</li>
+</ul>
+</li>
+<li>
+<p><code>sample_amount_unit</code> (ForeignKey to WeightUnit)</p>
+<ul>
+<li>Represents the unit of weight for the sample amount.</li>
+</ul>
+</li>
+<li>
+<p><code>require_documents</code> (ManyToManyField to QuotationDocType)</p>
+<ul>
+<li>Represents the documents needed for the test. Users can select multiple document types required for the service.</li>
+</ul>
+</li>
+<li>
+<p><code>factory_pickup</code> (BooleanField)</p>
+<ul>
+<li>Indicates whether the sample will be collected from the factory.</li>
+</ul>
+</li>
+<li>
+<p><code>test_for</code> (ForeignKey to Question)</p>
+<ul>
+<li>Represents the question for which the test is conducted. Users can select from available questions.</li>
+</ul>
+</li>
+<li>
+<p><code>related_questions</code> (ManyToManyField to Question)</p>
+<ul>
+<li>Allows the selection of other questions that are tested within the provided quotation. Users can select multiple related questions.</li>
+</ul>
+</li>
+<li>
+<p><code>quotation_format</code> (FileField)</p>
+<ul>
+<li>Allows the uploading of a quotation file, which must be in PDF format.</li>
+</ul>
+</li>
+<li>
+<p><code>next_activities</code> (ForeignKey to NextActivities, optional)</p>
+<ul>
+<li>Represents next activities related to the quotation (optional).</li>
+</ul>
+</li>
+<li>
+<p><code>display_site_address</code> (BooleanField)</p>
+<ul>
+<li>Indicates if the site address should be displayed.</li>
+</ul>
+</li>
+<li>
+<p><code>comments</code> (TextField, optional)</p>
+<ul>
+<li>Provides an additional space for users to add comments related to the quotation (optional).</li>
+</ul>
+</li>
+</ol>
+<p>Key Properties and Methods:
+   - <code>get_quot_url</code>: Returns the URL to add a new quotation for the corresponding question.
+   - <code>get_business_name</code>: Retrieves the business name for the quotation based on display settings.
+   - <code>get_phone</code>: Retrieves the phone number for the quotation based on display settings.
+   - <code>get_email</code>: Retrieves the email address for the quotation based on display settings.
+   - <code>get_absolute_url</code>: Gets the absolute URL for the quotation report.</p>
+<p>The <code>Quotation</code> model is a fundamental component of your application for managing quotations for testing services, facilitating interactions between service providers and users seeking testing services.</p>
+<p>These models are vital for maintaining consistent and organized data storage within your application. Developers can create, update, and retrieve instances of these models as needed to manage and categorize various attributes and data types effectively.</p>
+<p>For detailed information on using these models, including creating and managing instances, refer to the relevant views, forms, and templates in your application. These models serve as the foundation for data representation and management.</p>
+<h1 id="viewspy">views.py<a class="headerlink" href="#viewspy" title="Permanent link">&para;</a></h1>
+<p>This document provides an overview of the views defined in the project's <code>views.py</code> file. Views are responsible for handling HTTP requests and returning appropriate HTTP responses. Below are the main views and their descriptions:</p>
+<ol>
+<li><code>home(request)</code></li>
+<li>View for the home page.</li>
+<li>Displays information on the home page.</li>
+<li>Caches user types and latest blog posts for efficient access.</li>
+<li>Meta data is set for page details.</li>
+<li>
+<p>Available context data:</p>
+<ul>
+<li><code>user_types</code>: Cached user types.</li>
+<li><code>latest_blogs</code>: Cached latest blog posts.</li>
+<li><code>site_info</code>: Meta data for the page.</li>
+</ul>
+</li>
+<li>
+<p><code>user_types(request, slug)</code></p>
+</li>
+<li>View for displaying different user types and initiating the user signup journey.</li>
+<li>Sets the 'interested_in' session variable to the selected user type's slug.</li>
+<li>Ensures the user is logged in to initiate enrollment.</li>
+<li>Determines enrollment options based on user type and permissions.</li>
+<li>Retrieves user type data and related users.</li>
+<li>Meta data is set for page details.</li>
+<li>
+<p>Available context data:</p>
+<ul>
+<li><code>user_type</code>: Selected user type.</li>
+<li><code>users</code>: Users associated with the selected user type.</li>
+<li><code>enroll</code>: Enrollment options.</li>
+<li><code>site_info</code>: Meta data for the page.</li>
+</ul>
+</li>
+<li>
+<p><code>dashboard(request)</code></p>
+</li>
+<li>View for displaying the user dashboard.</li>
+<li>Requires the user to be logged in.</li>
+<li>Provides a summary of dashboard data, including weekly results, user labels, biofuel records, and more.</li>
+<li>Meta data is set for page details.</li>
+<li>
+<p>Available context data:</p>
+<ul>
+<li><code>user_of_labels</code>: User labels statistics.</li>
+<li><code>biofuel_records</code>: Biofuel records statistics.</li>
+<li><code>day_of_week</code>: Days of the week for weekly results.</li>
+<li><code>total_of_day</code>: Total reports for each day of the week.</li>
+<li><code>total_reports</code>: Total number of reports.</li>
+<li><code>allreports</code>: Paginated list of reports and additional statistics.</li>
+<li><code>typewise_user</code>: User types and associated users.</li>
+<li><code>site_info</code>: Meta data for the page.</li>
+</ul>
+</li>
+<li>
+<p><code>questionsint(request)</code></p>
+</li>
+<li>View for displaying questions related to the current marine user.</li>
+<li>Protected with <code>@login_required</code> and <code>@marine_required</code> decorators, ensuring that only logged-in marine users can access it.</li>
+<li>Provides specialized questions to get feedback from marine experts.</li>
+<li>Retrieves parent questions and related child questions.</li>
+<li>Paginates the results for display.</li>
+<li>Meta data is set for page details.</li>
+<li>
+<p>Available context data:</p>
+<ul>
+<li><code>questions</code>: Specialized questions for marine users.</li>
+<li><code>site_info</code>: Meta data for the page.</li>
+</ul>
+</li>
+<li>
+<p><code>user_setting(request)</code></p>
+</li>
+<li>View for managing user settings and profile.</li>
+<li>Allows logged-in users to update their general information, profile data, password, company logo, and notification settings.</li>
+<li>Handles different form submissions for various sections of user settings.</li>
+<li>Initializes form instances for different sections.</li>
+<li>Meta data is set for page details.</li>
+<li>
+<p>Available context data:</p>
+<ul>
+<li><code>user</code>: The logged-in user.</li>
+<li><code>user_form</code>: Form for general user information.</li>
+<li><code>profile_form</code>: Form for user profile data.</li>
+<li><code>password_form</code>: Form for changing the password.</li>
+<li><code>company_logo_form</code>: Form for updating the company logo.</li>
+<li><code>notification_form</code>: Form for notification settings.</li>
+<li><code>site_info</code>: Meta data for the page.</li>
+</ul>
+</li>
+<li>
+<p><code>delete_avatar(request)</code></p>
+</li>
+<li>View for deleting the user's avatar.</li>
+<li>Deletes the user's company logo from the profile.</li>
+<li>
+<p>Redirects to the user settings page after deletion.</p>
+</li>
+<li>
+<p><code>password_change(request)</code></p>
+</li>
+<li>View for changing the user's password.</li>
+<li>Allows logged-in users to change their password by providing the current and new password.</li>
+<li>Handles form submissions for changing the password.</li>
+<li>Initializes the form instance for changing the password.</li>
+<li>Updates the session auth hash after password change.</li>
+<li>Meta data is set for page details.</li>
+<li>
+<p>Available context data:</p>
+<ul>
+<li><code>user</code>: The logged-in user.</li>
+<li><code>password_form</code>: Form for changing the password.</li>
+<li><code>site_info</code>: Meta data for the page.</li>
+</ul>
+</li>
+<li>
+<p><code>get_question_of_label(request)</code></p>
+</li>
+<li>View to retrieve questions of a specific label.</li>
+<li>Checks if the user has the necessary permissions (staff, superuser, expert, marine) to access questions.</li>
+<li>If the user has the required permissions, it retrieves all questions.</li>
+<li>If the user lacks permissions, it redirects and displays a warning message.</li>
+<li>
+<p>Available context data:</p>
+<ul>
+<li><code>questions</code>: A list of questions (or a redirection if user lacks permissions).</li>
+</ul>
+</li>
+<li>
+<p><code>child_modal_data(request, id)</code></p>
+</li>
+<li>View to retrieve data for a child question modal.</li>
+<li>Designed to fetch data for a child question modal.</li>
+<li>Checks if the user is logged in, returning a message if not.</li>
+<li>Ensures access is allowed to experts only, returning a message if the user lacks the necessary permissions.</li>
+<li>Retrieves the question data with related data prefetching.</li>
+<li>Renders a child question modal data template.</li>
+<li>
+<p>Available context data:</p>
+<ul>
+<li><code>qquestion</code>: Question data.</li>
+</ul>
+</li>
+<li>
+<p><code>quotations(request)</code></p>
+<ul>
+<li>View to display quotations related to questions.</li>
+<li>Allows logged-in experts (staff, superuser) to access quotations associated with questions.</li>
+<li>Retrieves questions and their related data, including quotations.</li>
+<li>Provides a paginated response for viewing.</li>
+<li>Meta data is set for page details.</li>
+<li>Available context data:</li>
+<li><code>questions</code>: Paginated list of questions with related quotations.</li>
+<li><code>site_info</code>: Meta data for the page.</li>
+</ul>
+</li>
+<li>
+<p><code>quotationsatg(request)</code></p>
+<ul>
+<li>View to display quotations at a glance.</li>
+<li>Allows logged-in experts (staff, superuser) to access quotations at a glance.</li>
+<li>Quotations can be accessed by staff, superusers, or the service provider (user) who created them.</li>
+<li>Retrieves quotations and provides a paginated response for viewing.</li>
+<li>Meta data is set for page details.</li>
+<li>Available context data:</li>
+<li><code>quotations</code>: Paginated list of quotations.</li>
+<li><code>site_info</code>: Meta data for the page.</li>
+</ul>
+</li>
+<li>
+<p><code>add_quatation(request, slug)</code></p>
+<ul>
+<li>View to add or edit a quotation for a specific question.</li>
+<li>Available to logged-in experts (staff, superuser).</li>
+<li>Checks if the user is logged in, has the necessary permissions, and allows adding or editing quotations.</li>
+<li>Manages form submissions for adding/editing quotations.</li>
+<li>Saves the quotations, related questions, and next activities.</li>
+<li>Checks and validates data related to quotations.</li>
+<li>Deletes the session of next activities after saving the quotation.</li>
+<li>Ensures that a question exists for adding/editing quotations.</li>
+<li>Meta data is set for page details.</li>
+<li>Available context data:</li>
+<li><code>question</code>: The specific question for which the quotation is added or edited.</li>
+<li><code>form</code>: Form for adding/editing quotations.</li>
+<li><code>na_form</code>: Form for selecting next activities.</li>
+<li><code>quatation</code>: The quotation being added/edited.</li>
+<li><code>report_link</code>: Link to view the quotation report.</li>
+<li><code>site_info</code>: Meta data for the page.</li>
+</ul>
+</li>
+<li>
+<p><code>get_verbose_name(instance, field_name)</code></p>
+<ul>
+<li>Helper function to get the <code>verbose_name</code> for a field in a model instance.</li>
+<li>Takes the model instance and the field name as arguments.</li>
+<li>Returns the <code>verbose_name</code> of the specified field title-cased.</li>
+</ul>
+</li>
+<li>
+<p><code>quotation_report2(request, quotation_data)</code></p>
+<ul>
+<li>Sub-function to generate a PDF report based on quotation data.</li>
+<li>Generates a PDF report for a given quotation data.</li>
+<li>Creates a PDF document using the ReportLab library and includes quotation details, related questions, and additional information.</li>
+<li>Returns the generated PDF as a BytesIO buffer.</li>
+</ul>
+</li>
+<li>
+<p><code>quotation_report(request, question, quotation)</code></p>
+<ul>
+<li>View to return a final report with an attachment as a PDF.</li>
+<li>Generates a final report in PDF format by merging the contents of a quotation report and an attachment (if available) into a single PDF document.</li>
+<li>Uses the PyPDF2 library to merge the two PDFs.</li>
+<li>Returns the generated PDF report as an HTTP response.</li>
+<li>Available context data:</li>
+<li><code>question</code>: The question associated with the quotation.</li>
+<li><code>quotation</code>: The ID of the quotation for which the report is generated.</li>
+</ul>
+</li>
+<li>
+<p><code>questions_details(request, slug)</code></p>
+<ul>
+<li>View to display and edit the details of a specific question.</li>
+<li>Marine experts can view and edit the question text, associated options, and other attributes.</li>
+<li>The view uses a combined form that includes the main question and its associated options.</li>
+<li>Available context data:</li>
+<li><code>slug</code>: The slug of the question to be displayed and edited.</li>
+<li><code>question</code>: The specific question to be edited.</li>
+<li>Returns an HTTP response containing the question details and an editable form.</li>
+</ul>
+</li>
+<li>
+<p><code>new_questions(request)</code></p>
+<ul>
+<li>View to add a new question and associated options.</li>
+<li>Marine experts can add a new question along with its associated options.</li>
+<li>The view provides a form for inputting the question text and options for the new question.</li>
+<li>Available context data:</li>
+<li>No specific context data other than site metadata.</li>
+<li>Returns an HTTP response containing the form for adding a new question and options.</li>
+</ul>
+</li>
+<li>
+<p><code>allreports(request)</code></p>
+<ul>
+<li>View to display a list of evaluation reports for biofuels.</li>
+<li>Admin users can see all reports, while biofuel producers can only see their own reports.</li>
+<li>The view provides a list of evaluation reports for biofuels.</li>
+<li>Available context data:</li>
+<li>No specific context data other than site metadata.</li>
+<li>Returns an HTTP response containing the list of evaluation reports.</li>
+</ul>
+</li>
+<li>
+<p><code>check_type_to_get_expert(request)</code></p>
+<ul>
+<li>View to check the user type selected during registration and set session variables accordingly.</li>
+<li>Used during the registration process to determine the user type selected by the user and set session variables based on that selection.</li>
+<li>Retrieves the user type from the request's POST data and sets the 'interested_in' session variable to the user type's slug.</li>
+<li>Sets the 'hidden' session variable to 'hidden' if the user type is not an expert, indicating that certain form fields should be hidden in the registration form.</li>
+<li>Returns a redirection to the registration page.</li>
+</ul>
+</li>
+<li>
+<p><code>add_extra(request, pk)</code></p>
+<ul>
+<li>View to add an extra form field.</li>
+<li>Increments the 'extra' session variable to control front-end behavior.</li>
+<li>Returns a redirection to the question details page.</li>
+</ul>
+</li>
+<li>
+<p><code>sub_extra(request, pk)</code></p>
+<ul>
+<li>View to subtract an extra form field.</li>
+<li>Decrements the 'extra' session variable if it's greater than or equal to 1 to control front-end behavior.</li>
+<li>Returns a redirection to the question details page.</li>
+</ul>
+</li>
+<li>
+<p><code>webmanifest(request)</code></p>
+<ul>
+<li>View to generate a web app manifest.</li>
+<li>Creates a web app manifest containing data such as the app's name, icons, and other configuration options.</li>
+<li>Returns a JSON response containing the web app manifest data.</li>
+</ul>
+</li>
+<li>
+<p><code>AddSugestion(View)</code></p>
+<ul>
+<li>Class-based view for adding or editing suggestions related to a question.</li>
+<li>Handles both GET and POST requests for displaying the form and processing form submissions.</li>
+<li>Attributes:<ul>
+<li><code>get_temp</code> (str): Template file for rendering the form.</li>
+<li><code>form_class</code> (class): Form class used for suggestion input.</li>
+</ul>
+</li>
+<li>Methods:<ul>
+<li><code>get(self, request, *args, **kwargs)</code>: Handles GET requests to display the suggestion form.</li>
+<li><code>post(self, request, *args, **kwargs)</code>: Handles POST requests to process form submissions.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>get_edit_sugestion(request, slug, pk)</code></p>
+<ul>
+<li>View to edit an existing suggestion related to a question.</li>
+<li>Allows marine users to edit an existing suggestion for a specific question based on its primary key (pk).</li>
+</ul>
+</li>
+<li>
+<p><code>get_sugestion_list(request, slug)</code></p>
+<ul>
+<li>View to display a list of suggestions related to a specific question.</li>
+<li>Retrieves and displays a list of suggestions related to a specific question, identified by its slug.</li>
+</ul>
+</li>
+<li>
+<p><code>delete_sugestion(request, pk)</code></p>
+<ul>
+<li>View to delete a suggestion.</li>
+<li>Allows authenticated users, typically marine experts, to delete a specific suggestion based on its primary key (pk).</li>
+<li>Users must have the necessary permissions to delete the suggestion. Only the creator of the suggestion, admin users, and superusers can delete it.</li>
+</ul>
+</li>
+<li>
+<p><code>sugest_new_ques_option(request)</code></p>
+<ul>
+<li>View to suggest new questions and options for evaluation.</li>
+<li>Allows marine experts to submit suggestions for new questions and corresponding options.</li>
+<li>The submitted suggestions are reviewed and, if approved, added to the evaluation pool.</li>
+<li>Displays previously suggested questions by the same expert.</li>
+</ul>
+</li>
+<li>
+<p><code>get_edit_new_sugestion(request, pk)</code></p>
+<ul>
+<li>View to edit a new suggestion.</li>
+<li>Allows marine experts to edit a previously suggested question or option.</li>
+<li>Experts can update the statement, title, related questions, and suggestion type.</li>
+<li>Changes are saved if the expert is the creator of the suggestion or has staff/superuser privileges.</li>
+</ul>
+</li>
+<li>
+<p><code>get_new_sugestion_list(request)</code></p>
+<ul>
+<li>View to display a list of new suggestions created by the marine expert.</li>
+<li>Retrieves and displays a list of new suggestions created by the marine expert.</li>
+<li>These suggestions have not been associated with a specific question or option yet.</li>
+</ul>
+</li>
+<li>
+<p><code>add_new_service(request, user_id)</code></p>
+<ul>
+<li>View to allow an expert to add a new service or select an existing service for a visiting user.</li>
+<li>Allows an expert user to add a new service or select an existing service for a visiting user.</li>
+<li>The expert can provide details about the service and associate it with related and compulsory questions.</li>
+<li>If an existing service is found for the selected questions, the expert is prompted to select that service.</li>
+</ul>
+</li>
+</ol>
+<p>These views empower expert users to provide services and options to visiting users and facilitate the management of services associated with specific questions.</p>
+<p>Please note that these views are part of the project's features for user interaction and service management. Additional views and features may be defined elsewhere in the project based on specific requirements.</p>
+<p>These views serve as the core components of the project, handling various functionalities and interactions with users on the website.</p>
+<p>Please note that the mentioned views are not the entire list of views in the project. Additional views may be defined elsewhere in the project based on specific requirements.</p>
+<h2 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">&para;</a></h2>
+<p>Feel free to contribute to this app or report any issues by following the guidelines in the project's repository.</p>
+<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
+<p>This app is open-source and is distributed under the [License Name]. Refer to the LICENSE file for details.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>(c) gf-vp.com</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = ".",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="js/base.js" defer></script>
+        <script src="search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

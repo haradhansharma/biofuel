@@ -8,7 +8,7 @@
         <meta name="author" content="Haradhan Sharma">
         
         <link rel="shortcut icon" href="img/favicon.ico">
-        <title>Guide - GFVP Docs</title>
+        <title>User Guide - GFVP Docs</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/base.css" rel="stylesheet">
@@ -43,10 +43,10 @@
                                 <a href="accounts.html" class="nav-link">Accounts</a>
                             </li>
                             <li class="navitem">
-                                <a href="crm.html" class="nav-link">CRM</a>
+                                <a href="blog.html" class="nav-link">Blog</a>
                             </li>
                             <li class="navitem">
-                                <a href="blog.html" class="nav-link">Blog</a>
+                                <a href="crm.html" class="nav-link">CRM</a>
                             </li>
                             <li class="navitem">
                                 <a href="doc.html" class="nav-link">Doc</a>
@@ -54,11 +54,23 @@
                             <li class="navitem">
                                 <a href="evaluation.html" class="nav-link">Evaluation</a>
                             </li>
-                            <li class="navitem active">
-                                <a href="guide.html" class="nav-link">Guide</a>
+                            <li class="navitem">
+                                <a href="feedback.html" class="nav-link">Feedback</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="gfvp.html" class="nav-link">Project</a>
                             </li>
                             <li class="navitem">
                                 <a href="glossary.html" class="nav-link">Glossary</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="guide.html" class="nav-link">User Guide</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="home.html" class="nav-link">Home And Dash</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="navigation.html" class="nav-link">Navigation</a>
                             </li>
                         </ul>
 
@@ -69,17 +81,17 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="evaluation.html" class="nav-link">
+                                <a rel="prev" href="glossary.html" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="glossary.html" class="nav-link">
+                                <a rel="next" href="home.html" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/haradhansharma/biofuel/blob/main/docs/guide.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/haradhansharma/biofuel/tree/v24123/edit/master/docs/guide.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -98,12 +110,294 @@
     
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#admin_configuration_adminpy" class="nav-link">Admin Configuration (admin.py)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#installation_and_usage" class="nav-link">Installation and Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#models_overview_modelspy" class="nav-link">Models Overview (models.py)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#usage_and_relationships" class="nav-link">Usage and Relationships</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#url_patterns_overview_urlspy" class="nav-link">URL Patterns Overview (urls.py)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#namespace_and_app_name" class="nav-link">Namespace and app_name</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#views_overview_viewspy" class="nav-link">Views Overview (views.py)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#meta_information_and_seo" class="nav-link">Meta Information and SEO</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#customization" class="nav-link">Customization</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#feedback_and_contributions" class="nav-link">Feedback and Contributions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-</div>
+<p>=====================================
+Django Guide App - Developer's Guide
+=====================================</p>
+<p>This is the developer's guide for the Django Guide App, an application designed to manage and display guides in a Django project. This guide will walk you through the key components of the app, starting with the <code>admin.py</code> file.</p>
+<h2 id="admin_configuration_adminpy">Admin Configuration (<code>admin.py</code>)<a class="headerlink" href="#admin_configuration_adminpy" title="Permanent link">&para;</a></h2>
+<p>The <code>admin.py</code> file is where we define the admin interface for managing our guide-related models. Here, we'll provide an overview of each admin class and its functionality.</p>
+<ol>
+<li><code>GenarelGuideAdmin</code>:</li>
+<li>This admin class is used to manage instances of the <code>GenarelGuide</code> model.</li>
+<li>It extends <code>SummernoteModelAdmin</code> to enable a rich text editor for the <code>content</code> field.</li>
+<li>The <code>list_filter</code> attribute adds a filter for the <code>menu</code> field in the admin interface.</li>
+</ol>
+<pre><code class="language-python">@admin.register(GenarelGuide)
+class GenarelGuideAdmin(SummernoteModelAdmin):
+    summernote_fields = ('content',)  # Enable Summernote for the 'content' field
+    list_filter = ('menu',)  # Add a filter for the 'menu' field
+</code></pre>
+<ol>
+<li><code>GuideTypeAdmin</code>:</li>
+<li>This admin class is used to manage instances of the <code>GuideType</code> model.</li>
+<li>It includes the <code>prepopulated_fields</code> attribute, which automatically generates the <code>key</code> field based on the <code>title</code> field.</li>
+<li>If you want the <code>key</code> field to be read-only, uncomment the <code>readonly_fields</code> attribute.</li>
+</ol>
+<pre><code class="language-python">@admin.register(GuideType)
+class GuideTypeAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'key': ('title',)}  # Auto-generate 'key' based on 'title'
+    # readonly_fields = ('key',)  # Uncomment this line if 'key' should be read-only
+</code></pre>
+<ol>
+<li><code>GuideMenuAdmin</code>:</li>
+<li>This admin class is used to manage instances of the <code>GuideMenu</code> model.</li>
+<li>Similar to <code>GuideTypeAdmin</code>, it includes the <code>prepopulated_fields</code> attribute, which generates the <code>slug</code> field based on the <code>title</code> field.</li>
+<li>The <code>list_filter</code> attribute adds a filter for the <code>guidetype</code> field in the admin interface.</li>
+</ol>
+<pre><code class="language-python">@admin.register(GuideMenu)
+class GuideMenuAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('title',)}  # Auto-generate 'slug' based on 'title'
+    list_filter = ('guidetype',)  # Add a filter for the 'guidetype' field
+</code></pre>
+<h2 id="installation_and_usage">Installation and Usage<a class="headerlink" href="#installation_and_usage" title="Permanent link">&para;</a></h2>
+<p>To use the Django Guide App in your project, follow these steps:</p>
+<ol>
+<li>Install the app by adding it to your project's <code>INSTALLED_APPS</code> in the project's settings:</li>
+</ol>
+<p><code>python
+   INSTALLED_APPS = [
+       # ...
+       'guide',  # Add 'guide' to your installed apps
+       # ...
+   ]</code></p>
+<ol>
+<li>Configure the app's database models by running migrations:</li>
+</ol>
+<p><code>bash
+   python manage.py makemigrations guide
+   python manage.py migrate</code></p>
+<ol>
+<li>Create a superuser to access the admin interface:</li>
+</ol>
+<p><code>bash
+   python manage.py createsuperuser</code></p>
+<ol>
+<li>
+<p>Register your guide-related models in the <code>admin.py</code> file as shown above.</p>
+</li>
+<li>
+<p>Start the development server:</p>
+</li>
+</ol>
+<p><code>bash
+   python manage.py runserver</code></p>
+<ol>
+<li>Access the admin interface at <code>http://localhost:8000/admin/</code> and use the registered admin classes to manage guides, guide types, and guide menus.</li>
+</ol>
+<p>===============================
+Django Guide App - Models Guide
+===============================</p>
+<p>This is the models guide for the Django Guide App, explaining the structure and attributes of the models defined in the <code>models.py</code> file.</p>
+<h2 id="models_overview_modelspy">Models Overview (<code>models.py</code>)<a class="headerlink" href="#models_overview_modelspy" title="Permanent link">&para;</a></h2>
+<p>The <code>models.py</code> file defines three main models used in the Django Guide App: <code>GuideType</code>, <code>GuideMenu</code>, and <code>GenarelGuide</code>. Each model represents a different aspect of managing guides.</p>
+<ol>
+<li><code>GuideType</code> Model:</li>
+<li>Model representing different types of guides.</li>
+<li>Attributes:<ul>
+<li><code>title</code> (CharField): The title of the guide type.</li>
+<li><code>position</code> (IntegerField): The position of the guide type.</li>
+<li><code>key</code> (SlugField): A slug field used for identifying the guide type.</li>
+<li><code>icon_image</code> (ImageField): An image field for the guide type's icon.</li>
+</ul>
+</li>
+<li>The <code>__str__</code> method returns the title of the guide type.</li>
+<li>
+<p>The <code>get_absolute_url</code> method returns the absolute URL for the guide type.</p>
+</li>
+<li>
+<p><code>GuideMenu</code> Model:</p>
+</li>
+<li>Model representing menus for guides.</li>
+<li>Attributes:<ul>
+<li><code>title</code> (CharField): The title of the guide menu.</li>
+<li><code>position</code> (IntegerField): The position of the guide menu.</li>
+<li><code>guidetype</code> (ForeignKey): A foreign key to the associated guide type.</li>
+<li><code>slug</code> (SlugField): A slug field used for identifying the menu.</li>
+</ul>
+</li>
+<li>The <code>__str__</code> method returns the title of the guide menu.</li>
+<li>
+<p>The <code>get_absolute_url</code> method returns the absolute URL for a general guide within this menu.</p>
+</li>
+<li>
+<p><code>GenarelGuide</code> Model:</p>
+</li>
+<li>Model representing general guides.</li>
+<li>Attributes:<ul>
+<li><code>title</code> (CharField): The title of the general guide.</li>
+<li><code>position</code> (IntegerField): The position of the general guide.</li>
+<li><code>menu</code> (ForeignKey): A foreign key to the related guide menu.</li>
+<li><code>anchor</code> (CharField): An anchor field.</li>
+<li><code>parent</code> (ForeignKey): A foreign key to a parent guide (self-referential relationship).</li>
+<li><code>content</code> (TextField): The content of the general guide.</li>
+</ul>
+</li>
+<li>The <code>__str__</code> method returns the title of the general guide along with its parent information.</li>
+</ol>
+<h2 id="usage_and_relationships">Usage and Relationships<a class="headerlink" href="#usage_and_relationships" title="Permanent link">&para;</a></h2>
+<p>These models are designed to create a structured system for managing and displaying guides within your Django project. <code>GuideType</code> defines the types of guides, <code>GuideMenu</code> organizes guides into menus, and <code>GenarelGuide</code> contains the actual guide content.</p>
+<ul>
+<li><code>GuideType</code> and <code>GuideMenu</code> are related through a foreign key, allowing you to group menus by guide type.</li>
+<li><code>GenarelGuide</code> is related to <code>GuideMenu</code> to associate guides with specific menus.</li>
+</ul>
+<p>You can further customize these models or add additional fields to suit the specific requirements of your project.</p>
+<p>For more information on using Django models, refer to the official Django documentation: https://docs.djangoproject.com/</p>
+<p>=============================
+Django Guide App - URLs Guide
+=============================</p>
+<p>This is the URLs guide for the Django Guide App, explaining the URL patterns and their associated views defined in the <code>urls.py</code> file.</p>
+<h2 id="url_patterns_overview_urlspy">URL Patterns Overview (<code>urls.py</code>)<a class="headerlink" href="#url_patterns_overview_urlspy" title="Permanent link">&para;</a></h2>
+<p>The <code>urls.py</code> file defines the URL patterns that map URLs to views within the Django Guide App. Here's an overview of the defined URL patterns:</p>
+<ol>
+<li>Guide Home Page:</li>
+<li>URL Pattern: <code>/guide</code></li>
+<li>View: <code>views.guide_home</code></li>
+<li>Name: <code>'guide:guide_home'</code></li>
+<li>
+<p>Description: This URL pattern maps to the <code>guide_home</code> view, which serves as the home page for the guide app.</p>
+</li>
+<li>
+<p>Specific Guide Type:</p>
+</li>
+<li>URL Pattern: <code>/guide/&lt;str:key&gt;</code></li>
+<li>View: <code>views.guide_type</code></li>
+<li>Name: <code>'guide:guide_type'</code></li>
+<li>
+<p>Description: This URL pattern is used to display guides of a specific type. The <code>key</code> parameter is a dynamic part of the URL.</p>
+</li>
+<li>
+<p>General Guide Under a Specific Guide Type:</p>
+</li>
+<li>URL Pattern: <code>/guide/&lt;str:gt&gt;/&lt;str:slug&gt;</code></li>
+<li>View: <code>views.genarel_guide</code></li>
+<li>Name: <code>'guide:genarel_guide'</code></li>
+<li>Description: This URL pattern is used to display a general guide under a specific guide type. It takes two dynamic parameters, <code>gt</code> and <code>slug</code>.</li>
+</ol>
+<p>Using these URL patterns, you can navigate to different sections of the guide app, view guides of specific types, and access individual general guides.</p>
+<h2 id="namespace_and_app_name">Namespace and <code>app_name</code><a class="headerlink" href="#namespace_and_app_name" title="Permanent link">&para;</a></h2>
+<p>The <code>'guide'</code> namespace is set using the <code>app_name</code> variable at the beginning of the <code>urls.py</code> file. This namespace is used to organize and avoid naming conflicts with URL patterns from other apps in your Django project.</p>
+<p>Each URL pattern is associated with a unique name, which can be used for reverse URL lookups or in templates. The names are prefixed with <code>'guide:'</code> to specify the namespace.</p>
+<p>For example:
+- <code>'guide:guide_home'</code> refers to the URL pattern for the guide home page.
+- <code>'guide:guide_type'</code> refers to the URL pattern for displaying guides of a specific type.
+- <code>'guide:genarel_guide'</code> refers to the URL pattern for displaying a general guide under a specific guide type.</p>
+<p>=============================
+Django Guide App - Views Guide
+=============================</p>
+<p>This is the views guide for the Django Guide App, explaining the purpose and functionality of each view defined in the <code>views.py</code> file.</p>
+<h2 id="views_overview_viewspy">Views Overview (<code>views.py</code>)<a class="headerlink" href="#views_overview_viewspy" title="Permanent link">&para;</a></h2>
+<p>The <code>views.py</code> file contains view functions that handle HTTP requests and define the behavior of different pages in the Django Guide App. Here's an overview of each view:</p>
+<ol>
+<li><code>guide_home</code> View:</li>
+<li>URL: <code>/guide</code></li>
+<li>Description: This view function serves as the home page for the guide app. It retrieves information about guide types and renders the home page template with guide type information.</li>
+<li>Args:<ul>
+<li><code>request</code> (HttpRequest): The request object.</li>
+</ul>
+</li>
+<li>
+<p>Returns:</p>
+<ul>
+<li><code>HttpResponse</code>: The rendered home page.</li>
+</ul>
+</li>
+<li>
+<p><code>guide_type</code> View:</p>
+</li>
+<li>URL: <code>/guide/&lt;str:key&gt;</code></li>
+<li>Description: This view function displays guides of a specific type. It retrieves guide menus for the specified guide type and renders the guide type template.</li>
+<li>Args:<ul>
+<li><code>request</code> (HttpRequest): The request object.</li>
+<li><code>key</code> (str): The key of the guide type.</li>
+</ul>
+</li>
+<li>
+<p>Returns:</p>
+<ul>
+<li><code>HttpResponse</code>: The rendered guide type page.</li>
+</ul>
+</li>
+<li>
+<p><code>genarel_guide</code> View:</p>
+</li>
+<li>URL: <code>/guide/&lt;str:gt&gt;/&lt;str:slug&gt;</code></li>
+<li>Description: This view function displays a general guide under a specific guide type and menu. It retrieves general guides for the specified guide type and menu and renders the general guide template.</li>
+<li>Args:<ul>
+<li><code>request</code> (HttpRequest): The request object.</li>
+<li><code>gt</code> (str): The key of the guide type.</li>
+<li><code>slug</code> (str): The slug of the guide menu.</li>
+</ul>
+</li>
+<li>Returns:<ul>
+<li><code>HttpResponse</code>: The rendered general guide page.</li>
+</ul>
+</li>
+</ol>
+<p>Each view function takes a <code>request</code> parameter, which represents the incoming HTTP request, and returns an <code>HttpResponse</code> object that represents the rendered HTML page.</p>
+<h2 id="meta_information_and_seo">Meta Information and SEO<a class="headerlink" href="#meta_information_and_seo" title="Permanent link">&para;</a></h2>
+<p>Each view includes meta information for SEO (Search Engine Optimization) and social sharing. This information helps improve the visibility and sharing of the guide content. It includes metadata such as titles, descriptions, tags, and images.</p>
+<h2 id="customization">Customization<a class="headerlink" href="#customization" title="Permanent link">&para;</a></h2>
+<p>You can customize the app further to meet your project's specific requirements. For example, you can extend the models, add additional fields, or modify the admin classes to tailor the admin interface to your needs.</p>
+<p>For more information on Django development and customization, refer to the official Django documentation: https://docs.djangoproject.com/</p>
+<h2 id="feedback_and_contributions">Feedback and Contributions<a class="headerlink" href="#feedback_and_contributions" title="Permanent link">&para;</a></h2>
+<p>We welcome feedback, bug reports, and contributions to this project. If you encounter any issues or have suggestions for improvements, please open an issue on the GitHub repository of this project.</p>
+<p>Thank you for using the Django Guide App!
+```</p></div>
             </div>
         </div>
 
