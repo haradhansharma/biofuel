@@ -21,8 +21,8 @@ evaluation/bkup_middleware.cpython-39-x86_64-linux-gnu.so
 
 
 gfvp/bakup_addset.cpython-39-x86_64-linux-gnu.so
-gfvp/addset.cp39-win_amd64.pyd
-gfvp/addset.cp310-win_amd64.pyd
+# gfvp/addset.cp39-win_amd64.pyd
+# gfvp/addset.cp310-win_amd64.pyd
 gfvp/settings
 gfvp/bkup_addset.py
 for krishnahara.txt
