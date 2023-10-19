@@ -1,5 +1,4 @@
 {% extends "admin/change_list.html" %}
-
 {% block content %}
 <div class="extra-info">
     {% if label_pending_in_logical_string %}
@@ -13,15 +12,14 @@
                             <li>{{ls}}</li>
                         {% endfor %}
                     </ul>
-                    This is an authentic system bug. It needs to be corrected in order to generate an accurate evaluation report and ensure the smooth functioning of the system.
-                </ul>
-                
-
+                    {# The following message explains the issue and its impact on the system. #}
+                    This is an authentic system bug. It needs to be corrected in order to generate an accurate evaluation report 
+                    and ensure the smooth functioning of the system.
+                </ul>    
             </ul>
-                
         </div>
     {% endif %}   
 </div>
-    {{ block.super }} 
-    
+{{ block.super }} 
+{# Include the content from the parent template. #}    
 {% endblock %}

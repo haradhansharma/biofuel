@@ -1,14 +1,22 @@
-==================================
-Home App - Django Project Skeleton
-==================================
+---
+title: Technical Guide Home app of GFVP
+summary: Here given overview of the home app of Green fuel validation platform.
+copyright: (c) gf-vp.com
+repo_url: https://github.com/haradhansharma/biofuel
+edit_uri: blob/v24123/gfvp_docs/docs
+authors:
+    - Haradhan Sharma
+date: 2023-10-16
 
-Description
------------
+---
+# Home App - Django Project Skeleton
+
+
+### Description
 
 The "home" app is an integral part of the Django project. It includes various components that are essential for the functionality of the project. This readme provides an overview of the key components within the "home" app.
 
-Components
-----------
+### Components
 
 - `admin.py`: This module contains configurations for Django's admin interface, allowing administrators to manage data associated with the "home" app.
 
@@ -19,10 +27,9 @@ Components
 - `views.py`: The views module contains view functions that handle user requests, process data, and render templates.
 
 - `helper.py`: This module may include any utility functions or helpers used across the "home" app to streamline common tasks or logic.
-- 
 
-admin.py
-========
+
+## admin.py
 
 - `admin.py`: This module contains configurations for Django's admin interface, allowing administrators to manage data associated with the "home" app. In this file, various models are registered with the Django admin site to provide an interface for administrators to manage data. The following models are registered:
 
@@ -39,93 +46,67 @@ admin.py
   These registrations enable administrators to create, edit, and delete records related to these models using the Django admin interface.
 
 
-forms.py
-========
+## forms.py
 
 This `forms.py` file defines custom form classes for various aspects of a web application. These form classes are designed to provide a more tailored and user-friendly experience for creating and editing user profiles, updating company logos, and managing questions.
 
 1. `PasswordChangeForm`
-   ----------------------
    The `PasswordChangeForm` is a custom form for changing a user's password. It enhances the default Django `PasswordChangeForm` by updating the widget attributes to improve user experience. Specifically, it sets the autocomplete values for old and new passwords and assigns CSS classes for styling.
 
 2. `UserForm`
-   ------------
    The `UserForm` is used for creating and editing user profiles. It is based on the Django `ModelForm` and is associated with the `User` model. The form fields are customized with placeholders, CSS classes, and ARIA labels to make the user interface more user-friendly.
 
 3. `CompanyLogoForm`
-   ---------------------
    The `CompanyLogoForm` is designed for updating company logos in user profiles. It is also based on the `ModelForm` and is associated with the `Profile` model. It customizes the widget for the `company_logo` field, providing a user-friendly way to update the company's logo.
 
 4. `ProfileForm`
-   ----------------
    The `ProfileForm` is used for creating and editing user profiles. It is similar to the `UserForm` but focuses on fields related to a user's personal profile, such as about information, location, and establishment date. The form fields are customized with placeholders, CSS classes, and ARIA labels for improved user experience.
 
 5. `QuestionForm`
-   -----------------
    The `QuestionForm` is employed for creating and editing questions. It is associated with the `Question` model and customizes the widget for the `name` field. It also provides a more user-friendly experience by adding placeholders, CSS classes, and ARIA labels to the form fields.
 
 6. `OptionForm`
-   ---------------
    The `OptionForm` is used for creating and editing options. It is associated with the `Option` model and customizes the widget for the 'name' and 'statement' fields. These fields have placeholders, CSS classes, and ARIA labels for a better user interface.
 
 7. `QuotationForm`
-   ------------------
    The `QuotationForm` is designed for creating and editing quotations. It is associated with the `Quotation` model and provides extensive customization for various fields. These customizations include input styling, CSS classes, and ARIA labels for fields like price, time, unit, document requirements, and more. Additionally, it handles file uploads for quotation formats.
 
 8. `NextActivitiesOnQuotation`
-   ----------------------------
    The `NextActivitiesOnQuotation` form is intended for updating next activities on quotations. It is associated with the `Quotation` model and customizes the widget for the 'next_activities' field with styling and a select input.
 
 9. `SuggestionForm`
-   -------------------
    The `SuggestionForm` allows the creation and editing of suggestions. It is associated with the `Suggestions` model and provides customization for fields like suggestion type, title, and statement. The form includes select inputs, text inputs, and text areas with appropriate attributes to enhance user interaction.
 
 10. `QuesSugestionForm`
-   ---------------------
    The `QuesSugestionForm` is a custom form for creating and editing question suggestions. It is associated with the `Suggestions` model and includes a special constructor (`__init__`) that populates choices for the 'related_qs' field based on a custom function. The form also customizes the widget for 'su_type,' 'title,' 'statement,' and 'related_qs' fields. It provides select inputs, text inputs, and text areas, along with appropriate placeholders and attributes. This form enhances the user experience in creating and editing question suggestions.
 
 11. `NextActivitiesForm`
-   -----------------------
    The `NextActivitiesForm` is used for creating and editing next activities. It is associated with the `NextActivities` model and includes a constructor to handle the 'request' object. The form customizes the widget for various fields, including 'related_questions,' 'compulsory_questions,' 'name_and_standared,' 'priority,' and others. It provides input styling, placeholders, and attributes for an improved user experience. The form also includes a custom `save` method that checks for the existence of instances with the same selected IDs and, if found, takes specific actions such as updating user IDs and sending notifications to the admin.
 
 
-Developers can use these forms as part of the application's functionality for creating, editing, and managing options, quotations, and suggestions. Ensure that these forms are integrated into your Django project as needed and referenced in associated views and templates.
-
-For more information on using these forms and their integration into your Django project, please refer to the associated views and templates in your application.
-
-
-
-helper.py
-=========
+## helper.py
 
 The `helper.py` module contains a set of custom helper methods aimed at assisting with data calculation and retrieval. These methods offer valuable functionality for calculating the total number of reports, the total number of reports created by the current user, and counting the number of users under each label.
 
 1. `total_reports(request)`
-   --------------------------
    The `total_reports` method calculates the total number of reports in the database. It queries the `Evaluator` model and counts all instances. This count is useful for generating statistics and insights regarding the reports within your application.
 
 2. `total_this_user_report(request)`
-   -----------------------------------
    The `total_this_user_report` method calculates the total number of reports created by the current user. It filters the `Evaluator` model by the creator attribute, which is set to the current user, and counts the instances. This count helps users monitor and manage their own reports.
 
 3. `users_under_each_label(request)`
-   -----------------------------------
    The `users_under_each_label` method counts the number of users associated with each label. It retrieves a list of labels by calling `get_all_definedlabel()` and filters out labels marked as common. To optimize database queries, it prefetches related users for each label. The method constructs a dictionary where the keys represent label names, and the values indicate the count of users under each label. This information is valuable for analyzing user distribution based on labels.
 
 4. `reports_under_each_biofuel(request)`
-   ---------------------------------------
    The `reports_under_each_biofuel` method counts the number of reports under each biofuel category. It retrieves the biofuel categories and calculates the count of reports associated with each category. The results are stored in a dictionary where the keys represent biofuel names, and the values represent the count of reports under each biofuel category. This information is valuable for understanding the distribution of reports based on biofuel types.
 
 5. `weeks_results(request)`
-   --------------------------
    The `weeks_results` method retrieves the number of reports generated in the last year and formats the results. It calculates the date one year ago from the current date, filters reports created in the last year, and aggregates the report counts by month/year. The results are formatted into a dictionary where keys are formatted date strings (month/year), and values represent the report counts. This information is useful for tracking report generation trends over time.
 
 6. `all_reports(request)`
-   -----------------------
    The `all_reports` method retrieves and filters reports based on user roles and calculates additional statistics. It checks the user's role, and if they are a staff member or superuser, all reports are shown. For regular users, only their reports are displayed. The method calculates the number of answered, positive, and "don't know" responses for each report, providing insights into response patterns. The results are paginated, with 10 reports per page, and additional statistics are included in each report's information. This method streamlines report management, making it easier to access and analyze data.
 
 7. `typewise_user(request)`
-   ------------------------
     The `typewise_user` method fetches all user types, each of which represents a specific classification or role for users in your application. To optimize database queries, it prefetches related users for each user type. The method returns a dictionary where the keys are user type objects, and the values are lists of associated users, limited to the first 4 users for each type. This limitation helps provide a concise overview of user types and their members.
 
 This method is beneficial for various purposes, including generating user statistics, understanding user role distributions, and facilitating user management.
@@ -135,34 +116,26 @@ For detailed information on using these methods and their integration into your 
 
 
 
-models.py
-=========
+## models.py
 
 This section of `models.py` introduces several essential models designed to represent various attributes within the application, such as price units, time units, weight units, and quotation document types. These models serve as fundamental components for managing and categorizing data. Here's a detailed explanation:
 
 1. `User` Model
-   ---------------
    The `User` model is dynamically defined based on the project's `AUTH_USER_MODEL` setting. It represents the user entities within your application. This model stores user-related information and is used for user authentication and management. The specific fields and attributes associated with the `User` model are determined by your project's settings.
 
 2. `PriceUnit` Model
-   --------------------
    The `PriceUnit` model represents different price units used in the application, such as currency symbols (e.g., USD, EUR). Each instance of this model corresponds to a specific price unit. The `name` attribute stores the name of the price unit. This model simplifies the handling of price-related data.
 
 3. `TimeUnit` Model
-   -------------------
    The `TimeUnit` model represents time units, such as minutes and hours. Each instance of this model corresponds to a specific time unit. The `name` attribute stores the name of the time unit. This model is valuable for dealing with time-related calculations and data presentation.
 
 4. `WeightUnit` Model
-   ---------------------
    The `WeightUnit` model represents various weight units, such as kilograms (kg) and pounds (lb). Each instance of this model corresponds to a specific weight unit. The `name` attribute stores the name of the weight unit. This model simplifies the handling of weight-related data.
 
 5. `QuotationDocType` Model
-   --------------------------
    The `QuotationDocType` model represents different document types that can be associated with quotations. Examples of document types include PDF and Word documents. Each instance of this model corresponds to a specific document type. The `name` attribute stores the name of the document type. This model categorizes and manages document types associated with quotations.
 
 6. `Quotation` Model
-   -----------------
-
    The `Quotation` model represents a quotation for testing services. It stores essential information related to the quotation and is used to manage quotations provided by service providers. Below are the attributes and their descriptions associated with the `Quotation` model:
 
    1. `service_provider` (ForeignKey to User)
@@ -228,16 +201,12 @@ This section of `models.py` introduces several essential models designed to repr
 
 The `Quotation` model is a fundamental component of your application for managing quotations for testing services, facilitating interactions between service providers and users seeking testing services.
 
-
-
 These models are vital for maintaining consistent and organized data storage within your application. Developers can create, update, and retrieve instances of these models as needed to manage and categorize various attributes and data types effectively.
 
 For detailed information on using these models, including creating and managing instances, refer to the relevant views, forms, and templates in your application. These models serve as the foundation for data representation and management.
 
 
-
-views.py
-================
+## views.py
 
 This document provides an overview of the views defined in the project's `views.py` file. Views are responsible for handling HTTP requests and returning appropriate HTTP responses. Below are the main views and their descriptions:
 
@@ -504,13 +473,15 @@ Please note that the mentioned views are not the entire list of views in the pro
 
 
 
-Contributing
-------------
+## Contributions
 
-Feel free to contribute to this app or report any issues by following the guidelines in the project's repository.
+Contributions to enhance or expand this custom Django admin configuration are welcome. Feel free to submit pull requests with improvements, bug fixes, or additional features.
 
-License
--------
 
-This app is open-source and is distributed under the [License Name]. Refer to the LICENSE file for details.
+
+## Credits
+
+This app is developed by [Haradhan Sharma](https://github.com/haradhansharma).
+
+For more information, visit the [GF-VP website](https://www.gf-vp.com).
 

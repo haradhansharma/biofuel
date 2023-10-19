@@ -1,14 +1,25 @@
-=======================================
-README for the 'doc' Django App
-=======================================
+---
+title: Technical Guide Doc app of GFVP
+summary: Here given overview of the Doc app of Green fuel validation platform.
+copyright: (c) gf-vp.com
+repo_url: https://github.com/haradhansharma/biofuel
+edit_uri: blob/v24123/gfvp_docs/docs
+authors:
+    - Haradhan Sharma
+date: 2023-10-16
 
-Introduction
-------------
+---
 
-The 'doc' app is a Django application designed to manage and organize documents and related content. This README provides an overview of the app and explains the structure and functionality of the `admin.py` file.
+# GFVP Doc APP
 
-`admin.py` Overview
---------------------
+
+## Introduction
+
+
+The 'doc' app is a Django application designed to manage and organize common functions and behaviors. This README provides an overview of the app and explains the structure and functionality of the `admin.py` file.
+
+## `admin.py` Overview
+
 
 The `admin.py` file within the 'doc' app is essential for customizing the admin interface of the Django application. It extends the default admin behavior for models and provides a more tailored experience for managing content.
 
@@ -34,8 +45,8 @@ With these configurations in `admin.py`, administrators can efficiently manage '
 
 Please refer to the respective model files and other parts of the application for more detailed information on their functionalities and relationships.
 
-Getting Started
-----------------
+## Getting Started
+
 
 To get started with the 'doc' app, follow these steps:
 
@@ -54,17 +65,15 @@ To get started with the 'doc' app, follow these steps:
 7. Access the Django admin panel, where you can manage 'Acordion', 'Site', and 'ExSite' objects with the customizations provided in `admin.py`.
 
 
-==============================================
-README for 'doc_processor.py' in the 'doc' App
-==============================================
 
-Introduction
-------------
+## 'doc_processor.py' 
+
+
+### Introduction
 
 The 'doc_processor.py' module in the 'doc' app is a crucial component responsible for processing common data and site information used throughout the application. This README provides an overview of the functions and their purposes within this module.
 
-Functions Overview
-------------------
+### Functions Overview
 
 1. **site_info()**:
 
@@ -93,8 +102,7 @@ Functions Overview
        common_data = common_doc(request)
        ```
 
-Usage Instructions
-------------------
+### Usage Instructions
 
 To utilize the 'doc_processor.py' module in your 'doc' app, follow these steps:
 
@@ -104,28 +112,25 @@ To utilize the 'doc_processor.py' module in your 'doc' app, follow these steps:
 
 For example, to access site information and common data:
 
-   ```python
-   from doc_processor import site_info, common_doc
+```python
+from doc_processor import site_info, common_doc
 
-   # Access site information
-   site_information = site_info()
+# Access site information
+site_information = site_info()
 
-   # Access common data for rendering templates
-   common_data = common_doc(request)
-   ```
+# Access common data for rendering templates
+common_data = common_doc(request)
+```
 
 
-============================================
-README for 'models.py' in the 'doc' App
-============================================
+## 'models.py' in the 'doc' App
 
-Introduction
-------------
+
+### Introduction
 
 The `models.py` module within the 'doc' app defines the database models used to store and manage data related to site information and accordion elements. This README provides an overview of the models and their attributes.
 
-Models Overview
----------------
+### Models Overview
 
 1. **ExSite**:
 
@@ -161,8 +166,8 @@ Models Overview
         - `button_des` (TextField): Description or content associated with the accordion element.
         - `apps` (CharField): Choice field for associating the accordion with an installed app.
 
-Usage Instructions
-------------------
+### Usage Instructions
+
 
 To utilize the models defined in `models.py` within your 'doc' app, follow these steps:
 
@@ -175,16 +180,16 @@ To utilize the models defined in `models.py` within your 'doc' app, follow these
 For detailed information on working with Django models, please refer to the official Django documentation.
 
 
-
-
 For further information and detailed documentation, consult the project's documentation or the source code.
 
-Contributing
-------------
+## Contributions
 
-Contributions to the 'doc' app are welcome! If you'd like to contribute, please review the contribution guidelines in the project's repository.
+Contributions to enhance or expand this custom Django admin configuration are welcome. Feel free to submit pull requests with improvements, bug fixes, or additional features.
 
-License
--------
 
-This app is distributed under the [Insert License Here] license. See the `LICENSE` file for more information.
+
+## Credits
+
+This app is developed by [Haradhan Sharma](https://github.com/haradhansharma).
+
+For more information, visit the [GF-VP website](https://www.gf-vp.com).

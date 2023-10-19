@@ -3,14 +3,15 @@
 {% block submit_buttons_bottom %}
 
     {{ block.super }} 
+    {# Include the content from the parent template. #}
 
     <h3>This oil included in the below questions:</h3>
     <hr>
     <ul>
         {% for q in questions %}
             <li>{{q}}</li> 
+            {# Display a list of questions that include the specific oil. #}
         {% endfor %}
     </ul>
-
     
 {% endblock %}

@@ -1,34 +1,36 @@
-Glossary App
-============
+---
+title: Technical Guide Glossary App of GFVP
+summary: Here given overview of the glossary app of Green fuel validation platform.
+copyright: (c) gf-vp.com
+repo_url: https://github.com/haradhansharma/biofuel
+edit_uri: blob/v24123/gfvp_docs/docs
+authors:
+    - Haradhan Sharma
+date: 2023-10-16
 
-Introduction
-------------
+---
+
+# Glossary App
+
+
+## Introduction
 
 The Glossary app is a Django application designed to manage and display glossary entries and user-submitted glossary requests within the Green Fuel Validation Platform project.
 
-Features
---------
+## Features
 
 - Display a list of glossary entries.
 - Allow users to submit glossary requests.
 - Custom Django admin settings for managing glossary entries and requests.
 - ...
 
-Installation
-------------
+## Installation
 
 1. Clone the repository or download the project files.
 2. Install the required dependencies using `pip install -r requirements.txt`.
 3. Add 'glossary' to the `INSTALLED_APPS` list in your project's settings.
 4. Run migrations to create the database tables: `python manage.py migrate`.
 
-
-Contact
--------
-
-If you have any questions or need further assistance, please contact [haradhan.sharma@gmail.com].
-
----
 
 ## Admin Configuration (admin.py)
 
@@ -77,8 +79,7 @@ class GRequestsAdmin(admin.ModelAdmin):
 
 # Register the GRequestsAdmin class with the Django admin site for the GRequests model.
 admin.site.register(GRequests, GRequestsAdmin)
-
-
+```
 
 
 ## AppConfig (app.py)
@@ -113,10 +114,10 @@ class GlossaryConfig(AppConfig):
         """
         import glossary.signals
 
+```
 
 
-
-**`forms.py` - Glossary App Forms**
+## `forms.py` - Glossary App Forms
 
 The `forms.py` file in the Glossary app defines the forms used for submitting and changing GRequests, including custom validation for certain fields.
 
@@ -161,7 +162,7 @@ class GRequestsChangeForm(forms.ModelForm):
 
         return super(GRequestsChangeForm, self).clean(*args, **kwargs)
 
-
+```
 
 
 ## Glossary App Models
@@ -224,7 +225,7 @@ The `GRequests` model represents user-submitted requests for glossary entries. I
 
 
 
-# signals.py
+## signals.py
 
 In the `signals.py` file of the Glossary app, we define and configure signal receivers that respond to specific events in the application. In particular, we have a receiver function that gets triggered after a `GRequests` instance is saved. Here's an overview of what's done in this file:
 
@@ -270,7 +271,7 @@ def make_glossary(sender, instance, created, *args, **kwargs):
         
         # Delete the GRequests instance since it's now been converted to a Glossary entry.
         instance.delete()     
-
+```
 
 
 
@@ -290,7 +291,7 @@ urlpatterns = [
     # Define a URL pattern for the glossary list view.
     path('', views.Glist.as_view(), name='g_list'),    
 ]
-
+```
 
 ## Views (views.py)
 
@@ -319,6 +320,13 @@ This view also incorporates meta information for SEO purposes, enhancing the use
 
 Keep in mind that pagination can be enabled by uncommenting the `paginate_by` attribute and specifying the desired number of entries per page.
 
-```python
-model = Glossary
-# paginate_by = 100  # Uncomment to enable pagination with a specific number of entries per page.
+## Contributions
+
+Contributions to enhance or expand this custom Django admin configuration are welcome. Feel free to submit pull requests with improvements, bug fixes, or additional features.
+
+
+## Credits
+
+This app is developed by [Haradhan Sharma](https://github.com/haradhansharma).
+
+For more information, visit the [GF-VP website](https://www.gf-vp.com).

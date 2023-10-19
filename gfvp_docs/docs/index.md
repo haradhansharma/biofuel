@@ -1,10 +1,9 @@
 ---
-title: Techniucale Documentation Homepage
+title: Technical Guide for GFVP
 summary: Here given overview of the Green fuel validation platform.
 authors:
     - Haradhan Sharma
-    - 
-date: 2023-01-24
+date: 2023-10-16
 
 ---
 

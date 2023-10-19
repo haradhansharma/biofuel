@@ -91,7 +91,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/haradhansharma/biofuel/tree/v24123/edit/master/docs/navigation.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/haradhansharma/biofuel/blob/v24123/gfvp_docs/docs/navigation.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -129,17 +129,11 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#viewspy" class="nav-link">views.py</a>
+            <li class="nav-item" data-level="2"><a href="#contributions" class="nav-link">Contributions</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="1"><a href="#templatehtml" class="nav-link">template.html</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#support_and_contributions" class="nav-link">Support and Contributions</a>
+            <li class="nav-item" data-level="2"><a href="#credits" class="nav-link">Credits</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -178,23 +172,28 @@
 </ol>
 <h2 id="example_usage">Example Usage<a class="headerlink" href="#example_usage" title="Permanent link">&para;</a></h2>
 <p>Here's a quick example of how to use the Navigation app in your Django project:</p>
-<p>```python</p>
-<h1 id="viewspy">views.py<a class="headerlink" href="#viewspy" title="Permanent link">&para;</a></h1>
-<p>from navigation.menu import dashboard_menu</p>
-<p>def dashboard(request):
+<pre><code class="language-python"># views.py
+from navigation.menu import dashboard_menu
+
+def dashboard(request):
     # Generate the dashboard menu items
     menu_items = dashboard_menu(request)
-    # ... your view logic ...</p>
-<h1 id="templatehtml">template.html<a class="headerlink" href="#templatehtml" title="Permanent link">&para;</a></h1>
-<p>{% load navigation_tags %}</p>
-<ul class="menu">
-    {% for item in menu_items %}
-        <li><a href="{{ item.url }}">{{ item.title }}</a></li>
-    {% endfor %}
-</ul>
+    # ... your view logic ...
+</code></pre>
+<pre><code class="language-html"># template.html
+{% load navigation_tags %}
 
-<h2 id="support_and_contributions">Support and Contributions<a class="headerlink" href="#support_and_contributions" title="Permanent link">&para;</a></h2>
-<p>If you encounter any issues, have suggestions, or want to contribute to the Navigation app, please visit the GitHub repository and submit your feedback or pull requests.</p></div>
+&lt;ul class=&quot;menu&quot;&gt;
+    {% for item in menu_items %}
+        &lt;li&gt;&lt;a href=&quot;{{ item.url }}&quot;&gt;{{ item.title }}&lt;/a&gt;&lt;/li&gt;
+    {% endfor %}
+&lt;/ul&gt;
+</code></pre>
+<h2 id="contributions">Contributions<a class="headerlink" href="#contributions" title="Permanent link">&para;</a></h2>
+<p>Contributions to enhance or expand this custom Django admin configuration are welcome. Feel free to submit pull requests with improvements, bug fixes, or additional features.</p>
+<h2 id="credits">Credits<a class="headerlink" href="#credits" title="Permanent link">&para;</a></h2>
+<p>This app is developed by <a href="https://github.com/haradhansharma">Haradhan Sharma</a>.</p>
+<p>For more information, visit the <a href="https://www.gf-vp.com">GF-VP website</a>.</p></div>
             </div>
         </div>
 

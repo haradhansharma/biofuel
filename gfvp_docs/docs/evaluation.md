@@ -1,94 +1,105 @@
-======================================================
-README for 'custom_tags.py' in the 'templatetags' Directory of the 'Evaluation' App
-======================================================
+---
+title: Technical Guide Evaluation app of GFVP
+summary: Here given overview of the evaluation app of Green fuel validation platform.
+copyright: (c) gf-vp.com
+repo_url: https://github.com/haradhansharma/biofuel
+edit_uri: blob/v24123/gfvp_docs/docs
+authors:
+    - Haradhan Sharma
+date: 2023-10-16
 
-Introduction
-------------
+---
+# 'Evaluation' App.
+- __Do not change or modify any signle code in this app if you do not understand total business logic very well. It may cause for unexpected behavior and can give wrong result__
+
+## 'custom_tags.py' in the 'templatetags' Directory 
+
+
+### Introduction
 
 The 'custom_tags.py' module in the 'templatetags' directory of the 'Evaluation' app contains custom template filters and tags that extend the functionality of Django templates. These filters and tags are designed to enhance template rendering and provide additional features for template-based operations. This README provides an overview of the custom filters and tags available in this module.
 
-Custom Filters and Tags Overview
----------------------------------
+### Custom Filters and Tags Overview
 
 1. **brek_after_two Filter**:
 
     - This custom filter inserts a line break into text after a specified number of characters.
     - Usage Example:
-      ```html
-      {{ text|brek_after_two:10 }}
-      ```
+```html
+{{ text|brek_after_two:10 }}
+```
 
 2. **get_verbose_name Tag**:
 
     - This custom template tag retrieves the verbose name of a field in a model.
     - Usage Example:
-      ```html
-      {% get_verbose_name instance field_name %}
-      ```
+```html
+{% get_verbose_name instance field_name %}
+```
 
 3. **in_quot Filter**:
 
     - This filter filters quotes based on a specific user, returning only quotes associated with that user.
     - Usage Example:
-      ```html
-      {{ quotes|in_quot:user }}
-      ```
+```html
+{{ quotes|in_quot:user }}
+```
 
 4. **offchars Filter**:
 
     - This filter returns characters from the end of a string, excluding the specified number of characters from the beginning.
     - Usage Example:
-      ```html
-      {{ text|offchars:5 }}
-      ```
+```html
+{{ text|offchars:5 }}
+```
 
 5. **onnchars Filter**:
 
     - This filter returns characters from the beginning of a string, excluding the specified number of characters from the end.
     - Usage Example:
-      ```html
-      {{ text|onnchars:5 }}
-      ```
+```html
+{{ text|onnchars:5 }}
+```
 
 6. **listobj_for_paginator Filter**:
 
     - This filter paginates a list of objects and returns a paginated Page object.
     - Usage Example:
-      ```html
-      {{ object_list|listobj_for_paginator:request }}
-      ```
+```html
+{{ object_list|listobj_for_paginator:request }}
+```
 
 7. **get_options Filter**:
 
     - This filter retrieves options associated with a question and returns them as a list.
     - Usage Example:
-      ```html
-      {{ question|get_options }}
-      ```
+```html
+{{ question|get_options }}
+```
 
 8. **get_quotations_user Filter**:
 
     - This filter retrieves quotations related to a question for a specific user and returns them as a list.
     - Usage Example:
-      ```html
-      {{ question|get_quotations_user:user }}
-      ```
+```html
+{{ question|get_quotations_user:user }}
+```
 
 9. **get_related_quotations_user Filter**:
 
     - This filter retrieves related quotations for a question for a specific user and returns them as a list.
     - Usage Example:
-      ```html
-      {{ question|get_related_quotations_user:user }}
-      ```
+```html
+{{ question|get_related_quotations_user:user }}
+```
 
 10. **get_merged_quotations_with_user Filter**:
 
     - This filter retrieves merged quotations for a question with a specific user and returns them as a list.
     - Usage Example:
-      ```html
-      {{ question|get_merged_quotations_with_user:user }}
-      ```
+```html
+{{ question|get_merged_quotations_with_user:user }}
+```
 
 11. **get_types_slug Template Filter**:
 
@@ -98,26 +109,27 @@ Custom Filters and Tags Overview
       - `type` (str): The type of UserType ('is_producer', 'is_expert', 'is_consumer', 'is_marine') for which you want to retrieve the slug.
 
     - Usage Example:
-      ```html
-      <!-- In a Django template -->
-      {{ 'is_producer'|get_types_slug }}
-      ```
 
-    - This filter returns the slug of the UserType associated with the provided type, or `None` if the type is not recognized.
+```html
+<!-- In a Django template -->
+{{ 'is_producer'|get_types_slug }}
+```
 
-    - **Parameters**:
-      - `type` (str): The type of UserType ('is_producer', 'is_expert', 'is_consumer', 'is_marine').
+- This filter returns the slug of the UserType associated with the provided type, or `None` if the type is not recognized.
 
-    - **Returns**:
-      - `str` or `None`: The slug of the UserType associated with the provided type, or `None` if not found.
+- **Parameters**:
+    - `type` (str): The type of UserType ('is_producer', 'is_expert', 'is_consumer', 'is_marine').
 
-    - **Note**:
-      - This filter can be used in Django templates to conditionally display content or generate links based on user types.
-      - It checks the provided type and returns the corresponding slug for the UserType, allowing you to tailor the template output based on user roles.
+- **Returns**:
+    - `str` or `None`: The slug of the UserType associated with the provided type, or `None` if not found.
+
+- **Note**:
+    - This filter can be used in Django templates to conditionally display content or generate links based on user types.
+    - It checks the provided type and returns the corresponding slug for the UserType, allowing you to tailor the template output based on user roles.
 
 
-Usage Instructions
-------------------
+### Usage Instructions
+
 
 To use the custom filters and tags defined in 'custom_tags.py' within your Django templates, follow these steps:
 
@@ -128,9 +140,9 @@ To use the custom filters and tags defined in 'custom_tags.py' within your Djang
 Ensure that you include appropriate error handling and context variables in your templates when using these custom filters and tags.
 
 
-=========================
-Evaluation App - admin.py
-=========================
+
+## admin.py
+
 
 This README provides an overview of the admin.py file for the Evaluation app. The admin.py file contains the Django admin configurations for various models within the app.
 
@@ -185,9 +197,9 @@ This README provides an overview of the admin.py file for the Evaluation app. Th
 If you have any questions or need additional information, please refer to the comments in the code or feel free to ask for assistance.
 
 
-====================
-Evaluation App - apps.py
-====================
+
+## apps.py
+
 
 This README provides an overview of the apps.py file for the Evaluation app. The apps.py file contains the configuration settings for the 'evaluation' app.
 
@@ -204,17 +216,15 @@ The `ready()` method is executed when the app is ready to function within the Dj
 
 To use this AppConfig in your Django project, add it to the 'INSTALLED_APPS' list in your project's settings.py file. This configuration ensures that the 'evaluation' app is integrated into your project and that its signals are loaded and available for use.
 
-  ```python
-  INSTALLED_APPS = [
-      ...
-      'evaluation',
-      ...
-  ]
-  ```
+```python
+INSTALLED_APPS = [
+    ...
+    'evaluation',
+    ...
+]
+```
 
-========================
-Evaluation App - middleware.py
-========================
+## middleware.py
 
 This README provides an overview of the middleware.py file for the Evaluation app. The middleware.py file contains the `EvaMiddleware` class, which is responsible for handling specific requests and sessions within the app.
 
@@ -232,13 +242,13 @@ Middleware in Django is used to process requests and responses globally before t
 
 To use this middleware, add it to the `MIDDLEWARE` list in your Django project's `settings.py` file as follows:
 
-  ```python
-  MIDDLEWARE = [
-      ...
-      'evaluation.middleware.EvaMiddleware',
-      ...
-  ]
-  ```
+```python
+MIDDLEWARE = [
+    ...
+    'evaluation.middleware.EvaMiddleware',
+    ...
+]
+```
 
 **Conditions Checked**
 
@@ -249,13 +259,13 @@ The middleware checks the following conditions before processing a request:
 
 **Customization**
 
-Do not customize the `EvaMiddleware` class. It can cause in the evaluation process and report genaration.
+- Do not customize the `EvaMiddleware` class. It can cause in the evaluation process and report genaration.
 
 
 
-========================
-Evaluation App - forms.py
-========================
+
+
+## forms.py
 
 This README provides an overview of the forms.py file for the Evaluation app. The forms.py file contains the `EvaluatorForm` class, which is a Django form used for creating and updating Evaluator instances.
 
@@ -294,9 +304,9 @@ If you have any questions or need further clarification, please refer to the com
 
 
 
-========================
-Evaluation App - helper.py
-========================
+
+## helper.py
+
 
 This README provides an overview of the helper.py file in the Evaluation app. The helper.py file contains various functions that retrieve and cache data from the database to improve performance on subsequent calls.
 
@@ -547,9 +557,9 @@ For any further assistance or information on using these functions, please consu
 
 
 
-=======================
-Evaluation App - signals.py
-=======================
+
+## signals.py
+
 
 This README provides comprehensive information about the signals.py module in the Evaluation app, including the purpose of the signals, their usage, and customization options.
 
@@ -632,9 +642,9 @@ For further details on the usage, customization, and integration of these signal
 
 
 
-=======================
-Evaluation App - models.py
-=======================
+
+## models.py
+
 
 This README provides comprehensive information about the `models.py` module in the Evaluation app, including the purpose of the defined models and any custom validators used.
 
@@ -995,22 +1005,20 @@ For further details on the usage, customization, and integration of these models
 
 
 
-=========================================================
-ReportPDFData Class of nreport_class.py of EVALUATION APP
-=========================================================
+
+## ReportPDFData Class of nreport_class.py 
+
 
 The `ReportPDFData` class is an essential part of the Evaluation APP, responsible for generating PDF reports based on evaluation data. This class initializes various styles and settings for formatting the PDF report, draws images and content on the pages, and organizes different sections of the report.
 
-Initialization
----------------
+### Initialization
 
 To create a `ReportPDFData` object, you need to provide two parameters: `request` and `slug`. These parameters are required for constructing the report.
 
 - `request`: The Django request object.
 - `slug`: The slug for the Evaluator object.
 
-Attributes
-----------
+### Attributes
 
 This class has several attributes used for styling and formatting the report:
 
@@ -1025,8 +1033,7 @@ This class has several attributes used for styling and formatting the report:
 - `stylesTR`, `SectionT`, `LeftIndent`, `Footer`: References to the custom paragraph styles.
 - `title_font_size`: Font size for report titles.
 
-Methods
--------
+### Methods
 
 This class contains various methods to generate different parts of the PDF report, including:
 
@@ -1046,38 +1053,37 @@ This class contains various methods to generate different parts of the PDF repor
 - `details_of_activities()`: Generates the details of activities section of the report.
 - `biofuel_history()`: Generates the biofuel history section of the report.
 
-Usage
------
+### Usage
+
 
 To use the `ReportPDFData` class, you need to initialize an instance with the required parameters and then call the appropriate methods to generate the report content. The resulting content can be added to a PDF document.
 
-Example Usage
--------------
-
-  ```python
-  # Initialize the ReportPDFData object
-  report_data = ReportPDFData(request, slug)
-
-  # Create a PDF document
-  pdf_doc = SimpleDocTemplate("evaluation_report.pdf")
-
-  # Generate the report content
-  report_content = report_data.wrapped_pdf()
-
-  # Build the PDF document with the report content
-  pdf_doc.build(report_content)
-
-  ```
+### Example Usage
 
 
-=====================================
-sitemaps.py - Evaluation APP Sitemaps
-=====================================
+```python
+# Initialize the ReportPDFData object
+report_data = ReportPDFData(request, slug)
+
+# Create a PDF document
+pdf_doc = SimpleDocTemplate("evaluation_report.pdf")
+
+# Generate the report content
+report_content = report_data.wrapped_pdf()
+
+# Build the PDF document with the report content
+pdf_doc.build(report_content)
+
+```
+
+
+
+## sitemaps.py
+
 
 This module defines sitemaps for the Evaluation APP within the GFVP (Green Fuel Validation Platform) website. Sitemaps are used to inform search engines about the structure and hierarchy of your site's URLs, helping improve SEO and discoverability.
 
-GfvpSitemap
------------
+### GfvpSitemap
 
 :class:`GfvpSitemap` is the main sitemap for the GFVP website. It includes various important URLs for the website.
 
@@ -1089,8 +1095,8 @@ Methods:
     - `items()`: Define the list of URLs to include in the sitemap.
     - `location(item)`: Generate the URL for a given item using its name.
 
-UserSitemap
------------
+### UserSitemap
+
 
 :class:`UserSitemap` is responsible for sitemapping user profiles on the GFVP website. It includes user profiles who are active and have verified email addresses.
 
@@ -1103,8 +1109,7 @@ Methods:
     - `lastmod(obj)`: Determine the last modification date for a user profile.
     - `location(obj)`: Generate the URL for a user's profile.
 
-UserTypeSitemap
----------------
+### UserTypeSitemap
 
 :class:`UserTypeSitemap` is responsible for sitemapping user types on the GFVP website. It includes active user types.
 
@@ -1117,8 +1122,7 @@ Methods:
     - `lastmod(obj)`: Determine the last modification date for a user type.
     - `location(obj)`: Generate the URL for a user type page.
 
-BlogSitemap
------------
+### BlogSitemap
 
 :class:`BlogSitemap` is responsible for sitemapping blog posts on the GFVP website. It includes published blog posts.
 
@@ -1131,8 +1135,7 @@ Methods:
     - `lastmod(obj)`: Determine the last modification date for a blog post.
     - `location(obj)`: Generate the URL for a blog post.
 
-HtmlReportSitemap
------------------
+### HtmlReportSitemap
 
 :class:`HtmlReportSitemap` is responsible for sitemapping generated evaluation reports on the GFVP website. It includes evaluation reports with verified email addresses.
 
@@ -1148,14 +1151,14 @@ Methods:
 For detailed information on each sitemap class, their methods, and attributes, please refer to the code comments and docstrings provided within `sitemaps.py`.
 
 
-=============================
-urls.py - Evaluation APP URLs
-=============================
+
+## urls.py
+
 
 This module defines the URL patterns for the Evaluation APP within the GFVP (Green Fuel Validation Platform) website. It also includes the configuration of sitemaps for various sections of the website.
 
-Sitemaps Configuration
-----------------------
+### Sitemaps Configuration
+
 
 The following sitemaps are configured for different sections of the website:
 
@@ -1165,13 +1168,12 @@ The following sitemaps are configured for different sections of the website:
 - `blog_list`: Sitemap for blog posts
 - `HtmlReportitemap`: Sitemap for HTML reports
 
-URL Patterns
-------------
+### URL Patterns
+
 
 The URL patterns are organized into two main sections: core patterns and additional patterns for the 'evaluation' app.
 
-Core URL Patterns:
-------------------
+### Core URL Patterns:
 
 1. `evaluation/thanks/`: URL for the 'thanks' view.
 2. `evaluation/report/<str:slug>`: URL for the 'report' view with a dynamic slug parameter.
@@ -1180,8 +1182,7 @@ Core URL Patterns:
 5. `get-glossary/`: URL for the 'get_glossary' view.
 6. `sitemap.xml/`: URL for the sitemap view, which uses Django's sitemap framework to generate sitemaps for search engines.
 
-Additional URL Patterns for the 'evaluation' App:
--------------------------------------------------
+### Additional URL Patterns for the 'evaluation' App:
 
 1. `evaluation2/`: URL for the 'eva_index2' view.
 2. `evaluation2/option_add/`: URL for the 'option_add2' view.
@@ -1197,19 +1198,15 @@ For more details on each URL pattern and its corresponding view, please refer to
 
 
 
+## views.py
 
-=========================
-Evaluation App Views (views.py)
-=========================
 
 This module contains view functions for handling various aspects of the evaluation process within the evaluation app.
 
-.. note::
-
-    This documentation provides an overview of the functions and their purposes, but it's recommended to refer to the source code for detailed implementation and usage.
+**note:**
+This documentation provides an overview of the functions and their purposes, but it's recommended to refer to the source code for detailed implementation and usage.
 
 1. `set_evaluation` Function
-===========================
 
    Set the evaluation for a given question and evaluator.
 
@@ -1227,12 +1224,11 @@ This module contains view functions for handling various aspects of the evaluati
        - Subsequently, it creates a new evaluation entry with the provided information and saves it to the database.
 
    - Example Usage:
-     ```python
-     set_evaluation(question, selected_option, evaluator)
-     ```
+```python
+set_evaluation(question, selected_option, evaluator)
+```
 
 2. `set_eva_comments` Function
-==============================
 
    Set or update an evaluation comment for a given question and evaluator.
 
@@ -1251,12 +1247,11 @@ This module contains view functions for handling various aspects of the evaluati
        - If no previous comment entry exists, create a new one with the provided information and save it to the database.
 
    - Example Usage:
-     ```python
-     set_eva_comments(question, comment, evaluator)
-     ```
+```python
+set_eva_comments(question, comment, evaluator)
+```
 
 3. `set_evastatment` Function
-============================
 
    Set evaluation statements for a given selected option and evaluator.
 
@@ -1277,12 +1272,11 @@ This module contains view functions for handling various aspects of the evaluati
        - Calculate assessment statements based on answers and save them.
 
    - Example Usage:
-     ```python
-     set_evastatment(request, selected_option, evaluator)
-     ```
+```python
+set_evastatment(request, selected_option, evaluator)
+```
 
 4. `get_eoi` Function
-=====================
 
    Get a list of option IDs from a given list of evaluation statements.
 
@@ -1298,13 +1292,12 @@ This module contains view functions for handling various aspects of the evaluati
        - Return a sorted list of unique option IDs found in the evaluation statements.
 
    - Example Usage:
-     ```python
-     eva_statements = get_evaluation_statements()
-     eoi = get_eoi(eva_statements)
-     ```
+```python
+eva_statements = get_evaluation_statements()
+eoi = get_eoi(eva_statements)
+```
 
 5. `set_evastatement_of_logical_string` Function
-===============================================
 
    Set evaluation statements based on logical strings for a given selected option and evaluator.
 
@@ -1325,12 +1318,12 @@ This module contains view functions for handling various aspects of the evaluati
        - Calculate assessment statements based on answers and save them.
 
    - Example Usage:
-     ```python
-     set_evastatement_of_logical_string(request, selected_option, evaluator)
-     ```
+```python
+set_evastatement_of_logical_string(request, selected_option, evaluator)
+```
 
 6. `option_add2` Function
-========================
+
 
    Handle the submission of evaluation options and comments by authenticated users.
 
@@ -1482,8 +1475,7 @@ Use this function as a view to display the main evaluation interface during the 
 
 
 
-eva_index2 View
----------------
+**`eva_index2`**
 
 This view renders the initial interface for data collection during the evaluation process.
 
@@ -1505,8 +1497,7 @@ Comments:
 Example Usage:
 Use this function as a view to display the initial interface for data collection during the evaluation process.
 
-thanks View
------------
+**`thanks`**
 
 This view renders the thank you page after completing the evaluation process.
 
@@ -1527,8 +1518,8 @@ Comments:
 Example Usage:
 Use this function as a view to display the thank you page after completing the evaluation process.
 
-trafic_light_hori View
------------------------
+**`trafic_light_hori`**
+
 
 This view renders a horizontal traffic light evaluation page based on the last available report.
 
@@ -1542,8 +1533,7 @@ Returns:
 Note:
 This function retrieves data from the database, prepares it for rendering, and returns an HTML page with the evaluation results.
 
-fuel_history View
-----------------
+**`fuel_history`**
 
 This view renders a fuel history chart based on the data from the last available report.
 
@@ -1558,8 +1548,8 @@ Note:
 This function retrieves historical fuel data from the database, prepares it for rendering, and returns an HTML page with the fuel history chart.
 
 
-report View
------------
+**`report`**
+
 
 This view renders a report page based on the provided report slug.
 
@@ -1579,8 +1569,8 @@ Comments:
 Example Usage:
 Use this function as a view to display a report page based on the provided report slug.
 
-create_notification_to_consumer Function
----------------------------------------
+**`create_notification_to_consumer`**
+
 
 This function creates notifications for consumers regarding a report.
 
@@ -1598,8 +1588,8 @@ Comments:
 Example Usage:
 Call this function to create notifications for consumers regarding a report.
 
-nreport View
-------------
+**`nreport`**
+
 
 This view renders a new report creation/editing page based on the provided report slug.
 
@@ -1623,8 +1613,8 @@ Use this function as a view to display a new report creation/editing page based 
 
 
 
-nreport_pdf View
-----------------
+**`nreport_pdf`**
+
 
 This view generates a PDF report based on ReportLab for a new evaluation report.
 
@@ -1643,8 +1633,8 @@ Comments:
 Example Usage:
 Use this function as a view to generate a PDF report for a new evaluation report.
 
-stdoils View
-------------
+**`stdoils`**
+
 
 This view renders a list of standard oils based on the selected biofuel.
 
@@ -1661,8 +1651,7 @@ Comments:
 Example Usage:
 Use this function as a view to display a list of standard oils based on the selected biofuel.
 
-get_glossary View
------------------
+**`get_glossary`**
 
 This view renders the glossary page with a list of glossary items.
 
@@ -1679,8 +1668,7 @@ Comments:
 Example Usage:
 Use this function as a view to display a glossary page with a list of glossary items.
 
-edit_report View
-----------------
+**`edit_report`**
 
 This view allows the creator of a report to edit its details.
 
@@ -1700,14 +1688,15 @@ Example Usage:
 Use this function as a view to allow report creators to edit report details.
 
 
+## Contributions
+
+Contributions to enhance or expand this custom Django admin configuration are welcome. Feel free to submit pull requests with improvements, bug fixes, or additional features.
 
 
-Contributing
-------------
 
-Contributions to the 'Evaluation' app are welcome! If you'd like to contribute, please review the contribution guidelines in the project's repository.
+## Credits
 
-License
--------
+This app is developed by [Haradhan Sharma](https://github.com/haradhansharma).
 
-This module is distributed under the [Insert License Here] license. See the `LICENSE` file for more information.
+For more information, visit the [GF-VP website](https://www.gf-vp.com).
+

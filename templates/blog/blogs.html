@@ -1,32 +1,27 @@
 {% extends "includes/g_base.html" %}
 {% load static %} 
-
-
 {% block title %} {{site_info.title}} {% endblock %}
-
-
 {% block header %}
     {% include 'includes/g_header.html' %}
 {% endblock %}
 
 {% block main %}
     <main class="flex-shrink-0">
-
         {% include "includes/blog_hero_section.html" %}
-
         <div class="section bgjessica-primary">
             <div class="container mt-n8 mt-lg-n12 z-2">
                 <div class='row'>
                     {% if tag %}
-                    <h2 class="mb-3 text-secondary text-center border-bottom border-top p-2 border-danger">
-                        Posts tagged with
-                        "{{ tag.name }}"
-                    </h2>
+                        {# Display a title for posts tagged with a specific tag. #}
+                        <h2 class="mb-3 text-secondary text-center border-bottom border-top p-2 border-danger">
+                            Posts tagged with
+                            "{{ tag.name }}"
+                        </h2>
                     {% endif %}
 
-
                     <div class = "col-md-8">
-                        {% for post in posts %}                
+                        {% for post in posts %}  
+                            {# Loop through and display individual blog posts. #}              
                             <div class="card bgjessica-light mb-3">
                                 <div class="card-body">
                                     <div class="row g-0">
@@ -41,25 +36,24 @@
                                                     {{ post.title|upper }}
                                                 </a>
                                             </h2>
-                                            <div
-                                                class="d-block d-sm-flex justify-content-between border-top border-bottom border-2 border-danger pt-2 px-0">
+                                            <div class="d-block d-sm-flex justify-content-between border-top border-bottom border-2 border-danger pt-2 px-0">
                                                 <div class="mb-2">
                                                     <div class="text-muted">
                                                         Published {{ post.publish.date }} by <strong>{{ post.author.username }}</strong>
                                                     </div>                                                  
                                                 </div>
-                                                <div class=" mb-2">
+                                                <div class="mb-2">
                                                     <span class="text-muted">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                             fill="#frfrfr" class="bi bi-folder2" viewBox="0 0 16 16">
-                                                            <path
-                                                                d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5v-9zM2.5 3a.5.5 0 0 0-.5.5V6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5zM14 7H2v5.5a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5V7z" />
+                                                            <path  d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5v-9zM2.5 3a.5.5 0 0 0-.5.5V6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5zM14 7H2v5.5a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5V7z" />
                                                         </svg>
                                                     </span>
+                                                    {# Display tags associated with the post. #}
                                                     {% for tag in post.tags.all %}
-                                                    <a href="{% url 'blog:post_tag' tag.slug %}" class="badge bg-warning">
-                                                        {{tag.name}}
-                                                    </a>
+                                                        <a href="{% url 'blog:post_tag' tag.slug %}" class="badge bg-warning">
+                                                            {{tag.name}}
+                                                        </a>
                                                     {% endfor %}
                                                 </div>
                                             </div>
@@ -77,7 +71,7 @@
 
                     <div class = "col-md-4">
                         <div class="card">
-                            <div class="card-header">Top 10  {% if tag %}In '{{tag|title}}'{% elif request.GET.q  %} having '{{request.GET.q }}'{% else %}In All Blogs{% endif %}</div>
+                            <div class="card-header">Top 10  {% if tag %}In '{{tag|title}}'{% elif request.GET.q  %} having '{{request.GET.q }}'{% else %} In All Blogs {% endif %}</div>
                             <div class="card-body">
                                 <ul>
                                     {% for mv in most_viewed %}
@@ -87,10 +81,7 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
             </div>
         </div>
     </main>

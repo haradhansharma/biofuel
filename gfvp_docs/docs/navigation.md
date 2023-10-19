@@ -1,23 +1,32 @@
-Navigation App
-==============
+---
+title: Technical Guide Navigation app of GFVP
+summary: Here given overview of the navigation app of Green fuel validation platform.
+copyright: (c) gf-vp.com
+repo_url: https://github.com/haradhansharma/biofuel
+edit_uri: blob/v24123/gfvp_docs/docs
+authors:
+    - Haradhan Sharma
+date: 2023-10-16
+
+---
+# Navigation App
+
 
 The **Navigation App** is a lightweight Django app designed to generate navigation menus and provide menu items for various parts of your website based on user roles and permissions.
 
-Purpose
--------
+## Purpose
+
 
 This app simplifies the process of generating dynamic navigation menus in your Django web application. It provides functions to create lists of menu items for different parts of your website, making it easy to manage what users see in their navigation menu.
 
-Key Features
-------------
+## Key Features
 
 - Dynamic menu generation based on user roles and permissions.
 - Provides functions for generating dashboard, header, and account-related menus.
 - Flexible and easy-to-use menu items structure.
 - Helps maintain a clean and organized navigation structure.
 
-Usage
------
+## Usage
 
 1. **Installation**: Install the Navigation app by including it in your Django project. You can do this by adding `'navigation'` to your `INSTALLED_APPS` in your Django project's settings.
 
@@ -27,8 +36,7 @@ Usage
 
 4. **Customization**: You can customize the menu items' appearance and behavior as needed for your specific web application. You can modify the menu structure, add or remove menu items, and apply your own styles.
 
-Example Usage
-------------
+## Example Usage
 
 Here's a quick example of how to use the Navigation app in your Django project:
 
@@ -40,7 +48,8 @@ def dashboard(request):
     # Generate the dashboard menu items
     menu_items = dashboard_menu(request)
     # ... your view logic ...
-
+```
+```html
 # template.html
 {% load navigation_tags %}
 
@@ -49,8 +58,16 @@ def dashboard(request):
         <li><a href="{{ item.url }}">{{ item.title }}</a></li>
     {% endfor %}
 </ul>
+```
 
-Support and Contributions
--------------------------
+## Contributions
 
-If you encounter any issues, have suggestions, or want to contribute to the Navigation app, please visit the GitHub repository and submit your feedback or pull requests.
+Contributions to enhance or expand this custom Django admin configuration are welcome. Feel free to submit pull requests with improvements, bug fixes, or additional features.
+
+
+
+## Credits
+
+This app is developed by [Haradhan Sharma](https://github.com/haradhansharma).
+
+For more information, visit the [GF-VP website](https://www.gf-vp.com).

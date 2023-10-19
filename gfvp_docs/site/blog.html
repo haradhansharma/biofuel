@@ -91,7 +91,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/haradhansharma/biofuel/tree/v24123/edit/master/docs/blog.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/haradhansharma/biofuel/blob/v24123/gfvp_docs/docs/blog.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -121,10 +121,6 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#usage" class="nav-link">Usage</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
             <li class="nav-item" data-level="2"><a href="#models" class="nav-link">Models</a>
               <ul class="nav flex-column">
               </ul>
@@ -137,45 +133,19 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#view_post_list" class="nav-link">View: post_list</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#view_details" class="nav-link">View Details</a>
+            <li class="nav-item" data-level="2"><a href="#view_post_list" class="nav-link">View: post_list</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#usage_examples" class="nav-link">Usage Examples</a>
+            <li class="nav-item" data-level="2"><a href="#view_post_detail" class="nav-link">View: post_detail</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#view_post_detail" class="nav-link">View: post_detail</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#view_details_1" class="nav-link">View Details</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#usage_examples_1" class="nav-link">Usage Examples</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#contributing" class="nav-link">Contributing</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#license" class="nav-link">License</a>
+            <li class="nav-item" data-level="2"><a href="#contributions" class="nav-link">Contributions</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#credits" class="nav-link">Credits</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#contact" class="nav-link">Contact</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -192,32 +162,32 @@
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <p>To use the Django Blog App in your project, follow these steps:</p>
 <ol>
-<li>
-<p>Install the app using pip:</p>
-<p>.. code-block:: bash</p>
-<p>pip install ....</p>
-</li>
-<li>
-<p>Add <code>'blog'</code> to the <code>INSTALLED_APPS</code> list in your project's <code>settings.py</code>:</p>
-<p>.. code-block:: python</p>
-<p>INSTALLED_APPS = [
-       # ...
-       'blog',
-       # ...
-   ]</p>
-</li>
-<li>
-<p>Include the app's URLs in your project's <code>urls.py</code>:</p>
-<p>.. code-block:: python</p>
-<p>from django.urls import path, include</p>
-<p>urlpatterns = [
-       # ...
-       path('blog/', include('blog.urls')),
-       # ...
-   ]</p>
-</li>
+<li>Install the app using pip:</li>
 </ol>
-<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<pre><code>pip install blog
+</code></pre>
+<ol>
+<li>Add <code>'blog'</code> to the <code>INSTALLED_APPS</code> list in your project's <code>settings.py</code>:</li>
+</ol>
+<pre><code class="language-python">INSTALLED_APPS = [
+   # ...
+   'blog',
+   # ...
+]
+</code></pre>
+<ol>
+<li>Include the app's URLs in your project's <code>urls.py</code>:</li>
+</ol>
+<pre><code class="language-python">
+from django.urls import path, include
+
+urlpatterns = [
+   # ...
+   path('blog/', include('blog.urls')),
+   # ...
+]
+</code></pre>
+<h3 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h3>
 <p><strong>Admin Panel:</strong></p>
 <p>The Django Blog App provides an admin panel interface to manage blog posts easily. You can access the admin panel at <code>/admin/</code>.</p>
 <p>In the admin panel, you can:</p>
@@ -315,31 +285,26 @@
 <p>For example, to generate the URL for the <code>post_detail</code> view for a blog post with the slug 'my-blog-post', you can use <code>{% url 'blog:post_detail' post='my-blog-post' %}</code> in templates or <code>reverse('blog:post_detail', args=['my-blog-post'])</code> in Python code.</p>
 <p>Understanding and utilizing these URL patterns is crucial for ensuring smooth navigation and interaction within the Django Blog App.</p>
 <p>For more information on Django URL routing and reversing, refer to the official Django documentation on URL dispatch and URL reversing.</p>
-<h1 id="view_post_list">View: post_list<a class="headerlink" href="#view_post_list" title="Permanent link">&para;</a></h1>
+<h2 id="view_post_list">View: post_list<a class="headerlink" href="#view_post_list" title="Permanent link">&para;</a></h2>
 <p>The <code>post_list</code> view function is responsible for displaying a list of blog posts on the website. This view supports various scenarios, such as showing all published posts, filtering posts by a specific tag, and providing search functionality.</p>
-<h2 id="view_details">View Details<a class="headerlink" href="#view_details" title="Permanent link">&para;</a></h2>
+<h3 id="view_details">View Details<a class="headerlink" href="#view_details" title="Permanent link">&para;</a></h3>
 <p><strong>Function Signature:</strong></p>
-<p>.. code-block:: python</p>
-<pre><code>  def post_list(request, tag_slug=None):
+<pre><code class="language-python">def post_list(request, tag_slug=None):
 </code></pre>
-<p><strong>Parameters:</strong></p>
-<ul>
-<li><code>request</code> (:class:<code>~django.http.request.HttpRequest</code>): The HTTP request object.</li>
-<li><code>tag_slug</code> (:class:<code>~str</code>, optional): An optional tag slug to filter posts by a specific tag.</li>
-</ul>
-<p><strong>Functionality:</strong></p>
-<ul>
-<li>This view handles the display of blog posts and supports filtering by tag and searching by query.</li>
-<li>It constructs a context for rendering the template, including the list of blog posts and other necessary data.</li>
-<li>If a <code>tag_slug</code> is provided in the URL, it filters posts tagged with the specified tag.</li>
-<li>If a search query (<code>q</code>) is present in the GET parameters, it filters posts based on the search query using Q objects for more advanced searches.</li>
-<li>The resulting list of posts is ordered by their update date and supports pagination.</li>
-</ul>
-<p><strong>Stored Search Query:</strong></p>
-<p>If a search query is provided, the view stores it in the user's session to pre-fill the search box when displaying the search results. The stored query is cleared from the session if there is no active search.</p>
-<p><strong>Meta Information:</strong></p>
-<p>The view also sets up meta information for the page, such as title, description, tags, and robot indexing instructions.</p>
-<h2 id="usage_examples">Usage Examples<a class="headerlink" href="#usage_examples" title="Permanent link">&para;</a></h2>
+<p><strong>Parameters:</strong>
+- <code>request</code> (:class:<code>~django.http.request.HttpRequest</code>): The HTTP request object.
+- <code>tag_slug</code> (:class:<code>~str</code>, optional): An optional tag slug to filter posts by a specific tag.</p>
+<p><strong>Functionality:</strong>
+- This view handles the display of blog posts and supports filtering by tag and searching by query.
+- It constructs a context for rendering the template, including the list of blog posts and other necessary data.
+- If a <code>tag_slug</code> is provided in the URL, it filters posts tagged with the specified tag.
+- If a search query (<code>q</code>) is present in the GET parameters, it filters posts based on the search query using Q objects for more advanced searches.
+- The resulting list of posts is ordered by their update date and supports pagination.</p>
+<p><strong>Stored Search Query:</strong>
+If a search query is provided, the view stores it in the user's session to pre-fill the search box when displaying the search results. The stored query is cleared from the session if there is no active search.</p>
+<p><strong>Meta Information:</strong>
+The view also sets up meta information for the page, such as title, description, tags, and robot indexing instructions.</p>
+<h3 id="usage_examples">Usage Examples<a class="headerlink" href="#usage_examples" title="Permanent link">&para;</a></h3>
 <ul>
 <li>To display all published blog posts, access the URL: <code>/blog/</code></li>
 <li>To view posts with a specific tag, access the URL: <code>/blog/tag/tag-slug/</code></li>
@@ -347,9 +312,9 @@
 </ul>
 <p>This view plays a central role in providing users with a curated list of blog posts and facilitates easy navigation and discovery.</p>
 <p>For more information on how this view is utilized within the application and its interaction with templates, please refer to the comments and docstrings within the source code.</p>
-<h1 id="view_post_detail">View: post_detail<a class="headerlink" href="#view_post_detail" title="Permanent link">&para;</a></h1>
+<h2 id="view_post_detail">View: post_detail<a class="headerlink" href="#view_post_detail" title="Permanent link">&para;</a></h2>
 <p>The <code>post_detail</code> view function is responsible for displaying a detailed view of a specific blog post on the website. This view provides users with comprehensive information about a single blog post, including related posts and meta information.</p>
-<h2 id="view_details_1">View Details<a class="headerlink" href="#view_details_1" title="Permanent link">&para;</a></h2>
+<h3 id="view_details_1">View Details<a class="headerlink" href="#view_details_1" title="Permanent link">&para;</a></h3>
 <p><strong>Function Signature:</strong></p>
 <p>.. code-block:: python</p>
 <pre><code> def post_detail(request, post):
@@ -371,20 +336,17 @@
 </ul>
 <p><strong>Meta Information:</strong></p>
 <p>The view sets up meta information for the page, including title, description, tags, and robot indexing instructions. It also sets an Open Graph (og) image for social media sharing.</p>
-<h2 id="usage_examples_1">Usage Examples<a class="headerlink" href="#usage_examples_1" title="Permanent link">&para;</a></h2>
+<h3 id="usage_examples_1">Usage Examples<a class="headerlink" href="#usage_examples_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li>To view the details of a specific blog post, access the URL: <code>/blog/my-blog-post/</code></li>
 </ul>
 <p>The <code>post_detail</code> view provides users with a rich and engaging experience to explore the content of individual blog posts and discover related content.</p>
 <p>For more insights into how this view interacts with templates and how its features are utilized within the application, refer to the comments and docstrings within the source code.</p>
-<h2 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">&para;</a></h2>
-<p>If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request on the project's GitHub repository: https://github.com/yourusername/django-blog-app</p>
-<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
-<p>This project is licensed under the MIT License - see the <code>LICENSE</code> file for details.</p>
+<h2 id="contributions">Contributions<a class="headerlink" href="#contributions" title="Permanent link">&para;</a></h2>
+<p>Contributions to enhance or expand this custom Django admin configuration are welcome. Feel free to submit pull requests with improvements, bug fixes, or additional features.</p>
 <h2 id="credits">Credits<a class="headerlink" href="#credits" title="Permanent link">&para;</a></h2>
-<p>This app was developed with love by the Django community.</p>
-<h2 id="contact">Contact<a class="headerlink" href="#contact" title="Permanent link">&para;</a></h2>
-<p>If you have any questions or need assistance, you can reach out to us at haradhan.sharma@gmail.com.</p></div>
+<p>This app is developed by <a href="https://github.com/haradhansharma">Haradhan Sharma</a>.</p>
+<p>For more information, visit the <a href="https://www.gf-vp.com">GF-VP website</a>.</p></div>
             </div>
         </div>
 

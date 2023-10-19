@@ -91,7 +91,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/haradhansharma/biofuel/tree/v24123/edit/master/docs/guide.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/haradhansharma/biofuel/blob/v24123/gfvp_docs/docs/guide.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -111,53 +111,40 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-level="1"><a href="#django_guide_app_-_developers_guide" class="nav-link">Django Guide App - Developer's Guide</a>
+              <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#admin_configuration_adminpy" class="nav-link">Admin Configuration (admin.py)</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#installation_and_usage" class="nav-link">Installation and Usage</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
+            <li class="nav-item" data-level="2"><a href="#django_guide_app_-_models_guide" class="nav-link">Django Guide App - Models Guide</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#models_overview_modelspy" class="nav-link">Models Overview (models.py)</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#usage_and_relationships" class="nav-link">Usage and Relationships</a>
+            <li class="nav-item" data-level="2"><a href="#django_guide_app_-_urls_guide" class="nav-link">Django Guide App - URLs Guide</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#url_patterns_overview_urlspy" class="nav-link">URL Patterns Overview (urls.py)</a>
+            <li class="nav-item" data-level="2"><a href="#django_guide_app_-_views_guide" class="nav-link">Django Guide App - Views Guide</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#namespace_and_app_name" class="nav-link">Namespace and app_name</a>
+            <li class="nav-item" data-level="2"><a href="#contributions" class="nav-link">Contributions</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#views_overview_viewspy" class="nav-link">Views Overview (views.py)</a>
+            <li class="nav-item" data-level="2"><a href="#credits" class="nav-link">Credits</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#meta_information_and_seo" class="nav-link">Meta Information and SEO</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="2"><a href="#customization" class="nav-link">Customization</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="2"><a href="#feedback_and_contributions" class="nav-link">Feedback and Contributions</a>
-              <ul class="nav flex-column">
               </ul>
             </li>
         </ul>
@@ -165,9 +152,7 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p>=====================================
-Django Guide App - Developer's Guide
-=====================================</p>
+<h1 id="django_guide_app_-_developers_guide">Django Guide App - Developer's Guide<a class="headerlink" href="#django_guide_app_-_developers_guide" title="Permanent link">&para;</a></h1>
 <p>This is the developer's guide for the Django Guide App, an application designed to manage and display guides in a Django project. This guide will walk you through the key components of the app, starting with the <code>admin.py</code> file.</p>
 <h2 id="admin_configuration_adminpy">Admin Configuration (<code>admin.py</code>)<a class="headerlink" href="#admin_configuration_adminpy" title="Permanent link">&para;</a></h2>
 <p>The <code>admin.py</code> file is where we define the admin interface for managing our guide-related models. Here, we'll provide an overview of each admin class and its functionality.</p>
@@ -209,23 +194,23 @@ class GuideMenuAdmin(admin.ModelAdmin):
 <ol>
 <li>Install the app by adding it to your project's <code>INSTALLED_APPS</code> in the project's settings:</li>
 </ol>
-<p><code>python
-   INSTALLED_APPS = [
-       # ...
-       'guide',  # Add 'guide' to your installed apps
-       # ...
-   ]</code></p>
+<pre><code class="language-python">INSTALLED_APPS = [
+      # ...
+      'guide',  # Add 'guide' to your installed apps
+      # ...
+]
+</code></pre>
 <ol>
 <li>Configure the app's database models by running migrations:</li>
 </ol>
-<p><code>bash
-   python manage.py makemigrations guide
-   python manage.py migrate</code></p>
+<pre><code class="language-bash">python manage.py makemigrations guide
+python manage.py migrate
+</code></pre>
 <ol>
 <li>Create a superuser to access the admin interface:</li>
 </ol>
-<p><code>bash
-   python manage.py createsuperuser</code></p>
+<pre><code class="language-bash">python manage.py createsuperuser
+</code></pre>
 <ol>
 <li>
 <p>Register your guide-related models in the <code>admin.py</code> file as shown above.</p>
@@ -234,14 +219,12 @@ class GuideMenuAdmin(admin.ModelAdmin):
 <p>Start the development server:</p>
 </li>
 </ol>
-<p><code>bash
-   python manage.py runserver</code></p>
+<pre><code class="language-bash">python manage.py runserver
+</code></pre>
 <ol>
 <li>Access the admin interface at <code>http://localhost:8000/admin/</code> and use the registered admin classes to manage guides, guide types, and guide menus.</li>
 </ol>
-<p>===============================
-Django Guide App - Models Guide
-===============================</p>
+<h2 id="django_guide_app_-_models_guide">Django Guide App - Models Guide<a class="headerlink" href="#django_guide_app_-_models_guide" title="Permanent link">&para;</a></h2>
 <p>This is the models guide for the Django Guide App, explaining the structure and attributes of the models defined in the <code>models.py</code> file.</p>
 <h2 id="models_overview_modelspy">Models Overview (<code>models.py</code>)<a class="headerlink" href="#models_overview_modelspy" title="Permanent link">&para;</a></h2>
 <p>The <code>models.py</code> file defines three main models used in the Django Guide App: <code>GuideType</code>, <code>GuideMenu</code>, and <code>GenarelGuide</code>. Each model represents a different aspect of managing guides.</p>
@@ -289,7 +272,7 @@ Django Guide App - Models Guide
 </li>
 <li>The <code>__str__</code> method returns the title of the general guide along with its parent information.</li>
 </ol>
-<h2 id="usage_and_relationships">Usage and Relationships<a class="headerlink" href="#usage_and_relationships" title="Permanent link">&para;</a></h2>
+<h3 id="usage_and_relationships">Usage and Relationships<a class="headerlink" href="#usage_and_relationships" title="Permanent link">&para;</a></h3>
 <p>These models are designed to create a structured system for managing and displaying guides within your Django project. <code>GuideType</code> defines the types of guides, <code>GuideMenu</code> organizes guides into menus, and <code>GenarelGuide</code> contains the actual guide content.</p>
 <ul>
 <li><code>GuideType</code> and <code>GuideMenu</code> are related through a foreign key, allowing you to group menus by guide type.</li>
@@ -297,11 +280,9 @@ Django Guide App - Models Guide
 </ul>
 <p>You can further customize these models or add additional fields to suit the specific requirements of your project.</p>
 <p>For more information on using Django models, refer to the official Django documentation: https://docs.djangoproject.com/</p>
-<p>=============================
-Django Guide App - URLs Guide
-=============================</p>
+<h2 id="django_guide_app_-_urls_guide">Django Guide App - URLs Guide<a class="headerlink" href="#django_guide_app_-_urls_guide" title="Permanent link">&para;</a></h2>
 <p>This is the URLs guide for the Django Guide App, explaining the URL patterns and their associated views defined in the <code>urls.py</code> file.</p>
-<h2 id="url_patterns_overview_urlspy">URL Patterns Overview (<code>urls.py</code>)<a class="headerlink" href="#url_patterns_overview_urlspy" title="Permanent link">&para;</a></h2>
+<h3 id="url_patterns_overview_urlspy">URL Patterns Overview (<code>urls.py</code>)<a class="headerlink" href="#url_patterns_overview_urlspy" title="Permanent link">&para;</a></h3>
 <p>The <code>urls.py</code> file defines the URL patterns that map URLs to views within the Django Guide App. Here's an overview of the defined URL patterns:</p>
 <ol>
 <li>Guide Home Page:</li>
@@ -329,18 +310,16 @@ Django Guide App - URLs Guide
 <li>Description: This URL pattern is used to display a general guide under a specific guide type. It takes two dynamic parameters, <code>gt</code> and <code>slug</code>.</li>
 </ol>
 <p>Using these URL patterns, you can navigate to different sections of the guide app, view guides of specific types, and access individual general guides.</p>
-<h2 id="namespace_and_app_name">Namespace and <code>app_name</code><a class="headerlink" href="#namespace_and_app_name" title="Permanent link">&para;</a></h2>
+<h3 id="namespace_and_app_name">Namespace and <code>app_name</code><a class="headerlink" href="#namespace_and_app_name" title="Permanent link">&para;</a></h3>
 <p>The <code>'guide'</code> namespace is set using the <code>app_name</code> variable at the beginning of the <code>urls.py</code> file. This namespace is used to organize and avoid naming conflicts with URL patterns from other apps in your Django project.</p>
 <p>Each URL pattern is associated with a unique name, which can be used for reverse URL lookups or in templates. The names are prefixed with <code>'guide:'</code> to specify the namespace.</p>
 <p>For example:
 - <code>'guide:guide_home'</code> refers to the URL pattern for the guide home page.
 - <code>'guide:guide_type'</code> refers to the URL pattern for displaying guides of a specific type.
 - <code>'guide:genarel_guide'</code> refers to the URL pattern for displaying a general guide under a specific guide type.</p>
-<p>=============================
-Django Guide App - Views Guide
-=============================</p>
+<h2 id="django_guide_app_-_views_guide">Django Guide App - Views Guide<a class="headerlink" href="#django_guide_app_-_views_guide" title="Permanent link">&para;</a></h2>
 <p>This is the views guide for the Django Guide App, explaining the purpose and functionality of each view defined in the <code>views.py</code> file.</p>
-<h2 id="views_overview_viewspy">Views Overview (<code>views.py</code>)<a class="headerlink" href="#views_overview_viewspy" title="Permanent link">&para;</a></h2>
+<h3 id="views_overview_viewspy">Views Overview (<code>views.py</code>)<a class="headerlink" href="#views_overview_viewspy" title="Permanent link">&para;</a></h3>
 <p>The <code>views.py</code> file contains view functions that handle HTTP requests and define the behavior of different pages in the Django Guide App. Here's an overview of each view:</p>
 <ol>
 <li><code>guide_home</code> View:</li>
@@ -389,15 +368,13 @@ Django Guide App - Views Guide
 </li>
 </ol>
 <p>Each view function takes a <code>request</code> parameter, which represents the incoming HTTP request, and returns an <code>HttpResponse</code> object that represents the rendered HTML page.</p>
-<h2 id="meta_information_and_seo">Meta Information and SEO<a class="headerlink" href="#meta_information_and_seo" title="Permanent link">&para;</a></h2>
+<h3 id="meta_information_and_seo">Meta Information and SEO<a class="headerlink" href="#meta_information_and_seo" title="Permanent link">&para;</a></h3>
 <p>Each view includes meta information for SEO (Search Engine Optimization) and social sharing. This information helps improve the visibility and sharing of the guide content. It includes metadata such as titles, descriptions, tags, and images.</p>
-<h2 id="customization">Customization<a class="headerlink" href="#customization" title="Permanent link">&para;</a></h2>
-<p>You can customize the app further to meet your project's specific requirements. For example, you can extend the models, add additional fields, or modify the admin classes to tailor the admin interface to your needs.</p>
-<p>For more information on Django development and customization, refer to the official Django documentation: https://docs.djangoproject.com/</p>
-<h2 id="feedback_and_contributions">Feedback and Contributions<a class="headerlink" href="#feedback_and_contributions" title="Permanent link">&para;</a></h2>
-<p>We welcome feedback, bug reports, and contributions to this project. If you encounter any issues or have suggestions for improvements, please open an issue on the GitHub repository of this project.</p>
-<p>Thank you for using the Django Guide App!
-```</p></div>
+<h2 id="contributions">Contributions<a class="headerlink" href="#contributions" title="Permanent link">&para;</a></h2>
+<p>Contributions to enhance or expand this custom Django admin configuration are welcome. Feel free to submit pull requests with improvements, bug fixes, or additional features.</p>
+<h2 id="credits">Credits<a class="headerlink" href="#credits" title="Permanent link">&para;</a></h2>
+<p>This app is developed by <a href="https://github.com/haradhansharma">Haradhan Sharma</a>.</p>
+<p>For more information, visit the <a href="https://www.gf-vp.com">GF-VP website</a>.</p></div>
             </div>
         </div>
 

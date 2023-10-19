@@ -1,5 +1,4 @@
 {% extends "admin/change_list.html" %}
-
 {% block content %}
 <div class="extra-info">
     {% if label_pending_in_question %}
@@ -16,26 +15,22 @@
             <ul> 
                 Below is a list of question's sort order with incorrect configuration.
                 <ul>       
-                Mentioned short order below have:<br>
-                1. "Yes" status is "True" but "positivie" is '0' in option model. OR
-                <br>
-                2. "Don't Know" status is "True" but "positive" is "1" in option model. OR
-                <br>
-                3. Option type is "No" but "positive" is '1'. OR
-                <br>
-                4. Assigned minimum option lower then 3: 
+                    Mentioned short order below have:<br>
+                    1. "Yes" status is "True" but "positivie" is '0' in option model. OR<br>
+                    2. "Don't Know" status is "True" but "positive" is "1" in option model. OR<br>
+                    3. Option type is "No" but "positive" is '1'. OR<br>
+                    4. Assigned minimum option lower then 3: 
                 </ul>   
                 <ul class="toplinks">
                     {% for so in problem_in_options %}
-                    <li>{{so}}</li>
+                        <li>{{so}}</li>
                     {% endfor %}
                 </ul>
+                {# This message explains the issue and its impact on the system. #}
                 This is an authentic system bug. It needs to be corrected in order to generate an accurate evaluation report and ensure the smooth functioning of the system.
-            </ul>
-            
+            </ul>            
         </div>
     {% endif %}
-
 
     {% if not_door_but_no_parent %}
         <div class="errornote">
@@ -47,9 +42,6 @@
             {{not_door_but_no_parent}}
         </div>
     {% endif %}
-    </div>
-
-    {{ block.super }} 
-
-    
+</div>
+{{ block.super }} 
 {% endblock %}

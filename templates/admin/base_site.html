@@ -1,13 +1,18 @@
 {% extends "admin/base_site.html" %}
 {% load static %}
 
-
 {% block nav-global %}
+    {# This block extends the 'nav-global' block from the parent template. #}
 
-<div id="user-tools">     
-        <a style="color: rgb(215, 185, 15);" href="/admin/evaluation/suggestions/">Sugestions({{sugestion_no_comited}})</a>    
-</div>
+    <div id="user-tools">
+        {% comment %}
+        The following code creates a link to the 'Sugestions' page in the admin panel.
+        It displays the number of uncommitted suggestions in parentheses. 
+        {% endcomment %}
+        <a style="color: rgb(215, 185, 15);" href="/admin/evaluation/suggestions/">Sugestions({{sugestion_no_comited}})</a>
+    </div>
 
-{{ block.super }} 
+    {{ block.super }}
+    {# 'block.super' is used to include the content from the parent template. #}
 
 {% endblock %}

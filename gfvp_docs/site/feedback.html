@@ -91,7 +91,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/haradhansharma/biofuel/tree/v24123/edit/master/docs/feedback.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/haradhansharma/biofuel/blob/v24123/gfvp_docs/docs/feedback.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -111,77 +111,36 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#feedback_app_readme" class="nav-link">Feedback App README</a>
+            <li class="nav-item" data-level="1"><a href="#feedback_app" class="nav-link">Feedback App</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#admin_configuration_adminpy" class="nav-link">Admin Configuration (admin.py)</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#feedback_app_forms" class="nav-link">Feedback App Forms</a>
+            <li class="nav-item" data-level="2"><a href="#feedback_app_forms" class="nav-link">Feedback App Forms</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="1"><a href="#create_an_instance_of_the_form" class="nav-link">Create an instance of the form</a>
+            <li class="nav-item" data-level="2"><a href="#feedback_app_models" class="nav-link">Feedback App Models</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="1"><a href="#check_if_the_form_is_valid" class="nav-link">Check if the form is valid</a>
+            <li class="nav-item" data-level="2"><a href="#feedback_app_url_configuration" class="nav-link">Feedback App URL Configuration</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="1"><a href="#feedback_app_models" class="nav-link">Feedback App Models</a>
+            <li class="nav-item" data-level="2"><a href="#feedback_app_views" class="nav-link">Feedback App Views</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="1"><a href="#create_a_new_feedback_instance" class="nav-link">Create a new feedback instance</a>
+            <li class="nav-item" data-level="2"><a href="#contributions" class="nav-link">Contributions</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="1"><a href="#save_the_feedback_instance_to_the_database" class="nav-link">Save the feedback instance to the database</a>
+            <li class="nav-item" data-level="2"><a href="#credits" class="nav-link">Credits</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="1"><a href="#feedback_app_url_configuration" class="nav-link">Feedback App URL Configuration</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#import_the_view_for_submitting_feedback" class="nav-link">Import the view for submitting feedback</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#define_the_app_namespace" class="nav-link">Define the app namespace</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#define_url_patterns" class="nav-link">Define URL patterns</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#placeholder_for_additional_hx_url_patterns" class="nav-link">Placeholder for additional 'hx' URL patterns</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#include_hx_url_patterns_in_the_main_urlpatterns" class="nav-link">Include 'hx' URL patterns in the main urlpatterns</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#feedback_app_views" class="nav-link">Feedback App Views</a>
-              <ul class="nav flex-column">
               </ul>
             </li>
         </ul>
@@ -189,86 +148,92 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="feedback_app_readme">Feedback App README<a class="headerlink" href="#feedback_app_readme" title="Permanent link">&para;</a></h1>
-<p>This README provides an overview of the Feedback app in Django, explaining its components and functionality.</p>
+<h1 id="feedback_app">Feedback App<a class="headerlink" href="#feedback_app" title="Permanent link">&para;</a></h1>
+<p>This guide provides an overview of the Feedback app in GFVP, explaining its components and functionality.</p>
 <h2 id="admin_configuration_adminpy">Admin Configuration (admin.py)<a class="headerlink" href="#admin_configuration_adminpy" title="Permanent link">&para;</a></h2>
 <p>The <code>admin.py</code> file contains the Django Admin configuration for the Feedback Model. It defines how the Feedback model is displayed and filtered in the Django Admin interface. Here's an explanation of the key aspects:</p>
-<p>.. code-block:: python</p>
-<p>from django.contrib import admin
-   from .models import Feedback</p>
-<p>@admin.register(Feedback)
-   class FeedbackAdmin(admin.ModelAdmin):
-       """
-       Custom admin configuration for the Feedback model.</p>
-<pre><code>   This class defines how the Feedback model should be displayed and
-   filtered in the Django admin interface.
+<pre><code class="language-python">
+from django.contrib import admin
+from .models import Feedback
 
-   Attributes:
-       list_display (list of str): Fields to display in the list view.
-       list_filter (tuple of str): Fields to use for filtering records.
-       search_fields (tuple of str): Fields to use for searching records.
-       ordering (tuple of str): Fields to determine the default ordering of records.
-       readonly_fields (tuple of str): Fields that should be read-only in the admin interface.
-   """
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    &quot;&quot;&quot;
+    Custom admin configuration for the Feedback model.
 
-   # Display these fields in the list view of the admin interface.
-   list_display = [f.name for f in Feedback._meta.fields if f.editable and not f.name == "id"]
+    This class defines how the Feedback model should be displayed and
+    filtered in the Django admin interface.
 
-   # Allow filtering by the 'url' field in the right sidebar.
-   list_filter = ('url', )
+    Attributes:
+        list_display (list of str): Fields to display in the list view.
+        list_filter (tuple of str): Fields to use for filtering records.
+        search_fields (tuple of str): Fields to use for searching records.
+        ordering (tuple of str): Fields to determine the default ordering of records.
+        readonly_fields (tuple of str): Fields that should be read-only in the admin interface.
+    &quot;&quot;&quot;
 
-   # Enable searching by 'message', 'name', and 'email' fields.
-   search_fields = ('message', 'name', 'email', )
+    # Display these fields in the list view of the admin interface.
+    list_display = [f.name for f in Feedback._meta.fields if f.editable and not f.name == &quot;id&quot;]
 
-   # Order records by 'created_at' in descending order by default.
-   ordering = ('-created_at',)
+    # Allow filtering by the 'url' field in the right sidebar.
+    list_filter = ('url', )
 
-   # Make 'url', 'message', 'name', 'email', and 'phone' fields read-only.
-   readonly_fields = ('url', 'message', 'name', 'email', 'phone',)
+    # Enable searching by 'message', 'name', and 'email' fields.
+    search_fields = ('message', 'name', 'email', )
+
+    # Order records by 'created_at' in descending order by default.
+    ordering = ('-created_at',)
+
+    # Make 'url', 'message', 'name', 'email', and 'phone' fields read-only.
+    readonly_fields = ('url', 'message', 'name', 'email', 'phone',)
 </code></pre>
-<h1 id="feedback_app_forms">Feedback App Forms<a class="headerlink" href="#feedback_app_forms" title="Permanent link">&para;</a></h1>
+<h2 id="feedback_app_forms">Feedback App Forms<a class="headerlink" href="#feedback_app_forms" title="Permanent link">&para;</a></h2>
 <p>This module defines a Django form used for collecting and validating user feedback.</p>
 <p><strong>FeedbackForm</strong></p>
 <p>A Django form for the Feedback model. It includes fields for 'name', 'phone', 'email', 'url', and 'message', along with widget configurations for the form fields. The 'url' field is hidden and captures the URL from which feedback is submitted.</p>
-<p>Usage:
+<p><strong>Usage:</strong>
 - Import the form in your views.
 - Use it to collect and validate user feedback data.
 - Save the feedback instance to the database.</p>
 <p>Example:</p>
-<p>```python
-from .forms import FeedbackForm</p>
-<h1 id="create_an_instance_of_the_form">Create an instance of the form<a class="headerlink" href="#create_an_instance_of_the_form" title="Permanent link">&para;</a></h1>
-<p>form = FeedbackForm(request.POST)</p>
-<h1 id="check_if_the_form_is_valid">Check if the form is valid<a class="headerlink" href="#check_if_the_form_is_valid" title="Permanent link">&para;</a></h1>
-<p>if form.is_valid():
+<pre><code class="language-python">from .forms import FeedbackForm
+
+# Create an instance of the form
+form = FeedbackForm(request.POST)
+
+# Check if the form is valid
+if form.is_valid():
     # Save the feedback instance
-    feedback = form.save()</p>
-<h1 id="feedback_app_models">Feedback App Models<a class="headerlink" href="#feedback_app_models" title="Permanent link">&para;</a></h1>
+    feedback = form.save()
+</code></pre>
+<h2 id="feedback_app_models">Feedback App Models<a class="headerlink" href="#feedback_app_models" title="Permanent link">&para;</a></h2>
 <p><code>models.py</code> contains the Django model definition for storing user feedback.</p>
 <p><strong>Feedback Model</strong></p>
 <p>A Django model to represent user feedback. This model defines the structure and data fields for storing user feedback. It includes fields for 'name', 'phone', 'email', 'message', 'url', and 'created_at', along with the default ordering for feedback instances.</p>
-<p>Attributes:
+<p><strong>Attributes:</strong>
 - <code>name</code> (models.CharField): The name of the person providing feedback.
 - <code>phone</code> (models.CharField): The phone number of the person providing feedback.
 - <code>email</code> (models.EmailField): The email address of the person providing feedback.
 - <code>message</code> (models.TextField): The feedback message.
 - <code>url</code> (models.URLField): The URL from which the feedback was submitted.
 - <code>created_at</code> (models.DateTimeField): The timestamp when the feedback was created.</p>
-<p>Example Usage:</p>
-<p>```python
-from .models import Feedback</p>
-<h1 id="create_a_new_feedback_instance">Create a new feedback instance<a class="headerlink" href="#create_a_new_feedback_instance" title="Permanent link">&para;</a></h1>
-<p>feedback = Feedback(name='John Doe', phone='123-456-7890', email='john@example.com', message='Great service!', url='http://example.com')</p>
-<h1 id="save_the_feedback_instance_to_the_database">Save the feedback instance to the database<a class="headerlink" href="#save_the_feedback_instance_to_the_database" title="Permanent link">&para;</a></h1>
-<p>feedback.save()</p>
-<h1 id="feedback_app_url_configuration">Feedback App URL Configuration<a class="headerlink" href="#feedback_app_url_configuration" title="Permanent link">&para;</a></h1>
+<p><strong>Example Usage:</strong></p>
+<pre><code class="language-python">from .models import Feedback
+
+# Create a new feedback instance
+feedback = Feedback(name='John Doe', phone='123-456-7890', email='john@example.com', message='Great service!', url='http://example.com')
+
+# Save the feedback instance to the database
+feedback.save()
+</code></pre>
+<h2 id="feedback_app_url_configuration">Feedback App URL Configuration<a class="headerlink" href="#feedback_app_url_configuration" title="Permanent link">&para;</a></h2>
 <p><code>urls.py</code> defines the URL patterns and routing configuration for the Feedback app.</p>
 <p><strong>App Namespace</strong></p>
 <p>The app defines a namespace named <code>'feedback'</code> using <code>app_name</code>. This helps organize and group related URLs.</p>
-<p>URL Patterns:
+<p><strong>URL Patterns:</strong>
 - <code>/submit/</code>: Handles the submission of user feedback.
 - <code>/hx/</code>: Placeholder for additional URL patterns related to 'hx' (Hypertext) views.</p>
-<p>Example Usage:</p>
+<p><strong>Example Usage:</strong></p>
 <ol>
 <li>Submitting Feedback:</li>
 <li>URL: <code>/submit/</code></li>
@@ -282,24 +247,28 @@ from .models import Feedback</p>
 </li>
 <li>Additional URL patterns related to dynamic updates in web applications can be added here under the <code>/hx/</code> namespace.</li>
 </ol>
-<p>```python</p>
-<h1 id="import_the_view_for_submitting_feedback">Import the view for submitting feedback<a class="headerlink" href="#import_the_view_for_submitting_feedback" title="Permanent link">&para;</a></h1>
-<p>from .views import submit_feedback
-from django.urls import path</p>
-<h1 id="define_the_app_namespace">Define the app namespace<a class="headerlink" href="#define_the_app_namespace" title="Permanent link">&para;</a></h1>
-<p>app_name = 'feedback'</p>
-<h1 id="define_url_patterns">Define URL patterns<a class="headerlink" href="#define_url_patterns" title="Permanent link">&para;</a></h1>
-<p>urlpatterns = [
+<pre><code class="language-python"># Import the view for submitting feedback
+from .views import submit_feedback
+from django.urls import path
+
+# Define the app namespace
+app_name = 'feedback'
+
+# Define URL patterns
+urlpatterns = [
     # URL pattern for submitting feedback
     path('submit/', submit_feedback, name='submit_feedback'),
-]</p>
-<h1 id="placeholder_for_additional_hx_url_patterns">Placeholder for additional 'hx' URL patterns<a class="headerlink" href="#placeholder_for_additional_hx_url_patterns" title="Permanent link">&para;</a></h1>
-<p>hx_urlpatterns = [
+]
+
+# Placeholder for additional 'hx' URL patterns
+hx_urlpatterns = [
     # Add additional 'hx' URL patterns here if needed.
-]</p>
-<h1 id="include_hx_url_patterns_in_the_main_urlpatterns">Include 'hx' URL patterns in the main urlpatterns<a class="headerlink" href="#include_hx_url_patterns_in_the_main_urlpatterns" title="Permanent link">&para;</a></h1>
-<p>urlpatterns += hx_urlpatterns</p>
-<h1 id="feedback_app_views">Feedback App Views<a class="headerlink" href="#feedback_app_views" title="Permanent link">&para;</a></h1>
+]
+
+# Include 'hx' URL patterns in the main urlpatterns
+urlpatterns += hx_urlpatterns
+</code></pre>
+<h2 id="feedback_app_views">Feedback App Views<a class="headerlink" href="#feedback_app_views" title="Permanent link">&para;</a></h2>
 <p><code>views.py</code> contains view functions for user feedback submissions in the Feedback app.</p>
 <p><strong>submit_feedback View</strong></p>
 <p>A view for handling user feedback submissions. It processes both GET and POST requests. When valid feedback data is submitted, it is saved, and the action is logged. For GET requests, the form is pre-filled with relevant data.</p>
@@ -309,7 +278,12 @@ from django.urls import path</p>
 <li>Handles form submission, data validation, and logging.</li>
 <li>Returns a success message on successful submission.</li>
 </ul>
-<p>For more details, refer to the code in <code>views.py</code>.</p></div>
+<p>For more details, refer to the code in <code>views.py</code>.</p>
+<h2 id="contributions">Contributions<a class="headerlink" href="#contributions" title="Permanent link">&para;</a></h2>
+<p>Contributions to enhance or expand this custom Django admin configuration are welcome. Feel free to submit pull requests with improvements, bug fixes, or additional features.</p>
+<h2 id="credits">Credits<a class="headerlink" href="#credits" title="Permanent link">&para;</a></h2>
+<p>This app is developed by <a href="https://github.com/haradhansharma">Haradhan Sharma</a>.</p>
+<p>For more information, visit the <a href="https://www.gf-vp.com">GF-VP website</a>.</p></div>
             </div>
         </div>
 

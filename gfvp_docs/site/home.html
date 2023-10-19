@@ -91,7 +91,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/haradhansharma/biofuel/tree/v24123/edit/master/docs/home.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/haradhansharma/biofuel/blob/v24123/gfvp_docs/docs/home.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -111,48 +111,33 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="2"><a href="#description" class="nav-link">Description</a>
+            <li class="nav-item" data-level="1"><a href="#home_app_-_django_project_skeleton" class="nav-link">Home App - Django Project Skeleton</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#adminpy" class="nav-link">admin.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#components" class="nav-link">Components</a>
+            <li class="nav-item" data-level="2"><a href="#formspy" class="nav-link">forms.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#-_helperpy_this_module_may_include_any_utility_functions_or_helpers_used_across_the_home_app_to_streamline_common_tasks_or_logic" class="nav-link">- helper.py: This module may include any utility functions or helpers used across the "home" app to streamline common tasks or logic.</a>
+            <li class="nav-item" data-level="2"><a href="#helperpy" class="nav-link">helper.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="1"><a href="#adminpy" class="nav-link">admin.py</a>
+            <li class="nav-item" data-level="2"><a href="#modelspy" class="nav-link">models.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="1"><a href="#formspy" class="nav-link">forms.py</a>
+            <li class="nav-item" data-level="2"><a href="#viewspy" class="nav-link">views.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="1"><a href="#helperpy" class="nav-link">helper.py</a>
+            <li class="nav-item" data-level="2"><a href="#contributions" class="nav-link">Contributions</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="1"><a href="#modelspy" class="nav-link">models.py</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#viewspy" class="nav-link">views.py</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#contributing" class="nav-link">Contributing</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#license" class="nav-link">License</a>
+            <li class="nav-item" data-level="2"><a href="#credits" class="nav-link">Credits</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -163,12 +148,10 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p>==================================
-Home App - Django Project Skeleton
-==================================</p>
-<h2 id="description">Description<a class="headerlink" href="#description" title="Permanent link">&para;</a></h2>
+<h1 id="home_app_-_django_project_skeleton">Home App - Django Project Skeleton<a class="headerlink" href="#home_app_-_django_project_skeleton" title="Permanent link">&para;</a></h1>
+<h3 id="description">Description<a class="headerlink" href="#description" title="Permanent link">&para;</a></h3>
 <p>The "home" app is an integral part of the Django project. It includes various components that are essential for the functionality of the project. This readme provides an overview of the key components within the "home" app.</p>
-<h2 id="components">Components<a class="headerlink" href="#components" title="Permanent link">&para;</a></h2>
+<h3 id="components">Components<a class="headerlink" href="#components" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
 <p><code>admin.py</code>: This module contains configurations for Django's admin interface, allowing administrators to manage data associated with the "home" app.</p>
@@ -182,9 +165,11 @@ Home App - Django Project Skeleton
 <li>
 <p><code>views.py</code>: The views module contains view functions that handle user requests, process data, and render templates.</p>
 </li>
+<li>
+<p><code>helper.py</code>: This module may include any utility functions or helpers used across the "home" app to streamline common tasks or logic.</p>
+</li>
 </ul>
-<h2 id="-_helperpy_this_module_may_include_any_utility_functions_or_helpers_used_across_the_home_app_to_streamline_common_tasks_or_logic">- <code>helper.py</code>: This module may include any utility functions or helpers used across the "home" app to streamline common tasks or logic.<a class="headerlink" href="#-_helperpy_this_module_may_include_any_utility_functions_or_helpers_used_across_the_home_app_to_streamline_common_tasks_or_logic" title="Permanent link">&para;</a></h2>
-<h1 id="adminpy">admin.py<a class="headerlink" href="#adminpy" title="Permanent link">&para;</a></h1>
+<h2 id="adminpy">admin.py<a class="headerlink" href="#adminpy" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p><code>admin.py</code>: This module contains configurations for Django's admin interface, allowing administrators to manage data associated with the "home" app. In this file, various models are registered with the Django admin site to provide an interface for administrators to manage data. The following models are registered:</p>
@@ -208,139 +193,116 @@ Home App - Django Project Skeleton
 </li>
 </ul>
 <p>These registrations enable administrators to create, edit, and delete records related to these models using the Django admin interface.</p>
-<h1 id="formspy">forms.py<a class="headerlink" href="#formspy" title="Permanent link">&para;</a></h1>
+<h2 id="formspy">forms.py<a class="headerlink" href="#formspy" title="Permanent link">&para;</a></h2>
 <p>This <code>forms.py</code> file defines custom form classes for various aspects of a web application. These form classes are designed to provide a more tailored and user-friendly experience for creating and editing user profiles, updating company logos, and managing questions.</p>
 <ol>
-<li><code>PasswordChangeForm</code></li>
+<li>
+<p><code>PasswordChangeForm</code>
+   The <code>PasswordChangeForm</code> is a custom form for changing a user's password. It enhances the default Django <code>PasswordChangeForm</code> by updating the widget attributes to improve user experience. Specifically, it sets the autocomplete values for old and new passwords and assigns CSS classes for styling.</p>
+</li>
+<li>
+<p><code>UserForm</code>
+   The <code>UserForm</code> is used for creating and editing user profiles. It is based on the Django <code>ModelForm</code> and is associated with the <code>User</code> model. The form fields are customized with placeholders, CSS classes, and ARIA labels to make the user interface more user-friendly.</p>
+</li>
+<li>
+<p><code>CompanyLogoForm</code>
+   The <code>CompanyLogoForm</code> is designed for updating company logos in user profiles. It is also based on the <code>ModelForm</code> and is associated with the <code>Profile</code> model. It customizes the widget for the <code>company_logo</code> field, providing a user-friendly way to update the company's logo.</p>
+</li>
+<li>
+<p><code>ProfileForm</code>
+   The <code>ProfileForm</code> is used for creating and editing user profiles. It is similar to the <code>UserForm</code> but focuses on fields related to a user's personal profile, such as about information, location, and establishment date. The form fields are customized with placeholders, CSS classes, and ARIA labels for improved user experience.</p>
+</li>
+<li>
+<p><code>QuestionForm</code>
+   The <code>QuestionForm</code> is employed for creating and editing questions. It is associated with the <code>Question</code> model and customizes the widget for the <code>name</code> field. It also provides a more user-friendly experience by adding placeholders, CSS classes, and ARIA labels to the form fields.</p>
+</li>
+<li>
+<p><code>OptionForm</code>
+   The <code>OptionForm</code> is used for creating and editing options. It is associated with the <code>Option</code> model and customizes the widget for the 'name' and 'statement' fields. These fields have placeholders, CSS classes, and ARIA labels for a better user interface.</p>
+</li>
+<li>
+<p><code>QuotationForm</code>
+   The <code>QuotationForm</code> is designed for creating and editing quotations. It is associated with the <code>Quotation</code> model and provides extensive customization for various fields. These customizations include input styling, CSS classes, and ARIA labels for fields like price, time, unit, document requirements, and more. Additionally, it handles file uploads for quotation formats.</p>
+</li>
+<li>
+<p><code>NextActivitiesOnQuotation</code>
+   The <code>NextActivitiesOnQuotation</code> form is intended for updating next activities on quotations. It is associated with the <code>Quotation</code> model and customizes the widget for the 'next_activities' field with styling and a select input.</p>
+</li>
+<li>
+<p><code>SuggestionForm</code>
+   The <code>SuggestionForm</code> allows the creation and editing of suggestions. It is associated with the <code>Suggestions</code> model and provides customization for fields like suggestion type, title, and statement. The form includes select inputs, text inputs, and text areas with appropriate attributes to enhance user interaction.</p>
+</li>
+<li>
+<p><code>QuesSugestionForm</code>
+   The <code>QuesSugestionForm</code> is a custom form for creating and editing question suggestions. It is associated with the <code>Suggestions</code> model and includes a special constructor (<code>__init__</code>) that populates choices for the 'related_qs' field based on a custom function. The form also customizes the widget for 'su_type,' 'title,' 'statement,' and 'related_qs' fields. It provides select inputs, text inputs, and text areas, along with appropriate placeholders and attributes. This form enhances the user experience in creating and editing question suggestions.</p>
+</li>
+<li>
+<p><code>NextActivitiesForm</code>
+   The <code>NextActivitiesForm</code> is used for creating and editing next activities. It is associated with the <code>NextActivities</code> model and includes a constructor to handle the 'request' object. The form customizes the widget for various fields, including 'related_questions,' 'compulsory_questions,' 'name_and_standared,' 'priority,' and others. It provides input styling, placeholders, and attributes for an improved user experience. The form also includes a custom <code>save</code> method that checks for the existence of instances with the same selected IDs and, if found, takes specific actions such as updating user IDs and sending notifications to the admin.</p>
+</li>
 </ol>
-<hr />
-<p>The <code>PasswordChangeForm</code> is a custom form for changing a user's password. It enhances the default Django <code>PasswordChangeForm</code> by updating the widget attributes to improve user experience. Specifically, it sets the autocomplete values for old and new passwords and assigns CSS classes for styling.</p>
-<ol>
-<li><code>UserForm</code></li>
-</ol>
-<hr />
-<p>The <code>UserForm</code> is used for creating and editing user profiles. It is based on the Django <code>ModelForm</code> and is associated with the <code>User</code> model. The form fields are customized with placeholders, CSS classes, and ARIA labels to make the user interface more user-friendly.</p>
-<ol>
-<li><code>CompanyLogoForm</code></li>
-</ol>
-<hr />
-<p>The <code>CompanyLogoForm</code> is designed for updating company logos in user profiles. It is also based on the <code>ModelForm</code> and is associated with the <code>Profile</code> model. It customizes the widget for the <code>company_logo</code> field, providing a user-friendly way to update the company's logo.</p>
-<ol>
-<li><code>ProfileForm</code></li>
-</ol>
-<hr />
-<p>The <code>ProfileForm</code> is used for creating and editing user profiles. It is similar to the <code>UserForm</code> but focuses on fields related to a user's personal profile, such as about information, location, and establishment date. The form fields are customized with placeholders, CSS classes, and ARIA labels for improved user experience.</p>
-<ol>
-<li><code>QuestionForm</code></li>
-</ol>
-<hr />
-<p>The <code>QuestionForm</code> is employed for creating and editing questions. It is associated with the <code>Question</code> model and customizes the widget for the <code>name</code> field. It also provides a more user-friendly experience by adding placeholders, CSS classes, and ARIA labels to the form fields.</p>
-<ol>
-<li><code>OptionForm</code></li>
-</ol>
-<hr />
-<p>The <code>OptionForm</code> is used for creating and editing options. It is associated with the <code>Option</code> model and customizes the widget for the 'name' and 'statement' fields. These fields have placeholders, CSS classes, and ARIA labels for a better user interface.</p>
-<ol>
-<li><code>QuotationForm</code></li>
-</ol>
-<hr />
-<p>The <code>QuotationForm</code> is designed for creating and editing quotations. It is associated with the <code>Quotation</code> model and provides extensive customization for various fields. These customizations include input styling, CSS classes, and ARIA labels for fields like price, time, unit, document requirements, and more. Additionally, it handles file uploads for quotation formats.</p>
-<ol>
-<li><code>NextActivitiesOnQuotation</code></li>
-</ol>
-<hr />
-<p>The <code>NextActivitiesOnQuotation</code> form is intended for updating next activities on quotations. It is associated with the <code>Quotation</code> model and customizes the widget for the 'next_activities' field with styling and a select input.</p>
-<ol>
-<li><code>SuggestionForm</code></li>
-</ol>
-<hr />
-<p>The <code>SuggestionForm</code> allows the creation and editing of suggestions. It is associated with the <code>Suggestions</code> model and provides customization for fields like suggestion type, title, and statement. The form includes select inputs, text inputs, and text areas with appropriate attributes to enhance user interaction.</p>
-<ol>
-<li><code>QuesSugestionForm</code></li>
-</ol>
-<hr />
-<p>The <code>QuesSugestionForm</code> is a custom form for creating and editing question suggestions. It is associated with the <code>Suggestions</code> model and includes a special constructor (<code>__init__</code>) that populates choices for the 'related_qs' field based on a custom function. The form also customizes the widget for 'su_type,' 'title,' 'statement,' and 'related_qs' fields. It provides select inputs, text inputs, and text areas, along with appropriate placeholders and attributes. This form enhances the user experience in creating and editing question suggestions.</p>
-<ol>
-<li><code>NextActivitiesForm</code></li>
-</ol>
-<hr />
-<p>The <code>NextActivitiesForm</code> is used for creating and editing next activities. It is associated with the <code>NextActivities</code> model and includes a constructor to handle the 'request' object. The form customizes the widget for various fields, including 'related_questions,' 'compulsory_questions,' 'name_and_standared,' 'priority,' and others. It provides input styling, placeholders, and attributes for an improved user experience. The form also includes a custom <code>save</code> method that checks for the existence of instances with the same selected IDs and, if found, takes specific actions such as updating user IDs and sending notifications to the admin.</p>
-<p>Developers can use these forms as part of the application's functionality for creating, editing, and managing options, quotations, and suggestions. Ensure that these forms are integrated into your Django project as needed and referenced in associated views and templates.</p>
-<p>For more information on using these forms and their integration into your Django project, please refer to the associated views and templates in your application.</p>
-<h1 id="helperpy">helper.py<a class="headerlink" href="#helperpy" title="Permanent link">&para;</a></h1>
+<h2 id="helperpy">helper.py<a class="headerlink" href="#helperpy" title="Permanent link">&para;</a></h2>
 <p>The <code>helper.py</code> module contains a set of custom helper methods aimed at assisting with data calculation and retrieval. These methods offer valuable functionality for calculating the total number of reports, the total number of reports created by the current user, and counting the number of users under each label.</p>
 <ol>
-<li><code>total_reports(request)</code></li>
+<li>
+<p><code>total_reports(request)</code>
+   The <code>total_reports</code> method calculates the total number of reports in the database. It queries the <code>Evaluator</code> model and counts all instances. This count is useful for generating statistics and insights regarding the reports within your application.</p>
+</li>
+<li>
+<p><code>total_this_user_report(request)</code>
+   The <code>total_this_user_report</code> method calculates the total number of reports created by the current user. It filters the <code>Evaluator</code> model by the creator attribute, which is set to the current user, and counts the instances. This count helps users monitor and manage their own reports.</p>
+</li>
+<li>
+<p><code>users_under_each_label(request)</code>
+   The <code>users_under_each_label</code> method counts the number of users associated with each label. It retrieves a list of labels by calling <code>get_all_definedlabel()</code> and filters out labels marked as common. To optimize database queries, it prefetches related users for each label. The method constructs a dictionary where the keys represent label names, and the values indicate the count of users under each label. This information is valuable for analyzing user distribution based on labels.</p>
+</li>
+<li>
+<p><code>reports_under_each_biofuel(request)</code>
+   The <code>reports_under_each_biofuel</code> method counts the number of reports under each biofuel category. It retrieves the biofuel categories and calculates the count of reports associated with each category. The results are stored in a dictionary where the keys represent biofuel names, and the values represent the count of reports under each biofuel category. This information is valuable for understanding the distribution of reports based on biofuel types.</p>
+</li>
+<li>
+<p><code>weeks_results(request)</code>
+   The <code>weeks_results</code> method retrieves the number of reports generated in the last year and formats the results. It calculates the date one year ago from the current date, filters reports created in the last year, and aggregates the report counts by month/year. The results are formatted into a dictionary where keys are formatted date strings (month/year), and values represent the report counts. This information is useful for tracking report generation trends over time.</p>
+</li>
+<li>
+<p><code>all_reports(request)</code>
+   The <code>all_reports</code> method retrieves and filters reports based on user roles and calculates additional statistics. It checks the user's role, and if they are a staff member or superuser, all reports are shown. For regular users, only their reports are displayed. The method calculates the number of answered, positive, and "don't know" responses for each report, providing insights into response patterns. The results are paginated, with 10 reports per page, and additional statistics are included in each report's information. This method streamlines report management, making it easier to access and analyze data.</p>
+</li>
+<li>
+<p><code>typewise_user(request)</code>
+    The <code>typewise_user</code> method fetches all user types, each of which represents a specific classification or role for users in your application. To optimize database queries, it prefetches related users for each user type. The method returns a dictionary where the keys are user type objects, and the values are lists of associated users, limited to the first 4 users for each type. This limitation helps provide a concise overview of user types and their members.</p>
+</li>
 </ol>
-<hr />
-<p>The <code>total_reports</code> method calculates the total number of reports in the database. It queries the <code>Evaluator</code> model and counts all instances. This count is useful for generating statistics and insights regarding the reports within your application.</p>
-<ol>
-<li><code>total_this_user_report(request)</code></li>
-</ol>
-<hr />
-<p>The <code>total_this_user_report</code> method calculates the total number of reports created by the current user. It filters the <code>Evaluator</code> model by the creator attribute, which is set to the current user, and counts the instances. This count helps users monitor and manage their own reports.</p>
-<ol>
-<li><code>users_under_each_label(request)</code></li>
-</ol>
-<hr />
-<p>The <code>users_under_each_label</code> method counts the number of users associated with each label. It retrieves a list of labels by calling <code>get_all_definedlabel()</code> and filters out labels marked as common. To optimize database queries, it prefetches related users for each label. The method constructs a dictionary where the keys represent label names, and the values indicate the count of users under each label. This information is valuable for analyzing user distribution based on labels.</p>
-<ol>
-<li><code>reports_under_each_biofuel(request)</code></li>
-</ol>
-<hr />
-<p>The <code>reports_under_each_biofuel</code> method counts the number of reports under each biofuel category. It retrieves the biofuel categories and calculates the count of reports associated with each category. The results are stored in a dictionary where the keys represent biofuel names, and the values represent the count of reports under each biofuel category. This information is valuable for understanding the distribution of reports based on biofuel types.</p>
-<ol>
-<li><code>weeks_results(request)</code></li>
-</ol>
-<hr />
-<p>The <code>weeks_results</code> method retrieves the number of reports generated in the last year and formats the results. It calculates the date one year ago from the current date, filters reports created in the last year, and aggregates the report counts by month/year. The results are formatted into a dictionary where keys are formatted date strings (month/year), and values represent the report counts. This information is useful for tracking report generation trends over time.</p>
-<ol>
-<li><code>all_reports(request)</code></li>
-</ol>
-<hr />
-<p>The <code>all_reports</code> method retrieves and filters reports based on user roles and calculates additional statistics. It checks the user's role, and if they are a staff member or superuser, all reports are shown. For regular users, only their reports are displayed. The method calculates the number of answered, positive, and "don't know" responses for each report, providing insights into response patterns. The results are paginated, with 10 reports per page, and additional statistics are included in each report's information. This method streamlines report management, making it easier to access and analyze data.</p>
-<ol>
-<li><code>typewise_user(request)</code></li>
-</ol>
-<hr />
-<pre><code>The `typewise_user` method fetches all user types, each of which represents a specific classification or role for users in your application. To optimize database queries, it prefetches related users for each user type. The method returns a dictionary where the keys are user type objects, and the values are lists of associated users, limited to the first 4 users for each type. This limitation helps provide a concise overview of user types and their members.
-</code></pre>
 <p>This method is beneficial for various purposes, including generating user statistics, understanding user role distributions, and facilitating user management.
 These helper methods simplify data processing and statistics generation within your application. Developers can leverage these methods in various scenarios, such as generating reports, user management, or label-based analytics. Integration into your views or other application components is essential to maximize the benefits of these methods.</p>
 <p>For detailed information on using these methods and their integration into your Django project, please refer to the associated views and templates in your application. These methods serve as essential components for data analysis and user management.</p>
-<h1 id="modelspy">models.py<a class="headerlink" href="#modelspy" title="Permanent link">&para;</a></h1>
+<h2 id="modelspy">models.py<a class="headerlink" href="#modelspy" title="Permanent link">&para;</a></h2>
 <p>This section of <code>models.py</code> introduces several essential models designed to represent various attributes within the application, such as price units, time units, weight units, and quotation document types. These models serve as fundamental components for managing and categorizing data. Here's a detailed explanation:</p>
 <ol>
-<li><code>User</code> Model</li>
-</ol>
-<hr />
-<p>The <code>User</code> model is dynamically defined based on the project's <code>AUTH_USER_MODEL</code> setting. It represents the user entities within your application. This model stores user-related information and is used for user authentication and management. The specific fields and attributes associated with the <code>User</code> model are determined by your project's settings.</p>
-<ol>
-<li><code>PriceUnit</code> Model</li>
-</ol>
-<hr />
-<p>The <code>PriceUnit</code> model represents different price units used in the application, such as currency symbols (e.g., USD, EUR). Each instance of this model corresponds to a specific price unit. The <code>name</code> attribute stores the name of the price unit. This model simplifies the handling of price-related data.</p>
-<ol>
-<li><code>TimeUnit</code> Model</li>
-</ol>
-<hr />
-<p>The <code>TimeUnit</code> model represents time units, such as minutes and hours. Each instance of this model corresponds to a specific time unit. The <code>name</code> attribute stores the name of the time unit. This model is valuable for dealing with time-related calculations and data presentation.</p>
-<ol>
-<li><code>WeightUnit</code> Model</li>
-</ol>
-<hr />
-<p>The <code>WeightUnit</code> model represents various weight units, such as kilograms (kg) and pounds (lb). Each instance of this model corresponds to a specific weight unit. The <code>name</code> attribute stores the name of the weight unit. This model simplifies the handling of weight-related data.</p>
-<ol>
-<li><code>QuotationDocType</code> Model</li>
-</ol>
-<hr />
-<p>The <code>QuotationDocType</code> model represents different document types that can be associated with quotations. Examples of document types include PDF and Word documents. Each instance of this model corresponds to a specific document type. The <code>name</code> attribute stores the name of the document type. This model categorizes and manages document types associated with quotations.</p>
-<ol>
-<li><code>Quotation</code> Model</li>
-</ol>
-<hr />
-<p>The <code>Quotation</code> model represents a quotation for testing services. It stores essential information related to the quotation and is used to manage quotations provided by service providers. Below are the attributes and their descriptions associated with the <code>Quotation</code> model:</p>
-<ol>
+<li>
+<p><code>User</code> Model
+   The <code>User</code> model is dynamically defined based on the project's <code>AUTH_USER_MODEL</code> setting. It represents the user entities within your application. This model stores user-related information and is used for user authentication and management. The specific fields and attributes associated with the <code>User</code> model are determined by your project's settings.</p>
+</li>
+<li>
+<p><code>PriceUnit</code> Model
+   The <code>PriceUnit</code> model represents different price units used in the application, such as currency symbols (e.g., USD, EUR). Each instance of this model corresponds to a specific price unit. The <code>name</code> attribute stores the name of the price unit. This model simplifies the handling of price-related data.</p>
+</li>
+<li>
+<p><code>TimeUnit</code> Model
+   The <code>TimeUnit</code> model represents time units, such as minutes and hours. Each instance of this model corresponds to a specific time unit. The <code>name</code> attribute stores the name of the time unit. This model is valuable for dealing with time-related calculations and data presentation.</p>
+</li>
+<li>
+<p><code>WeightUnit</code> Model
+   The <code>WeightUnit</code> model represents various weight units, such as kilograms (kg) and pounds (lb). Each instance of this model corresponds to a specific weight unit. The <code>name</code> attribute stores the name of the weight unit. This model simplifies the handling of weight-related data.</p>
+</li>
+<li>
+<p><code>QuotationDocType</code> Model
+   The <code>QuotationDocType</code> model represents different document types that can be associated with quotations. Examples of document types include PDF and Word documents. Each instance of this model corresponds to a specific document type. The <code>name</code> attribute stores the name of the document type. This model categorizes and manages document types associated with quotations.</p>
+</li>
+<li>
+<p><code>Quotation</code> Model
+   The <code>Quotation</code> model represents a quotation for testing services. It stores essential information related to the quotation and is used to manage quotations provided by service providers. Below are the attributes and their descriptions associated with the <code>Quotation</code> model:</p>
+</li>
 <li>
 <p><code>service_provider</code> (ForeignKey to User)</p>
 <ul>
@@ -459,7 +421,7 @@ These helper methods simplify data processing and statistics generation within y
 <p>The <code>Quotation</code> model is a fundamental component of your application for managing quotations for testing services, facilitating interactions between service providers and users seeking testing services.</p>
 <p>These models are vital for maintaining consistent and organized data storage within your application. Developers can create, update, and retrieve instances of these models as needed to manage and categorize various attributes and data types effectively.</p>
 <p>For detailed information on using these models, including creating and managing instances, refer to the relevant views, forms, and templates in your application. These models serve as the foundation for data representation and management.</p>
-<h1 id="viewspy">views.py<a class="headerlink" href="#viewspy" title="Permanent link">&para;</a></h1>
+<h2 id="viewspy">views.py<a class="headerlink" href="#viewspy" title="Permanent link">&para;</a></h2>
 <p>This document provides an overview of the views defined in the project's <code>views.py</code> file. Views are responsible for handling HTTP requests and returning appropriate HTTP responses. Below are the main views and their descriptions:</p>
 <ol>
 <li><code>home(request)</code></li>
@@ -825,10 +787,11 @@ These helper methods simplify data processing and statistics generation within y
 <p>Please note that these views are part of the project's features for user interaction and service management. Additional views and features may be defined elsewhere in the project based on specific requirements.</p>
 <p>These views serve as the core components of the project, handling various functionalities and interactions with users on the website.</p>
 <p>Please note that the mentioned views are not the entire list of views in the project. Additional views may be defined elsewhere in the project based on specific requirements.</p>
-<h2 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">&para;</a></h2>
-<p>Feel free to contribute to this app or report any issues by following the guidelines in the project's repository.</p>
-<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
-<p>This app is open-source and is distributed under the [License Name]. Refer to the LICENSE file for details.</p></div>
+<h2 id="contributions">Contributions<a class="headerlink" href="#contributions" title="Permanent link">&para;</a></h2>
+<p>Contributions to enhance or expand this custom Django admin configuration are welcome. Feel free to submit pull requests with improvements, bug fixes, or additional features.</p>
+<h2 id="credits">Credits<a class="headerlink" href="#credits" title="Permanent link">&para;</a></h2>
+<p>This app is developed by <a href="https://github.com/haradhansharma">Haradhan Sharma</a>.</p>
+<p>For more information, visit the <a href="https://www.gf-vp.com">GF-VP website</a>.</p></div>
             </div>
         </div>
 

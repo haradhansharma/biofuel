@@ -2,8 +2,8 @@ site_name: GFVP Docs
 site_description: Biofuel Evaluation Process
 site_author: Haradhan Sharma
 copyright: (c) gf-vp.com
-repo_url: https://github.com/haradhansharma/biofuel/tree/v24123
-# edit_uri: 'blob/main/docs/'
+repo_url: https://github.com/haradhansharma/biofuel
+edit_uri: blob/v24123/gfvp_docs/docs
 use_directory_urls: false
 docs_dir: gfvp_docs/docs
 site_dir: gfvp_docs/site

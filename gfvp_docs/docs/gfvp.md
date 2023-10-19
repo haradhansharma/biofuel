@@ -1,13 +1,22 @@
-======================================================
-Django Project: GFVP (Green Fuel Validation Platform)
-======================================================
+---
+title: Technical Guide GFVP project of GFVP
+summary: Here given overview of the gfvp main project of Green fuel validation platform.
+copyright: (c) gf-vp.com
+repo_url: https://github.com/haradhansharma/biofuel
+edit_uri: blob/v24123/gfvp_docs/docs
+authors:
+    - Haradhan Sharma
+date: 2023-10-16
 
-Project Structure
------------------
+---
+
+# Django Project: GFVP (Green Fuel Validation Platform)
+
+
+## Project Structure
 
 The 'gfvp' project has the following directory structure:
 
-::
 
     gfvp/
     ├── __init__.py
@@ -32,13 +41,11 @@ The 'gfvp' project has the following directory structure:
     ├── wsgi.py
     └── asgi.py
 
-Overview
---------
+## Overview
 
 GFVP (Green Fuel Validation Platform) is a Django-based web application for managing and verifying green fuel data. It includes various features and modules for fuel evaluation, user management, content management, and more.
 
-Getting Started
----------------
+## Getting Started
 
 1. Install Dependencies:
    - Make sure you have Python 3.9 or higher installed.
@@ -57,8 +64,7 @@ Getting Started
 4. Serve the Application:
    - Start the development server with ``python manage.py runserver``.
 
-Project Features
-----------------
+## Project Features
 
 - Admin Panel:
   - Access the admin panel at '/admin/' with customizable branding.
@@ -88,31 +94,22 @@ Project Features
   - View GDPR policy at '/gdpr-policy/'.
   - View terms and conditions at '/terms/'.
 
-Deployment
-----------
+## Deployment
 
 - Configure your server for deployment.
 - Set up environment variables and server-specific configurations.
 - Use 'wsgi.py' (for non-Windows systems) or 'asgi.py' (for ASGI deployment) as your application entry point.
 - Ensure proper permissions for cache and static/media files as required.
 
-Contributing
-------------
+## Contributions
 
-Feel free to contribute to this project by following our contribution guidelines and opening pull requests.
+Contributions to enhance or expand this custom Django admin configuration are welcome. Feel free to submit pull requests with improvements, bug fixes, or additional features.
 
-License
--------
 
-This project is licensed under the XYZ License - see the 'LICENSE' file for details.
 
-Acknowledgments
----------------
+## Credits
 
-Special thanks to all contributors and the Django community for their support.
+This app is developed by [Haradhan Sharma](https://github.com/haradhansharma).
 
-For more information and detailed documentation, refer to the project's official documentation.
+For more information, visit the [GF-VP website](https://www.gf-vp.com).
 
-For the latest updates and issues, visit the project repository on GitHub.
-
-Project Repository: `https://github.com/haradhansharma/biofuel <https://github.com/harahansharma/biofuel>`_

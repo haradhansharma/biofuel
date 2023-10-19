@@ -1,46 +1,58 @@
-GFVP Blog App
-================
+---
+title: Technical Guide Blog app of GFVP
+summary: Here given overview of the blog app of Green fuel validation platform.
+copyright: (c) gf-vp.com
+repo_url: https://github.com/haradhansharma/biofuel
+edit_uri: blob/v24123/gfvp_docs/docs
+authors:
+    - Haradhan Sharma
+date: 2023-10-16
 
-Introduction
-------------
+---
+
+
+# GFVP Blog App
+
+
+## Introduction
 
 The GFVP Blog App is a simple yet powerful application that provides the foundation for creating and managing blog posts. This app allows you to easily create, edit, publish, and manage blog posts, while also providing a user-friendly interface for the admin panel.
 
-Installation
-------------
+## Installation
 
 To use the Django Blog App in your project, follow these steps:
 
 1. Install the app using pip:
 
-    .. code-block:: bash
-
-       pip install ....
+```
+pip install blog
+```
 
 2. Add `'blog'` to the `INSTALLED_APPS` list in your project's `settings.py`:
 
-    .. code-block:: python
-
-       INSTALLED_APPS = [
-           # ...
-           'blog',
-           # ...
-       ]
+```python
+INSTALLED_APPS = [
+   # ...
+   'blog',
+   # ...
+]
+```
 
 3. Include the app's URLs in your project's `urls.py`:
 
-    .. code-block:: python
+```python
 
-       from django.urls import path, include
+from django.urls import path, include
 
-       urlpatterns = [
-           # ...
-           path('blog/', include('blog.urls')),
-           # ...
-       ]
+urlpatterns = [
+   # ...
+   path('blog/', include('blog.urls')),
+   # ...
+]
+```
 
-Usage
------
+### Usage
+
 
 **Admin Panel:**
 
@@ -61,8 +73,7 @@ The app is designed to be easily customizable to fit your project's specific nee
 For more information on how to customize and extend the app, refer to the official documentation.
 
 
-Models
-------
+## Models
 
 The Django Blog App includes two main models to manage blog posts and track actions on various objects.
 
@@ -101,8 +112,7 @@ Additionally, the `BlogPost` model includes custom methods to calculate the tota
 This combination of models provides a powerful foundation for creating and managing blog posts with customizable features and actions tracking.
 
 
-Signals
--------
+## Signals
 
 The Django Blog App uses signals to automate certain actions and tasks related to blog posts. Signals allow the app to respond to events like creating, updating, or deleting a blog post, and perform additional actions as needed.
 
@@ -128,8 +138,8 @@ Please note that signals can greatly enhance the automation and logic within you
 For more information on how signals work in Django and how to handle them effectively, refer to the official Django documentation on signals.
 
 
-URL Patterns
-------------
+## URL Patterns
+
 
 The Django Blog App uses URL patterns to define how different URLs should be handled and routed to specific views. URL patterns play a crucial role in determining how users can access various parts of your application.
 
@@ -168,27 +178,24 @@ Understanding and utilizing these URL patterns is crucial for ensuring smooth na
 For more information on Django URL routing and reversing, refer to the official Django documentation on URL dispatch and URL reversing.
 
 
-View: post_list
-================
+## View: post_list
+
 
 The `post_list` view function is responsible for displaying a list of blog posts on the website. This view supports various scenarios, such as showing all published posts, filtering posts by a specific tag, and providing search functionality.
 
-View Details
--------------
+### View Details
 
 **Function Signature:**
 
-   .. code-block:: python
-
-      def post_list(request, tag_slug=None):
+```python
+def post_list(request, tag_slug=None):
+```
 
 **Parameters:**
-
 - `request` (:class:`~django.http.request.HttpRequest`): The HTTP request object.
 - `tag_slug` (:class:`~str`, optional): An optional tag slug to filter posts by a specific tag.
 
 **Functionality:**
-
 - This view handles the display of blog posts and supports filtering by tag and searching by query.
 - It constructs a context for rendering the template, including the list of blog posts and other necessary data.
 - If a `tag_slug` is provided in the URL, it filters posts tagged with the specified tag.
@@ -196,15 +203,12 @@ View Details
 - The resulting list of posts is ordered by their update date and supports pagination.
 
 **Stored Search Query:**
-
 If a search query is provided, the view stores it in the user's session to pre-fill the search box when displaying the search results. The stored query is cleared from the session if there is no active search.
 
 **Meta Information:**
-
 The view also sets up meta information for the page, such as title, description, tags, and robot indexing instructions.
 
-Usage Examples
---------------
+### Usage Examples
 
 - To display all published blog posts, access the URL: ``/blog/``
 - To view posts with a specific tag, access the URL: ``/blog/tag/tag-slug/``
@@ -215,13 +219,13 @@ This view plays a central role in providing users with a curated list of blog po
 For more information on how this view is utilized within the application and its interaction with templates, please refer to the comments and docstrings within the source code.
 
 
-View: post_detail
-==================
+## View: post_detail
+
 
 The `post_detail` view function is responsible for displaying a detailed view of a specific blog post on the website. This view provides users with comprehensive information about a single blog post, including related posts and meta information.
 
-View Details
--------------
+### View Details
+
 
 **Function Signature:**
 
@@ -248,8 +252,7 @@ View Details
 
 The view sets up meta information for the page, including title, description, tags, and robot indexing instructions. It also sets an Open Graph (og) image for social media sharing.
 
-Usage Examples
---------------
+### Usage Examples
 
 - To view the details of a specific blog post, access the URL: ``/blog/my-blog-post/``
 
@@ -258,22 +261,14 @@ The `post_detail` view provides users with a rich and engaging experience to exp
 For more insights into how this view interacts with templates and how its features are utilized within the application, refer to the comments and docstrings within the source code.
 
 
-Contributing
-------------
+## Contributions
 
-If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request on the project's GitHub repository: https://github.com/yourusername/django-blog-app
+Contributions to enhance or expand this custom Django admin configuration are welcome. Feel free to submit pull requests with improvements, bug fixes, or additional features.
 
-License
--------
 
-This project is licensed under the MIT License - see the `LICENSE` file for details.
 
-Credits
--------
+## Credits
 
-This app was developed with love by the Django community.
+This app is developed by [Haradhan Sharma](https://github.com/haradhansharma).
 
-Contact
--------
-
-If you have any questions or need assistance, you can reach out to us at haradhan.sharma@gmail.com.
+For more information, visit the [GF-VP website](https://www.gf-vp.com).

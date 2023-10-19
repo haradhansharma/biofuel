@@ -1,11 +1,19 @@
-=====================================
-Django Guide App - Developer's Guide
-=====================================
+---
+title: Technical Guide Guide app of GFVP
+summary: Here given overview of the guide app of Green fuel validation platform.
+copyright: (c) gf-vp.com
+repo_url: https://github.com/haradhansharma/biofuel
+edit_uri: blob/v24123/gfvp_docs/docs
+authors:
+    - Haradhan Sharma
+date: 2023-10-16
+
+---
+# Django Guide App - Developer's Guide
 
 This is the developer's guide for the Django Guide App, an application designed to manage and display guides in a Django project. This guide will walk you through the key components of the app, starting with the `admin.py` file.
 
-Admin Configuration (`admin.py`)
-----------------------------------
+## Admin Configuration (`admin.py`)
 
 The `admin.py` file is where we define the admin interface for managing our guide-related models. Here, we'll provide an overview of each admin class and its functionality.
 
@@ -45,54 +53,52 @@ class GuideMenuAdmin(admin.ModelAdmin):
     list_filter = ('guidetype',)  # Add a filter for the 'guidetype' field
 ```
 
-Installation and Usage
-----------------------
+## Installation and Usage
 
 To use the Django Guide App in your project, follow these steps:
 
 1. Install the app by adding it to your project's `INSTALLED_APPS` in the project's settings:
 
-   ```python
-   INSTALLED_APPS = [
-       # ...
-       'guide',  # Add 'guide' to your installed apps
-       # ...
-   ]
-   ```
+```python
+INSTALLED_APPS = [
+      # ...
+      'guide',  # Add 'guide' to your installed apps
+      # ...
+]
+```
 
 2. Configure the app's database models by running migrations:
 
-   ```bash
-   python manage.py makemigrations guide
-   python manage.py migrate
-   ```
+```bash
+python manage.py makemigrations guide
+python manage.py migrate
+```
 
 3. Create a superuser to access the admin interface:
 
-   ```bash
-   python manage.py createsuperuser
-   ```
+```bash
+python manage.py createsuperuser
+```
 
 4. Register your guide-related models in the `admin.py` file as shown above.
 
 5. Start the development server:
 
-   ```bash
-   python manage.py runserver
-   ```
+```bash
+python manage.py runserver
+```
 
 6. Access the admin interface at `http://localhost:8000/admin/` and use the registered admin classes to manage guides, guide types, and guide menus.
 
 
 
-===============================
-Django Guide App - Models Guide
-===============================
+
+## Django Guide App - Models Guide
+
 
 This is the models guide for the Django Guide App, explaining the structure and attributes of the models defined in the `models.py` file.
 
-Models Overview (`models.py`)
--------------------------------
+## Models Overview (`models.py`)
 
 The `models.py` file defines three main models used in the Django Guide App: `GuideType`, `GuideMenu`, and `GenarelGuide`. Each model represents a different aspect of managing guides.
 
@@ -127,8 +133,8 @@ The `models.py` file defines three main models used in the Django Guide App: `Gu
      - `content` (TextField): The content of the general guide.
    - The `__str__` method returns the title of the general guide along with its parent information.
 
-Usage and Relationships
------------------------
+### Usage and Relationships
+
 
 These models are designed to create a structured system for managing and displaying guides within your Django project. `GuideType` defines the types of guides, `GuideMenu` organizes guides into menus, and `GenarelGuide` contains the actual guide content.
 
@@ -141,14 +147,13 @@ For more information on using Django models, refer to the official Django docume
 
 
 
-=============================
-Django Guide App - URLs Guide
-=============================
+
+## Django Guide App - URLs Guide
+
 
 This is the URLs guide for the Django Guide App, explaining the URL patterns and their associated views defined in the `urls.py` file.
 
-URL Patterns Overview (`urls.py`)
------------------------------------
+### URL Patterns Overview (`urls.py`)
 
 The `urls.py` file defines the URL patterns that map URLs to views within the Django Guide App. Here's an overview of the defined URL patterns:
 
@@ -172,8 +177,7 @@ The `urls.py` file defines the URL patterns that map URLs to views within the Dj
 
 Using these URL patterns, you can navigate to different sections of the guide app, view guides of specific types, and access individual general guides.
 
-Namespace and `app_name`
--------------------------
+### Namespace and `app_name`
 
 The `'guide'` namespace is set using the `app_name` variable at the beginning of the `urls.py` file. This namespace is used to organize and avoid naming conflicts with URL patterns from other apps in your Django project.
 
@@ -186,14 +190,12 @@ For example:
 
 
 
-=============================
-Django Guide App - Views Guide
-=============================
+
+## Django Guide App - Views Guide
 
 This is the views guide for the Django Guide App, explaining the purpose and functionality of each view defined in the `views.py` file.
 
-Views Overview (`views.py`)
-----------------------------
+### Views Overview (`views.py`)
 
 The `views.py` file contains view functions that handle HTTP requests and define the behavior of different pages in the Django Guide App. Here's an overview of each view:
 
@@ -226,27 +228,20 @@ The `views.py` file contains view functions that handle HTTP requests and define
 
 Each view function takes a `request` parameter, which represents the incoming HTTP request, and returns an `HttpResponse` object that represents the rendered HTML page.
 
-Meta Information and SEO
-------------------------
+### Meta Information and SEO
 
 Each view includes meta information for SEO (Search Engine Optimization) and social sharing. This information helps improve the visibility and sharing of the guide content. It includes metadata such as titles, descriptions, tags, and images.
 
 
 
+## Contributions
+
+Contributions to enhance or expand this custom Django admin configuration are welcome. Feel free to submit pull requests with improvements, bug fixes, or additional features.
 
 
-Customization
--------------
 
-You can customize the app further to meet your project's specific requirements. For example, you can extend the models, add additional fields, or modify the admin classes to tailor the admin interface to your needs.
+## Credits
 
-For more information on Django development and customization, refer to the official Django documentation: https://docs.djangoproject.com/
+This app is developed by [Haradhan Sharma](https://github.com/haradhansharma).
 
-Feedback and Contributions
---------------------------
-
-We welcome feedback, bug reports, and contributions to this project. If you encounter any issues or have suggestions for improvements, please open an issue on the GitHub repository of this project.
-
-
-Thank you for using the Django Guide App!
-```
+For more information, visit the [GF-VP website](https://www.gf-vp.com).

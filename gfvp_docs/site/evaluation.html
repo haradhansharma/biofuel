@@ -91,7 +91,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/haradhansharma/biofuel/tree/v24123/edit/master/docs/evaluation.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/haradhansharma/biofuel/blob/v24123/gfvp_docs/docs/evaluation.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -111,167 +111,61 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="2"><a href="#introduction" class="nav-link">Introduction</a>
+            <li class="nav-item" data-level="1"><a href="#evaluation_app" class="nav-link">'Evaluation' App.</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#custom_tagspy_in_the_templatetags_directory" class="nav-link">'custom_tags.py' in the 'templatetags' Directory</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#custom_filters_and_tags_overview" class="nav-link">Custom Filters and Tags Overview</a>
+            <li class="nav-item" data-level="2"><a href="#adminpy" class="nav-link">admin.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#usage_instructions" class="nav-link">Usage Instructions</a>
+            <li class="nav-item" data-level="2"><a href="#appspy" class="nav-link">apps.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#initialization" class="nav-link">Initialization</a>
+            <li class="nav-item" data-level="2"><a href="#middlewarepy" class="nav-link">middleware.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#attributes" class="nav-link">Attributes</a>
+            <li class="nav-item" data-level="2"><a href="#formspy" class="nav-link">forms.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#methods" class="nav-link">Methods</a>
+            <li class="nav-item" data-level="2"><a href="#helperpy" class="nav-link">helper.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#usage" class="nav-link">Usage</a>
+            <li class="nav-item" data-level="2"><a href="#signalspy" class="nav-link">signals.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#example_usage" class="nav-link">Example Usage</a>
+            <li class="nav-item" data-level="2"><a href="#modelspy" class="nav-link">models.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#gfvpsitemap" class="nav-link">GfvpSitemap</a>
+            <li class="nav-item" data-level="2"><a href="#reportpdfdata_class_of_nreport_classpy" class="nav-link">ReportPDFData Class of nreport_class.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#usersitemap" class="nav-link">UserSitemap</a>
+            <li class="nav-item" data-level="2"><a href="#sitemapspy" class="nav-link">sitemaps.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#usertypesitemap" class="nav-link">UserTypeSitemap</a>
+            <li class="nav-item" data-level="2"><a href="#urlspy" class="nav-link">urls.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#blogsitemap" class="nav-link">BlogSitemap</a>
+            <li class="nav-item" data-level="2"><a href="#viewspy" class="nav-link">views.py</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#htmlreportsitemap" class="nav-link">HtmlReportSitemap</a>
+            <li class="nav-item" data-level="2"><a href="#contributions" class="nav-link">Contributions</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#sitemaps_configuration" class="nav-link">Sitemaps Configuration</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="2"><a href="#url_patterns" class="nav-link">URL Patterns</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="2"><a href="#core_url_patterns" class="nav-link">Core URL Patterns:</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="2"><a href="#additional_url_patterns_for_the_evaluation_app" class="nav-link">Additional URL Patterns for the 'evaluation' App:</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#1_set_evaluation_function" class="nav-link">1. set_evaluation Function</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#2_set_eva_comments_function" class="nav-link">2. set_eva_comments Function</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#3_set_evastatment_function" class="nav-link">3. set_evastatment Function</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#4_get_eoi_function" class="nav-link">4. get_eoi Function</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#5_set_evastatement_of_logical_string_function" class="nav-link">5. set_evastatement_of_logical_string Function</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#6_option_add2_function" class="nav-link">6. option_add2 Function</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#eva_index2_view" class="nav-link">eva_index2 View</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#thanks_view" class="nav-link">thanks View</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#trafic_light_hori_view" class="nav-link">trafic_light_hori View</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#fuel_history_view" class="nav-link">fuel_history View</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#report_view" class="nav-link">report View</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#create_notification_to_consumer_function" class="nav-link">create_notification_to_consumer Function</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#nreport_view" class="nav-link">nreport View</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#nreport_pdf_view" class="nav-link">nreport_pdf View</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#stdoils_view" class="nav-link">stdoils View</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#get_glossary_view" class="nav-link">get_glossary View</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#edit_report_view" class="nav-link">edit_report View</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#contributing" class="nav-link">Contributing</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#license" class="nav-link">License</a>
+            <li class="nav-item" data-level="2"><a href="#credits" class="nav-link">Credits</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -282,103 +176,125 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p>======================================================
-README for 'custom_tags.py' in the 'templatetags' Directory of the 'Evaluation' App
-======================================================</p>
-<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<h1 id="evaluation_app">'Evaluation' App.<a class="headerlink" href="#evaluation_app" title="Permanent link">&para;</a></h1>
+<ul>
+<li><strong>Do not change or modify any signle code in this app if you do not understand total business logic very well. It may cause for unexpected behavior and can give wrong result</strong></li>
+</ul>
+<h2 id="custom_tagspy_in_the_templatetags_directory">'custom_tags.py' in the 'templatetags' Directory<a class="headerlink" href="#custom_tagspy_in_the_templatetags_directory" title="Permanent link">&para;</a></h2>
+<h3 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h3>
 <p>The 'custom_tags.py' module in the 'templatetags' directory of the 'Evaluation' app contains custom template filters and tags that extend the functionality of Django templates. These filters and tags are designed to enhance template rendering and provide additional features for template-based operations. This README provides an overview of the custom filters and tags available in this module.</p>
-<h2 id="custom_filters_and_tags_overview">Custom Filters and Tags Overview<a class="headerlink" href="#custom_filters_and_tags_overview" title="Permanent link">&para;</a></h2>
+<h3 id="custom_filters_and_tags_overview">Custom Filters and Tags Overview<a class="headerlink" href="#custom_filters_and_tags_overview" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
 <p><strong>brek_after_two Filter</strong>:</p>
 <ul>
 <li>This custom filter inserts a line break into text after a specified number of characters.</li>
-<li>Usage Example:
-  <code>html
-  {{ text|brek_after_two:10 }}</code></li>
+<li>Usage Example:</li>
 </ul>
 </li>
+</ol>
+<pre><code class="language-html">{{ text|brek_after_two:10 }}
+</code></pre>
+<ol>
 <li>
 <p><strong>get_verbose_name Tag</strong>:</p>
 <ul>
 <li>This custom template tag retrieves the verbose name of a field in a model.</li>
-<li>Usage Example:
-  <code>html
-  {% get_verbose_name instance field_name %}</code></li>
+<li>Usage Example:</li>
 </ul>
 </li>
+</ol>
+<pre><code class="language-html">{% get_verbose_name instance field_name %}
+</code></pre>
+<ol>
 <li>
 <p><strong>in_quot Filter</strong>:</p>
 <ul>
 <li>This filter filters quotes based on a specific user, returning only quotes associated with that user.</li>
-<li>Usage Example:
-  <code>html
-  {{ quotes|in_quot:user }}</code></li>
+<li>Usage Example:</li>
 </ul>
 </li>
+</ol>
+<pre><code class="language-html">{{ quotes|in_quot:user }}
+</code></pre>
+<ol>
 <li>
 <p><strong>offchars Filter</strong>:</p>
 <ul>
 <li>This filter returns characters from the end of a string, excluding the specified number of characters from the beginning.</li>
-<li>Usage Example:
-  <code>html
-  {{ text|offchars:5 }}</code></li>
+<li>Usage Example:</li>
 </ul>
 </li>
+</ol>
+<pre><code class="language-html">{{ text|offchars:5 }}
+</code></pre>
+<ol>
 <li>
 <p><strong>onnchars Filter</strong>:</p>
 <ul>
 <li>This filter returns characters from the beginning of a string, excluding the specified number of characters from the end.</li>
-<li>Usage Example:
-  <code>html
-  {{ text|onnchars:5 }}</code></li>
+<li>Usage Example:</li>
 </ul>
 </li>
+</ol>
+<pre><code class="language-html">{{ text|onnchars:5 }}
+</code></pre>
+<ol>
 <li>
 <p><strong>listobj_for_paginator Filter</strong>:</p>
 <ul>
 <li>This filter paginates a list of objects and returns a paginated Page object.</li>
-<li>Usage Example:
-  <code>html
-  {{ object_list|listobj_for_paginator:request }}</code></li>
+<li>Usage Example:</li>
 </ul>
 </li>
+</ol>
+<pre><code class="language-html">{{ object_list|listobj_for_paginator:request }}
+</code></pre>
+<ol>
 <li>
 <p><strong>get_options Filter</strong>:</p>
 <ul>
 <li>This filter retrieves options associated with a question and returns them as a list.</li>
-<li>Usage Example:
-  <code>html
-  {{ question|get_options }}</code></li>
+<li>Usage Example:</li>
 </ul>
 </li>
+</ol>
+<pre><code class="language-html">{{ question|get_options }}
+</code></pre>
+<ol>
 <li>
 <p><strong>get_quotations_user Filter</strong>:</p>
 <ul>
 <li>This filter retrieves quotations related to a question for a specific user and returns them as a list.</li>
-<li>Usage Example:
-  <code>html
-  {{ question|get_quotations_user:user }}</code></li>
+<li>Usage Example:</li>
 </ul>
 </li>
+</ol>
+<pre><code class="language-html">{{ question|get_quotations_user:user }}
+</code></pre>
+<ol>
 <li>
 <p><strong>get_related_quotations_user Filter</strong>:</p>
 <ul>
 <li>This filter retrieves related quotations for a question for a specific user and returns them as a list.</li>
-<li>Usage Example:
-  <code>html
-  {{ question|get_related_quotations_user:user }}</code></li>
+<li>Usage Example:</li>
 </ul>
 </li>
+</ol>
+<pre><code class="language-html">{{ question|get_related_quotations_user:user }}
+</code></pre>
+<ol>
 <li>
 <p><strong>get_merged_quotations_with_user Filter</strong>:</p>
 <ul>
 <li>This filter retrieves merged quotations for a question with a specific user and returns them as a list.</li>
-<li>Usage Example:
-  <code>html
-  {{ question|get_merged_quotations_with_user:user }}</code></li>
+<li>Usage Example:</li>
 </ul>
 </li>
+</ol>
+<pre><code class="language-html">{{ question|get_merged_quotations_with_user:user }}
+</code></pre>
+<ol>
 <li>
 <p><strong>get_types_slug Template Filter</strong>:</p>
 <ul>
@@ -389,35 +305,39 @@ README for 'custom_tags.py' in the 'templatetags' Directory of the 'Evaluation' 
 <p><code>type</code> (str): The type of UserType ('is_producer', 'is_expert', 'is_consumer', 'is_marine') for which you want to retrieve the slug.</p>
 </li>
 <li>
-<p>Usage Example:
-  <code>html
-  &lt;!-- In a Django template --&gt;
-  {{ 'is_producer'|get_types_slug }}</code></p>
+<p>Usage Example:</p>
 </li>
+</ul>
+</li>
+</ol>
+<pre><code class="language-html">&lt;!-- In a Django template --&gt;
+{{ 'is_producer'|get_types_slug }}
+</code></pre>
+<ul>
 <li>
 <p>This filter returns the slug of the UserType associated with the provided type, or <code>None</code> if the type is not recognized.</p>
 </li>
 <li>
 <p><strong>Parameters</strong>:</p>
-</li>
-<li>
-<p><code>type</code> (str): The type of UserType ('is_producer', 'is_expert', 'is_consumer', 'is_marine').</p>
+<ul>
+<li><code>type</code> (str): The type of UserType ('is_producer', 'is_expert', 'is_consumer', 'is_marine').</li>
+</ul>
 </li>
 <li>
 <p><strong>Returns</strong>:</p>
-</li>
-<li>
-<p><code>str</code> or <code>None</code>: The slug of the UserType associated with the provided type, or <code>None</code> if not found.</p>
+<ul>
+<li><code>str</code> or <code>None</code>: The slug of the UserType associated with the provided type, or <code>None</code> if not found.</li>
+</ul>
 </li>
 <li>
 <p><strong>Note</strong>:</p>
-</li>
+<ul>
 <li>This filter can be used in Django templates to conditionally display content or generate links based on user types.</li>
 <li>It checks the provided type and returns the corresponding slug for the UserType, allowing you to tailor the template output based on user roles.</li>
 </ul>
 </li>
-</ol>
-<h2 id="usage_instructions">Usage Instructions<a class="headerlink" href="#usage_instructions" title="Permanent link">&para;</a></h2>
+</ul>
+<h3 id="usage_instructions">Usage Instructions<a class="headerlink" href="#usage_instructions" title="Permanent link">&para;</a></h3>
 <p>To use the custom filters and tags defined in 'custom_tags.py' within your Django templates, follow these steps:</p>
 <ol>
 <li>
@@ -428,9 +348,7 @@ README for 'custom_tags.py' in the 'templatetags' Directory of the 'Evaluation' 
 </li>
 </ol>
 <p>Ensure that you include appropriate error handling and context variables in your templates when using these custom filters and tags.</p>
-<p>=========================
-Evaluation App - admin.py
-=========================</p>
+<h2 id="adminpy">admin.py<a class="headerlink" href="#adminpy" title="Permanent link">&para;</a></h2>
 <p>This README provides an overview of the admin.py file for the Evaluation app. The admin.py file contains the Django admin configurations for various models within the app.</p>
 <p><strong>Admin Configurations</strong></p>
 <ol>
@@ -509,9 +427,7 @@ Evaluation App - admin.py
 </ol>
 <p><strong>Please Note</strong>: The code comments and docstrings in admin.py provide further details about the functionality and purpose of each admin class.</p>
 <p>If you have any questions or need additional information, please refer to the comments in the code or feel free to ask for assistance.</p>
-<p>====================
-Evaluation App - apps.py
-====================</p>
+<h2 id="appspy">apps.py<a class="headerlink" href="#appspy" title="Permanent link">&para;</a></h2>
 <p>This README provides an overview of the apps.py file for the Evaluation app. The apps.py file contains the configuration settings for the 'evaluation' app.</p>
 <p><strong>App Configuration</strong></p>
 <ul>
@@ -522,15 +438,13 @@ Evaluation App - apps.py
 <p>The <code>ready()</code> method is executed when the app is ready to function within the Django project. In this method, the <code>evaluation.signals</code> module is imported, allowing the app to utilize signals for event handling.</p>
 <p><strong>Example Usage</strong></p>
 <p>To use this AppConfig in your Django project, add it to the 'INSTALLED_APPS' list in your project's settings.py file. This configuration ensures that the 'evaluation' app is integrated into your project and that its signals are loaded and available for use.</p>
-<p><code>python
-  INSTALLED_APPS = [
-      ...
-      'evaluation',
-      ...
-  ]</code></p>
-<p>========================
-Evaluation App - middleware.py
-========================</p>
+<pre><code class="language-python">INSTALLED_APPS = [
+    ...
+    'evaluation',
+    ...
+]
+</code></pre>
+<h2 id="middlewarepy">middleware.py<a class="headerlink" href="#middlewarepy" title="Permanent link">&para;</a></h2>
 <p>This README provides an overview of the middleware.py file for the Evaluation app. The middleware.py file contains the <code>EvaMiddleware</code> class, which is responsible for handling specific requests and sessions within the app.</p>
 <p><strong>Middleware Overview</strong></p>
 <p>Middleware in Django is used to process requests and responses globally before they reach the view or after they leave the view. This custom middleware class, <code>EvaMiddleware</code>, performs specific actions based on conditions before allowing a request to proceed to the view.</p>
@@ -545,12 +459,12 @@ Evaluation App - middleware.py
 </ul>
 <p><strong>Usage</strong></p>
 <p>To use this middleware, add it to the <code>MIDDLEWARE</code> list in your Django project's <code>settings.py</code> file as follows:</p>
-<p><code>python
-  MIDDLEWARE = [
-      ...
-      'evaluation.middleware.EvaMiddleware',
-      ...
-  ]</code></p>
+<pre><code class="language-python">MIDDLEWARE = [
+    ...
+    'evaluation.middleware.EvaMiddleware',
+    ...
+]
+</code></pre>
 <p><strong>Conditions Checked</strong></p>
 <p>The middleware checks the following conditions before processing a request:</p>
 <ol>
@@ -558,10 +472,10 @@ Evaluation App - middleware.py
 <li>Whether a specific setting ('CNN') is enabled in the project's settings.</li>
 </ol>
 <p><strong>Customization</strong></p>
-<p>Do not customize the <code>EvaMiddleware</code> class. It can cause in the evaluation process and report genaration.</p>
-<p>========================
-Evaluation App - forms.py
-========================</p>
+<ul>
+<li>Do not customize the <code>EvaMiddleware</code> class. It can cause in the evaluation process and report genaration.</li>
+</ul>
+<h2 id="formspy">forms.py<a class="headerlink" href="#formspy" title="Permanent link">&para;</a></h2>
 <p>This README provides an overview of the forms.py file for the Evaluation app. The forms.py file contains the <code>EvaluatorForm</code> class, which is a Django form used for creating and updating Evaluator instances.</p>
 <p><strong>Form Overview</strong></p>
 <p>Forms in Django are used to handle user input and validation. The <code>EvaluatorForm</code> class is designed to work with the Evaluator model and provides a structured way to create and update Evaluator objects.</p>
@@ -588,9 +502,7 @@ Evaluation App - forms.py
 <p><strong>Customization</strong></p>
 <p>Developers can customize this form to suit their app's specific needs by modifying form fields, widgets, labels, or adding additional validation logic.</p>
 <p>If you have any questions or need further clarification, please refer to the comments in the code or feel free to ask for assistance.</p>
-<p>========================
-Evaluation App - helper.py
-========================</p>
+<h2 id="helperpy">helper.py<a class="headerlink" href="#helperpy" title="Permanent link">&para;</a></h2>
 <p>This README provides an overview of the helper.py file in the Evaluation app. The helper.py file contains various functions that retrieve and cache data from the database to improve performance on subsequent calls.</p>
 <p><strong>Function Overview</strong></p>
 <p>The helper functions in helper.py are designed to efficiently fetch and cache specific data from the database. Each function focuses on retrieving a specific set of data related to Questions, StdOils, or Glossary.</p>
@@ -906,9 +818,7 @@ Evaluation App - helper.py
 </ul>
 <p>Customization of these functions may be required to meet specific project requirements. Developers can refer to code comments for more details on how these functions work.</p>
 <p>For any further assistance or information on using these functions, please consult the code comments or contact the development team.</p>
-<p>=======================
-Evaluation App - signals.py
-=======================</p>
+<h2 id="signalspy">signals.py<a class="headerlink" href="#signalspy" title="Permanent link">&para;</a></h2>
 <p>This README provides comprehensive information about the signals.py module in the Evaluation app, including the purpose of the signals, their usage, and customization options.</p>
 <p><strong>Signals Overview</strong></p>
 <p>The signals.py module contains custom signals and signal handlers used to perform specific actions during database transactions. Signals are a way to allow certain senders to notify a set of receivers that an action has taken place. In this context, the signals are used for database-related actions and provide flexibility in managing data changes.</p>
@@ -993,9 +903,7 @@ Evaluation App - signals.py
 <p><strong>Signal Usage and Customization</strong></p>
 <p>Developers can use these signals and signal handlers to automate actions, maintain data consistency, and respond to database changes effectively. By understanding the purpose and behavior of each signal, developers can customize them to meet specific project needs.</p>
 <p>For further details on the usage, customization, and integration of these signals in your project, consult the code comments or reach out to the development team for assistance.</p>
-<p>=======================
-Evaluation App - models.py
-=======================</p>
+<h2 id="modelspy">models.py<a class="headerlink" href="#modelspy" title="Permanent link">&para;</a></h2>
 <p>This README provides comprehensive information about the <code>models.py</code> module in the Evaluation app, including the purpose of the defined models and any custom validators used.</p>
 <p><strong>Custom Validator: get_common_status(value)</strong></p>
 <ul>
@@ -1424,17 +1332,15 @@ Evaluation App - models.py
 </li>
 <li>Note: The 'question' field is nullable, allowing suggestions without an associated question.</li>
 </ul>
-<p>=========================================================
-ReportPDFData Class of nreport_class.py of EVALUATION APP
-=========================================================</p>
+<h2 id="reportpdfdata_class_of_nreport_classpy">ReportPDFData Class of nreport_class.py<a class="headerlink" href="#reportpdfdata_class_of_nreport_classpy" title="Permanent link">&para;</a></h2>
 <p>The <code>ReportPDFData</code> class is an essential part of the Evaluation APP, responsible for generating PDF reports based on evaluation data. This class initializes various styles and settings for formatting the PDF report, draws images and content on the pages, and organizes different sections of the report.</p>
-<h2 id="initialization">Initialization<a class="headerlink" href="#initialization" title="Permanent link">&para;</a></h2>
+<h3 id="initialization">Initialization<a class="headerlink" href="#initialization" title="Permanent link">&para;</a></h3>
 <p>To create a <code>ReportPDFData</code> object, you need to provide two parameters: <code>request</code> and <code>slug</code>. These parameters are required for constructing the report.</p>
 <ul>
 <li><code>request</code>: The Django request object.</li>
 <li><code>slug</code>: The slug for the Evaluator object.</li>
 </ul>
-<h2 id="attributes">Attributes<a class="headerlink" href="#attributes" title="Permanent link">&para;</a></h2>
+<h3 id="attributes">Attributes<a class="headerlink" href="#attributes" title="Permanent link">&para;</a></h3>
 <p>This class has several attributes used for styling and formatting the report:</p>
 <ul>
 <li><code>pagesize</code>: The page size (A4 by default).</li>
@@ -1448,7 +1354,7 @@ ReportPDFData Class of nreport_class.py of EVALUATION APP
 <li><code>stylesTR</code>, <code>SectionT</code>, <code>LeftIndent</code>, <code>Footer</code>: References to the custom paragraph styles.</li>
 <li><code>title_font_size</code>: Font size for report titles.</li>
 </ul>
-<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
+<h3 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h3>
 <p>This class contains various methods to generate different parts of the PDF report, including:</p>
 <ul>
 <li><code>report_initial(c, doc)</code>: Draws an initial image on the report's first page.</li>
@@ -1467,24 +1373,25 @@ ReportPDFData Class of nreport_class.py of EVALUATION APP
 <li><code>details_of_activities()</code>: Generates the details of activities section of the report.</li>
 <li><code>biofuel_history()</code>: Generates the biofuel history section of the report.</li>
 </ul>
-<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<h3 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h3>
 <p>To use the <code>ReportPDFData</code> class, you need to initialize an instance with the required parameters and then call the appropriate methods to generate the report content. The resulting content can be added to a PDF document.</p>
-<h2 id="example_usage">Example Usage<a class="headerlink" href="#example_usage" title="Permanent link">&para;</a></h2>
-<p>```python
-  # Initialize the ReportPDFData object
-  report_data = ReportPDFData(request, slug)</p>
-<p># Create a PDF document
-  pdf_doc = SimpleDocTemplate("evaluation_report.pdf")</p>
-<p># Generate the report content
-  report_content = report_data.wrapped_pdf()</p>
-<p># Build the PDF document with the report content
-  pdf_doc.build(report_content)</p>
-<p>```</p>
-<p>=====================================
-sitemaps.py - Evaluation APP Sitemaps
-=====================================</p>
+<h3 id="example_usage">Example Usage<a class="headerlink" href="#example_usage" title="Permanent link">&para;</a></h3>
+<pre><code class="language-python"># Initialize the ReportPDFData object
+report_data = ReportPDFData(request, slug)
+
+# Create a PDF document
+pdf_doc = SimpleDocTemplate(&quot;evaluation_report.pdf&quot;)
+
+# Generate the report content
+report_content = report_data.wrapped_pdf()
+
+# Build the PDF document with the report content
+pdf_doc.build(report_content)
+
+</code></pre>
+<h2 id="sitemapspy">sitemaps.py<a class="headerlink" href="#sitemapspy" title="Permanent link">&para;</a></h2>
 <p>This module defines sitemaps for the Evaluation APP within the GFVP (Green Fuel Validation Platform) website. Sitemaps are used to inform search engines about the structure and hierarchy of your site's URLs, helping improve SEO and discoverability.</p>
-<h2 id="gfvpsitemap">GfvpSitemap<a class="headerlink" href="#gfvpsitemap" title="Permanent link">&para;</a></h2>
+<h3 id="gfvpsitemap">GfvpSitemap<a class="headerlink" href="#gfvpsitemap" title="Permanent link">&para;</a></h3>
 <p>:class:<code>GfvpSitemap</code> is the main sitemap for the GFVP website. It includes various important URLs for the website.</p>
 <p>Attributes:
     - <code>priority</code> (float): The priority of this sitemap in relation to others (0.0 to 1.0).
@@ -1492,7 +1399,7 @@ sitemaps.py - Evaluation APP Sitemaps
 <p>Methods:
     - <code>items()</code>: Define the list of URLs to include in the sitemap.
     - <code>location(item)</code>: Generate the URL for a given item using its name.</p>
-<h2 id="usersitemap">UserSitemap<a class="headerlink" href="#usersitemap" title="Permanent link">&para;</a></h2>
+<h3 id="usersitemap">UserSitemap<a class="headerlink" href="#usersitemap" title="Permanent link">&para;</a></h3>
 <p>:class:<code>UserSitemap</code> is responsible for sitemapping user profiles on the GFVP website. It includes user profiles who are active and have verified email addresses.</p>
 <p>Attributes:
     - <code>changefreq</code> (str): The expected change frequency of URLs in this sitemap.
@@ -1501,7 +1408,7 @@ sitemaps.py - Evaluation APP Sitemaps
     - <code>items()</code>: Retrieve the list of active users with verified email addresses.
     - <code>lastmod(obj)</code>: Determine the last modification date for a user profile.
     - <code>location(obj)</code>: Generate the URL for a user's profile.</p>
-<h2 id="usertypesitemap">UserTypeSitemap<a class="headerlink" href="#usertypesitemap" title="Permanent link">&para;</a></h2>
+<h3 id="usertypesitemap">UserTypeSitemap<a class="headerlink" href="#usertypesitemap" title="Permanent link">&para;</a></h3>
 <p>:class:<code>UserTypeSitemap</code> is responsible for sitemapping user types on the GFVP website. It includes active user types.</p>
 <p>Attributes:
     - <code>changefreq</code> (str): The expected change frequency of URLs in this sitemap.
@@ -1510,7 +1417,7 @@ sitemaps.py - Evaluation APP Sitemaps
     - <code>items()</code>: Retrieve the list of active user types.
     - <code>lastmod(obj)</code>: Determine the last modification date for a user type.
     - <code>location(obj)</code>: Generate the URL for a user type page.</p>
-<h2 id="blogsitemap">BlogSitemap<a class="headerlink" href="#blogsitemap" title="Permanent link">&para;</a></h2>
+<h3 id="blogsitemap">BlogSitemap<a class="headerlink" href="#blogsitemap" title="Permanent link">&para;</a></h3>
 <p>:class:<code>BlogSitemap</code> is responsible for sitemapping blog posts on the GFVP website. It includes published blog posts.</p>
 <p>Attributes:
     - <code>changefreq</code> (str): The expected change frequency of URLs in this sitemap.
@@ -1519,7 +1426,7 @@ sitemaps.py - Evaluation APP Sitemaps
     - <code>items()</code>: Retrieve the list of published blog posts.
     - <code>lastmod(obj)</code>: Determine the last modification date for a blog post.
     - <code>location(obj)</code>: Generate the URL for a blog post.</p>
-<h2 id="htmlreportsitemap">HtmlReportSitemap<a class="headerlink" href="#htmlreportsitemap" title="Permanent link">&para;</a></h2>
+<h3 id="htmlreportsitemap">HtmlReportSitemap<a class="headerlink" href="#htmlreportsitemap" title="Permanent link">&para;</a></h3>
 <p>:class:<code>HtmlReportSitemap</code> is responsible for sitemapping generated evaluation reports on the GFVP website. It includes evaluation reports with verified email addresses.</p>
 <p>Attributes:
     - <code>changefreq</code> (str): The expected change frequency of URLs in this sitemap.
@@ -1529,11 +1436,9 @@ sitemaps.py - Evaluation APP Sitemaps
     - <code>lastmod(obj)</code>: Determine the last modification date for an evaluation report.
     - <code>location(obj)</code>: Generate the URL for an evaluation report.</p>
 <p>For detailed information on each sitemap class, their methods, and attributes, please refer to the code comments and docstrings provided within <code>sitemaps.py</code>.</p>
-<p>=============================
-urls.py - Evaluation APP URLs
-=============================</p>
+<h2 id="urlspy">urls.py<a class="headerlink" href="#urlspy" title="Permanent link">&para;</a></h2>
 <p>This module defines the URL patterns for the Evaluation APP within the GFVP (Green Fuel Validation Platform) website. It also includes the configuration of sitemaps for various sections of the website.</p>
-<h2 id="sitemaps_configuration">Sitemaps Configuration<a class="headerlink" href="#sitemaps_configuration" title="Permanent link">&para;</a></h2>
+<h3 id="sitemaps_configuration">Sitemaps Configuration<a class="headerlink" href="#sitemaps_configuration" title="Permanent link">&para;</a></h3>
 <p>The following sitemaps are configured for different sections of the website:</p>
 <ul>
 <li><code>static</code>: Sitemap for static URLs</li>
@@ -1542,9 +1447,9 @@ urls.py - Evaluation APP URLs
 <li><code>blog_list</code>: Sitemap for blog posts</li>
 <li><code>HtmlReportitemap</code>: Sitemap for HTML reports</li>
 </ul>
-<h2 id="url_patterns">URL Patterns<a class="headerlink" href="#url_patterns" title="Permanent link">&para;</a></h2>
+<h3 id="url_patterns">URL Patterns<a class="headerlink" href="#url_patterns" title="Permanent link">&para;</a></h3>
 <p>The URL patterns are organized into two main sections: core patterns and additional patterns for the 'evaluation' app.</p>
-<h2 id="core_url_patterns">Core URL Patterns:<a class="headerlink" href="#core_url_patterns" title="Permanent link">&para;</a></h2>
+<h3 id="core_url_patterns">Core URL Patterns:<a class="headerlink" href="#core_url_patterns" title="Permanent link">&para;</a></h3>
 <ol>
 <li><code>evaluation/thanks/</code>: URL for the 'thanks' view.</li>
 <li><code>evaluation/report/&lt;str:slug&gt;</code>: URL for the 'report' view with a dynamic slug parameter.</li>
@@ -1553,7 +1458,7 @@ urls.py - Evaluation APP URLs
 <li><code>get-glossary/</code>: URL for the 'get_glossary' view.</li>
 <li><code>sitemap.xml/</code>: URL for the sitemap view, which uses Django's sitemap framework to generate sitemaps for search engines.</li>
 </ol>
-<h2 id="additional_url_patterns_for_the_evaluation_app">Additional URL Patterns for the 'evaluation' App:<a class="headerlink" href="#additional_url_patterns_for_the_evaluation_app" title="Permanent link">&para;</a></h2>
+<h3 id="additional_url_patterns_for_the_evaluation_app">Additional URL Patterns for the 'evaluation' App:<a class="headerlink" href="#additional_url_patterns_for_the_evaluation_app" title="Permanent link">&para;</a></h3>
 <ol>
 <li><code>evaluation2/</code>: URL for the 'eva_index2' view.</li>
 <li><code>evaluation2/option_add/</code>: URL for the 'option_add2' view.</li>
@@ -1566,14 +1471,13 @@ urls.py - Evaluation APP URLs
 <li><code>fuel-history/&lt;str:last_reports&gt;</code>: URL for the 'fuel_history' view with a dynamic last_reports parameter.</li>
 </ol>
 <p>For more details on each URL pattern and its corresponding view, please refer to the code and comments provided within <code>urls.py</code>.</p>
-<p>=========================
-Evaluation App Views (views.py)
-=========================</p>
+<h2 id="viewspy">views.py<a class="headerlink" href="#viewspy" title="Permanent link">&para;</a></h2>
 <p>This module contains view functions for handling various aspects of the evaluation process within the evaluation app.</p>
-<p>.. note::</p>
-<pre><code>This documentation provides an overview of the functions and their purposes, but it's recommended to refer to the source code for detailed implementation and usage.
-</code></pre>
-<h1 id="1_set_evaluation_function">1. <code>set_evaluation</code> Function<a class="headerlink" href="#1_set_evaluation_function" title="Permanent link">&para;</a></h1>
+<p><strong>note:</strong>
+This documentation provides an overview of the functions and their purposes, but it's recommended to refer to the source code for detailed implementation and usage.</p>
+<ol>
+<li><code>set_evaluation</code> Function</li>
+</ol>
 <p>Set the evaluation for a given question and evaluator.</p>
 <ul>
 <li>
@@ -1599,12 +1503,14 @@ Evaluation App Views (views.py)
 </ul>
 </li>
 <li>
-<p>Example Usage:
-     <code>python
-     set_evaluation(question, selected_option, evaluator)</code></p>
+<p>Example Usage:</p>
 </li>
 </ul>
-<h1 id="2_set_eva_comments_function">2. <code>set_eva_comments</code> Function<a class="headerlink" href="#2_set_eva_comments_function" title="Permanent link">&para;</a></h1>
+<pre><code class="language-python">set_evaluation(question, selected_option, evaluator)
+</code></pre>
+<ol>
+<li><code>set_eva_comments</code> Function</li>
+</ol>
 <p>Set or update an evaluation comment for a given question and evaluator.</p>
 <ul>
 <li>
@@ -1631,12 +1537,14 @@ Evaluation App Views (views.py)
 </ul>
 </li>
 <li>
-<p>Example Usage:
-     <code>python
-     set_eva_comments(question, comment, evaluator)</code></p>
+<p>Example Usage:</p>
 </li>
 </ul>
-<h1 id="3_set_evastatment_function">3. <code>set_evastatment</code> Function<a class="headerlink" href="#3_set_evastatment_function" title="Permanent link">&para;</a></h1>
+<pre><code class="language-python">set_eva_comments(question, comment, evaluator)
+</code></pre>
+<ol>
+<li><code>set_evastatment</code> Function</li>
+</ol>
 <p>Set evaluation statements for a given selected option and evaluator.</p>
 <ul>
 <li>
@@ -1665,12 +1573,14 @@ Evaluation App Views (views.py)
 </ul>
 </li>
 <li>
-<p>Example Usage:
-     <code>python
-     set_evastatment(request, selected_option, evaluator)</code></p>
+<p>Example Usage:</p>
 </li>
 </ul>
-<h1 id="4_get_eoi_function">4. <code>get_eoi</code> Function<a class="headerlink" href="#4_get_eoi_function" title="Permanent link">&para;</a></h1>
+<pre><code class="language-python">set_evastatment(request, selected_option, evaluator)
+</code></pre>
+<ol>
+<li><code>get_eoi</code> Function</li>
+</ol>
 <p>Get a list of option IDs from a given list of evaluation statements.</p>
 <ul>
 <li>
@@ -1694,13 +1604,15 @@ Evaluation App Views (views.py)
 </ul>
 </li>
 <li>
-<p>Example Usage:
-     <code>python
-     eva_statements = get_evaluation_statements()
-     eoi = get_eoi(eva_statements)</code></p>
+<p>Example Usage:</p>
 </li>
 </ul>
-<h1 id="5_set_evastatement_of_logical_string_function">5. <code>set_evastatement_of_logical_string</code> Function<a class="headerlink" href="#5_set_evastatement_of_logical_string_function" title="Permanent link">&para;</a></h1>
+<pre><code class="language-python">eva_statements = get_evaluation_statements()
+eoi = get_eoi(eva_statements)
+</code></pre>
+<ol>
+<li><code>set_evastatement_of_logical_string</code> Function</li>
+</ol>
 <p>Set evaluation statements based on logical strings for a given selected option and evaluator.</p>
 <ul>
 <li>
@@ -1729,12 +1641,14 @@ Evaluation App Views (views.py)
 </ul>
 </li>
 <li>
-<p>Example Usage:
-     <code>python
-     set_evastatement_of_logical_string(request, selected_option, evaluator)</code></p>
+<p>Example Usage:</p>
 </li>
 </ul>
-<h1 id="6_option_add2_function">6. <code>option_add2</code> Function<a class="headerlink" href="#6_option_add2_function" title="Permanent link">&para;</a></h1>
+<pre><code class="language-python">set_evastatement_of_logical_string(request, selected_option, evaluator)
+</code></pre>
+<ol>
+<li><code>option_add2</code> Function</li>
+</ol>
 <p>Handle the submission of evaluation options and comments by authenticated users.</p>
 <ul>
 <li>
@@ -1855,7 +1769,7 @@ Use this function as a view to display a quotation block for a specific question
     - Prepare context data for rendering the evaluation interface.</p>
 <p>Example Usage:
 Use this function as a view to display the main evaluation interface during the evaluation process.</p>
-<h2 id="eva_index2_view">eva_index2 View<a class="headerlink" href="#eva_index2_view" title="Permanent link">&para;</a></h2>
+<p><strong><code>eva_index2</code></strong></p>
 <p>This view renders the initial interface for data collection during the evaluation process.</p>
 <p>Args:
     - request: The HTTP request object.</p>
@@ -1871,7 +1785,7 @@ Use this function as a view to display the main evaluation interface during the 
     - Handle meta data for SEO purposes.</p>
 <p>Example Usage:
 Use this function as a view to display the initial interface for data collection during the evaluation process.</p>
-<h2 id="thanks_view">thanks View<a class="headerlink" href="#thanks_view" title="Permanent link">&para;</a></h2>
+<p><strong><code>thanks</code></strong></p>
 <p>This view renders the thank you page after completing the evaluation process.</p>
 <p>Args:
     - request: The HTTP request object.</p>
@@ -1886,7 +1800,7 @@ Use this function as a view to display the initial interface for data collection
     - Handle meta data for SEO purposes.</p>
 <p>Example Usage:
 Use this function as a view to display the thank you page after completing the evaluation process.</p>
-<h2 id="trafic_light_hori_view">trafic_light_hori View<a class="headerlink" href="#trafic_light_hori_view" title="Permanent link">&para;</a></h2>
+<p><strong><code>trafic_light_hori</code></strong></p>
 <p>This view renders a horizontal traffic light evaluation page based on the last available report.</p>
 <p>Args:
     - request: The HTTP request object.
@@ -1895,7 +1809,7 @@ Use this function as a view to display the thank you page after completing the e
     - HttpResponse: A rendered HTML page displaying the horizontal traffic light evaluation.</p>
 <p>Note:
 This function retrieves data from the database, prepares it for rendering, and returns an HTML page with the evaluation results.</p>
-<h2 id="fuel_history_view">fuel_history View<a class="headerlink" href="#fuel_history_view" title="Permanent link">&para;</a></h2>
+<p><strong><code>fuel_history</code></strong></p>
 <p>This view renders a fuel history chart based on the data from the last available report.</p>
 <p>Args:
     - request: The HTTP request object.
@@ -1904,7 +1818,7 @@ This function retrieves data from the database, prepares it for rendering, and r
     - HttpResponse: A rendered HTML page displaying the fuel history chart.</p>
 <p>Note:
 This function retrieves historical fuel data from the database, prepares it for rendering, and returns an HTML page with the fuel history chart.</p>
-<h2 id="report_view">report View<a class="headerlink" href="#report_view" title="Permanent link">&para;</a></h2>
+<p><strong><code>report</code></strong></p>
 <p>This view renders a report page based on the provided report slug.</p>
 <p>Args:
     - request (HttpRequest): The HTTP request object.
@@ -1918,7 +1832,7 @@ This function retrieves historical fuel data from the database, prepares it for 
     - Determines the status of next activities.</p>
 <p>Example Usage:
 Use this function as a view to display a report page based on the provided report slug.</p>
-<h2 id="create_notification_to_consumer_function">create_notification_to_consumer Function<a class="headerlink" href="#create_notification_to_consumer_function" title="Permanent link">&para;</a></h2>
+<p><strong><code>create_notification_to_consumer</code></strong></p>
 <p>This function creates notifications for consumers regarding a report.</p>
 <p>Args:
     - report: The report for which notifications are to be created.</p>
@@ -1930,7 +1844,7 @@ Use this function as a view to display a report page based on the provided repor
     - Bulk inserts the instances into the database.</p>
 <p>Example Usage:
 Call this function to create notifications for consumers regarding a report.</p>
-<h2 id="nreport_view">nreport View<a class="headerlink" href="#nreport_view" title="Permanent link">&para;</a></h2>
+<p><strong><code>nreport</code></strong></p>
 <p>This view renders a new report creation/editing page based on the provided report slug.</p>
 <p>Args:
     - request (HttpRequest): The HTTP request object.
@@ -1945,7 +1859,7 @@ Call this function to create notifications for consumers regarding a report.</p>
     - Sets metadata for the page.</p>
 <p>Example Usage:
 Use this function as a view to display a new report creation/editing page based on the provided report slug.</p>
-<h2 id="nreport_pdf_view">nreport_pdf View<a class="headerlink" href="#nreport_pdf_view" title="Permanent link">&para;</a></h2>
+<p><strong><code>nreport_pdf</code></strong></p>
 <p>This view generates a PDF report based on ReportLab for a new evaluation report.</p>
 <p>Args:
     - request (HttpRequest): The HTTP request object.
@@ -1958,7 +1872,7 @@ Use this function as a view to display a new report creation/editing page based 
     - Generates the content (Story) for the PDF report.</p>
 <p>Example Usage:
 Use this function as a view to generate a PDF report for a new evaluation report.</p>
-<h2 id="stdoils_view">stdoils View<a class="headerlink" href="#stdoils_view" title="Permanent link">&para;</a></h2>
+<p><strong><code>stdoils</code></strong></p>
 <p>This view renders a list of standard oils based on the selected biofuel.</p>
 <p>Args:
     - request (HttpRequest): The HTTP request object.</p>
@@ -1969,7 +1883,7 @@ Use this function as a view to generate a PDF report for a new evaluation report
     - Renders the list in the 'std_oils.html' template.</p>
 <p>Example Usage:
 Use this function as a view to display a list of standard oils based on the selected biofuel.</p>
-<h2 id="get_glossary_view">get_glossary View<a class="headerlink" href="#get_glossary_view" title="Permanent link">&para;</a></h2>
+<p><strong><code>get_glossary</code></strong></p>
 <p>This view renders the glossary page with a list of glossary items.</p>
 <p>Args:
     - request (HttpRequest): The HTTP request object.</p>
@@ -1980,7 +1894,7 @@ Use this function as a view to display a list of standard oils based on the sele
     - Renders the list in the 'glossary_template.html' template.</p>
 <p>Example Usage:
 Use this function as a view to display a glossary page with a list of glossary items.</p>
-<h2 id="edit_report_view">edit_report View<a class="headerlink" href="#edit_report_view" title="Permanent link">&para;</a></h2>
+<p><strong><code>edit_report</code></strong></p>
 <p>This view allows the creator of a report to edit its details.</p>
 <p>Args:
     - request (HttpRequest): The HTTP request object.
@@ -1993,10 +1907,11 @@ Use this function as a view to display a glossary page with a list of glossary i
     - Uses the 'EvaluatorEditForm' to handle form submission and update the report's information.</p>
 <p>Example Usage:
 Use this function as a view to allow report creators to edit report details.</p>
-<h2 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">&para;</a></h2>
-<p>Contributions to the 'Evaluation' app are welcome! If you'd like to contribute, please review the contribution guidelines in the project's repository.</p>
-<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
-<p>This module is distributed under the [Insert License Here] license. See the <code>LICENSE</code> file for more information.</p></div>
+<h2 id="contributions">Contributions<a class="headerlink" href="#contributions" title="Permanent link">&para;</a></h2>
+<p>Contributions to enhance or expand this custom Django admin configuration are welcome. Feel free to submit pull requests with improvements, bug fixes, or additional features.</p>
+<h2 id="credits">Credits<a class="headerlink" href="#credits" title="Permanent link">&para;</a></h2>
+<p>This app is developed by <a href="https://github.com/haradhansharma">Haradhan Sharma</a>.</p>
+<p>For more information, visit the <a href="https://www.gf-vp.com">GF-VP website</a>.</p></div>
             </div>
         </div>
 

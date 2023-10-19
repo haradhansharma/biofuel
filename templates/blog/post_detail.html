@@ -41,11 +41,9 @@
                     </div>
                     <div class="article-body mt-3">
                         {{post.body|safe}}
-                    </div>
-                    
+                    </div>                    
                 </article>
-                <div
-                    class="col-12 d-block d-sm-flex justify-content-between border-top border-bottom border-2 border-danger p-2">
+                <div class="col-12 d-block d-sm-flex justify-content-between border-top border-bottom border-2 border-danger p-2">
                     <div>
                         {% if post.get_previous_by_publish %}
                         <div class="previous">
