@@ -2,9 +2,6 @@
 import os
 import sys
 
-# Set the umask to 0o002, which controls default permissions when creating files and directories
-os.umask(0o002)
-
 # Check the operating system name
 if os.name != 'nt':
     # On non-Windows systems, configure the Python path and Django settings
