@@ -164,7 +164,7 @@ def signup(request):
     users_without_profile = User.objects.all()
     
     for user in users_without_profile:       
-        if not user.profile:
+        if not hasattr(user, 'profile'):
             Profile.objects.create(user=user)
         if not hasattr(user, 'notificationsettings'):
             NotificationSettings.objects.create(user=user)
