@@ -159,15 +159,8 @@ def signup(request):
     =====
     '''
     
-    log.info(f'signup page accessed by_____________ {request.user}')
+    log.info(f'signup page accessed by_____________ {request.user}') 
     
-    users_without_profile = User.objects.all()
-    
-    for user in users_without_profile:       
-        if not hasattr(user, 'profile'):
-            Profile.objects.create(user=user)
-        if not hasattr(user, 'notificationsettings'):
-            NotificationSettings.objects.create(user=user)
     
     # User type segregation based on session.
     if 'interested_in' not in request.session:
