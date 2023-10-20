@@ -35,10 +35,26 @@
                             </h3>
                         {% endif %}                        
 
-                        <p class="mt-5">
-                            Are you a sustainable fuel producer and would like to assess your fuel qualities? 
-                            Please sign up here and create a profile to use the services of the Green Fuel Validation Platform.
-                        </p> 
+                        <div class="mt-5">
+                            {% if not user.is_authenticated %}
+                                {% if user_type.is_consumer %}
+                                Are you a trader or end-customer and would like to become a member on the platform?  Please sign up here and create a profile to use the services of the Green Fuel Validation Platform.
+                                {% elif user_type.is_marine %}
+                                <p>Are you a subject matter expert eager to contribute to our platform with your valuable insights? 
+                                    If you're ready to make a meaningful impact, please sign up here, and our team will promptly review your information to verify your account.</p>
+
+                                <p>Your expertise could play a vital role in advancing the platform's mission.</p>
+
+                                <p>Thank you for considering joining our community of experts.</p>
+                                {% elif user_type.is_expert %}
+                                {% elif user_type.is_producer %}
+                                <p>Are you a sustainable fuel producer and would like to assess your fuel qualities? Please sign up here and create a profile to use the services of the Green Fuel Validation Platform.</p>
+                                {% else %}
+                                {% endif %}
+                            {% endif %}
+
+
+                        </div> 
                         <p class="mt-5"> 
                             {% if user.is_authenticated %}
                             If you are searching for specific information about a particular user, you can click on this <a href="{% url 'accounts:user_link' %}">LINK</a>. 
