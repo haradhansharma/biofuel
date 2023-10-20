@@ -161,6 +161,14 @@ def signup(request):
     
     log.info(f'signup page accessed by_____________ {request.user}')
     
+    users_without_profile = User.objects.all()
+    
+    for user in users_without_profile:       
+        if not user.profile:
+            Profile.objects.create(user=user)
+        if not hasattr(user, 'notificationsettings'):
+            NotificationSettings.objects.create(user=user)
+    
     # User type segregation based on session.
     if 'interested_in' not in request.session:
         request.session['interested_in'] = None     
@@ -195,7 +203,7 @@ def signup(request):
         form = UserCreationFormFront(request.POST)
         
         if form.is_valid():           
-            new_user = form.save(commit=False)      
+            new_user = form.save()      
             #ensure user inactive to verify email.              
             new_user.is_active = False
             new_user.save()   
@@ -527,7 +535,7 @@ def check_username(request):
     if User.objects.filter(username = username).exists():
         return HttpResponse(' <span class="text-danger"> This username already exists! </span>') 
     else:
-        return HttpResponse('<span class="text-success">This username avialable!</span>')    
+        return HttpResponse('<span class="text-success">This username available!</span>')    
 
     
 def check_email(request):
@@ -558,7 +566,7 @@ def check_email(request):
         if User.objects.filter(email = email).exists():
             return HttpResponse(' <span class="text-danger"> This email already exists! </span>')
         else:
-            return HttpResponse('<span class="text-success">This email avialable!</span>')
+            return HttpResponse('<span class="text-success">This email available!</span>')
     except:
         return HttpResponse('<span class="text-danger">Type a valid email address!</span>')
     

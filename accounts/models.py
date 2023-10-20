@@ -233,7 +233,7 @@ class UsersNextActivity(models.Model):
    
    
 class NotificationSettings(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, editable=False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="notificationsettings")
     marketing_mail = models.BooleanField(default=True)
     new_fuel_notifications = models.BooleanField(default=True)
     blog_notifications = models.BooleanField(default=True)
