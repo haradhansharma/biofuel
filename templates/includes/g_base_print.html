@@ -21,11 +21,14 @@
 {% endblock %}
 <body>
 
-
+  
 
 {% block main %}
 {% endblock %}
 
+{% block concent %}
+{% include 'gf_cookies/cookie_consent.html' %}
+{% endblock %}
 
 {% include 'includes/scripts.html' %}
 {% block javascripts %}

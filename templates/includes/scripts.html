@@ -26,3 +26,12 @@
       event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
     })
 </script> 
+
+<script>
+  // Use JavaScript to show the modal on page load
+  $(document).ready(function() {
+    if ($('#cookie-consent').length) {
+      $('#cookie-consent').modal('show');
+    }
+  });
+</script>

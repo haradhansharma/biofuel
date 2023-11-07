@@ -25,12 +25,17 @@
 
     {% block header %}
     {% endblock %}
-
+    
     {% block main %}
+    {% endblock %}
+
+    {% block concent %}
+    {% include 'gf_cookies/cookie_consent.html' %}
     {% endblock %}
 
     {% block footer %}
     {% endblock %}
+    
 
     {% include 'includes/scripts.html' %}
 

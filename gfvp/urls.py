@@ -46,6 +46,8 @@ urlpatterns = [
     # URL for integrating the Summernote WYSIWYG editor
     path('summernote/', include('django_summernote.urls')),
     
+    path('c/', include('gf_cookies.urls')), 
+    
     # URL for taggit autosuggest functionality
     path('taggit_autosuggest/', include('taggit_autosuggest.urls')),  
     
@@ -58,11 +60,15 @@ urlpatterns = [
     # URL for integrating MkDocs documentation
     path('docs/', include('django_mkdocs.urls', namespace='mkdocs')), 
     
+    
+    
     # URL for displaying partner services    
     path('<int:pk>/services/', partner_service, name='partner_service'), 
     
     # URL for displaying producer fuels
-    path('<int:pk>/producer-fuels/', producer_fuels, name='producer_fuels'),     
+    path('<int:pk>/producer-fuels/', producer_fuels, name='producer_fuels'),  
+     
+      
         
 ] 
 

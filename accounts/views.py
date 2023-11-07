@@ -131,7 +131,7 @@ class CustomLoginView(LoginView):
 
 
 
-def signup(request):  
+def signup(request, slug=None):  
     
     
     """
@@ -161,30 +161,43 @@ def signup(request):
     
     log.info(f'signup page accessed by_____________ {request.user}') 
     
+    if slug == None or slug == '':
+        messages.error(request, 'Should have user types key in the url! Select one from below!')
+        return HttpResponseRedirect(reverse('home:home') + '#register')  
+    else:
+        slugs = UserType.objects.values_list('slug', flat=True)
+        if slug in slugs:
+            pass
+        else:
+            messages.error(request, 'Wrong user type key given! Click on below to provide correct one!')
+            return HttpResponseRedirect(reverse('home:home') + '#register')  
+            
     
-    # User type segregation based on session.
-    if 'interested_in' not in request.session:
-        request.session['interested_in'] = None     
+            
+
+    # # User type segregation based on session.
+    # if 'interested_in' not in request.session:
+    #     request.session['interested_in'] = None     
           
-    if request.session['interested_in'] == None :    
-        #Ensure Selection of User Type based on session
-        referer = urlparse(request.META.get('HTTP_REFERER')).path 
-        try:       
-            type_path = reverse('types', args=[str( request.session['interested_in'])] )
-        except Exception as e:            
-            type_path = None           
-        if referer != type_path:  
-            messages.warning(request, f'Select your business type to register!')             
-            # user type selected facility in the home page so we will forwared user there     
-            return HttpResponseRedirect(reverse('home:home') + '#register')     
+    # if request.session['interested_in'] == None:    
+    #     #Ensure Selection of User Type based on session
+    #     referer = urlparse(request.META.get('HTTP_REFERER')).path 
+    #     try:       
+    #         type_path = reverse('types', args=[str(request.session['interested_in'])] )
+    #     except Exception as e:            
+    #         type_path = None           
+    #     if referer != type_path:  
+    #         messages.warning(request, f'Select your business type to register!')             
+    #         # user type selected facility in the home page so we will forwared user there     
+    #         return HttpResponseRedirect(reverse('home:home') + '#register')     
  
     # Session-controlled interactivity in frontend.
     slug_of_expart = UserType.objects.get(is_expert = True).slug   
     
-    if slug_of_expart == request.session['interested_in']:    
-        request.session['hidden'] = ''
+    if slug_of_expart == slug:    
+        hidden = ''
     else:
-        request.session['hidden'] = 'hidden' 
+        hidden = 'hidden' 
         
               
         
@@ -218,7 +231,7 @@ def signup(request):
         else:
             messages.error(request, 'Invalid form submission.')
             messages.error(request, form.errors)   
-            return HttpResponseRedirect(reverse_lazy('accounts:signup'))          
+            return HttpResponseRedirect(reverse_lazy('accounts:signup'), args=[str(slug)])          
                      
     else:
         
@@ -231,13 +244,13 @@ def signup(request):
         
                   
         try:
-            usertype = UserType.objects.get(slug = request.session['interested_in'] )   
+            usertype = UserType.objects.get(slug = slug)   
         except Exception as e:            
-            usertype = None  
+            # usertype = None  
             messages.warning(request, f'Select your business type to register!') 
             
             # user type selected facility in the home page so we will forwared user there     
-            return HttpResponseRedirect(reverse('home:home'))  
+            return HttpResponseRedirect(reverse('home:home') + '#register')  
         
         
         # Interacting behind the scenes.
@@ -259,6 +272,8 @@ def signup(request):
     meta_data['robots'] = 'noindex, nofollow'
         
     context = {
+        'hidden' : hidden,
+        'slug' : slug,
         'form': form,
         'usertype': usertype,
         'site_info' : meta_data           

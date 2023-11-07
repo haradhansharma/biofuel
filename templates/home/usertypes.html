@@ -28,7 +28,7 @@
                             {% endfor %}
                         {% else %}
                             <h3 class="h5">
-                                <a href="{% url 'accounts:signup' %}"
+                                <a href="{% url 'accounts:signup' slug %}"
                                     class="btn btn-outline-primary d-inline-flex align-items-center me-md-3 shadow-lg">
                                     Join as {{ user_type.name }}
                                 </a>

@@ -119,8 +119,9 @@ class UserCreationFormFront(UserCreationFormDjango):
                 'hx-post': "/check_type_to_get_expert/",
                 'hx-trigger': "change",
                 'hx-target': "#hx",
-                'hx-swap': "innerHTML"
-            }),
+                'hx-swap': "innerHTML",
+             
+            }), 
             'experts_in': forms.Select(attrs={'class': 'form-select', 'aria-label': 'experts_in'}),
             'orgonization': forms.TextInput(attrs={
                 'placeholder': 'My Organization',

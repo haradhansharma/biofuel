@@ -12,6 +12,9 @@
 .feedbakbtn{
   z-index: 1000;
 }
+.concent-dialog{
+  z-index: 999;
+}
 
 .sugestion-loaders{
   opacity:0;

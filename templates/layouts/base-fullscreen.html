@@ -24,7 +24,11 @@
 
         {% include 'feedback/floating.html' %}
 
-        {% block content %}{% endblock content %}  
+        {% block content %}{% endblock content %} 
+        
+        {% block concent %}
+        {% include 'gf_cookies/cookie_consent.html' %}
+        {% endblock %}
 
         {% include 'includes/scripts.html' %}
 

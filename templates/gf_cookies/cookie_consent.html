@@ -1,0 +1,49 @@
+{% if not request.COOKIES.cookie_consent %}
+<div class="modal fade " id="cookie-consent" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="concentBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Coockies concent</h5>    
+            </div>
+            <form method="post" action="{% url 'gf_cookies:cookie_consent' %}">
+                <div class="modal-body">                
+                    <p>We use cookies to improve your experience on our site. By using our site, you consent to our use of cookies.</p>
+                    <div> Please review our
+                    <a class="link-primary py-2 px-2" target="_blank" href="{% url 'term' %}"><small>Terms of Service</small> </a>
+                    and
+                    <a class="link-primary py-2 px-2" target="_blank" href="{% url 'gdpr' %}"><small>GDPR Policy</small> </a>
+                    </div>
+                    {% csrf_token %}
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" name="consent" value="accept">Accept</button>
+                    <button type="submit" class="btn btn-danger" name="consent" value="decline">Decline</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% if request.COOKIES.cookie_consent %}
+    <div class="concent-dialog fixed-bottom justify-content-start d-flex col-sm-4 col-md-3 col-lg-2">  
+    <div class="card">     
+        
+        <div class="card-body">
+        <div class="card-title border-bottom">  
+            Coockies Concent
+            </div>
+            <div class="card-text">
+            <p>You've accepted, but you can decline anytime.</p>
+            <form method="post" action="{% url 'gf_cookies:cookie_consent' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm" name="consent" value="decline">Decline</button>         
+            </form>
+        </div>
+        </div>
+    </div>
+    </div>
+    {% endif %}
+
+
+
+

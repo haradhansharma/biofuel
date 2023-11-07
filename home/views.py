@@ -49,7 +49,9 @@ import logging
 log =  logging.getLogger('log')
 
 
-def home(request):
+def home(request):    
+ 
+    
     """
     View function for the home page.
 
@@ -119,7 +121,8 @@ def user_types(request, slug):
     log.info(f'User type page accessed by_____________ {request.user}')
     
     # Set the 'interested_in' session variable to the selected user type's slug
-    request.session['interested_in'] = slug          
+
+    # request.session['interested_in'] = slug       
     
     # Ensure the user is logged in to initiate enrollment
     try:
@@ -191,6 +194,7 @@ def user_types(request, slug):
     meta_data['og_image'] = user_type.icon.url
     
     context = {
+        'slug' : slug,
         'user_type': user_type,
         'users': users,
         'enroll': enroll,
@@ -936,7 +940,7 @@ def quotation_report2(request, quotation_data):
         aH -= h  # reduce the available height starting from first line  
         if w <= aW and h <= aH:
             p.drawOn(c,50,aH)
-            aH = aH #protect to be double line          
+            aH = aH #protect to be double line           
         else:
             aH = 800
             c.showPage()            

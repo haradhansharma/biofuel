@@ -9,7 +9,7 @@ app_name = 'accounts'
 # Define the URL patterns for the 'accounts' app
 urlpatterns = [
     # URL pattern for user signup
-    path('signup/', views.signup, name='signup'),
+    path('signup/<str:slug>', views.signup, name='signup'),
 
     # URL pattern for user login with a custom login view
     path('login/', views.CustomLoginView.as_view(

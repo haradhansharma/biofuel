@@ -8,7 +8,7 @@
         <meta name="author" content="Haradhan Sharma">
         
         <link rel="shortcut icon" href="img/favicon.ico">
-        <title>Navigation - GFVP Docs</title>
+        <title>GF Cookies - GFVP Docs</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/base.css" rel="stylesheet">
@@ -69,10 +69,10 @@
                             <li class="navitem">
                                 <a href="home.html" class="nav-link">Home And Dash</a>
                             </li>
-                            <li class="navitem active">
+                            <li class="navitem">
                                 <a href="navigation.html" class="nav-link">Navigation</a>
                             </li>
-                            <li class="navitem">
+                            <li class="navitem active">
                                 <a href="cookies.html" class="nav-link">GF Cookies</a>
                             </li>
                         </ul>
@@ -84,17 +84,17 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="home.html" class="nav-link">
+                                <a rel="prev" href="navigation.html" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="cookies.html" class="nav-link">
+                                <a rel="next" class="nav-link disabled">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://github.com/haradhansharma/biofuel/blob/v24123/gfvp_docs/docs/navigation.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/haradhansharma/biofuel/blob/v24123/gfvp_docs/docs/cookies.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -114,13 +114,13 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#navigation_app" class="nav-link">Navigation App</a>
+            <li class="nav-item" data-level="1"><a href="#gf_cookies_app" class="nav-link">GF Cookies App</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#purpose" class="nav-link">Purpose</a>
+            <li class="nav-item" data-level="2"><a href="#features" class="nav-link">Features</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#key_features" class="nav-link">Key Features</a>
+            <li class="nav-item" data-level="2"><a href="#installation" class="nav-link">Installation</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -128,7 +128,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#example_usage" class="nav-link">Example Usage</a>
+            <li class="nav-item" data-level="2"><a href="#contributing" class="nav-link">Contributing</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -147,51 +147,38 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="navigation_app">Navigation App<a class="headerlink" href="#navigation_app" title="Permanent link">&para;</a></h1>
-<p>The <strong>Navigation App</strong> is a lightweight Django app designed to generate navigation menus and provide menu items for various parts of your website based on user roles and permissions.</p>
-<h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>This app simplifies the process of generating dynamic navigation menus in your Django web application. It provides functions to create lists of menu items for different parts of your website, making it easy to manage what users see in their navigation menu.</p>
-<h2 id="key_features">Key Features<a class="headerlink" href="#key_features" title="Permanent link">&para;</a></h2>
+<h1 id="gf_cookies_app">GF Cookies App<a class="headerlink" href="#gf_cookies_app" title="Permanent link">&para;</a></h1>
+<p>The GF Cookies app is a Django application designed to handle user consent for cookies. It allows users to either accept or decline the use of cookies and stores consent records in the database.</p>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Dynamic menu generation based on user roles and permissions.</li>
-<li>Provides functions for generating dashboard, header, and account-related menus.</li>
-<li>Flexible and easy-to-use menu items structure.</li>
-<li>Helps maintain a clean and organized navigation structure.</li>
+<li>Users can provide their consent for cookie usage.</li>
+<li>Consent records are stored in the database, including user information, session details, and the type of consent (accept or decline).</li>
+<li>A cookie is set for users who accept cookies with a one-year expiration.</li>
 </ul>
-<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <ol>
-<li>
-<p><strong>Installation</strong>: Install the Navigation app by including it in your Django project. You can do this by adding <code>'navigation'</code> to your <code>INSTALLED_APPS</code> in your Django project's settings.</p>
-</li>
-<li>
-<p><strong>Integration</strong>: You can integrate the Navigation app by using the provided functions to generate menu items. The app supports dynamic menu generation based on user roles, making it simple to customize the menus for different user groups.</p>
-</li>
-<li>
-<p><strong>Function Usage</strong>: To use the app's functions, import them into your views or templates. The provided functions allow you to generate menus for your dashboard, header, and account-related sections.</p>
-</li>
-<li>
-<p><strong>Customization</strong>: You can customize the menu items' appearance and behavior as needed for your specific web application. You can modify the menu structure, add or remove menu items, and apply your own styles.</p>
-</li>
+<li>Clone the repository to your local machine:</li>
+<li>Install the required dependencies:</li>
+<li>Apply database migrations:</li>
+<li>Start the Django development server:</li>
+<li>Access the app in your web browser at <a href="http://localhost:8000/cookie_consent">http://localhost:8000/cookie_consent</a>.</li>
 </ol>
-<h2 id="example_usage">Example Usage<a class="headerlink" href="#example_usage" title="Permanent link">&para;</a></h2>
-<p>Here's a quick example of how to use the Navigation app in your Django project:</p>
-<pre><code class="language-python"># views.py
-from navigation.menu import dashboard_menu
-
-def dashboard(request):
-    # Generate the dashboard menu items
-    menu_items = dashboard_menu(request)
-    # ... your view logic ...
-</code></pre>
-<pre><code class="language-html"># template.html
-{% load navigation_tags %}
-
-&lt;ul class=&quot;menu&quot;&gt;
-    {% for item in menu_items %}
-        &lt;li&gt;&lt;a href=&quot;{{ item.url }}&quot;&gt;{{ item.title }}&lt;/a&gt;&lt;/li&gt;
-    {% endfor %}
-&lt;/ul&gt;
-</code></pre>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Visit the <code>/cookie_consent</code> URL to manage cookie consent.</li>
+<li>Users can click the "Accept" or "Decline" button to provide their consent or decline cookies.</li>
+<li>Consent records are stored in the database for future reference.</li>
+</ul>
+<h2 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">&para;</a></h2>
+<p>If you'd like to contribute to this project, please follow these steps:</p>
+<ol>
+<li>Fork the repository on GitHub.</li>
+<li>Clone your fork locally.</li>
+<li>Create a new branch for your changes.</li>
+<li>Make your changes and commit them.</li>
+<li>Push your changes to your fork on GitHub.</li>
+<li>Create a pull request to submit your changes for review.</li>
+</ol>
 <h2 id="contributions">Contributions<a class="headerlink" href="#contributions" title="Permanent link">&para;</a></h2>
 <p>Contributions to enhance or expand this custom Django admin configuration are welcome. Feel free to submit pull requests with improvements, bug fixes, or additional features.</p>
 <h2 id="credits">Credits<a class="headerlink" href="#credits" title="Permanent link">&para;</a></h2>

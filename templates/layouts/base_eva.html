@@ -29,6 +29,8 @@
   {% include 'feedback/floating.html' %}
 
     {% include 'includes/eva_sidebar.html' %}
+
+    
     
     <main class="content" id = "indi">
 
@@ -45,11 +47,18 @@
 
       {% block content %}{% endblock content %} 
 
+      {% block concent %}
+      {% include 'gf_cookies/cookie_consent.html' %}
+      {% endblock %}
+
       {% include 'includes/settings-box.html' %}
+
+      
 
       {% include 'includes/footer.html' %}
 
     </main>
+  
 
   {% include 'includes/scripts.html' %}
     

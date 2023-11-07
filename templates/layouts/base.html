@@ -27,11 +27,15 @@
     <main class="content" id = "pppp">
       {% include 'includes/navigation.html' %}
 
-      {% block content %}{% endblock content %} 
+      {% block concent %}
+      {% include 'gf_cookies/cookie_consent.html' %}
+      {% endblock %}
 
       {% include 'includes/settings-box.html' %}
 
       {% include 'includes/footer.html' %}
+
+      
 
     </main>
 
