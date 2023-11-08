@@ -1,5 +1,15 @@
-<div class="feedbakbtn fixed-bottom justify-content-end d-flex">
-  
+<div class="feedbakbtn fixed-bottom {% if request.COOKIES.cookie_consent %}justify-content-between{% else %}justify-content-end {% endif %} d-flex">
+
+
+
+  {% if request.COOKIES.cookie_consent %}
+        <form method="post" action="{% url 'gf_cookies:cookie_consent' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger" name="consent" value="decline">Decline Cookie Consent</button>         
+        </form>
+  {% endif %}
+
+
 
 
   <a class="btn btn-danger" 
@@ -11,6 +21,7 @@
   id="feedbackbutton">Feedback</a>
 
 
+  
   
 </div>
 <div class="offcanvas offcanvas-end" tabindex="-1" id="feedbackcanvas" data-bs-scroll="true" aria-labelledby="feedbackcanvasLabel" hx-get={% url 'feedback:submit_feedback' %} hx-target="#canasbody" hx-swap="innerHTML" hx-trigger="revealed once">

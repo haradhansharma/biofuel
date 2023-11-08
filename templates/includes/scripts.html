@@ -27,11 +27,38 @@
     })
 </script> 
 
-<script>
+{% comment %} <script>
   // Use JavaScript to show the modal on page load
   $(document).ready(function() {
     if ($('#cookie-consent').length) {
       $('#cookie-consent').modal('show');
     }
   });
+</script> {% endcomment %}
+
+<script>   
+  // Display the beta information modal immediately
+  $(document).ready(function() {
+    if (!localStorage.getItem('betaInfoDialogShown')) {
+      $('#beta-info-modal').modal('show');
+      // Set a flag in localStorage to indicate that the dialog has been shown
+      localStorage.setItem('betaInfoDialogShown', 'true');
+      // Close the beta information modal and show the consent modal after 2 seconds
+      setTimeout(function() {
+        $('#beta-info-modal').modal('hide');
+        // Show the cookie consent modal
+        setTimeout(function() {      
+          $('#cookie-consent').modal('show');
+        }, 500); // Adjust the delay as needed for a smooth transition
+      }, 5000); // Adjust the delay as needed (e.g., 2000 for 2 seconds)
+
+    } else {
+
+      $('#cookie-consent').modal('show');
+      
+    }
+  });
+
 </script>
+
+

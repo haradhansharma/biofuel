@@ -5,6 +5,25 @@
 @import '../assets/vendor/font-awesome/css/brands.min.css';
 @import '../assets/vendor/font-awesome/css/solid.min.css';
 
+.beta-ribbon {
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0;
+  background-color: rgba(200, 20, 20, 0.75); /* Change the color as desired */
+  color: #fff;
+  padding: 5px 15px;
+  font-weight: bold;
+  transform: rotate(-90deg);
+  transform-origin: bottom;
+  z-index: 1200; /* Adjust the z-index to ensure it's above other elements */
+  width:98px;
+}
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.95); /* You can adjust the alpha (last value) to control the opacity */
+}
+
 .popover-header {
   background-color: #214768;
   color: #eff4f5;
