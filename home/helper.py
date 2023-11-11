@@ -62,7 +62,7 @@ def users_under_each_label(request):
     for label in labels:          
         count = len(getattr(label, 'active_users', []))
         record_dict[label.name] = count
-    
+ 
     return record_dict
 
 # Method to count the number of reports under each biofuel category.
