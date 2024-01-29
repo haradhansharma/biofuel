@@ -155,7 +155,7 @@ def signup(request, slug=None):
     
     '''
     =====
-    Part of user type segrigation
+    Part of user type segrigation 
     =====
     '''
     
