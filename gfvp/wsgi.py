@@ -18,6 +18,4 @@ else:
 
 # Import the 'add_set' function from the 'gfvp.addset' module
 from gfvp.addset import add_set
-
-# Call the 'add_set' function to set some important special settings
 add_set()
